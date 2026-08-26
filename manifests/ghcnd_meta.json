@@ -1,0 +1,42 @@
+{
+  "ghcnd-inventory.txt": {
+    "dataset": "ghcnd_meta",
+    "filename": "ghcnd-inventory.txt",
+    "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+    "sha256": "2569466e7bb81c2e983f7b2a6fa64e0fe451af927a7aafc28e74b922bf91c300",
+    "size": 35994862,
+    "downloaded_at": "2026-08-26T16:19:46+00:00",
+    "last_modified": "Thu, 20 Aug 2026 11:25:13 GMT",
+    "note": ""
+  },
+  "ghcnd-stations.txt": {
+    "dataset": "ghcnd_meta",
+    "filename": "ghcnd-stations.txt",
+    "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+    "sha256": "91e4bd9b4c991c3ea9c19062eae73bca118cad0f4a436e33149ff345bffc8f9c",
+    "size": 11395086,
+    "downloaded_at": "2026-08-26T16:19:41+00:00",
+    "last_modified": "Thu, 20 Aug 2026 11:25:14 GMT",
+    "note": ""
+  },
+  "ghcnd-version.txt": {
+    "dataset": "ghcnd_meta",
+    "filename": "ghcnd-version.txt",
+    "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-version.txt",
+    "sha256": "0e81c3fd741e6b137fe0b25e8d7f12a6db84ff3f7dab6697a5da0bb7ddf096f8",
+    "size": 270,
+    "downloaded_at": "2026-08-26T16:19:47+00:00",
+    "last_modified": "Wed, 26 Aug 2026 11:00:26 GMT",
+    "note": ""
+  },
+  "readme.txt": {
+    "dataset": "ghcnd_meta",
+    "filename": "readme.txt",
+    "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+    "sha256": "3a71ae355252a6693a56a473ed7182b500ae7816c2cb2b2ce708c1e9ea9dcfde",
+    "size": 28567,
+    "downloaded_at": "2026-08-26T16:19:49+00:00",
+    "last_modified": "Fri, 23 Jan 2026 18:46:57 GMT",
+    "note": ""
+  }
+}

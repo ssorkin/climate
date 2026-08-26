@@ -1,0 +1,57 @@
+"""climate pipeline CLI: acquire → ingest → check → analyze → export."""
+
+import typer
+
+app = typer.Typer(no_args_is_help=True, help=__doc__)
+
+REGION_HELP = "Region id from stations/*.yaml (e.g. la) or 'all'"
+
+
+@app.command()
+def acquire(
+    region: str = typer.Option("all", help=REGION_HELP),
+    refresh: bool = typer.Option(False, help="Re-fetch files that changed upstream (nightly)"),
+    force: bool = typer.Option(False, help="Re-download everything"),
+) -> None:
+    """Download GHCN-Daily station files and record provenance manifests."""
+    from climate.acquire.ghcnd import run_acquire
+
+    run_acquire(region=region, refresh=refresh, force=force)
+
+
+@app.command()
+def ingest(region: str = typer.Option("all", help=REGION_HELP)) -> None:
+    """Parse raw files into Parquet + DuckDB views."""
+    from climate.ingest.runner import run_ingest
+
+    run_ingest(region=region)
+
+
+@app.command()
+def check(
+    strict: bool = typer.Option(False, help="Exit 1 on any anomaly (gates the nightly deploy)"),
+) -> None:
+    """Run data-quality checks and regenerate DATA_QUALITY.md."""
+    from climate.quality.runner import run_checks
+
+    run_checks(strict=strict)
+
+
+@app.command()
+def analyze(region: str = typer.Option("all", help=REGION_HELP)) -> None:
+    """Compute annual/monthly/daily metrics per station."""
+    from climate.analysis.runner import run_analysis
+
+    run_analysis(region=region)
+
+
+@app.command()
+def export(region: str = typer.Option("all", help=REGION_HELP)) -> None:
+    """Write the site's JSON (site/static/data/)."""
+    from climate.analysis.export import run_export
+
+    run_export(region=region)
+
+
+if __name__ == "__main__":
+    app()

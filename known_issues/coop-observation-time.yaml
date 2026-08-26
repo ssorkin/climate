@@ -1,0 +1,16 @@
+id: coop-observation-time
+title: Cooperative-observer stations read the thermometer once a day
+kind: measurement
+dataset: ghcnd
+years: []
+description: >-
+  Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local
+  time, typically 0800 or 1600, and the value is logged on the date of the reading.
+  A high recorded at 0800 mostly happened the previous afternoon. Airport (USW*)
+  stations use calendar days (2400). Some stations changed their observation time
+  during their record, which shifts a small time-of-observation bias.
+handling: >-
+  Values are never shifted or adjusted. Monthly and annual aggregates are robust to
+  the one-day offset. The daily explorer shows the observation time for each period
+  and notes the offset when the reading is before noon. Changes in observation time
+  are surfaced by `clim check` and on each station page.

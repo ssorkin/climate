@@ -1,0 +1,32 @@
+# The only place analysis rules live. Every export echoes these values so the
+# site never hardcodes a baseline or a threshold.
+
+# Reference period for anomalies and "then vs now" comparisons. All v1 stations
+# are complete over 1951-1980; it is the GISS / Berkeley Earth convention and
+# predates most of the local warming, so anomalies read as "vs. mid-century LA".
+baseline:
+  start: 1951
+  end: 1980
+
+# Threshold lists, in whole degrees Fahrenheit (US observers record whole °F;
+# see f_whole in analysis/metrics.py for the exact round-trip rule).
+thresholds_f:
+  hot_days: [90, 95, 100, 105]      # TMAX >=
+  warm_nights: [65, 70, 75]         # TMIN >=
+  cold_days: [50, 60]               # TMAX <=
+  cold_nights: [32, 40]             # TMIN <=   (32 = frost night)
+
+# When a period counts. Incomplete periods export as null — never 0.
+completeness:
+  annual_min_frac: 0.9              # >= 90% of days valid, per element
+  monthly_min_days: 25
+  record_min_prior_years: 30        # a daily record needs this many prior valid years
+  partial_year_min_days: 60         # current year shown as "so far" only past this
+  decade_min_years: 7
+
+summer_months: [6, 7, 8]
+# Cold-season metrics (frost nights) run Jul->Jun and are labeled by the January year.
+cold_season:
+  start_month: 7
+# +/- days for smoothing daily-climatology percentiles.
+doy_window_days: 7

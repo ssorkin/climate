@@ -1,0 +1,49 @@
+# Los Angeles-area stations with long, still-active daily TMAX/TMIN records in
+# NOAA GHCN-Daily. Names, coordinates and elevation come from ghcnd-stations.txt
+# at ingest time; `short` is only the display label.
+region: la
+name: Los Angeles area
+center: [34.05, -118.30]
+zoom: 8.3
+default_station: USC00046719
+stations:
+  - id: USC00046719
+    short: Pasadena
+    ushcn: true
+  - id: USC00047888
+    short: Santa Ana
+  - id: USC00046175
+    short: Newport Beach
+    ushcn: true
+  - id: USC00046624
+    short: Palmdale
+  - id: USC00040798
+    short: Big Tujunga Dam
+  - id: USW00003122
+    short: Torrance Airport
+  - id: USC00049152
+    short: UCLA
+  - id: USC00042214
+    short: Culver City
+  - id: USC00041194
+    short: Burbank
+  - id: USW00023174
+    short: LAX
+  - id: USC00046006
+    short: Mt. Wilson
+  - id: USW00023129
+    short: Long Beach Airport
+  - id: USW00023130
+    short: Van Nuys Airport
+  - id: USC00049785
+    short: Woodland Hills
+excluded:
+  - id: USW00093134
+    short: Downtown LA (Civic Center / USC)
+    reason: >-
+      The downtown Los Angeles record has been produced from eight different
+      locations since 1877, with instruments from four feet to over 220 feet above
+      the ground, mostly on rooftops, before moving to ground level at USC in 1999.
+      It is the best-known "Los Angeles" record but not a homogeneous one.
+    source: https://www.weather.gov/media/wrh/online_publications/TMs/TM-261.pdf
+    source_note: NWS Technical Memorandum TM-261, "Weather Records at Los Angeles", p. 9-10 (PDF p. 31)

@@ -1,0 +1,14 @@
+id: civic-center-excluded
+title: Downtown LA (Civic Center) record excluded
+kind: siting
+dataset: ghcnd
+years: [1877, 1999]
+description: >-
+  The downtown Los Angeles record (GHCN USW00093134) is the most-quoted "Los Angeles"
+  temperature series, but per NWS Technical Memorandum TM-261 it was produced from
+  eight different locations between 1877 and 1999, with instruments 4 to 220+ feet
+  above the ground, mostly on rooftops. It is not a consistent record of one place.
+handling: >-
+  Not charted. Listed in stations/la.yaml under `excluded` with the source, and
+  explained on the site's Methods page. Nearby ground-level stations with stable
+  siting (Pasadena, Long Beach, Burbank, UCLA, Culver City) tell the downtown story.
