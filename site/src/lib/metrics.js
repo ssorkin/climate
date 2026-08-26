@@ -1,7 +1,7 @@
 // Live threshold counts from daily.json, using the same completeness flags the
 // pipeline exported (summary.annual / summary.monthly). Mirrors metrics.py.
 import { fWhole } from './units.js';
-import { dateToIdx, daysInMonth, parseISO } from './dates.js';
+import { dateToIdx, idxToDate, daysInMonth, parseISO } from './dates.js';
 
 export const FAMILIES = {
   hot: { key: 'hot_days', elem: 'tmax', op: '>=', label: 'Hot days', noun: 'days', unit: 'high of' },
@@ -26,14 +26,13 @@ export function countRange(daily, family, thr, from, to) {
   return n;
 }
 
-// Per-year counts, null where the exported completeness flag says the year is incomplete.
+// Per-year counts: `values` are null where the exported completeness flag says the year is
+// incomplete; `lower` is the count over observed days (a lower bound) for every year.
 export function annualCounts(daily, summary, family, thr) {
   const fam = FAMILIES[family];
   const flags = fam.elem === 'tmax' ? summary.annual.complete_tmax : summary.annual.complete_tmin;
-  return summary.annual.year.map((y, k) => {
-    if (!flags[k]) return null;
-    return countRange(daily, family, thr, new Date(Date.UTC(y, 0, 1)), new Date(Date.UTC(y, 11, 31)));
-  });
+  const lower = summary.annual.year.map((y) => countRange(daily, family, thr, new Date(Date.UTC(y, 0, 1)), new Date(Date.UTC(y, 11, 31))));
+  return { values: lower.map((v, k) => (flags[k] ? v : null)), lower };
 }
 
 // Per-(year, month) counts aligned with summary.monthly rows.
@@ -41,21 +40,19 @@ export function monthlyCounts(daily, summary, family, thr) {
   const fam = FAMILIES[family];
   const m = summary.monthly;
   const flags = fam.elem === 'tmax' ? m.complete_tmax : m.complete_tmin;
-  return m.year.map((y, k) => {
-    if (!flags[k]) return null;
+  const lower = m.year.map((y, k) => {
     const mo = m.month[k];
     return countRange(daily, family, thr, new Date(Date.UTC(y, mo - 1, 1)), new Date(Date.UTC(y, mo - 1, daysInMonth(y, mo))));
   });
+  return { values: lower.map((v, k) => (flags[k] ? v : null)), lower };
 }
 
 // Cold-season (Jul->Jun, labeled by January year) counts aligned with summary.cold_season rows.
 export function seasonCounts(daily, summary, family, thr) {
   const cs = summary.cold_season;
   const flags = FAMILIES[family].elem === 'tmax' ? cs.complete_tmax : cs.complete_tmin;
-  return cs.year.map((y, k) => {
-    if (!flags[k]) return null;
-    return countRange(daily, family, thr, new Date(Date.UTC(y - 1, 6, 1)), new Date(Date.UTC(y, 5, 30)));
-  });
+  const lower = cs.year.map((y) => countRange(daily, family, thr, new Date(Date.UTC(y - 1, 6, 1)), new Date(Date.UTC(y, 5, 30))));
+  return { values: lower.map((v, k) => (flags[k] ? v : null)), lower };
 }
 
 export const isStandard = (summary, family, thr) =>
@@ -69,6 +66,35 @@ export function exportedAnnual(summary, family, thr) {
 }
 export function exportedMonthly(summary, family, thr) {
   return summary.monthly[FAMILIES[family].key]?.[String(thr)] ?? null;
+}
+export function exportedAnnualLower(summary, family, thr) {
+  const key = FAMILIES[family].key + '_lb';
+  if (family === 'frost') return summary.cold_season[key]?.[String(thr)] ?? null;
+  return summary.annual[key]?.[String(thr)] ?? null;
+}
+export function exportedMonthlyLower(summary, family, thr) {
+  return summary.monthly[FAMILIES[family].key + '_lb']?.[String(thr)] ?? null;
+}
+
+// Contiguous runs of missing (null) days for one element inside [from, to].
+export function missingRanges(daily, elem, from, to) {
+  const arr = daily[elem];
+  const a = dateToIdx(daily.start, from);
+  const b = dateToIdx(daily.start, to);
+  const out = [];
+  let run = null;
+  for (let i = a; i <= b; i++) {
+    const missing = i < 0 || i >= daily.n || arr[i] == null;
+    if (missing) {
+      if (!run) run = { from: i, to: i };
+      else run.to = i;
+    } else if (run) {
+      out.push(run);
+      run = null;
+    }
+  }
+  if (run) out.push(run);
+  return out.map((r) => ({ from: idxToDate(daily.start, r.from), to: idxToDate(daily.start, r.to), days: r.to - r.from + 1 }));
 }
 
 export const yearsOf = (summary, family) =>

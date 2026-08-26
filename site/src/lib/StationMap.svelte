@@ -63,20 +63,24 @@
 
   function paint() {
     if (!ready) return;
-    const vals = [...values.values()].filter((v) => v != null);
+    const num = (v) => (v == null ? null : typeof v === 'object' ? v.lower : v);
+    const vals = [...values.values()].map(num).filter((v) => v != null);
     const vmax = Math.max(1, ...vals);
     for (const s of stations) {
       const mk = markers.get(s.id);
       if (!mk) continue;
-      const v = values.get(s.id);
-      mk.val.textContent = v == null ? '—' : `${Math.round(v)}`;
+      const raw = values.get(s.id);
+      const isLower = raw != null && typeof raw === 'object';
+      const v = num(raw);
+      mk.val.textContent = v == null ? '—' : `${isLower ? '≥' : ''}${Math.round(v)}`;
       const t = v == null ? null : v / vmax;
       const dark = t != null && t > 0.55;
       mk.d.style.background = v == null ? '#efe9df' : ramp(cool ? COOL_RAMP : HEAT_RAMP, t);
       mk.d.style.color = dark ? '#fff' : '#1f1b16';
       mk.d.classList.toggle('sel', s.id === selected);
       mk.d.classList.toggle('nodata', v == null);
-      mk.d.title = v == null ? `${s.short}: no complete data for this year` : `${s.short}: ${v} ${unitLabel}`;
+      mk.d.classList.toggle('lower', isLower);
+      mk.d.title = v == null ? `${s.short}: no data for this year` : isLower ? `${s.short}: at least ${v} ${unitLabel} (incomplete year)` : `${s.short}: ${v} ${unitLabel}`;
     }
   }
   $effect(() => {
@@ -125,6 +129,10 @@
   }
   :global(.stpill.nodata) {
     opacity: 0.75;
+  }
+  :global(.stpill.lower) {
+    border-style: dashed;
+    border-color: #a89f8f;
   }
   :global(.stpill.excluded) {
     background: transparent;

@@ -5,7 +5,8 @@
   import { units } from '$lib/units.svelte.js';
   import { fmtC, fmtThresholdF } from '$lib/units.js';
   import { fmtISO } from '$lib/dates.js';
-  import { FAMILIES, exportedAnnual, yearsOf, trendLabel } from '$lib/metrics.js';
+  import { FAMILIES, exportedAnnual, exportedAnnualLower, yearsOf, trendLabel } from '$lib/metrics.js';
+  import { daysInYear } from '$lib/dates.js';
   import { HEAT, COOL } from '$lib/palette.js';
   import StatTile from '$lib/StatTile.svelte';
   import StationMap from '$lib/StationMap.svelte';
@@ -54,8 +55,12 @@
         continue;
       }
       const series = exportedAnnual(sm, mapFamily, mapThr);
-      const k = yearsOf(sm, mapFamily).indexOf(mapYear);
-      m.set(s.id, k < 0 || !series ? null : series[k]);
+      const lb = exportedAnnualLower(sm, mapFamily, mapThr);
+      const ys = yearsOf(sm, mapFamily);
+      const k = ys.indexOf(mapYear);
+      if (k < 0 || !series) m.set(s.id, null);
+      else if (series[k] != null) m.set(s.id, series[k]);
+      else m.set(s.id, lb?.[k] != null ? { lower: lb[k] } : null);
     }
     return m;
   });
@@ -117,7 +122,7 @@
   </div>
   <YearScrubber years={mapYears} bind:value={mapYear} playable />
   <StationMap stations={allStations} values={mapValues} unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
-  <p class="small muted">Press play, or drag the year. Numbers are that year's count at each station; a dash means the year is incomplete there. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
+  <p class="small muted">Press play, or drag the year. Numbers are that year's count at each station; “≥” means the year is incomplete there and the count is a lower bound; a dash means no data. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
 </section>
 
 <section>
@@ -136,7 +141,7 @@
     </div>
   </div>
   <p class="muted">Nights at {bars.short} whose low never fell below {fmtThresholdF(70, units.f)}. Dark steps are decade averages.</p>
-  <AnnualBars years={bars.cold_season ? bars.annual.year : []} values={bars.annual.warm_nights['70']} partial={bars.annual.partial} decades={{ decade: bars.decades.decade, value: bars.decades.warm_nights['70'], partial: bars.decades.partial }} color={HEAT} unitLabel="nights" trendLabel={barsTrend} baseline={barsBaseline} annotations={(bars.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label }))} height={280} />
+  <AnnualBars years={bars.cold_season ? bars.annual.year : []} values={bars.annual.warm_nights['70']} lower={bars.annual.warm_nights_lb?.['70'] ?? []} daysValid={bars.annual.days_valid_tmin} daysTotal={bars.annual.year.map((y) => daysInYear(y))} partial={bars.annual.partial} decades={{ decade: bars.decades.decade, value: bars.decades.warm_nights['70'], partial: bars.decades.partial }} color={HEAT} unitLabel="nights" trendLabel={barsTrend} baseline={barsBaseline} annotations={(bars.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label }))} height={280} />
   <p class="small"><a href="/station/{bars.id}?m=warm&t=70">Explore {bars.short} in full →</a></p>
 </section>
 
@@ -169,7 +174,7 @@
   <section>
     <h2>The other end: frost is disappearing</h2>
     <p class="muted">Nights at or below {fmtThresholdF(32, units.f)} at {frostStation.short}, per July–June season. {frostStation.short} averaged {n1(frostStation.headline.frost_baseline)} frost nights a year in {frost.windows.baseline.years[0]}–{frost.windows.baseline.years[1]} and {n1(frostStation.headline.frost_last10)} in the last ten seasons.</p>
-    <AnnualBars years={frost.cold_season.year} values={frost.cold_season.cold_nights['32']} partial={frost.cold_season.partial} decades={{ decade: frost.decades.decade, value: frost.decades.season_cold_nights['32'], partial: frost.decades.partial }} color={COOL} unitLabel="nights" trendLabel={frostTrend} baseline={frostBaseline} height={240} />
+    <AnnualBars years={frost.cold_season.year} values={frost.cold_season.cold_nights['32']} lower={frost.cold_season.cold_nights_lb?.['32'] ?? []} daysValid={frost.cold_season.days_valid_tmin} daysTotal={frost.cold_season.year.map((y) => daysInYear(y))} partial={frost.cold_season.partial} decades={{ decade: frost.decades.decade, value: frost.decades.season_cold_nights['32'], partial: frost.decades.partial }} color={COOL} unitLabel="nights" trendLabel={frostTrend} baseline={frostBaseline} height={240} />
     <p class="small"><a href="/station/{frost.id}?m=frost&t=32">Explore {frostStation.short} →</a></p>
   </section>
 {/if}

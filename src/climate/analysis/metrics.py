@@ -79,7 +79,9 @@ def _with_flags(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
 
 
 def _count_exprs(cfg: dict, elem_ok: dict[str, str]) -> list[pl.Expr]:
-    """Sum of day flags, nulled when the element's completeness flag is false."""
+    """Sum of day flags, nulled when the element's completeness flag is false — plus the
+    unconditional sum as `<name>_lb`: over observed days only, so it is a lower bound on
+    the true count when days are missing."""
     cols = threshold_columns(cfg)
     out = []
     for family, names in cols.items():
@@ -92,6 +94,7 @@ def _count_exprs(cfg: dict, elem_ok: dict[str, str]) -> list[pl.Expr]:
                 .cast(pl.Int32)
                 .alias(n)
             )
+            out.append(pl.col(n).sum().cast(pl.Int32).alias(f"{n}_lb"))
     return out
 
 
@@ -313,6 +316,9 @@ def cold_season_metrics(daily: pl.DataFrame, cfg: dict, today: date | None = Non
                 & ~pl.col("partial")
             ).alias("complete_tmax"),
         )
+    )
+    out = out.with_columns(
+        *[pl.col(c).alias(f"{c}_lb") for c in night_cols + day_cols],
     )
     out = out.with_columns(
         *[

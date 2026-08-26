@@ -42,6 +42,8 @@ def dump(path, obj) -> int:
 
 
 def _family_block(df: pl.DataFrame, cfg: dict, prefix: str = "") -> dict:
+    """Threshold counts by family, plus `<family>_lb`: the count over observed days
+    (equal to the count for complete periods; a lower bound for incomplete ones)."""
     t = cfg["thresholds_f"]
     names = {
         "hot_days": "hot",
@@ -51,13 +53,17 @@ def _family_block(df: pl.DataFrame, cfg: dict, prefix: str = "") -> dict:
     }
     out = {}
     for family, stem in names.items():
-        block = {}
+        block, lb = {}, {}
         for thr in t[family]:
             c = f"{prefix}{stem}_{thr}"
             if c in df.columns:
                 block[str(thr)] = col(df, c)
+            if f"{c}_lb" in df.columns:
+                lb[str(thr)] = col(df, f"{c}_lb")
         if block:
             out[family] = block
+        if lb:
+            out[f"{family}_lb"] = lb
     return out
 
 

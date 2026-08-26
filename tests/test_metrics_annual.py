@@ -81,3 +81,12 @@ def test_decades_and_partial_decade(cfg):
     daily = make_daily(date(1998, 1, 1), date(2001, 12, 31), hot_summer, 55)
     dec = M.decade_means(M.annual_metrics(daily, cfg, TODAY), cfg)
     assert dec.filter(pl.col("decade") == 1990).row(0, named=True)["hot_95"] is None
+
+
+def test_incomplete_year_keeps_a_lower_bound(cfg):
+    gone = {date(2001, 3, 1) + timedelta(days=i) for i in range(60)}  # March-April missing
+    daily = make_daily(date(2001, 1, 1), date(2001, 12, 31), hot_summer, 55, missing=gone)
+    row = M.annual_metrics(daily, cfg, TODAY).row(0, named=True)
+    assert row["hot_95"] is None  # not a count
+    assert row["hot_95_lb"] == 31  # but at least 31: every July day was observed
+    assert row["days_valid_tmax"] == 305

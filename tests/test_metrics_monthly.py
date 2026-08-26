@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 import polars as pl
 
@@ -45,3 +45,22 @@ def test_cold_season_spans_new_year(cfg):
     assert s2000["coldest_night_tenths"] == -11 and s2000["coldest_night_date"] == date(1999, 12, 1)
     # season 2002 (Jul 2001 - Jun 2002) is complete; 2003 does not exist here
     assert cs["season"].to_list() == [2000, 2001, 2002]
+
+
+def test_incomplete_month_keeps_a_lower_bound(cfg):
+    gone = {date(2000, 7, d) for d in range(1, 10)}  # 22 valid July days
+    daily = make_daily(date(2000, 1, 1), date(2000, 12, 31), 95, 55, missing=gone)
+    jul = M.monthly_metrics(daily, cfg, TODAY).filter(pl.col("month") == 7).row(0, named=True)
+    assert not jul["complete_tmax"] and jul["hot_95"] is None and jul["hot_95_lb"] == 22
+
+
+def test_cold_season_lower_bound(cfg):
+    def frosty(d: date) -> float:
+        return 30 if d.month in (12, 1) else 50
+
+    gone = {date(2000, 3, 1) + timedelta(days=i) for i in range(60)}
+    daily = make_daily(date(1999, 7, 1), date(2001, 6, 30), 60, frosty, missing=gone)
+    cs = M.cold_season_metrics(daily, cfg, TODAY)
+    s2000 = cs.filter(pl.col("season") == 2000).row(0, named=True)
+    assert not s2000["complete_tmin"] and s2000["coldnight_32"] is None
+    assert s2000["coldnight_32_lb"] == 62

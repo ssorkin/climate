@@ -6,7 +6,7 @@
     import { dataUrl } from '$lib/data.js';
   import { units } from '$lib/units.svelte.js';
   import { fmtThresholdF } from '$lib/units.js';
-  import { FAMILIES, exportedAnnual, yearsOf } from '$lib/metrics.js';
+  import { FAMILIES, exportedAnnual, exportedAnnualLower, yearsOf } from '$lib/metrics.js';
   import StationMap from '$lib/StationMap.svelte';
   import YearScrubber from '$lib/YearScrubber.svelte';
 
@@ -59,14 +59,18 @@
         continue;
       }
       const series = exportedAnnual(sm, family, threshold);
+      const lb = exportedAnnualLower(sm, family, threshold);
       const ys = yearsOf(sm, family);
       const k = ys.indexOf(year);
-      m.set(s.id, k < 0 || !series ? null : series[k]);
+      if (k < 0 || !series) m.set(s.id, null);
+      else if (series[k] != null) m.set(s.id, series[k]);
+      else m.set(s.id, lb?.[k] != null ? { lower: lb[k] } : null);
     }
     return m;
   });
   let loaded = $derived(Object.keys(summaries).length === stations.length);
-  let ranked = $derived([...stations].map((s) => ({ s, v: values.get(s.id) })).sort((a, b) => (b.v ?? -1) - (a.v ?? -1)));
+  const num = (v) => (v == null ? null : typeof v === 'object' ? v.lower : v);
+  let ranked = $derived([...stations].map((s) => ({ s, v: num(values.get(s.id)), lb: typeof values.get(s.id) === 'object' && values.get(s.id) !== null })).sort((a, b) => (b.v ?? -1) - (a.v ?? -1)));
   const closedNote = (s) => (s.active ? '' : ` (closed ${s.last_year})`);
 </script>
 
@@ -97,11 +101,11 @@
     <a class="row" href="/station/{r.s.id}?m={family}&t={threshold}&year={year}">
       <span class="nm">{r.s.short}<span class="muted small">{closedNote(r.s)}</span></span>
       <span class="bar"><i style:width="{r.v == null ? 0 : (100 * r.v) / Math.max(1, ranked[0].v ?? 1)}%"></i></span>
-      <span class="vl">{r.v == null ? 'no complete data' : `${r.v} ${fam.noun}`}</span>
+      <span class="vl">{r.v == null ? 'no data' : `${r.lb ? '≥ ' : ''}${r.v} ${fam.noun}${r.lb ? ' (incomplete year)' : ''}`}</span>
     </a>
   {/each}
 </div>
-<p class="small muted">Cold-night counts use July–June seasons labeled by the January year. A station shows "no complete data" when fewer than 90% of that year's days were observed.</p>
+<p class="small muted">Cold-night counts use July–June seasons labeled by the January year. "≥" marks a year with fewer than 90% of its days observed: the count over the observed days is a lower bound on the true count.</p>
 
 <style>
   .title {

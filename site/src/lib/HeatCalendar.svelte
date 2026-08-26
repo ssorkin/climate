@@ -7,7 +7,7 @@
   import { MONTHS } from '$lib/dates.js';
   import { HEAT_RAMP, COOL_RAMP, ramp, MUTED, INK, HIGHLIGHT } from '$lib/palette.js';
 
-  let { years = [], months = [], values = [], complete = [], cool = false, selected = null, onselect = null, unitLabel = 'days' } = $props();
+  let { years = [], months = [], values = [], lower = [], daysValid = [], daysTotal = [], complete = [], cool = false, selected = null, onselect = null, unitLabel = 'days' } = $props();
 
   const W = 860;
   const LEFT = 34;
@@ -23,7 +23,7 @@
 
   let grid = $derived.by(() => {
     const g = new Map();
-    for (let k = 0; k < years.length; k++) g.set(years[k] * 100 + months[k], { v: values[k], ok: complete[k] });
+    for (let k = 0; k < years.length; k++) g.set(years[k] * 100 + months[k], { v: values[k], lb: lower[k], ok: complete[k], nv: daysValid[k], nt: daysTotal[k] });
     return g;
   });
   let hover = $state(null);
@@ -39,8 +39,9 @@
     if (!hover) return '';
     const c = grid.get(hover.yr * 100 + hover.mo);
     if (!c) return `${MONTHS[hover.mo - 1]} ${hover.yr}: no data`;
-    if (!c.ok) return `${MONTHS[hover.mo - 1]} ${hover.yr}: incomplete month — not counted`;
-    return `${MONTHS[hover.mo - 1]} ${hover.yr}: ${c.v} ${unitLabel}`;
+    const obs = c.nv != null && c.nt != null ? ` (${c.nv} of ${c.nt} days observed)` : '';
+    if (!c.ok) return c.lb != null && c.nv > 0 ? `${MONTHS[hover.mo - 1]} ${hover.yr}: at least ${c.lb} ${unitLabel} — incomplete${obs}` : `${MONTHS[hover.mo - 1]} ${hover.yr}: no data`;
+    return `${MONTHS[hover.mo - 1]} ${hover.yr}: ${c.v} ${unitLabel}${obs}`;
   });
 </script>
 
@@ -57,13 +58,13 @@
     {#each years as yr, k (yr * 100 + months[k])}
       {@const mo = months[k]}
       {@const v = values[k]}
-      <rect
-        x={LEFT + (yr - y0) * cw}
-        y={TOP + (mo - 1) * ch}
-        width={Math.max(0.5, cw - 0.6)}
-        height={ch - 1}
-        fill={complete[k] ? (v === 0 ? '#f3efe7' : ramp(colors, v / vmax)) : 'url(#hatch-gray)'}
-      />
+      {@const lb = lower[k]}
+      {#if complete[k]}
+        <rect x={LEFT + (yr - y0) * cw} y={TOP + (mo - 1) * ch} width={Math.max(0.5, cw - 0.6)} height={ch - 1} fill={v === 0 ? '#f3efe7' : ramp(colors, v / vmax)} />
+      {:else}
+        <rect x={LEFT + (yr - y0) * cw} y={TOP + (mo - 1) * ch} width={Math.max(0.5, cw - 0.6)} height={ch - 1} fill={lb > 0 ? ramp(colors, lb / vmax) : '#f3efe7'} opacity={lb > 0 ? 0.55 : 1} />
+        <rect x={LEFT + (yr - y0) * cw} y={TOP + (mo - 1) * ch} width={Math.max(0.5, cw - 0.6)} height={ch - 1} fill="url(#hatch-gray)" />
+      {/if}
     {/each}
     {#each Array.from({ length: Math.floor(y1 / 10) - Math.ceil(y0 / 10) + 1 }, (_, i) => Math.ceil(y0 / 10) * 10 + i * 10) as d (d)}
       {#if d % 20 === 0}
@@ -79,7 +80,7 @@
   </svg>
   <div class="legend">
     <span class="tip">{tip}</span>
-    <span class="scale"><span>0</span>{#each colors as c, i (i)}<i style:background={c}></i>{/each}<span>{vmax} {unitLabel}</span><i class="hatch"></i><span>incomplete</span></span>
+    <span class="scale"><span>0</span>{#each colors as c, i (i)}<i style:background={c}></i>{/each}<span>{vmax} {unitLabel}</span><i class="hatch"></i><span>incomplete (color = at least)</span></span>
   </div>
 </div>
 

@@ -6,8 +6,8 @@
   import { dataUrl } from '$lib/data.js';
   import { units } from '$lib/units.svelte.js';
   import { fmtC, fmtTenths, fmtThresholdF } from '$lib/units.js';
-  import { fmtISO } from '$lib/dates.js';
-  import { FAMILIES, annualCounts, monthlyCounts, seasonCounts, exportedAnnual, exportedMonthly, isStandard, yearsOf, partialOf, trendLabel as fmtTrend } from '$lib/metrics.js';
+  import { fmtISO, fmtDate, daysInYear, daysInMonth } from '$lib/dates.js';
+  import { FAMILIES, annualCounts, monthlyCounts, seasonCounts, exportedAnnual, exportedMonthly, exportedAnnualLower, exportedMonthlyLower, missingRanges, isStandard, yearsOf, partialOf, trendLabel as fmtTrend } from '$lib/metrics.js';
   import { HEAT, COOL } from '$lib/palette.js';
   import Controls from '$lib/Controls.svelte';
   import YearScrubber from '$lib/YearScrubber.svelte';
@@ -70,15 +70,42 @@
   let standard = $derived(isStandard(s, family, threshold));
   let years = $derived(yearsOf(s, family));
   let partial = $derived(partialOf(s, family));
-  let annual = $derived.by(() => {
-    if (standard) return exportedAnnual(s, family, threshold);
-    if (!daily) return years.map(() => null);
+  let annualBoth = $derived.by(() => {
+    if (standard) return { values: exportedAnnual(s, family, threshold), lower: exportedAnnualLower(s, family, threshold) ?? [] };
+    if (!daily) return { values: years.map(() => null), lower: [] };
     return family === 'frost' ? seasonCounts(daily, s, family, threshold) : annualCounts(daily, s, family, threshold);
   });
-  let monthly = $derived.by(() => {
-    if (standard) return exportedMonthly(s, family, threshold);
-    if (!daily) return s.monthly.year.map(() => null);
+  let annual = $derived(annualBoth.values);
+  let annualLower = $derived(annualBoth.lower);
+  let monthlyBoth = $derived.by(() => {
+    if (standard) return { values: exportedMonthly(s, family, threshold), lower: exportedMonthlyLower(s, family, threshold) ?? [] };
+    if (!daily) return { values: s.monthly.year.map(() => null), lower: [] };
     return monthlyCounts(daily, s, family, threshold);
+  });
+  let monthly = $derived(monthlyBoth.values);
+  let monthlyLower = $derived(monthlyBoth.lower);
+  let daysValid = $derived(family === 'frost' ? (fam.elem === 'tmax' ? s.cold_season.days_valid_tmax : s.cold_season.days_valid_tmin) : fam.elem === 'tmax' ? s.annual.days_valid_tmax : s.annual.days_valid_tmin);
+  let daysTotal = $derived(years.map((y) => daysInYear(y)));
+  let monthlyDaysValid = $derived(fam.elem === 'tmax' ? s.monthly.days_valid_tmax : s.monthly.days_valid_tmin);
+  let monthlyDaysTotal = $derived(s.monthly.year.map((y, k) => daysInMonth(y, s.monthly.month[k])));
+  // Where the gaps are, for the selected year (calendar year; cold seasons use Jul-Jun).
+  let gaps = $derived.by(() => {
+    if (!daily || year == null) return [];
+    const from = family === 'frost' ? new Date(Date.UTC(year - 1, 6, 1)) : new Date(Date.UTC(year, 0, 1));
+    const to = family === 'frost' ? new Date(Date.UTC(year, 5, 30)) : new Date(Date.UTC(year, 11, 31));
+    return missingRanges(daily, fam.elem, from, to);
+  });
+  const fmtGap = (g) => (g.days === 1 ? fmtDate(g.from, { year: false }) : `${fmtDate(g.from, { year: false })} – ${fmtDate(g.to, { year: false })} (${g.days} days)`);
+  // Long runs are listed; scattered one- or two-day holes are summarized.
+  let gapText = $derived.by(() => {
+    const runs = gaps.filter((g) => g.days >= 3);
+    const scattered = gaps.filter((g) => g.days < 3);
+    const parts = runs.map(fmtGap);
+    if (scattered.length) {
+      const n = scattered.reduce((a, g) => a + g.days, 0);
+      parts.push(`${n} scattered day${n === 1 ? '' : 's'} (${fmtDate(scattered[0].from, { year: false })} – ${fmtDate(scattered[scattered.length - 1].to, { year: false })})`);
+    }
+    return parts.join('; ');
   });
   let monthlyComplete = $derived(fam.elem === 'tmax' ? s.monthly.complete_tmax : s.monthly.complete_tmin);
   let decades = $derived.by(() => {
@@ -103,6 +130,11 @@
     const k = years.indexOf(year);
     return k < 0 ? null : annual[k];
   });
+  let selectedLower = $derived.by(() => {
+    const k = years.indexOf(year);
+    return k < 0 ? null : annualLower[k];
+  });
+  let selectedMissing = $derived(gaps.reduce((n, g) => n + g.days, 0));
   let incompleteYears = $derived(new Set(years.filter((y, k) => annual[k] == null && !partial[k])));
   let thrLabel = $derived(fmtThresholdF(threshold, units.f));
   let title = $derived(`${fam.label} · ${s.short}`);
@@ -181,22 +213,25 @@
 <p class="muted small">
   {#if family === 'frost'}Cold seasons run July–June and are labeled by the January year.{/if}
   {#if !standard && !daily}Computing from the daily record…{/if}
-  {#if selectedCount != null}<b>{year}: {selectedCount} {fam.noun}{partial[years.indexOf(year)] ? ' so far' : ''}.</b>{/if}
+  {#if selectedCount != null}<b>{year}: {selectedCount} {fam.noun}{partial[years.indexOf(year)] ? ' so far' : ''}.</b>{:else if selectedLower != null && year != null}<b>{year}: at least {selectedLower} {fam.noun}</b> — {selectedMissing} days not observed{#if gaps.length}: {gapText}{/if}.{/if}
 </p>
-<AnnualBars {years} values={annual} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
+<AnnualBars {years} values={annual} lower={annualLower} {daysValid} {daysTotal} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
 
 {#if year != null}
   <YearScrubber years={s.annual.year} bind:value={year} disabled={incompleteYears} />
 {/if}
 
 <h2>By month</h2>
-<HeatCalendar years={s.monthly.year} months={s.monthly.month} values={monthly} complete={monthlyComplete} cool={family === 'frost' || family === 'coldday'} selected={year} onselect={(y) => (year = y)} unitLabel={fam.noun} />
+<HeatCalendar years={s.monthly.year} months={s.monthly.month} values={monthly} lower={monthlyLower} daysValid={monthlyDaysValid} daysTotal={monthlyDaysTotal} complete={monthlyComplete} cool={family === 'frost' || family === 'coldday'} selected={year} onselect={(y) => (year = y)} unitLabel={fam.noun} />
 
 <h2>Then and now</h2>
 <WindowsTable summary={s} />
 
 <h2 id="daily">{year}, day by day</h2>
 {#if daily && year != null}
+  {#if gaps.length}
+    <p class="muted small">Not observed in {year}{family === 'frost' ? ' (Jul–Jun season)' : ''}: {gapText} — {selectedMissing} days in all.</p>
+  {/if}
   <DailyRibbon {daily} {year} {family} {threshold} />
   <details class="raw">
     <summary>Raw readings for {year}</summary>

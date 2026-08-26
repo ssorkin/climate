@@ -11,6 +11,9 @@
   let {
     years = [],
     values = [],
+    lower = [], // count over observed days; drawn hollow when the year is incomplete
+    daysValid = [],
+    daysTotal = [],
     partial = [],
     decades = null, // {decade:[], value:[]} means per decade
     selected = null,
@@ -32,7 +35,7 @@
 
   let x = $derived(linear([years[0] - 0.5, years[years.length - 1] + 0.5], [M.left, W - M.right]));
   let bw = $derived(Math.max(1.5, Math.min(24, (innerW / years.length) * 0.78)));
-  let vmax = $derived(Math.max(1, ...values.filter((v) => v != null), ...(decades?.value ?? []).filter((v) => v != null)));
+  let vmax = $derived(Math.max(1, ...values.filter((v) => v != null), ...lower.filter((v) => v != null), ...(decades?.value ?? []).filter((v) => v != null)));
   let yTicks = $derived(ticks(0, vmax * 1.08, 5));
   let y = $derived(linear([0, yTicks[yTicks.length - 1]], [M.top + innerH, M.top]));
 
@@ -50,8 +53,13 @@
     if (k < 0) return '';
     const v = values[k];
     const yr = years[k];
-    if (v == null) return `${yr}: incomplete year — not counted`;
-    return `${yr}: ${yFormat(v)} ${unitLabel}${partial[k] ? ' so far' : ''}`;
+    const obs = daysValid[k] != null && daysTotal[k] != null ? ` (${daysValid[k]} of ${daysTotal[k]} days observed)` : '';
+    if (v == null) {
+      if (partial[k] && lower[k] != null) return `${yr}: ${yFormat(lower[k])} ${unitLabel} so far${obs}`;
+      if (lower[k] != null) return `${yr}: at least ${yFormat(lower[k])} ${unitLabel} — incomplete year${obs}`;
+      return `${yr}: no data`;
+    }
+    return `${yr}: ${yFormat(v)} ${unitLabel}${partial[k] ? ' so far' : ''}${obs}`;
   });
   let decadeSegs = $derived(
     decades
@@ -73,7 +81,20 @@
     {/each}
     {#each years as yr, k (yr)}
       {@const v = values[k]}
-      {#if v == null}
+      {#if v == null && lower[k] != null && lower[k] > 0}
+        <rect
+          x={x(yr) - bw / 2}
+          y={y(lower[k])}
+          width={bw}
+          height={Math.max(0, y(0) - y(lower[k]))}
+          rx={Math.min(3, bw / 2)}
+          fill={partial[k] ? 'url(#hatch)' : 'none'}
+          stroke={color}
+          stroke-width="1"
+          stroke-dasharray={partial[k] ? null : '2 2'}
+          opacity="0.8"
+        />
+      {:else if v == null}
         <rect x={x(yr) - bw / 2} y={y(0) - 3} width={bw} height="3" fill={NEUTRAL} opacity="0.7" />
       {:else}
         <rect
@@ -117,7 +138,7 @@
       <text x={W - M.right} y={M.top - 8} text-anchor="end" font-size="11.5" fill={INK}>{trendLabel}</text>
     {/if}
   </svg>
-  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · gray ticks: incomplete years{#if annotations.some((a) => !a.label)} · ▼ dotted: site/instrument change detected by NOAA{/if}</span></div>
+  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · hollow bars: incomplete years, at least this many{#if annotations.some((a) => !a.label)} · ▼ dotted: site/instrument change detected by NOAA{/if}</span></div>
 </div>
 
 <style>
