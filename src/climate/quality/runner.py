@@ -59,11 +59,39 @@ def render(findings: list[Finding], issues: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def collapse_uncurated(findings: list[Finding]) -> list[Finding]:
+    """Per-station findings for generated (national) stations are summarized per check:
+    count plus a few examples. Curated stations keep every line."""
+    from climate.quality.checks import _stations
+
+    curated = {sid for sid, _ in _stations(curated_only=True)}
+    keep: list[Finding] = []
+    groups: dict[tuple[str, str], list[Finding]] = {}
+    for f in findings:
+        if f.entity in curated or f.entity == "all":
+            keep.append(f)
+        else:
+            groups.setdefault((f.check, f.severity), []).append(f)
+    for (check, sev), fs in groups.items():
+        keep.append(
+            Finding(
+                check,
+                sev,
+                None,
+                "national",
+                f"{len(fs)} national station(s): " + fs[0].message.split(": ", 1)[-1][:60] + " …",
+                {"examples": [f.message for f in fs[:6]]},
+            )
+        )
+    return keep
+
+
 def run_checks(strict: bool = False, report_path: Path = REPORT_PATH) -> list[Finding]:
     findings: list[Finding] = []
     for check in ALL_CHECKS:
         print(f"  running {check.__name__} …")
         findings.extend(check())
+    findings = collapse_uncurated(findings)
     findings.sort(key=lambda f: (SEVERITY_ORDER[f.severity], f.check, f.entity, f.year or 0))
     report_path.write_text(render(findings, load_known_issues()))
     n_anom = sum(1 for f in findings if f.severity == "anomaly")
