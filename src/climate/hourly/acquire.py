@@ -41,7 +41,7 @@ def run_acquire(only: list[str] | None = None, refresh: bool = False) -> None:
         )
 
     missing = 0
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=20) as pool:
         for i, path in enumerate(pool.map(fetch, jobs), 1):
             if path is None:
                 missing += 1

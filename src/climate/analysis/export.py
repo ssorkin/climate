@@ -346,6 +346,9 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             "tmin_trend_per_decade_c": meta["trends"]
             .get("tmin_mean_c", {})
             .get("slope_per_decade"),
+            "trend_warm70": meta["trends"].get("warm_70"),
+            "trend_hot95": meta["trends"].get("hot_95"),
+            "trend_frost32": meta["trends"].get("frost_nights"),
             "summer_to_date": {
                 "through": st.get("through"),
                 "ref_year": st.get("ref_year"),

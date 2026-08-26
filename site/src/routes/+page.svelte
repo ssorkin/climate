@@ -17,6 +17,7 @@
   import SummerMultiples from '$lib/SummerMultiples.svelte';
   import Stripes from '$lib/Stripes.svelte';
   import RegionalIndex from '$lib/RegionalIndex.svelte';
+  import TrendForest from '$lib/TrendForest.svelte';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -103,6 +104,16 @@
   let warmNow = $derived(regLast ? regWin('warm70', regLast - 9, regLast) : null);
   let hotBase = $derived(regWin('hot95', ix.baseline.start, ix.baseline.end));
   let hotNow = $derived(regLast ? regWin('hot95', regLast - 9, regLast) : null);
+  const trendStats = (key) => {
+    const ts = allStations.map((s) => s.headline?.[key]).filter((t) => t && t.slope_per_decade != null);
+    const up = ts.filter((t) => t.significant && t.slope_per_decade > 0).length;
+    const down = ts.filter((t) => t.significant && t.slope_per_decade < 0).length;
+    const slopes = ts.map((t) => t.slope_per_decade).sort((a, b) => a - b);
+    const median = slopes.length ? slopes[Math.floor(slopes.length / 2)] : null;
+    return { n: ts.length, up, down, median };
+  };
+  let warmT = $derived(trendStats('trend_warm70'));
+  let hotT = $derived(trendStats('trend_hot95'));
   let latest = $derived(stations.map((s) => s.last_date).sort().at(-1));
   let closed = $derived(allStations.length - stations.length);
 </script>
@@ -118,30 +129,22 @@
     <h1>Los Angeles nights aren't cooling off like they used to.</h1>
     <p class="lede">
       The heat you feel isn't only the afternoon high — it's whether the night gives you a break.
-      Across {allStations.length} weather stations in Greater Los Angeles that have reported every hour or three since
-      the 1940s — airports from the beach to the desert — the typical station now records
-      {#if warmBase != null && warmNow != null}about <b>{n1(warmNow)}</b> nights a year that never drop below 70°F, up from
-      <b>{n1(warmBase)}</b> in {ix.baseline.start}–{ix.baseline.end}{:else}far more nights that never drop below 70°F than it did in the mid-20th century{/if}
-      — and {#if hotBase != null && hotNow != null}<b>{n1(hotNow)}</b> days at or above 95°F, up from <b>{n1(hotBase)}</b>{:else}more 95°F days too{/if}.
-      Every number comes straight from NOAA's hourly station records.
+      Each of the {allStations.length} weather stations in Greater Los Angeles with hourly records — airports from the beach to
+      the desert, some since 1940 — tells its own story, and the stories agree: nights that never drop below 70°F are
+      becoming clearly more frequent at <b>{warmT.up} of {warmT.n}</b> stations with a measurable trend (the median station adds
+      {warmT.median != null ? warmT.median.toFixed(1) : '—'} such nights per decade), while 95°F days are rising clearly at
+      <b>{hotT.up} of {hotT.n}</b>{hotT.down ? ` and falling at ${hotT.down}` : ''}. Every number comes straight from NOAA's hourly station records.
     </p>
     <p class="small muted">
       Latest readings through {fmtISO(latest)}{#if closed}; {closed} closed {closed === 1 ? 'station is' : 'stations are'} included for history{/if}.
-      Stations come and go, so the two charts use a model that fills each station's missing years from the others (<a href="/methods#regional">how</a>); they start in {reg?.display_from ?? 1930}, when the network had grown past a handful of inland sites.
-      The famous downtown record has hourly data only since 1999 — <a href="/methods#civic-center">a note on that</a>.
+      Each station's trend is fitted to its own years, so a station that opened in 1998 is judged over 1998–2025 and one from
+      1940 over {ix.baseline.start}–2025 (<a href="/methods#trends">how</a>). The famous downtown record has hourly data only since 1999 —
+      <a href="/methods#civic-center">a note on that</a>.
     </p>
   </div>
   <div class="tiles">
-    {#if reg?.metrics?.warm70}
-      <RegionalIndex series={reg.metrics.warm70} from={reg.display_from} label="Nights ≥ 70°F per year, average station" unitLabel="nights" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
-    {/if}
-    {#if reg?.metrics?.hot95}
-      <RegionalIndex series={reg.metrics.hot95} from={reg.display_from} label="Days ≥ 95°F per year, average station" unitLabel="days" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
-    {/if}
-    {#if !reg}
-      <StatTile label="{heroIdx.short}: nights per year at or above 70°F, {hero.windows.baseline.years[0]}–{hero.windows.baseline.years[1]}" value={n1(h.warm70_baseline)} />
-      <StatTile label="…and per year, {hero.windows.last10.years[0]}–{hero.windows.last10.years[1]}" value={n1(h.warm70_last10)} accent />
-    {/if}
+    <TrendForest stations={allStations} key="trend_warm70" label="Nights ≥ 70°F per year — trend at each station" unitLabel="nights" compact />
+    <TrendForest stations={allStations} key="trend_hot95" label="Days ≥ 95°F per year — trend at each station" unitLabel="days" compact />
   </div>
 </section>
 
@@ -178,6 +181,17 @@
   <AnnualBars years={bars.cold_season ? bars.annual.year : []} values={bars.annual.warm_nights['70']} lower={bars.annual.warm_nights_lb?.['70'] ?? []} daysValid={bars.annual.days_valid_tmin} daysTotal={bars.annual.year.map((y) => daysInYear(y))} partial={bars.annual.partial} decades={{ decade: bars.decades.decade, value: bars.decades.warm_nights['70'], partial: bars.decades.partial }} color={HEAT} unitLabel="nights" trendLabel={barsTrend} baseline={barsBaseline} annotations={(bars.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label }))} height={280} />
   <p class="small"><a href="/station/{bars.id}?m=warm&t=70">Explore {bars.short} in full →</a></p>
 </section>
+
+{#if reg?.metrics?.warm70 && reg?.metrics?.hot95}
+  <section>
+    <h2>Los Angeles as a whole — a model, not an average</h2>
+    <p class="muted">Stations come and go, so a plain average of whatever stations exist each year would mostly track the network. These two charts come from a model that treats each station's missing years as unknowns and estimates what the typical station would have counted had every station reported every year, with a 90% band (<a href="/methods#regional">how, and how well it predicts held-out data</a>).</p>
+    <div class="two">
+      <RegionalIndex series={reg.metrics.warm70} from={reg.display_from} label="Nights ≥ 70°F per year, average station (modeled)" unitLabel="nights" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+      <RegionalIndex series={reg.metrics.hot95} from={reg.display_from} label="Days ≥ 95°F per year, average station (modeled)" unitLabel="days" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+    </div>
+  </section>
+{/if}
 
 <section>
   <h2>The same shift, at the beach, in the valleys, on the mountain, in the desert</h2>
@@ -246,6 +260,16 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.9rem;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  @media (max-width: 800px) {
+    .two {
+      grid-template-columns: 1fr;
+    }
   }
   .sechead {
     display: flex;
