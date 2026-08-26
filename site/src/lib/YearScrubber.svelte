@@ -54,7 +54,7 @@
   >
     <div class="rail"></div>
     {#each decades as d (d)}
-      <div class="tick" style:left="{(years.indexOf(d) / (years.length - 1)) * 100}%">
+      <div class="tick" class:odd={d % 20 !== 0} style:left="{(years.indexOf(d) / (years.length - 1)) * 100}%">
         <span>{d}</span>
       </div>
     {/each}
@@ -150,6 +150,9 @@
     .scrub {
       grid-template-columns: 1fr;
       gap: 0.3rem;
+    }
+    .tick.odd span {
+      display: none;
     }
   }
 </style>
