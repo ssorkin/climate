@@ -24,19 +24,8 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 
 ### station_config
 
-- 🔴 USL000ICAC1 not in ghcnd-stations
 - 🔴 USW00003165 not in ghcnd-stations
-- 🔴 USW00003174 not in ghcnd-stations
 - 🔴 USW00003180 not in ghcnd-stations
-- 🔴 USW00053130 not in ghcnd-stations
-- 🔴 USW00053141 not in ghcnd-stations
-- 🔴 743 national station(s): USL000SWPM4 not in ghcnd-stations …
-  - USL000SWPM4 not in ghcnd-stations
-  - USL000ADKA2 not in ghcnd-stations
-  - USW00026551 not in ghcnd-stations
-  - USW00026542 not in ghcnd-stations
-  - USL000ANTA2 not in ghcnd-stations
-  - USW00025310 not in ghcnd-stations
 ### completeness
 
 - 🟡 **2025** Fullerton Airport: 2025 has 327/365 TMAX and 327/365 TMIN days
@@ -304,3 +293,6 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 - ℹ️ Downtown LA (USC): 1999-07-01→2024-05-19 2400
 - ℹ️ John Wayne Airport: 1942-10-06→2025-12-30 2400
 - ℹ️ Santa Monica Airport: 2000-10-06→2025-12-30 2400
+### station_config
+
+- ℹ️ **2024** Downtown LA (USC): hourly record ended 2024

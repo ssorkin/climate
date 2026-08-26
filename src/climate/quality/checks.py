@@ -71,8 +71,21 @@ def check_station_config() -> list[Finding]:
     inv = load_inventory()
     year = _today().year
     curated = {sid for sid, _ in _stations(curated_only=True)}
+    from climate.ghcnh import hourly_station
+
     for sid, short in _stations():
-        if sid.startswith("ISD"):
+        hs = hourly_station(sid)
+        if hs is not None:
+            if sid in curated and not hs.active:
+                out.append(
+                    Finding(
+                        "station_config",
+                        "info",
+                        hs.last_year,
+                        sid,
+                        f"{short}: hourly record ended {hs.last_year}",
+                    )
+                )
             continue
         if stations.filter(pl.col("id") == sid).is_empty():
             out.append(
