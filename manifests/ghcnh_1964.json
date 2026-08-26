@@ -1,4 +1,34 @@
 {
+  "GHCNh_USA00722525_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USA00722525_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USA00722525_1964.parquet",
+    "sha256": "c55be395ef62fefc9913784d1dd33c6cce8b64eeb798420cf881860369ec202d",
+    "size": 256396,
+    "downloaded_at": "2026-08-26T23:39:13+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:30:11 GMT",
+    "note": ""
+  },
+  "GHCNh_USI0000KBRO_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USI0000KBRO_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USI0000KBRO_1964.parquet",
+    "sha256": "c3a438be9eaf026e32c9c3f8371be6af5ead2d1dd3b2921d2ea0d87abdb858b8",
+    "size": 256674,
+    "downloaded_at": "2026-08-26T23:38:10+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:47 GMT",
+    "note": ""
+  },
+  "GHCNh_USI0000KDFX_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USI0000KDFX_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USI0000KDFX_1964.parquet",
+    "sha256": "e4a1ae617d8d052730cd1cbab3a1e55de84fbd22080b15ecbeda337f5cfe50e1",
+    "size": 204997,
+    "downloaded_at": "2026-08-26T23:38:31+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:46 GMT",
+    "note": ""
+  },
   "GHCNh_USI0000KEGI_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USI0000KEGI_1964.parquet",
@@ -17,6 +47,16 @@
     "size": 209943,
     "downloaded_at": "2026-08-26T23:25:52+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:35:46 GMT",
+    "note": ""
+  },
+  "GHCNh_USI0000KREE_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USI0000KREE_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USI0000KREE_1964.parquet",
+    "sha256": "30ae15080298dc19298bc1399af7812d8f7111340dfc3ea10d2c85140cbdf5a8",
+    "size": 164951,
+    "downloaded_at": "2026-08-26T23:39:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:45 GMT",
     "note": ""
   },
   "GHCNh_USI0000KSEM_1964.parquet": {
@@ -59,6 +99,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:35:46 GMT",
     "note": ""
   },
+  "GHCNh_USW00003044_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003044_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003044_1964.parquet",
+    "sha256": "05b55204ed2fed6d8297d4638c3fa7d4e07e0fce1d03bdbf5fbb9b713d0e2ccc",
+    "size": 200219,
+    "downloaded_at": "2026-08-26T23:38:04+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:49 GMT",
+    "note": ""
+  },
   "GHCNh_USW00003103_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00003103_1964.parquet",
@@ -79,6 +129,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:35:52 GMT",
     "note": ""
   },
+  "GHCNh_USW00003804_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003804_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003804_1964.parquet",
+    "sha256": "a5a12e127008627ccb71964ed9af1c8084ab959e3749bd94af195cd99b05a7e8",
+    "size": 303721,
+    "downloaded_at": "2026-08-26T23:42:53+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:56 GMT",
+    "note": ""
+  },
   "GHCNh_USW00003810_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00003810_1964.parquet",
@@ -87,6 +147,16 @@
     "size": 290425,
     "downloaded_at": "2026-08-26T23:31:30+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:35:56 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003811_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003811_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003811_1964.parquet",
+    "sha256": "c159f4650b9a83aeaf7afe95650f34bb9987c30ba7189bbd657e8116d9e217d0",
+    "size": 292470,
+    "downloaded_at": "2026-08-26T23:37:46+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:57 GMT",
     "note": ""
   },
   "GHCNh_USW00003812_1964.parquet": {
@@ -146,6 +216,16 @@
     "sha256": "acc2f7fa19f10c378ca877091dc3c8f358d5d2cc01317b7a9cd839287dc2464b",
     "size": 310391,
     "downloaded_at": "2026-08-26T23:22:49+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:02 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003847_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003847_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003847_1964.parquet",
+    "sha256": "494e4d47ef1e0164784d4cfd5e7a940ecff67d5a482412c26bc73055c9c642a5",
+    "size": 289645,
+    "downloaded_at": "2026-08-26T23:37:43+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:02 GMT",
     "note": ""
   },
@@ -209,6 +289,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:07 GMT",
     "note": ""
   },
+  "GHCNh_USW00003858_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003858_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003858_1964.parquet",
+    "sha256": "a5f7079bdd537c53c6e9b29edb5ccdd12697a5bf1fdd10ea9600c17cd500df98",
+    "size": 225127,
+    "downloaded_at": "2026-08-26T23:37:09+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:05 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003860_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003860_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003860_1964.parquet",
+    "sha256": "b344aa6022b84bd717d82e5ae4d0e1034ffb5653c515c20c9ebae896c0b057ba",
+    "size": 288052,
+    "downloaded_at": "2026-08-26T23:42:47+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:52 GMT",
+    "note": ""
+  },
   "GHCNh_USW00003866_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00003866_1964.parquet",
@@ -217,6 +317,56 @@
     "size": 272101,
     "downloaded_at": "2026-08-26T23:30:38+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:35:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003870_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003870_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003870_1964.parquet",
+    "sha256": "c7e2facec4fb7d8ee525603b97d70cca7223331561c26c26274a622ddfbf6601",
+    "size": 277067,
+    "downloaded_at": "2026-08-26T23:37:14+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:53 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003872_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003872_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003872_1964.parquet",
+    "sha256": "76c4aa5b0a50edbe21c7e85806e4b2e209e96f81c40b964c6dc2241a85c8c87e",
+    "size": 287231,
+    "downloaded_at": "2026-08-26T23:42:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:54 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003901_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003901_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003901_1964.parquet",
+    "sha256": "cc21ff028fd1895e62b0ee44daa67f50097aedb6ccd327926e04fdbf2647f14f",
+    "size": 218058,
+    "downloaded_at": "2026-08-26T23:39:14+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:59 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003902_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003902_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003902_1964.parquet",
+    "sha256": "e7da604d714c8b087a777b9e13ec6674834535abe5c77e2423de17712cbc2f8d",
+    "size": 145585,
+    "downloaded_at": "2026-08-26T23:39:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003904_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003904_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003904_1964.parquet",
+    "sha256": "88c2ff234eea99c0c398f3ea50c740955198e600a6428851e8959b45dc88b01c",
+    "size": 279916,
+    "downloaded_at": "2026-08-26T23:38:16+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:58 GMT",
     "note": ""
   },
   "GHCNh_USW00003919_1964.parquet": {
@@ -237,6 +387,16 @@
     "size": 194252,
     "downloaded_at": "2026-08-26T23:25:56+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003927_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003927_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003927_1964.parquet",
+    "sha256": "ad4e9af3dfb3fb2b8abdd4500b88f48fc437ecd9ebe0dcc0e80d64cad68526c1",
+    "size": 266660,
+    "downloaded_at": "2026-08-26T23:38:23+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:59 GMT",
     "note": ""
   },
   "GHCNh_USW00003928_1964.parquet": {
@@ -279,6 +439,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:35:50 GMT",
     "note": ""
   },
+  "GHCNh_USW00003932_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003932_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003932_1964.parquet",
+    "sha256": "3fe1fad4d02c23b26010a283798ae3605379621c9f87990138dd5cd991574f71",
+    "size": 201816,
+    "downloaded_at": "2026-08-26T23:35:28+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:04 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00003933_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00003933_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00003933_1964.parquet",
+    "sha256": "d76fcd4c9290664bf9a466e1989b2e0c122a047788c5017c7936232df5768e2b",
+    "size": 208182,
+    "downloaded_at": "2026-08-26T23:38:38+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:35:50 GMT",
+    "note": ""
+  },
   "GHCNh_USW00003937_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00003937_1964.parquet",
@@ -309,6 +489,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:07 GMT",
     "note": ""
   },
+  "GHCNh_USW00004724_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00004724_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00004724_1964.parquet",
+    "sha256": "6f1d192212cd6699caab719e792fa6cc4428baa0ef938fbb3f15fd032f9148a4",
+    "size": 173777,
+    "downloaded_at": "2026-08-26T23:34:23+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:06 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00004725_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00004725_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00004725_1964.parquet",
+    "sha256": "d40e2ea116b402c43266e23320fe4e58ed8031cab35d11ddb141b62cde815f03",
+    "size": 279370,
+    "downloaded_at": "2026-08-26T23:34:03+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:07 GMT",
+    "note": ""
+  },
   "GHCNh_USW00004743_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00004743_1964.parquet",
@@ -317,6 +517,16 @@
     "size": 205628,
     "downloaded_at": "2026-08-26T23:33:00+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:05 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00004751_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00004751_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00004751_1964.parquet",
+    "sha256": "7b8c474bdc49a8302a2070a538826177ff346c355100ac1420cbd47598671085",
+    "size": 234364,
+    "downloaded_at": "2026-08-26T23:36:25+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:01 GMT",
     "note": ""
   },
   "GHCNh_USW00004869_1964.parquet": {
@@ -499,6 +709,46 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:18 GMT",
     "note": ""
   },
+  "GHCNh_USW00012906_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012906_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012906_1964.parquet",
+    "sha256": "53b9baacb0f04f087c79fde840be9e94a8e2603d0abc26919895a79ba77af4f9",
+    "size": 209895,
+    "downloaded_at": "2026-08-26T23:38:59+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:20 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012909_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012909_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012909_1964.parquet",
+    "sha256": "f9bcf90731f0fff52453a93893a1d7b82d0a71e6d449e2cd5f1f7f5c4f8f96db",
+    "size": 227110,
+    "downloaded_at": "2026-08-26T23:39:46+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012911_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012911_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012911_1964.parquet",
+    "sha256": "566d160123d98d1961cbc6bc327a399ff25203ca86c5b6b73f05f8f0fb41feca",
+    "size": 208961,
+    "downloaded_at": "2026-08-26T23:39:38+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:18 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012912_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012912_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012912_1964.parquet",
+    "sha256": "9a385ec945ba1b01638a55c27b8b128ce5a354069f17ebdad97bae752334c860",
+    "size": 273182,
+    "downloaded_at": "2026-08-26T23:39:58+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:23 GMT",
+    "note": ""
+  },
   "GHCNh_USW00012916_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00012916_1964.parquet",
@@ -507,6 +757,86 @@
     "size": 318794,
     "downloaded_at": "2026-08-26T23:26:32+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:19 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012917_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012917_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012917_1964.parquet",
+    "sha256": "fc4a5d1afd39354764c279b775eadecd02340cea99681a9d44d51eba46eedc83",
+    "size": 275699,
+    "downloaded_at": "2026-08-26T23:39:35+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012918_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012918_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012918_1964.parquet",
+    "sha256": "06efaaadc79346fe94edf4c301f16baddea2d5cdd8588e36981791539b86c1ee",
+    "size": 303129,
+    "downloaded_at": "2026-08-26T23:39:02+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:25 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012919_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012919_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012919_1964.parquet",
+    "sha256": "51719293ab95b67042742f3ba2f3732e3fae0cf1c2c7528e637554d492b56a4e",
+    "size": 301094,
+    "downloaded_at": "2026-08-26T23:38:09+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:24 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012920_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012920_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012920_1964.parquet",
+    "sha256": "c7a9cd0b47935f701bc5cecabfa2bde78f151ba533f2303a44e4137703fe266b",
+    "size": 299072,
+    "downloaded_at": "2026-08-26T23:39:13+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012921_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012921_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012921_1964.parquet",
+    "sha256": "86adb74870eae046a83da3a39e7c892e048d4a24b740c125f2ccba86f7001645",
+    "size": 301725,
+    "downloaded_at": "2026-08-26T23:39:44+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:13 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012923_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012923_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012923_1964.parquet",
+    "sha256": "ed387b7e01abf65f09f988f7839b0e813f5b1897586da902e2d0571cb0ad228c",
+    "size": 241254,
+    "downloaded_at": "2026-08-26T23:38:45+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:11 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012924_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012924_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012924_1964.parquet",
+    "sha256": "ce4117bd16efc3a688ea1a6313aeb5559722ec2aa5b53398e8f443e8703ca56e",
+    "size": 294996,
+    "downloaded_at": "2026-08-26T23:38:18+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:14 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012926_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012926_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012926_1964.parquet",
+    "sha256": "fab9cb789dd7e4691fb7cfc0d0462be87276afb214a0281c493b95c747cc6c30",
+    "size": 271547,
+    "downloaded_at": "2026-08-26T23:38:20+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:17 GMT",
     "note": ""
   },
   "GHCNh_USW00012927_1964.parquet": {
@@ -519,6 +849,36 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:10 GMT",
     "note": ""
   },
+  "GHCNh_USW00012928_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012928_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012928_1964.parquet",
+    "sha256": "9ad40f393ae9b5c03ffdb4e1fa8cda390bd7cab27280cb0dbf5f7b635c646328",
+    "size": 269217,
+    "downloaded_at": "2026-08-26T23:39:09+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:25 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012932_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012932_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012932_1964.parquet",
+    "sha256": "d7bd7b087f1aaeb50bf516cbcd91d99e49f6faa1f5364f0268888f4937465779",
+    "size": 292253,
+    "downloaded_at": "2026-08-26T23:37:56+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:21 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00012935_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00012935_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00012935_1964.parquet",
+    "sha256": "c33fa3a0b7679ba64965a76f326da552b8f750aa88709270f1f0277cdbd5c7ab",
+    "size": 282424,
+    "downloaded_at": "2026-08-26T23:39:28+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:11 GMT",
+    "note": ""
+  },
   "GHCNh_USW00012958_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00012958_1964.parquet",
@@ -527,6 +887,16 @@
     "size": 280618,
     "downloaded_at": "2026-08-26T23:26:31+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013702_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013702_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013702_1964.parquet",
+    "sha256": "ad9cbc44274cefc4656c0afd50b64beca09574e7bd6020534b2a17dbe4398f69",
+    "size": 209944,
+    "downloaded_at": "2026-08-26T23:40:38+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:29 GMT",
     "note": ""
   },
   "GHCNh_USW00013705_1964.parquet": {
@@ -579,6 +949,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:31 GMT",
     "note": ""
   },
+  "GHCNh_USW00013717_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013717_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013717_1964.parquet",
+    "sha256": "edaa4337b910a1d5cdaeb2e7372de1fbed560bf86f221e0f1d82d121a2717f5e",
+    "size": 234864,
+    "downloaded_at": "2026-08-26T23:37:16+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:31 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013721_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013721_1964.parquet",
@@ -609,6 +989,96 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:34 GMT",
     "note": ""
   },
+  "GHCNh_USW00013729_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013729_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013729_1964.parquet",
+    "sha256": "14ab57defb5a1fcb58ca699276aa4df83d91c28a2e6518d6d300552e9a88a64c",
+    "size": 292149,
+    "downloaded_at": "2026-08-26T23:42:46+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:36 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013733_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013733_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013733_1964.parquet",
+    "sha256": "69bacc7b9a20b48ead19cb4edb8cf229c9608ce93ff448f81fc862cb7668c26c",
+    "size": 204513,
+    "downloaded_at": "2026-08-26T23:40:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013734_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013734_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013734_1964.parquet",
+    "sha256": "6bc244bf5e74d19f7ec33c75305ade9686fb8e9f7f1cd392a1f24646793f3324",
+    "size": 231499,
+    "downloaded_at": "2026-08-26T23:42:50+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:38 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013737_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013737_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013737_1964.parquet",
+    "sha256": "a9a695420e68c0ba82bd3cdf4a59221e97b89a8a450f716f3dfcb9407ad5339c",
+    "size": 282982,
+    "downloaded_at": "2026-08-26T23:40:47+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:41 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013739_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013739_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013739_1964.parquet",
+    "sha256": "61a355c582c3c3a43cd03d578d0ed16a73d659d1ee12a32b4bc6970029375907",
+    "size": 287396,
+    "downloaded_at": "2026-08-26T23:36:42+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:42 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013740_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013740_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013740_1964.parquet",
+    "sha256": "0bed4f53c6aff418c2e53340496f58ba73b84f25113ebecbd41830264bf0a619",
+    "size": 276011,
+    "downloaded_at": "2026-08-26T23:40:55+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:26 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013741_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013741_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013741_1964.parquet",
+    "sha256": "c8ef79a0b04feec5612b6f136c041be9d13c9655cb14db303daa98974fe57cbe",
+    "size": 278691,
+    "downloaded_at": "2026-08-26T23:40:57+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:26 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013743_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013743_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013743_1964.parquet",
+    "sha256": "fa006291d256719d3b9a936918deb2c84e8dd735d2c5c2c5c8a3556e95ee9b0a",
+    "size": 213583,
+    "downloaded_at": "2026-08-26T23:41:04+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:29 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013744_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013744_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013744_1964.parquet",
+    "sha256": "89e5e65ab37e4947525f8788c3ce48a959cf025feefe1b3afdd51f3c3f659db0",
+    "size": 287268,
+    "downloaded_at": "2026-08-26T23:37:11+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:30 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013748_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013748_1964.parquet",
@@ -619,6 +1089,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:33 GMT",
     "note": ""
   },
+  "GHCNh_USW00013750_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013750_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013750_1964.parquet",
+    "sha256": "f1f913b59eb9ecb550fbe001cbc056618ceaa71b4800cbee1fec357d7168f0fc",
+    "size": 278368,
+    "downloaded_at": "2026-08-26T23:40:49+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:32 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013754_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013754_1964.parquet",
@@ -627,6 +1107,26 @@
     "size": 293786,
     "downloaded_at": "2026-08-26T23:31:15+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:30 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013769_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013769_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013769_1964.parquet",
+    "sha256": "cfe89800bafbf62e11a0a22c6c5a530340c70193a9c360eca7bfdfc4fad18540",
+    "size": 279595,
+    "downloaded_at": "2026-08-26T23:40:50+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013773_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013773_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013773_1964.parquet",
+    "sha256": "41f2e2fe542794ae5ee549fa901aeeedc6789ab36171c2e291445bcc9faaf5bf",
+    "size": 281632,
+    "downloaded_at": "2026-08-26T23:40:54+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:35 GMT",
     "note": ""
   },
   "GHCNh_USW00013781_1964.parquet": {
@@ -689,6 +1189,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:20 GMT",
     "note": ""
   },
+  "GHCNh_USW00013812_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013812_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013812_1964.parquet",
+    "sha256": "4d4e9322bc996d552e18ef584e0d7638f2481c3215e77b875e64f0ba458c32e4",
+    "size": 212049,
+    "downloaded_at": "2026-08-26T23:34:55+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:24 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013814_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013814_1964.parquet",
@@ -749,6 +1259,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:44 GMT",
     "note": ""
   },
+  "GHCNh_USW00013827_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013827_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013827_1964.parquet",
+    "sha256": "9f904bd81441f5c61d6c644118e7c0c6ebcab9a73bc7fc8aca6e00bdb55444d8",
+    "size": 211981,
+    "downloaded_at": "2026-08-26T23:37:53+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:23 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013829_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013829_1964.parquet",
@@ -769,6 +1289,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:45 GMT",
     "note": ""
   },
+  "GHCNh_USW00013840_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013840_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013840_1964.parquet",
+    "sha256": "9f26c6a087baa6282fb811242c6d5bec2f5d9a4b2ff33a8749815ea5ee992510",
+    "size": 215243,
+    "downloaded_at": "2026-08-26T23:34:58+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:47 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013841_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013841_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013841_1964.parquet",
+    "sha256": "201143302e226d8db811a31632a003f037661c492fcc1aed0e9c9245c077614b",
+    "size": 194309,
+    "downloaded_at": "2026-08-26T23:34:48+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:46 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013846_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013846_1964.parquet",
@@ -777,6 +1317,16 @@
     "size": 202190,
     "downloaded_at": "2026-08-26T23:22:09+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:48 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013849_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013849_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013849_1964.parquet",
+    "sha256": "4c983a33733eb2859d52d72e4dcb48015d9c87c8ca52e8d0be102f0e39b2a790",
+    "size": 230868,
+    "downloaded_at": "2026-08-26T23:37:20+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:49 GMT",
     "note": ""
   },
   "GHCNh_USW00013850_1964.parquet": {
@@ -839,6 +1389,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:53 GMT",
     "note": ""
   },
+  "GHCNh_USW00013866_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013866_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013866_1964.parquet",
+    "sha256": "8469929c5c42204830a75fef4f15d50113b859e7fdec127aa88c6c164a1e4b85",
+    "size": 287108,
+    "downloaded_at": "2026-08-26T23:42:43+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:53 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013871_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013871_1964.parquet",
@@ -879,6 +1439,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:59 GMT",
     "note": ""
   },
+  "GHCNh_USW00013877_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013877_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013877_1964.parquet",
+    "sha256": "0c6cb1806f24cc0e4757440adc61288fc0046949937c98f569b6f272e5cf1088",
+    "size": 279462,
+    "downloaded_at": "2026-08-26T23:37:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013880_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013880_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013880_1964.parquet",
+    "sha256": "afc1953a476ac8c3fc435d5b26bf4e0c32a81c23c35e1fdd7493774c2433aed8",
+    "size": 329156,
+    "downloaded_at": "2026-08-26T23:37:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:01 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013881_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013881_1964.parquet",
@@ -887,6 +1467,26 @@
     "size": 273964,
     "downloaded_at": "2026-08-26T23:31:14+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:00 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013882_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013882_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013882_1964.parquet",
+    "sha256": "a55fef611013ff142e5903e5b0497ece326afd41ba21af612ad21cf4444ff3fb",
+    "size": 278251,
+    "downloaded_at": "2026-08-26T23:37:41+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:00 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013883_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013883_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013883_1964.parquet",
+    "sha256": "536cd29ed4c52982e343e5599a680b29f20ed684a6a1ad18adb580988f28d74a",
+    "size": 276138,
+    "downloaded_at": "2026-08-26T23:37:07+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:02 GMT",
     "note": ""
   },
   "GHCNh_USW00013884_1964.parquet": {
@@ -907,6 +1507,26 @@
     "size": 305583,
     "downloaded_at": "2026-08-26T23:21:28+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:03 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013891_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013891_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013891_1964.parquet",
+    "sha256": "7540296f269a7929f56b107f341ea3adebabd7c8d9b4a330f73ef2f85c5f6e30",
+    "size": 308102,
+    "downloaded_at": "2026-08-26T23:37:47+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:04 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013893_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013893_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013893_1964.parquet",
+    "sha256": "f35f15e0b7afff8410989342af925c12bdd6b9848c9558f51d3f4e4ce8c7d1fb",
+    "size": 275509,
+    "downloaded_at": "2026-08-26T23:37:49+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:04 GMT",
     "note": ""
   },
   "GHCNh_USW00013894_1964.parquet": {
@@ -939,6 +1559,76 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:44 GMT",
     "note": ""
   },
+  "GHCNh_USW00013897_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013897_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013897_1964.parquet",
+    "sha256": "99f4e98d288d699b0c38ae71265134b9af15a4e4cd26b21980b9d074a6364e18",
+    "size": 278823,
+    "downloaded_at": "2026-08-26T23:37:51+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:48 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013902_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013902_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013902_1964.parquet",
+    "sha256": "c5f8c0411f37ec8f3d825696187f8d735d2cbf9ebe862768c18f13cc898fc376",
+    "size": 217737,
+    "downloaded_at": "2026-08-26T23:35:21+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:45 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013904_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013904_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013904_1964.parquet",
+    "sha256": "057a42ea5b4f874f19e228bb7965616e007b05e97898f995cc313e7ca5a83b7e",
+    "size": 208721,
+    "downloaded_at": "2026-08-26T23:38:00+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:46 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013909_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013909_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013909_1964.parquet",
+    "sha256": "6b76c3d15d84a4644a32fb94c59b7b92faf7617b9bb2a311f159e15a375bd1d8",
+    "size": 161558,
+    "downloaded_at": "2026-08-26T23:35:30+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:51 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013910_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013910_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013910_1964.parquet",
+    "sha256": "ed00162a4806994bec752fedd6e0bc01bd6742b48d89c9c8c792a07df5f98c34",
+    "size": 213158,
+    "downloaded_at": "2026-08-26T23:37:54+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:50 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013911_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013911_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013911_1964.parquet",
+    "sha256": "1ce2849ec47736a617b2d3da47fa042c0c0ee63fc6a0b082cdf29861372213c8",
+    "size": 203124,
+    "downloaded_at": "2026-08-26T23:38:42+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:53 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013919_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013919_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013919_1964.parquet",
+    "sha256": "0975fa02bbaef7908700eab91f248ec99843046901e47b1b539e4bcbe29ef660",
+    "size": 225457,
+    "downloaded_at": "2026-08-26T23:35:41+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:48 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013920_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013920_1964.parquet",
@@ -947,6 +1637,16 @@
     "size": 222664,
     "downloaded_at": "2026-08-26T23:25:54+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:52 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013928_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013928_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013928_1964.parquet",
+    "sha256": "ae6ec06dfcada80da715f17fb15b8d7d266b0ad00da1d95b52167c92daa9a3a9",
+    "size": 207070,
+    "downloaded_at": "2026-08-26T23:39:59+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:42 GMT",
     "note": ""
   },
   "GHCNh_USW00013930_1964.parquet": {
@@ -999,6 +1699,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:03 GMT",
     "note": ""
   },
+  "GHCNh_USW00013945_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013945_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013945_1964.parquet",
+    "sha256": "5a5c5545c92f751a6d394a7580bdc666aa5528d9b510366094e5dc92a2a6d5e0",
+    "size": 198845,
+    "downloaded_at": "2026-08-26T23:35:31+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:54 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013947_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013947_1964.parquet",
@@ -1017,6 +1727,56 @@
     "size": 258700,
     "downloaded_at": "2026-08-26T23:26:38+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013958_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013958_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013958_1964.parquet",
+    "sha256": "8633200173315375fa3578336c68287b5efcf35c286d0435a6cf90b7e3272df3",
+    "size": 270171,
+    "downloaded_at": "2026-08-26T23:38:02+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:56 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013959_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013959_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013959_1964.parquet",
+    "sha256": "5894a65db477ef127a34bb91da6c2e567b24aeb57eebdad4f160d92027fe5a3c",
+    "size": 275263,
+    "downloaded_at": "2026-08-26T23:40:01+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:58 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013960_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013960_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013960_1964.parquet",
+    "sha256": "e0879e5e93db4d66a685ab16d776b27fccb8d5d91b6464b6451a070144cedadf",
+    "size": 296412,
+    "downloaded_at": "2026-08-26T23:38:26+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:41 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013961_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013961_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013961_1964.parquet",
+    "sha256": "0e398ac4fc56b174d8fe6c3e74ffec80d97ae0f8f968557666f1d42a2bf5f15f",
+    "size": 222850,
+    "downloaded_at": "2026-08-26T23:38:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:59 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013962_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013962_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013962_1964.parquet",
+    "sha256": "1ca6803b565098aa5dcc59cd09acf94058cf10a4a5e82a2b50be49db71e8df44",
+    "size": 282294,
+    "downloaded_at": "2026-08-26T23:37:55+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:34 GMT",
     "note": ""
   },
   "GHCNh_USW00013963_1964.parquet": {
@@ -1039,6 +1799,46 @@
     "last_modified": "Tue, 31 Mar 2026 00:36:36 GMT",
     "note": ""
   },
+  "GHCNh_USW00013966_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013966_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013966_1964.parquet",
+    "sha256": "94f1677e8205e9cdd15247fd40b19e4f3e5e53032009e967744e94ed9dc96af8",
+    "size": 253917,
+    "downloaded_at": "2026-08-26T23:40:03+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013967_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013967_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013967_1964.parquet",
+    "sha256": "29ca0f540cc59fc61980950fa924c5a67af223f4a05fa406898def81ba69cf1c",
+    "size": 297070,
+    "downloaded_at": "2026-08-26T23:35:42+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:39 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013968_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013968_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013968_1964.parquet",
+    "sha256": "a59b2d50b2f5a4e812bb8ab55659e2202724b91b6e369b4a2a46ec98b6317db7",
+    "size": 298714,
+    "downloaded_at": "2026-08-26T23:35:48+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:06 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013969_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013969_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013969_1964.parquet",
+    "sha256": "342720eb230f78fed1754bad463339d41d262fd276d5743dd8a1b9ee3089fba0",
+    "size": 276005,
+    "downloaded_at": "2026-08-26T23:35:44+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:36:40 GMT",
+    "note": ""
+  },
   "GHCNh_USW00013970_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00013970_1964.parquet",
@@ -1057,6 +1857,36 @@
     "size": 287549,
     "downloaded_at": "2026-08-26T23:18:14+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:39 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013972_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013972_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013972_1964.parquet",
+    "sha256": "1b867bb474fa7eaaa115921fda46a1ad897ef8b3f4257871de9975f368bec15c",
+    "size": 233464,
+    "downloaded_at": "2026-08-26T23:39:56+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:06 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013973_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013973_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013973_1964.parquet",
+    "sha256": "71aa3ffb85c25906593e54d9bfc835b2c2c3fc0b54053ecfcc5bc40c1a3488c2",
+    "size": 219012,
+    "downloaded_at": "2026-08-26T23:39:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:05 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00013975_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00013975_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00013975_1964.parquet",
+    "sha256": "031bf42078586ee9baa62975de1336d77c5cb0290a342d29a7081463b23f9488",
+    "size": 223711,
+    "downloaded_at": "2026-08-26T23:35:32+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:08 GMT",
     "note": ""
   },
   "GHCNh_USW00013976_1964.parquet": {
@@ -1299,6 +2129,76 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:08 GMT",
     "note": ""
   },
+  "GHCNh_USW00014711_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014711_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014711_1964.parquet",
+    "sha256": "25b2b911e32e15ef5eb143157b90da5d480b8c0baf29d45bd1fe346fd8316ff2",
+    "size": 236486,
+    "downloaded_at": "2026-08-26T23:36:37+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:14 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014714_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014714_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014714_1964.parquet",
+    "sha256": "20fe8e6aaf18414b2a8c66555815d608b7b7cf3e93a53445048b1de3758f4047",
+    "size": 237499,
+    "downloaded_at": "2026-08-26T23:34:34+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:11 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014715_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014715_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014715_1964.parquet",
+    "sha256": "f760e2c3dfd648cd85f29b2dfa957b567d1372a344e60db42d132c3c62f650fc",
+    "size": 108815,
+    "downloaded_at": "2026-08-26T23:34:43+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:11 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014717_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014717_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014717_1964.parquet",
+    "sha256": "65d02c182eef53d68ee89dbb93c4474213b9c6c8d49453fc4af7f311d4576509",
+    "size": 246697,
+    "downloaded_at": "2026-08-26T23:34:14+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:25 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014719_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014719_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014719_1964.parquet",
+    "sha256": "c73d95d49543a97a3d06adfd236357d60e5eae471fd6bf51aad0f3bf9431bb23",
+    "size": 240094,
+    "downloaded_at": "2026-08-26T23:34:41+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:15 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014732_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014732_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014732_1964.parquet",
+    "sha256": "f580ca146fec208a12e4a138449067afd13c3ddc563f7aeb700105f3878aa171",
+    "size": 279413,
+    "downloaded_at": "2026-08-26T23:34:18+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:16 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014733_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014733_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014733_1964.parquet",
+    "sha256": "4bce7645aec598a4abe58ebaba8e93930c9a33edb3eda3e07fb13b4915d0ddcd",
+    "size": 321075,
+    "downloaded_at": "2026-08-26T23:34:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:09 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014734_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014734_1964.parquet",
@@ -1307,6 +2207,36 @@
     "size": 278709,
     "downloaded_at": "2026-08-26T23:33:12+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:17 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014735_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014735_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014735_1964.parquet",
+    "sha256": "5f3e53db61e981178e12d071b5074d869315626babc191351e8f587664a8ab79",
+    "size": 274872,
+    "downloaded_at": "2026-08-26T23:34:02+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:21 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014736_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014736_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014736_1964.parquet",
+    "sha256": "0208de42ca0dfadec807b28ea393bf7685949b1ca2a4863a8e93eb884c7bd1df",
+    "size": 293778,
+    "downloaded_at": "2026-08-26T23:36:24+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:07 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014737_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014737_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014737_1964.parquet",
+    "sha256": "1ce3d4a6e77ac06c33a620bb53c3e61f6a6f47077ebaef7b0519c953e1216df0",
+    "size": 280839,
+    "downloaded_at": "2026-08-26T23:36:22+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:18 GMT",
     "note": ""
   },
   "GHCNh_USW00014739_1964.parquet": {
@@ -1329,6 +2259,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:13 GMT",
     "note": ""
   },
+  "GHCNh_USW00014742_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014742_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014742_1964.parquet",
+    "sha256": "d3de9804c6a3318363ca106732a53e347efc071b81913ddcb0b73b363abf6f90",
+    "size": 326516,
+    "downloaded_at": "2026-08-26T23:41:08+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:19 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014745_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014745_1964.parquet",
@@ -1337,6 +2277,26 @@
     "size": 271128,
     "downloaded_at": "2026-08-26T23:32:51+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014748_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014748_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014748_1964.parquet",
+    "sha256": "b2b3f310315e5a772eefbb3a78746182e23a0f62c63ba8375bedceaeb41ddbb4",
+    "size": 300364,
+    "downloaded_at": "2026-08-26T23:34:10+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:17 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014751_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014751_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014751_1964.parquet",
+    "sha256": "ab5cdedbe344fee89982c756094242f5a2faf2184f10139327eab6e4822741b5",
+    "size": 306735,
+    "downloaded_at": "2026-08-26T23:36:31+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:25 GMT",
     "note": ""
   },
   "GHCNh_USW00014756_1964.parquet": {
@@ -1349,6 +2309,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:00 GMT",
     "note": ""
   },
+  "GHCNh_USW00014757_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014757_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014757_1964.parquet",
+    "sha256": "397c4549ca1f8cb8746caec97d595e06963bd15ad83a758bc37d00b945774b52",
+    "size": 291422,
+    "downloaded_at": "2026-08-26T23:34:28+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:02 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014758_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014758_1964.parquet",
@@ -1357,6 +2327,16 @@
     "size": 180878,
     "downloaded_at": "2026-08-26T23:20:58+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:36:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014762_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014762_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014762_1964.parquet",
+    "sha256": "2c9a042423acfa347586d84168d6d2ba0c863441e174445cde021d3425c090d9",
+    "size": 256318,
+    "downloaded_at": "2026-08-26T23:36:45+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:25 GMT",
     "note": ""
   },
   "GHCNh_USW00014764_1964.parquet": {
@@ -1369,6 +2349,56 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:28 GMT",
     "note": ""
   },
+  "GHCNh_USW00014765_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014765_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014765_1964.parquet",
+    "sha256": "a274ccd78c862a96d70827a7c85030978344da0171fc25fb84b8db504ee8fd7c",
+    "size": 278646,
+    "downloaded_at": "2026-08-26T23:37:00+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:30 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014768_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014768_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014768_1964.parquet",
+    "sha256": "9179cde8062cdc3f3bf581b31b45da721ed4c8095f4da857620799d9a3192991",
+    "size": 277666,
+    "downloaded_at": "2026-08-26T23:34:29+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:32 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014771_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014771_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014771_1964.parquet",
+    "sha256": "a6b6327eb108972ba04ca19bd9e38f3531414300c8a353f6ff53994c0b4f0691",
+    "size": 316017,
+    "downloaded_at": "2026-08-26T23:34:35+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014777_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014777_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014777_1964.parquet",
+    "sha256": "4f2a9482c1efa8ad908d1414cabd6076b095d0580e65e0bc7e78e468133d24df",
+    "size": 288669,
+    "downloaded_at": "2026-08-26T23:36:52+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014778_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014778_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014778_1964.parquet",
+    "sha256": "b9cce01f6fc0273229649501c1defd6c1e2bcebef7bcbebfb93f67fe2a0633e5",
+    "size": 287109,
+    "downloaded_at": "2026-08-26T23:36:53+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:34 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014780_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014780_1964.parquet",
@@ -1376,6 +2406,26 @@
     "sha256": "f473da3e57905c5f779a8c58049d8a9a62bcfdc0816469c14e476ed98fd44cb6",
     "size": 279820,
     "downloaded_at": "2026-08-26T23:33:07+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:29 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014786_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014786_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014786_1964.parquet",
+    "sha256": "60db49623329ac3b164e56909bc81272ca4a929d5a34523d77779206e9654a94",
+    "size": 241952,
+    "downloaded_at": "2026-08-26T23:34:23+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:26 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014788_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014788_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014788_1964.parquet",
+    "sha256": "95052a3ee89d88aa0fa7d5d36e15cf44acfb1ff1258a65a67372a12e03a89a76",
+    "size": 279738,
+    "downloaded_at": "2026-08-26T23:37:01+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:29 GMT",
     "note": ""
   },
@@ -1397,6 +2447,16 @@
     "size": 213046,
     "downloaded_at": "2026-08-26T23:33:16+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014793_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014793_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014793_1964.parquet",
+    "sha256": "28a515fd37fde52732439e579b7a931e27efcba5f93b92feaf787a8075d38c24",
+    "size": 205556,
+    "downloaded_at": "2026-08-26T23:36:54+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:36 GMT",
     "note": ""
   },
   "GHCNh_USW00014804_1964.parquet": {
@@ -1429,6 +2489,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:41 GMT",
     "note": ""
   },
+  "GHCNh_USW00014820_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014820_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014820_1964.parquet",
+    "sha256": "bb28226d35b1a766f1e1252a1fa25d2932f6690cc9ebbed9c8a283a8f9823964",
+    "size": 284474,
+    "downloaded_at": "2026-08-26T23:34:51+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:42 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014821_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014821_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014821_1964.parquet",
+    "sha256": "e40b427247a77381c68ee3e5d625a5881d2f8c7e28e4e7e590b2f3d9732aaac3",
+    "size": 282935,
+    "downloaded_at": "2026-08-26T23:35:03+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:42 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014822_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014822_1964.parquet",
@@ -1437,6 +2517,16 @@
     "size": 282996,
     "downloaded_at": "2026-08-26T23:27:57+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:44 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014825_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014825_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014825_1964.parquet",
+    "sha256": "900b036479f613be963951e8f800acfe9bd387a04463e496723cd5c5f44b917c",
+    "size": 297419,
+    "downloaded_at": "2026-08-26T23:35:01+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:31 GMT",
     "note": ""
   },
   "GHCNh_USW00014826_1964.parquet": {
@@ -1487,6 +2577,26 @@
     "size": 283987,
     "downloaded_at": "2026-08-26T23:28:20+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:31 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014837_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014837_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014837_1964.parquet",
+    "sha256": "631efac8f42e61716b05f84405ccc164c2cacf7b66b0ceb57aeee264d8364eb5",
+    "size": 311766,
+    "downloaded_at": "2026-08-26T23:42:12+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:35 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014839_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014839_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014839_1964.parquet",
+    "sha256": "e75fffdda1c920035827478cef9ee68a7f0598478e4eb8ad669f88f41cdf0c44",
+    "size": 304436,
+    "downloaded_at": "2026-08-26T23:42:16+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:32 GMT",
     "note": ""
   },
   "GHCNh_USW00014840_1964.parquet": {
@@ -1559,6 +2669,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:35 GMT",
     "note": ""
   },
+  "GHCNh_USW00014852_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014852_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014852_1964.parquet",
+    "sha256": "c501e5ff48bd7b45247c36f9ec7c459f1441979b1ec088a4ea7a3160e686ad18",
+    "size": 310815,
+    "downloaded_at": "2026-08-26T23:35:16+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:24 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014855_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014855_1964.parquet",
@@ -1587,6 +2707,56 @@
     "size": 241624,
     "downloaded_at": "2026-08-26T23:28:09+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:27 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014860_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014860_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014860_1964.parquet",
+    "sha256": "9d854e12eed12ab7b33dfd399855117a142d71dc7a874a06be1f17641c75c19f",
+    "size": 278904,
+    "downloaded_at": "2026-08-26T23:36:29+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:45 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014891_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014891_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014891_1964.parquet",
+    "sha256": "0bf07451665d6b1f1a29c74336949812b74f706fd40d3cb5b4bba5c9490072a4",
+    "size": 206443,
+    "downloaded_at": "2026-08-26T23:35:06+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:44 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014895_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014895_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014895_1964.parquet",
+    "sha256": "fb2a5ea916a43f1bdd162cdc09af4d9f4ac7e91889723299f41d5fb36135b698",
+    "size": 282783,
+    "downloaded_at": "2026-08-26T23:34:45+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:47 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014897_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014897_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014897_1964.parquet",
+    "sha256": "9f652acb66c1491b29e6c575cda9d2c0466c5ba13378f04d1a8472dadb1c692b",
+    "size": 232389,
+    "downloaded_at": "2026-08-26T23:42:37+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:46 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014898_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014898_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014898_1964.parquet",
+    "sha256": "ef69eac67bf6d33871adbaf8900cba25447ea66145060aaad6a260242cf63f32",
+    "size": 306125,
+    "downloaded_at": "2026-08-26T23:42:03+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:48 GMT",
     "note": ""
   },
   "GHCNh_USW00014910_1964.parquet": {
@@ -1649,6 +2819,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:50 GMT",
     "note": ""
   },
+  "GHCNh_USW00014920_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014920_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014920_1964.parquet",
+    "sha256": "a5ad248101eb556fdde517f160eac69b2ce08f032e733fd173b086f403a16093",
+    "size": 288410,
+    "downloaded_at": "2026-08-26T23:42:09+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:51 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014922_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014922_1964.parquet",
@@ -1689,6 +2869,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:53 GMT",
     "note": ""
   },
+  "GHCNh_USW00014929_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014929_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014929_1964.parquet",
+    "sha256": "c5378e9804c17f60be615d2863ca0aeaaa9cfc6ae12bff6ef05eddbe23d25831",
+    "size": 187227,
+    "downloaded_at": "2026-08-26T23:37:21+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:52 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014931_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014931_1964.parquet",
@@ -1717,6 +2907,16 @@
     "size": 275924,
     "downloaded_at": "2026-08-26T23:32:25+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:56 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014936_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014936_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014936_1964.parquet",
+    "sha256": "19d3ba8e8b0c8c7e97d4800593e81fb495fc6af87f0d6c12900239fb9d2bfc60",
+    "size": 278437,
+    "downloaded_at": "2026-08-26T23:37:28+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:57 GMT",
     "note": ""
   },
   "GHCNh_USW00014939_1964.parquet": {
@@ -1769,6 +2969,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:59 GMT",
     "note": ""
   },
+  "GHCNh_USW00014944_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014944_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014944_1964.parquet",
+    "sha256": "104fadcda482b6c9737fbf57e14a67f88e575c4a2f6ad2cd783c2011d0bb57f7",
+    "size": 278591,
+    "downloaded_at": "2026-08-26T23:37:35+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00014946_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014946_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014946_1964.parquet",
+    "sha256": "9c466dffa56b24a30e9488a94b8e9128408b18e8c8c81c64014a8080fe6c58a0",
+    "size": 289286,
+    "downloaded_at": "2026-08-26T23:37:37+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:46 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014949_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014949_1964.parquet",
@@ -1789,6 +3009,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:47 GMT",
     "note": ""
   },
+  "GHCNh_USW00014991_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00014991_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00014991_1964.parquet",
+    "sha256": "db9695d6854858e672a7c02528ccbf825582073ee84cf6a529c2e76ebdf979e8",
+    "size": 231559,
+    "downloaded_at": "2026-08-26T23:41:59+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:52 GMT",
+    "note": ""
+  },
   "GHCNh_USW00014992_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00014992_1964.parquet",
@@ -1807,6 +3037,26 @@
     "size": 269823,
     "downloaded_at": "2026-08-26T23:23:03+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:37:54 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00022001_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00022001_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00022001_1964.parquet",
+    "sha256": "e8e215326e9e6dad60e7239e14c1c5583b42d0aefe83e8d054fca73a40ec249c",
+    "size": 164574,
+    "downloaded_at": "2026-08-26T23:38:30+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:49 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00022010_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00022010_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00022010_1964.parquet",
+    "sha256": "8ab4d3c280286d1e14f1878c847dac2bfa8869ae931b55b30134837945ea0e78",
+    "size": 286715,
+    "downloaded_at": "2026-08-26T23:38:29+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:59 GMT",
     "note": ""
   },
   "GHCNh_USW00022508_1964.parquet": {
@@ -1869,6 +3119,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:03 GMT",
     "note": ""
   },
+  "GHCNh_USW00023007_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023007_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023007_1964.parquet",
+    "sha256": "ceb6acd28bc398ac692d0fb6c69f5e0e1c909aa66f7c7bf3ba57e87412f6c807",
+    "size": 277276,
+    "downloaded_at": "2026-08-26T23:38:14+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:05 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023008_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023008_1964.parquet",
@@ -1899,6 +3159,36 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:01 GMT",
     "note": ""
   },
+  "GHCNh_USW00023019_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023019_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023019_1964.parquet",
+    "sha256": "93486ee6ebab4206ac2301b1ee32847720345be5effc7192f85e693fd1b45193",
+    "size": 204512,
+    "downloaded_at": "2026-08-26T23:38:06+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023023_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023023_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023023_1964.parquet",
+    "sha256": "5ed40fff6bf82bd41184b09f9f829f034f80d6650b6d8df56799a3cea914298d",
+    "size": 292857,
+    "downloaded_at": "2026-08-26T23:39:22+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:10 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023034_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023034_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023034_1964.parquet",
+    "sha256": "d3b46e07d71a4ad64ea7f69bfb0196962b9a6334dd7ad89812f2c3e2fee371c6",
+    "size": 266226,
+    "downloaded_at": "2026-08-26T23:39:43+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:09 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023036_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023036_1964.parquet",
@@ -1909,6 +3199,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:08 GMT",
     "note": ""
   },
+  "GHCNh_USW00023040_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023040_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023040_1964.parquet",
+    "sha256": "5e97e8de6e31062145376bdd39973249d5a38c0bfb61971e879e5c3f67e695c3",
+    "size": 272031,
+    "downloaded_at": "2026-08-26T23:40:04+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:11 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023042_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023042_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023042_1964.parquet",
+    "sha256": "ae1712c56084b876ad8d2824808da4f786a850024d1c33375b64b7894e8320a3",
+    "size": 288235,
+    "downloaded_at": "2026-08-26T23:39:15+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:12 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023043_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023043_1964.parquet",
@@ -1917,6 +3227,26 @@
     "size": 321972,
     "downloaded_at": "2026-08-26T23:33:40+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:07 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023044_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023044_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023044_1964.parquet",
+    "sha256": "52612404cb796c6f5700a4fb96dae1b7c77d27b66141968867096d796f3caafd",
+    "size": 286125,
+    "downloaded_at": "2026-08-26T23:38:33+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:14 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023047_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023047_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023047_1964.parquet",
+    "sha256": "18554319262663db4de215e42ca66c90727df85af6850038feda8b71133c541a",
+    "size": 291535,
+    "downloaded_at": "2026-08-26T23:37:58+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:15 GMT",
     "note": ""
   },
   "GHCNh_USW00023048_1964.parquet": {
@@ -2179,6 +3509,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:13 GMT",
     "note": ""
   },
+  "GHCNh_USW00023153_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023153_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023153_1964.parquet",
+    "sha256": "e8e7308f5aa4095964df025b96799e06bad67568543a14257e755f977a45461c",
+    "size": 219261,
+    "downloaded_at": "2026-08-26T23:33:59+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:14 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023154_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023154_1964.parquet",
@@ -2219,6 +3559,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:37:59 GMT",
     "note": ""
   },
+  "GHCNh_USW00023159_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023159_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023159_1964.parquet",
+    "sha256": "6883d3877196c1138e84f320b7c9771806b2ea36fa401c16d6f9755cf9c224a1",
+    "size": 222962,
+    "downloaded_at": "2026-08-26T23:40:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:37:44 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023160_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023160_1964.parquet",
@@ -2239,6 +3589,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:22 GMT",
     "note": ""
   },
+  "GHCNh_USW00023169_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023169_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023169_1964.parquet",
+    "sha256": "a46e60be9e261196f973172b1157e9c9dbd49359ba9cd505f8e30c978b80cecc",
+    "size": 253537,
+    "downloaded_at": "2026-08-26T23:33:57+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:23 GMT",
+    "note": ""
+  },
   "GHCNh_USW00023174_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00023174_1964.parquet",
@@ -2247,6 +3607,16 @@
     "size": 269718,
     "downloaded_at": "2026-08-26T23:03:13+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:25 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023176_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023176_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023176_1964.parquet",
+    "sha256": "96aaab78cb2650c3f8eee2b32cada1a104228b1fe932b5f6218e7378910ccdee",
+    "size": 159822,
+    "downloaded_at": "2026-08-26T23:40:08+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:23 GMT",
     "note": ""
   },
   "GHCNh_USW00023179_1964.parquet": {
@@ -2287,6 +3657,16 @@
     "size": 245045,
     "downloaded_at": "2026-08-26T23:18:43+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:26 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00023185_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00023185_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00023185_1964.parquet",
+    "sha256": "e097cb1f5d2333380c44c79063f2a83cc2fa7a727e3470be9593112a26ecbdb0",
+    "size": 265027,
+    "downloaded_at": "2026-08-26T23:33:58+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:27 GMT",
     "note": ""
   },
   "GHCNh_USW00023187_1964.parquet": {
@@ -2489,6 +3869,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:22 GMT",
     "note": ""
   },
+  "GHCNh_USW00024006_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024006_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024006_1964.parquet",
+    "sha256": "0a2ad32ad0390a6fab5fc750a8fac178689ce274ce65c8a908251db932038ac3",
+    "size": 209126,
+    "downloaded_at": "2026-08-26T23:37:26+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:29 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024011_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024011_1964.parquet",
@@ -2519,6 +3909,36 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:32 GMT",
     "note": ""
   },
+  "GHCNh_USW00024018_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024018_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024018_1964.parquet",
+    "sha256": "b6e4b3da029e3516f8f45f670a396beb8b14f1dbb892215d1c7978093c2d5ec1",
+    "size": 306455,
+    "downloaded_at": "2026-08-26T23:43:00+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024021_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024021_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024021_1964.parquet",
+    "sha256": "4870528b3fa748d818a76e3bf1076d1e7f9081507980923473c4ed49e7855024",
+    "size": 270312,
+    "downloaded_at": "2026-08-26T23:43:06+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:17 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024022_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024022_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024022_1964.parquet",
+    "sha256": "5512d902d30db0ba936764974cfb4cd78993b5d0895da3ddb900ba9a528ab391",
+    "size": 292266,
+    "downloaded_at": "2026-08-26T23:43:07+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:18 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024023_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024023_1964.parquet",
@@ -2529,6 +3949,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:37 GMT",
     "note": ""
   },
+  "GHCNh_USW00024025_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024025_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024025_1964.parquet",
+    "sha256": "ded6eea9dc5b2618d0d1509177ec316d18e3118fa21254860daab0f72a8e3d2b",
+    "size": 228131,
+    "downloaded_at": "2026-08-26T23:37:32+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:35 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024027_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024027_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024027_1964.parquet",
+    "sha256": "7237e761c76d9b1c6f698aa0f8d252e5be82d6ebddad3c3fc2f0e1c3fb52794a",
+    "size": 226010,
+    "downloaded_at": "2026-08-26T23:43:10+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:42 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024028_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024028_1964.parquet",
@@ -2537,6 +3977,16 @@
     "size": 268008,
     "downloaded_at": "2026-08-26T23:32:43+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:39 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024029_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024029_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024029_1964.parquet",
+    "sha256": "8cd644d72296e9934ee1c9c10aa1f7a2960da0fdb1acffdbab1ff15b9193fc96",
+    "size": 265344,
+    "downloaded_at": "2026-08-26T23:43:11+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:37 GMT",
     "note": ""
   },
   "GHCNh_USW00024032_1964.parquet": {
@@ -2579,6 +4029,56 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:43 GMT",
     "note": ""
   },
+  "GHCNh_USW00024057_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024057_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024057_1964.parquet",
+    "sha256": "1d27b4185eccb1f094737532df8dfd4db68597753406bc78d311b76708131c75",
+    "size": 228309,
+    "downloaded_at": "2026-08-26T23:43:08+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:46 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024089_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024089_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024089_1964.parquet",
+    "sha256": "f788c74e256f8eea707019fd9b9aa14b468e0f0dd03eee10dcd67940531f2e45",
+    "size": 317029,
+    "downloaded_at": "2026-08-26T23:42:58+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:49 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024090_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024090_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024090_1964.parquet",
+    "sha256": "344aea8de7e1f04ec596a4ce2ac94175ce1c49eee64c23d133937b8a0a986761",
+    "size": 277936,
+    "downloaded_at": "2026-08-26T23:37:34+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:48 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024101_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024101_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024101_1964.parquet",
+    "sha256": "715de8e6f93d6f39ee60dc01c8f5b8633ee12486deb72bfbf940aef4ac565d5c",
+    "size": 225043,
+    "downloaded_at": "2026-08-26T23:40:10+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:51 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024103_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024103_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024103_1964.parquet",
+    "sha256": "fdda8b429bebf721392dfa6fb6b51c24afed07b3289893498aa8e0d7929fed07",
+    "size": 202226,
+    "downloaded_at": "2026-08-26T23:40:07+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:45 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024106_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024106_1964.parquet",
@@ -2587,6 +4087,16 @@
     "size": 217720,
     "downloaded_at": "2026-08-26T23:24:13+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:49 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024110_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024110_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024110_1964.parquet",
+    "sha256": "afa945afdd60707f6fcc72fd725a09c57756c41720afef4e9d8828c9b6ad7583",
+    "size": 222830,
+    "downloaded_at": "2026-08-26T23:41:31+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:48 GMT",
     "note": ""
   },
   "GHCNh_USW00024112_1964.parquet": {
@@ -2599,6 +4109,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:50 GMT",
     "note": ""
   },
+  "GHCNh_USW00024114_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024114_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024114_1964.parquet",
+    "sha256": "38269a82ce5ed87db152c3aaf17649f3ca7f3f2d82b7ad175771ad88145a2cb7",
+    "size": 209052,
+    "downloaded_at": "2026-08-26T23:41:24+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:42 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024121_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024121_1964.parquet",
@@ -2607,6 +4127,36 @@
     "size": 247178,
     "downloaded_at": "2026-08-26T23:33:49+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:43 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024127_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024127_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024127_1964.parquet",
+    "sha256": "c1708abec650a8a944874012384420db8fe64485221cd57a468ab8621a574e15",
+    "size": 317417,
+    "downloaded_at": "2026-08-26T23:40:15+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:42 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024128_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024128_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024128_1964.parquet",
+    "sha256": "690f5efa545777a95929c57eb0548839e6c493669fc4d40388270e64af5764bc",
+    "size": 264155,
+    "downloaded_at": "2026-08-26T23:34:00+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:37 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024130_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024130_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024130_1964.parquet",
+    "sha256": "1ab38d2c384039eaac31e20ad64225f47f65a7beadbeddf03fe9e390f17b7968",
+    "size": 229132,
+    "downloaded_at": "2026-08-26T23:35:54+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:37 GMT",
     "note": ""
   },
   "GHCNh_USW00024131_1964.parquet": {
@@ -2637,6 +4187,16 @@
     "size": 225423,
     "downloaded_at": "2026-08-26T23:24:04+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:38 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024134_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024134_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024134_1964.parquet",
+    "sha256": "1892fae1d831b686e9ab80a9989823de773e85b953a6ef66c08673e49b0afcef",
+    "size": 164307,
+    "downloaded_at": "2026-08-26T23:35:56+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:49 GMT",
     "note": ""
   },
   "GHCNh_USW00024137_1964.parquet": {
@@ -2709,6 +4269,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:46 GMT",
     "note": ""
   },
+  "GHCNh_USW00024152_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024152_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024152_1964.parquet",
+    "sha256": "f4fff2abe9cc9b12f93a4b4bed1693c5b1a56803024888801e2b3f16f9c8c595",
+    "size": 163290,
+    "downloaded_at": "2026-08-26T23:36:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:39 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024153_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024153_1964.parquet",
@@ -2719,6 +4289,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:48 GMT",
     "note": ""
   },
+  "GHCNh_USW00024155_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024155_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024155_1964.parquet",
+    "sha256": "a8d1f8c38636289a2a92deb75139ee1eb1875f719d1cf15515a8c586eae082e6",
+    "size": 374151,
+    "downloaded_at": "2026-08-26T23:36:11+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:47 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024156_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024156_1964.parquet",
@@ -2727,6 +4307,66 @@
     "size": 279294,
     "downloaded_at": "2026-08-26T23:24:15+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:32 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024157_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024157_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024157_1964.parquet",
+    "sha256": "97cf82ea1b9cfada374ce571166943c90a2ecf053a0deaf76abbc49bf5ab847a",
+    "size": 324049,
+    "downloaded_at": "2026-08-26T23:41:44+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:34 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024160_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024160_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024160_1964.parquet",
+    "sha256": "fe31fb83722d055795ee00298e0a40b420fe291ba4db880dbad3bbb7ae3ffd22",
+    "size": 230464,
+    "downloaded_at": "2026-08-26T23:41:51+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:31 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024172_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024172_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024172_1964.parquet",
+    "sha256": "bc6180bd5920a9653df82968b54fe1e8a8b1a84c182cf0b581d59e6d98eff413",
+    "size": 220110,
+    "downloaded_at": "2026-08-26T23:33:56+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:34 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024193_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024193_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024193_1964.parquet",
+    "sha256": "a6d0d411b62dd93f5df03d1493e0145c4c003367d81cca685cba63fd0d1697b8",
+    "size": 216634,
+    "downloaded_at": "2026-08-26T23:40:18+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:51 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024201_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024201_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024201_1964.parquet",
+    "sha256": "fa38d3c2d817e9906b577c56878ac25cf2893d28052151ba378bbf19abb4a28a",
+    "size": 212147,
+    "downloaded_at": "2026-08-26T23:41:26+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:52 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024207_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024207_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024207_1964.parquet",
+    "sha256": "3f0701e6a7f9505dd7ec8a0b03c47b64f34edeaabeff29c85427ef6af0b5a262",
+    "size": 211987,
+    "downloaded_at": "2026-08-26T23:41:47+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:55 GMT",
     "note": ""
   },
   "GHCNh_USW00024215_1964.parquet": {
@@ -2749,6 +4389,186 @@
     "last_modified": "Tue, 31 Mar 2026 00:38:53 GMT",
     "note": ""
   },
+  "GHCNh_USW00024217_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024217_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024217_1964.parquet",
+    "sha256": "cd589e7116e753197ffc6b2b810c6ad5ab01495555897a55d6cdc9904faff222",
+    "size": 219237,
+    "downloaded_at": "2026-08-26T23:41:15+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:54 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024219_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024219_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024219_1964.parquet",
+    "sha256": "f2672c20668562aac32a4a5fdec5e28d0f847a78a66b18b44dc3e28e52cb1797",
+    "size": 225083,
+    "downloaded_at": "2026-08-26T23:41:17+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:52 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024221_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024221_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024221_1964.parquet",
+    "sha256": "2363f0a213848189a114f8c76376985d5c69d7a4a857588e517d814ac65d85f7",
+    "size": 329480,
+    "downloaded_at": "2026-08-26T23:35:59+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024222_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024222_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024222_1964.parquet",
+    "sha256": "7c761f0ba16bdba1a03b72c1263ed303bdbd3baf82a8d70e60110a2539837f8f",
+    "size": 214773,
+    "downloaded_at": "2026-08-26T23:41:23+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024225_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024225_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024225_1964.parquet",
+    "sha256": "54b646f64d048e59986f7b7a10ec7ebaf01b1655c4aa68a22e1c9c0a75641be8",
+    "size": 281896,
+    "downloaded_at": "2026-08-26T23:36:06+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:58 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024227_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024227_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024227_1964.parquet",
+    "sha256": "ee4ca873bc24278ea583cdbc017ea8ac737127e3f670d2c5e7918a5befad3d83",
+    "size": 296217,
+    "downloaded_at": "2026-08-26T23:41:32+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:58 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024229_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024229_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024229_1964.parquet",
+    "sha256": "4c28a87a966254da61ca604755b80476849c37fa4217fa7092cfc3305db5f25d",
+    "size": 314371,
+    "downloaded_at": "2026-08-26T23:36:12+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:59 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024230_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024230_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024230_1964.parquet",
+    "sha256": "b1cd26e806e65a265446569818ebd6530a7acb97222b7805a53de48f79e5a198",
+    "size": 224531,
+    "downloaded_at": "2026-08-26T23:36:15+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024231_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024231_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024231_1964.parquet",
+    "sha256": "7f0e7fa48dda1e17b2e00600018e2ffd3e94a406b0c33aa61484c7b0b1e567d5",
+    "size": 216246,
+    "downloaded_at": "2026-08-26T23:36:18+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024232_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024232_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024232_1964.parquet",
+    "sha256": "dec92ac82e11ddf4e216403e69ace8d303eee1c151af57801bf2d70f2b3623c3",
+    "size": 296230,
+    "downloaded_at": "2026-08-26T23:36:19+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:04 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024233_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024233_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024233_1964.parquet",
+    "sha256": "320065e6c6bbc5c5624d58f8cff42c043250e52173f25c2454550d99d15ab838",
+    "size": 297710,
+    "downloaded_at": "2026-08-26T23:41:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:02 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024234_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024234_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024234_1964.parquet",
+    "sha256": "da34162a4ba8fdfaac1ba68798196a826a3da1460636bc74c8e2e8b2d2b8aeb1",
+    "size": 235234,
+    "downloaded_at": "2026-08-26T23:41:39+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:03 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024235_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024235_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024235_1964.parquet",
+    "sha256": "ebf70529d7574c1de109786d7ed4a5791b3e8c8edbc66fdc1159d39776f1f480",
+    "size": 162869,
+    "downloaded_at": "2026-08-26T23:36:20+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:03 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024237_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024237_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024237_1964.parquet",
+    "sha256": "1d5da96c527e84af696f119474ac28580feef8206d3c7c0fbf4002a6bfc6ac72",
+    "size": 217074,
+    "downloaded_at": "2026-08-26T23:41:45+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:03 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024240_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024240_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024240_1964.parquet",
+    "sha256": "f5ef4dcb6a3b5b7e2ac29aae766b8c7d383cd162ab5ae981ae28fb1b6643ad64",
+    "size": 274761,
+    "downloaded_at": "2026-08-26T23:41:49+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:58 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024243_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024243_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024243_1964.parquet",
+    "sha256": "8f68d72cad59c7b9efd6d982bb71b3b27ddaba014959ad8d5b10c9623af58aa6",
+    "size": 278630,
+    "downloaded_at": "2026-08-26T23:41:54+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024244_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024244_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024244_1964.parquet",
+    "sha256": "42e3d38c131f00a92154f0bef3120e0112b9fcaffb6c70f0051740809f9bd14d",
+    "size": 280333,
+    "downloaded_at": "2026-08-26T23:41:40+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:00 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024255_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024255_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024255_1964.parquet",
+    "sha256": "0fbcf0330b0fc2a27c2d3c0834d46ff96d9530ed3e788c201f256d709c4e02c4",
+    "size": 288368,
+    "downloaded_at": "2026-08-26T23:41:53+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:51 GMT",
+    "note": ""
+  },
   "GHCNh_USW00024259_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00024259_1964.parquet",
@@ -2767,6 +4587,16 @@
     "size": 227232,
     "downloaded_at": "2026-08-26T23:18:53+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:38:54 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00024284_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00024284_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00024284_1964.parquet",
+    "sha256": "2aa185a1fffc073e598b05719efe4bdaf08d44c4b6856d149ff4a51bbb8d9f9a",
+    "size": 234631,
+    "downloaded_at": "2026-08-26T23:36:07+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:38:55 GMT",
     "note": ""
   },
   "GHCNh_USW00025308_1964.parquet": {
@@ -3249,6 +5079,36 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:21 GMT",
     "note": ""
   },
+  "GHCNh_USW00064775_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00064775_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00064775_1964.parquet",
+    "sha256": "ed2ab3637afbe6c235c1b90836b9899149f12b33a6f4727c96e8eb47b1aa2a29",
+    "size": 211797,
+    "downloaded_at": "2026-08-26T23:34:30+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:20 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00064776_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00064776_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00064776_1964.parquet",
+    "sha256": "49956814d2fc8a97890e85f63a6b996066b3e016f0c2af2406089415227e4159",
+    "size": 208944,
+    "downloaded_at": "2026-08-26T23:34:26+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:22 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093025_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093025_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093025_1964.parquet",
+    "sha256": "1fb15a3e6204b1f735f70a8da2407b21e6861a1c4f5b6619b829b7d8244abfe3",
+    "size": 141312,
+    "downloaded_at": "2026-08-26T23:40:05+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:23 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093026_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093026_1964.parquet",
@@ -3277,6 +5137,16 @@
     "size": 324294,
     "downloaded_at": "2026-08-26T23:20:24+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:31 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093042_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093042_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093042_1964.parquet",
+    "sha256": "3de2e2f0d03f790dff5af2d1498b26ade7052771c8633e66077f4c5217a78f96",
+    "size": 274116,
+    "downloaded_at": "2026-08-26T23:38:24+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:29 GMT",
     "note": ""
   },
   "GHCNh_USW00093045_1964.parquet": {
@@ -3399,6 +5269,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:28 GMT",
     "note": ""
   },
+  "GHCNh_USW00093129_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093129_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093129_1964.parquet",
+    "sha256": "f7652f04b848a9f454e44e69c08c9d7643eddad28ef4e837de2e15b81bf01148",
+    "size": 221689,
+    "downloaded_at": "2026-08-26T23:40:06+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:23 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093193_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093193_1964.parquet",
@@ -3469,6 +5349,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:38 GMT",
     "note": ""
   },
+  "GHCNh_USW00093728_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093728_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093728_1964.parquet",
+    "sha256": "4c632d8be8c605b2f7a384f4072a76586d59f8688ef8f0d16903325cc827ea01",
+    "size": 226480,
+    "downloaded_at": "2026-08-26T23:40:28+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:38 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093729_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093729_1964.parquet",
@@ -3499,6 +5389,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:38 GMT",
     "note": ""
   },
+  "GHCNh_USW00093735_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093735_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093735_1964.parquet",
+    "sha256": "de4c86624c613fcb1a76e95e70fa2b5d1e85023d49831627bf19572d595bfb18",
+    "size": 209341,
+    "downloaded_at": "2026-08-26T23:40:35+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:39 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093736_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093736_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093736_1964.parquet",
+    "sha256": "fec48984778fe0bcb99c07c465b0e56fc9bdd819a4039fbcb4e32bafbab75bc4",
+    "size": 232322,
+    "downloaded_at": "2026-08-26T23:40:24+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:40 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093737_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093737_1964.parquet",
@@ -3509,6 +5419,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:40 GMT",
     "note": ""
   },
+  "GHCNh_USW00093738_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093738_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093738_1964.parquet",
+    "sha256": "6d66ae24180e7442362c0874645927ea35b1eea269719e3376136ef901623e05",
+    "size": 276222,
+    "downloaded_at": "2026-08-26T23:41:02+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:43 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093801_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093801_1964.parquet",
@@ -3517,6 +5437,16 @@
     "size": 159320,
     "downloaded_at": "2026-08-26T23:22:47+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:32 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093804_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093804_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093804_1964.parquet",
+    "sha256": "2c1f3645878e3ba35160adda4e240c083b97801335e47ffed9641b0b5beea44c",
+    "size": 194834,
+    "downloaded_at": "2026-08-26T23:37:19+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:33 GMT",
     "note": ""
   },
   "GHCNh_USW00093805_1964.parquet": {
@@ -3559,6 +5489,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:35 GMT",
     "note": ""
   },
+  "GHCNh_USW00093812_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093812_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093812_1964.parquet",
+    "sha256": "6aeec458a5bd6683cd4d0dcfba4e5f5a46343ef81edf1c0e3deaf4faf84a253d",
+    "size": 95343,
+    "downloaded_at": "2026-08-26T23:34:49+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:36 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093814_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093814_1964.parquet",
@@ -3567,6 +5507,16 @@
     "size": 286824,
     "downloaded_at": "2026-08-26T23:26:00+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:40 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093815_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093815_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093815_1964.parquet",
+    "sha256": "8f00c7d52706484f3d0fa11f37b09d0c1cd43fd3d76291bc980abf68ee3340af",
+    "size": 282663,
+    "downloaded_at": "2026-08-26T23:34:57+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:32 GMT",
     "note": ""
   },
   "GHCNh_USW00093817_1964.parquet": {
@@ -3629,6 +5579,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:42 GMT",
     "note": ""
   },
+  "GHCNh_USW00093824_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093824_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093824_1964.parquet",
+    "sha256": "440a3466d8222ac062c01c3a0f493070f6d0f891bc8d8e6661b8995c5be61dea",
+    "size": 307827,
+    "downloaded_at": "2026-08-26T23:35:17+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:44 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093831_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093831_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093831_1964.parquet",
+    "sha256": "0d72be6e358fc93149ca8603a4386f7f5370d7c7670f731eb0144a13a8f8884e",
+    "size": 327195,
+    "downloaded_at": "2026-08-26T23:37:03+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:48 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093836_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093836_1964.parquet",
@@ -3646,6 +5616,16 @@
     "sha256": "b8fefe302a7e97b1d82b5d82662a91a881ed06599d78c75439fd294c7a369524",
     "size": 280161,
     "downloaded_at": "2026-08-26T23:21:31+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:48 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093839_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093839_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093839_1964.parquet",
+    "sha256": "6c221521f762259a6c0890db2e46f2751afa69ced7b432381e86b13aec73c0d7",
+    "size": 279574,
+    "downloaded_at": "2026-08-26T23:37:48+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:48 GMT",
     "note": ""
   },
@@ -3699,6 +5679,16 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:44 GMT",
     "note": ""
   },
+  "GHCNh_USW00093901_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093901_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093901_1964.parquet",
+    "sha256": "ea4e8af37093354d768edc9c05f201ae2eefa2e16456a22d0141242d83c9da98",
+    "size": 270798,
+    "downloaded_at": "2026-08-26T23:38:27+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:46 GMT",
+    "note": ""
+  },
   "GHCNh_USW00093909_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00093909_1964.parquet",
@@ -3727,6 +5717,26 @@
     "size": 288622,
     "downloaded_at": "2026-08-26T23:30:36+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:48 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093985_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093985_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093985_1964.parquet",
+    "sha256": "277d642b50f0efb89ec8cc3205214a40f6a4c5b790b6140a8503b08a24b43a43",
+    "size": 225041,
+    "downloaded_at": "2026-08-26T23:39:24+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:49 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00093987_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00093987_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00093987_1964.parquet",
+    "sha256": "c8050507bd37fb22bc7ee4b68599b23bc541197c6e780e8cf3eea294d5f57711",
+    "size": 228979,
+    "downloaded_at": "2026-08-26T23:39:16+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:51 GMT",
     "note": ""
   },
   "GHCNh_USW00093989_1964.parquet": {
@@ -3809,6 +5819,46 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:53 GMT",
     "note": ""
   },
+  "GHCNh_USW00094224_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094224_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094224_1964.parquet",
+    "sha256": "6c55a41ce9e183f33f55e5998a95cab0079a510d2f870c90de08e3b5c3274247",
+    "size": 300086,
+    "downloaded_at": "2026-08-26T23:35:52+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:40:00 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094225_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094225_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094225_1964.parquet",
+    "sha256": "7f1f79c80504ad8b2cc9a3f4de423b242041d29a93aee0613ec8f28d4b59d53f",
+    "size": 272724,
+    "downloaded_at": "2026-08-26T23:41:27+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094236_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094236_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094236_1964.parquet",
+    "sha256": "ca9cd071c7eaf2887d2fb7ad333317dc1ab1fdd81c5dd1e31a680bdc65d7f71e",
+    "size": 229317,
+    "downloaded_at": "2026-08-26T23:36:01+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:58 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094274_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094274_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094274_1964.parquet",
+    "sha256": "671f065627b0642edef2f1dbbc0d5221f6645ef3fbced9f9a1186cc8bd5bbcba",
+    "size": 217977,
+    "downloaded_at": "2026-08-26T23:41:48+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:58 GMT",
+    "note": ""
+  },
   "GHCNh_USW00094702_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00094702_1964.parquet",
@@ -3817,6 +5867,26 @@
     "size": 276586,
     "downloaded_at": "2026-08-26T23:20:56+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:40:01 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094705_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094705_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094705_1964.parquet",
+    "sha256": "825facaeccedafdcb8e0cab0c49fd46849c4872370c15017705ff0e3476fab41",
+    "size": 303808,
+    "downloaded_at": "2026-08-26T23:41:09+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:57 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094725_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094725_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094725_1964.parquet",
+    "sha256": "2495e7dd0012a751b210eac96824c2d78cf909353216f9a510e9b8ab6ac36455",
+    "size": 235261,
+    "downloaded_at": "2026-08-26T23:34:20+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:58 GMT",
     "note": ""
   },
   "GHCNh_USW00094746_1964.parquet": {
@@ -3839,6 +5909,26 @@
     "last_modified": "Tue, 31 Mar 2026 00:39:57 GMT",
     "note": ""
   },
+  "GHCNh_USW00094789_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094789_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094789_1964.parquet",
+    "sha256": "0c3a05d29a10d633a9f3c408f3d58230067ebd8212b7f0382da5a9aef4ca8c72",
+    "size": 233123,
+    "downloaded_at": "2026-08-26T23:34:17+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:40:00 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094790_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094790_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094790_1964.parquet",
+    "sha256": "e4ae22bb50fb5a5623752c1c9f191c78a655bda713ac3ee2479fcc58ccdc591f",
+    "size": 239613,
+    "downloaded_at": "2026-08-26T23:34:37+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:59 GMT",
+    "note": ""
+  },
   "GHCNh_USW00094814_1964.parquet": {
     "dataset": "ghcnh_1964",
     "filename": "GHCNh_USW00094814_1964.parquet",
@@ -3857,6 +5947,26 @@
     "size": 278093,
     "downloaded_at": "2026-08-26T23:25:01+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:39:54 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094823_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094823_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094823_1964.parquet",
+    "sha256": "bfd7fb35c31cf2cd8f64f7ad2c98b2c2ee45b8fb268a9bdfc52cc5da93e00f05",
+    "size": 323084,
+    "downloaded_at": "2026-08-26T23:36:46+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:39:55 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094830_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094830_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094830_1964.parquet",
+    "sha256": "c7110ba008c788afa9f190b87270f5e4f509831948bc192065240b8656728d5c",
+    "size": 284455,
+    "downloaded_at": "2026-08-26T23:35:12+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:40:02 GMT",
     "note": ""
   },
   "GHCNh_USW00094833_1964.parquet": {
@@ -3947,6 +6057,16 @@
     "size": 228757,
     "downloaded_at": "2026-08-26T23:32:06+00:00",
     "last_modified": "Tue, 31 Mar 2026 00:40:05 GMT",
+    "note": ""
+  },
+  "GHCNh_USW00094930_1964.parquet": {
+    "dataset": "ghcnh_1964",
+    "filename": "GHCNh_USW00094930_1964.parquet",
+    "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/access/by-year/1964/parquet/GHCNh_USW00094930_1964.parquet",
+    "sha256": "bbbb678407620a0abff2b55ecc5a3a07ac59acf43a88f322066d1f45d1c0dad8",
+    "size": 152311,
+    "downloaded_at": "2026-08-26T23:42:33+00:00",
+    "last_modified": "Tue, 31 Mar 2026 00:40:03 GMT",
     "note": ""
   }
 }
