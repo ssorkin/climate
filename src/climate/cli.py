@@ -23,12 +23,31 @@ def acquire(
 def stations(
     region: str = typer.Option("us", help="Region id to (re)generate, e.g. us"),
     min_span: int = typer.Option(50, help="Minimum years spanned by TMAX and TMIN"),
+    tier: str = typer.Option("", help="'isd' to generate the hourly-tier list instead"),
 ) -> None:
-    """Generate stations/<region>.yaml from NOAA's inventory (needs `clim ingest` metadata)."""
+    """Generate stations/<region>.yaml (or stations/isd.yaml) from NOAA's inventories."""
+    if tier == "isd":
+        from climate.isd import write_isd_list
+
+        n = write_isd_list(min_span=min_span)
+        print(f"  wrote stations/isd.yaml with {n} stations")
+        return
     from climate.stations import write_region
 
     n = write_region(region_id=region, min_span=min_span)
     print(f"  wrote stations/{region}.yaml with {n} stations")
+
+
+@app.command()
+def hourly(
+    stage: str = typer.Argument(..., help="acquire | ingest | analyze | export"),
+    only: str = typer.Option("", help="Comma-separated WBANs or GHCN ids to restrict to"),
+    refresh: bool = typer.Option(False, help="Re-fetch the current year's files"),
+) -> None:
+    """The ISD hourly tier: same stages, separate data."""
+    from climate.hourly import run_stage
+
+    run_stage(stage, only=[x for x in only.split(",") if x], refresh=refresh)
 
 
 @app.command()

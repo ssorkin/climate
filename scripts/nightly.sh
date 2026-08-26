@@ -21,6 +21,11 @@ uv run clim ingest --region la
 uv run clim check --strict
 uv run clim analyze --region la
 uv run clim export --region la
+# Hourly layer for the LA airports (ISD-Lite updates daily; only the current year changes).
+uv run clim hourly acquire --only 23174,23152,23130,23129,93110,03102,23119 --refresh
+uv run clim hourly ingest --only 23174,23152,23130,23129,93110,03102,23119
+uv run clim hourly analyze --only 23174,23152,23130,23129,93110,03102,23119
+uv run clim hourly export
 (cd site && npm run build)
 scripts/deploy.sh
 echo "==> $(date -u +%FT%TZ) done"

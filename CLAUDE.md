@@ -8,6 +8,8 @@ in Python, fully static SvelteKit site at climate.sorkinlabs.com.
 
 - `uv sync` — install; `uv run clim --help` — pipeline CLI (`stations`, `acquire [--refresh]`,
   `ingest`, `check [--strict]`, `analyze`, `export`; all take `--region la|us|all`)
+- Hourly tier (ISD-Lite, airports since 1973): `uv run clim stations --tier isd` generates
+  `stations/isd.yaml`; `uv run clim hourly acquire|ingest|analyze|export [--only WBAN,…]`.
 - `uv run pytest` — tests; `uv run ruff check src tests` — lint
 - Site: `cd site && npm run dev` / `npm run build` (static; data from `clim export`)
 - Deploy (atomic): `scripts/deploy.sh [--build]` — rsync `site/build/` to dronesclub
@@ -34,6 +36,9 @@ in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   Exclusions live in `stations/*.yaml` with a `reason` and `source`.
 - Station lists live only in `stations/*.yaml`; baseline, thresholds and completeness
   rules only in `config/analysis.yaml`, echoed into every export. No duplicates in JS.
+- **Day counts come from the max/min thermometer (GHCN-Daily), never from hourly samples**
+  (hourly maxima under-read the peak by ~0.5 °C; the station page shows the measured gap).
+  Hourly data are for duration, night relief and heat index only.
 - **Charts show the raw record.** NOAA's USHCN homogenization (3 stations) is used only to
   mark detected site/instrument changes and to show an *estimated* homogenized count next
   to the raw one — never to replace it.

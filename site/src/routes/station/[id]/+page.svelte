@@ -17,6 +17,7 @@
   import RawTable from '$lib/RawTable.svelte';
   import WindowsTable from '$lib/WindowsTable.svelte';
   import MethodsNote from '$lib/MethodsNote.svelte';
+  import HourlyPanel from '$lib/HourlyPanel.svelte';
 
   let { data } = $props();
   let s = $derived(data.summary);
@@ -72,6 +73,17 @@
     if (!units.f) q.set('u', 'C');
     const target = window.location.pathname + '?' + q.toString();
     if (target !== window.location.pathname + window.location.search) replaceState(target, {});
+  });
+
+  // hourly layer (ISD), if this station is an airport with one
+  let hourly = $state(null);
+  $effect(() => {
+    if (!s) return;
+    const id = s.id;
+    hourly = null;
+    fetch(dataUrl(`/data/hourly/${id}.json`)).then((r) => (r.ok ? r.json() : null)).then((h) => {
+      if (h && h.ghcn === id) hourly = h;
+    }).catch(() => {});
   });
 
   // daily.json is loaded lazily: needed for the daily explorer, raw table, and custom thresholds.
@@ -262,6 +274,11 @@
 
 <h2>Then and now</h2>
 <WindowsTable summary={s} />
+
+{#if hourly}
+  <h2 id="hourly">Hour by hour</h2>
+  <HourlyPanel {hourly} {year} {family} onselect={(y) => (year = y)} />
+{/if}
 
 <h2 id="daily">{year}, day by day</h2>
 {#if daily && year != null}

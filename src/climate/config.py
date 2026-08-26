@@ -109,7 +109,12 @@ def _parse_region(path: Path) -> Region:
 def load_regions(region: str = "all", stations_dir: Path = STATIONS_DIR) -> list[Region]:
     """Load one region (by id) or all regions found in stations/."""
     paths = sorted(stations_dir.glob("*.yaml"))
-    regions = [_parse_region(p) for p in paths]
+    regions = []
+    for p in paths:
+        raw = yaml.safe_load(p.read_text())
+        if isinstance(raw, dict) and "tier" in raw:
+            continue  # a data tier (stations/isd.yaml), not a region
+        regions.append(_parse_region(p))
     if region != "all":
         regions = [r for r in regions if r.id == region]
         if not regions:

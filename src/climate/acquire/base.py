@@ -107,6 +107,7 @@ def download(
     throttle_seconds: float = 1.0,
     force: bool = False,
     refresh: bool = False,
+    quiet: bool = False,
 ) -> Path | None:
     """Stream-download url into data/raw/<dataset>/ and record a manifest entry.
 
@@ -152,7 +153,11 @@ def download(
                 break
             time.sleep(2 * (attempt + 1))
     if last_error is not None:
-        print(f"  FAILED {url}: {last_error}", flush=True)
+        is404 = (
+            isinstance(last_error, httpx.HTTPStatusError) and last_error.response.status_code == 404
+        )
+        if not (quiet and is404):
+            print(f"  FAILED {url}: {last_error}", flush=True)
         return None
 
     tmp.replace(dest)
@@ -176,6 +181,8 @@ def download(
             _since_flush = 0
     if flush:
         save_manifest(dataset)
-    print(f"  ok {filename} ({dest.stat().st_size:,} bytes)", flush=True)
-    time.sleep(throttle_seconds)
+    if not quiet:
+        print(f"  ok {filename} ({dest.stat().st_size:,} bytes)", flush=True)
+    if throttle_seconds:
+        time.sleep(throttle_seconds)
     return dest

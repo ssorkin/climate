@@ -94,6 +94,17 @@
   (USW) use automated instruments and calendar days.
 </p>
 
+<h2 id="hourly">The hourly layer (airports)</h2>
+<p>
+  For airports, NOAA's Integrated Surface Database (ISD-Lite) adds hourly temperature and dew point from 1973, converted to
+  local time. From it the station page shows hours at or above a threshold, "no-relief nights" (the air never fell below a
+  threshold between 6 pm and 8 am), heat-index hours (NWS formula, using humidity), and the average temperature at each hour of a
+  summer day by decade. A day counts when at least 18 of its 24 hours were observed, a night when 10 of its 14; years and months
+  follow the same 90% rule as the daily data. Day counts still come from the airport's max/min thermometer (its GHCN-Daily record):
+  hourly samples miss the true peak by about half a degree on average, and the station page reports the measured difference.
+  The hourly layer has its own history — automated ASOS instruments arrived around 1996 — so treat 1990s steps with care.
+</p>
+
 <h2 id="regional">The LA-wide index: filling in the blanks</h2>
 <p>
   Stations come and go — the 1900s network was three inland sites, the 1960s had 25, today 14 report — so a plain
