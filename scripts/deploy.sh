@@ -6,8 +6,9 @@
 # atomically (ln -s + mv -T), prune to the last KEEP releases. Never rsync --delete
 # into the live root — mid-deploy hydration breaks.
 #
-# Usage: scripts/deploy.sh [--build]
-#   --build   run `npm run build` in site/ first; otherwise deploys site/build as-is
+# Usage: scripts/deploy.sh [--build] [--no-verify]
+#   --build       run `npm run build` in site/ first; otherwise deploys site/build as-is
+#   --no-verify   skip the live-URL check (first deploy, before DNS/TLS exist)
 
 set -euo pipefail
 
@@ -28,10 +29,14 @@ SITE_URL=https://climate.sorkinlabs.com
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 build_dir="$repo_root/site/build"
 
-if [[ "${1:-}" == "--build" ]]; then
-  echo "==> building site"
-  (cd "$repo_root/site" && npm run build)
-fi
+verify=1
+for arg in "$@"; do
+  case "$arg" in
+    --build) echo "==> building site"; (cd "$repo_root/site" && npm run build) ;;
+    --no-verify) verify=0 ;;
+    *) echo "unknown option $arg" >&2; exit 2 ;;
+  esac
+done
 
 [[ -f "$build_dir/index.html" ]] || {
   echo "error: $build_dir/index.html not found — run with --build or build the site first" >&2
@@ -64,11 +69,15 @@ ssh "$HOST" "set -e
     sudo rm -rf \"$RELEASES/\$old\"
   done"
 
+live=$(ssh "$HOST" "readlink $CURRENT")
+[[ "$live" == "$RELEASES/$ts" ]] || { echo "error: symlink points at $live, expected $RELEASES/$ts" >&2; exit 1; }
+if [[ $verify == 0 ]]; then
+  echo "==> deployed $ts to $HOST:$CURRENT (live-URL check skipped)"
+  exit 0
+fi
 echo "==> verifying"
 code=$(curl -sS -o /dev/null -w '%{http_code}' "$SITE_URL/")
 [[ "$code" == 200 ]] || { echo "error: $SITE_URL/ returned HTTP $code" >&2; exit 1; }
-live=$(ssh "$HOST" "readlink $CURRENT")
-[[ "$live" == "$RELEASES/$ts" ]] || { echo "error: symlink points at $live, expected $RELEASES/$ts" >&2; exit 1; }
 want=$(python3 -c "import json;print(json.load(open('$build_dir/data/index.json'))['generated_at'])")
 got=$(curl -sS "$SITE_URL/data/index.json?v=$ts" | python3 -c "import json,sys;print(json.load(sys.stdin)['generated_at'])")
 [[ "$want" == "$got" ]] || { echo "error: live index.json generated_at=$got, expected $want" >&2; exit 1; }

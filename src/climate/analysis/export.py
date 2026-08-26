@@ -16,7 +16,7 @@ from climate.acquire.base import load_manifest
 from climate.acquire.ghcnd import meta_dataset, region_dataset, station_url
 from climate.analysis import metrics as M
 from climate.config import load_analysis_config, load_regions
-from climate.ingest.store import load_daily_wide
+from climate.ingest.store import load_daily_wide, load_stations
 from climate.paths import ANALYSIS_DIR, RAW_DIR, SITE_DATA_DIR
 
 
@@ -306,8 +306,15 @@ def run_export(region: str = "all") -> None:
             entry, nbytes = export_station(st.id, cfg, reg.id)
             stations_out.append(entry)
             print(f"  {st.id} {st.short:<20} {nbytes / 1e3:7.0f} KB")
+        stations_meta = load_stations()
         for e in reg.excluded:
-            excluded.append({"region": reg.id, **e.__dict__})
+            row = stations_meta.filter(pl.col("id") == e.id)
+            geo = (
+                {"lat": row["lat"][0], "lon": row["lon"][0], "name": row["name"][0]}
+                if row.height
+                else {"lat": None, "lon": None, "name": ""}
+            )
+            excluded.append({"region": reg.id, **e.__dict__, **geo})
     index = {
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "ghcnd_version": ghcnd_version(),

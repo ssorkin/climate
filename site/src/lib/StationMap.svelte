@@ -58,6 +58,7 @@
         markers.set(s.id, { m, d, val });
       }
       for (const e of excluded) {
+        if (e.lat == null || e.lon == null) continue;
         const d = document.createElement('div');
         d.className = 'stpill excluded';
         d.textContent = e.short + ' · not charted';
