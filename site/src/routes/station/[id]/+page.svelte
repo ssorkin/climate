@@ -183,6 +183,8 @@
       .filter((b) => Math.abs(b.tmax_c) >= 0.8 || Math.abs(b.tmin_c) >= 0.8)
       .map((b) => ({ year: b.year, label: '' }))
   );
+  const modelKey = { hot: { 95: 'hot95', 100: 'hot100' }, warm: { 65: 'warm65', 70: 'warm70' }, frost: { 32: 'frost32' } };
+  let modeled = $derived(standard ? (s.modeled?.[modelKey[family]?.[threshold]] ?? null) : null);
   let annotations = $derived([
     ...(s.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label })),
     ...breakAnnotations
@@ -249,7 +251,7 @@
   {#if !standard && !daily}Computing from the daily record…{/if}
   {#if selectedCount != null}<b>{year}: {selectedCount} {fam.noun}{partial[years.indexOf(year)] ? ' so far' : ''}.</b>{#if !selectedComplete && selectedMissing} {selectedMissing} days not observed, but on dates that {selectedExp === 0 ? 'have never' : 'rarely'} reach {thrLabel} here (expected effect {selectedExp?.toFixed(1)} {fam.noun}){#if gaps.length}: {gapText}{/if}.{/if}{:else if selectedLower != null && year != null}<b>{year}: at least {selectedLower} {fam.noun}</b> — {selectedMissing} days not observed, expected to add about {selectedExp?.toFixed(1)} {fam.noun}{#if gaps.length}: {gapText}{/if}.{/if}
 </p>
-<AnnualBars {years} values={annual} lower={annualLower} expected={annualExp} {daysValid} {daysTotal} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
+<AnnualBars {years} values={annual} lower={annualLower} expected={annualExp} {modeled} {daysValid} {daysTotal} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
 
 {#if year != null}
   <YearScrubber years={s.annual.year} bind:value={year} disabled={incompleteYears} />

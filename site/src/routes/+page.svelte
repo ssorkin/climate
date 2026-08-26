@@ -16,6 +16,7 @@
   import DecadeDots from '$lib/DecadeDots.svelte';
   import SummerMultiples from '$lib/SummerMultiples.svelte';
   import Stripes from '$lib/Stripes.svelte';
+  import RegionalIndex from '$lib/RegionalIndex.svelte';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -90,6 +91,18 @@
 
   const h = $derived(heroIdx.headline);
   const n1 = (v) => (v == null ? '—' : v < 10 ? v.toFixed(1) : Math.round(v).toString());
+  let reg = $derived(data.regional);
+  const regWin = (key, a, b) => {
+    const m = reg?.metrics?.[key];
+    if (!m) return null;
+    const v = m.year.map((y, i) => (y >= a && y <= b ? m.mean[i] : null)).filter((q) => q != null);
+    return v.length ? v.reduce((s, q) => s + q, 0) / v.length : null;
+  };
+  let regLast = $derived(reg?.metrics?.warm70 ? reg.metrics.warm70.year.at(-1) : null);
+  let warmBase = $derived(regWin('warm70', ix.baseline.start, ix.baseline.end));
+  let warmNow = $derived(regLast ? regWin('warm70', regLast - 9, regLast) : null);
+  let hotBase = $derived(regWin('hot95', ix.baseline.start, ix.baseline.end));
+  let hotNow = $derived(regLast ? regWin('hot95', regLast - 9, regLast) : null);
   let latest = $derived(stations.map((s) => s.last_date).sort().at(-1));
   let closed = $derived(allStations.length - stations.length);
 </script>
@@ -105,20 +118,30 @@
     <h1>Los Angeles nights aren't cooling off like they used to.</h1>
     <p class="lede">
       The heat you feel isn't only the afternoon high — it's whether the night gives you a break.
-      At {stations.length} weather stations across the LA area, from the beach to the mountains to the desert,
-      the number of nights that never drop below 70°F has climbed for decades. Here is every one of those
-      nights since {heroIdx.first_year}, straight from NOAA's daily records.
+      Across {allStations.length} long-running weather stations in Greater Los Angeles, from the beach to the
+      mountains to the desert, the typical station now records
+      {#if warmBase != null && warmNow != null}about <b>{n1(warmNow)}</b> nights a year that never drop below 70°F, up from
+      <b>{n1(warmBase)}</b> in {ix.baseline.start}–{ix.baseline.end}{:else}far more nights that never drop below 70°F than it did in the mid-20th century{/if}
+      — and {#if hotBase != null && hotNow != null}<b>{n1(hotNow)}</b> days at or above 95°F, up from <b>{n1(hotBase)}</b>{:else}more 95°F days too{/if}.
+      Every number comes straight from NOAA's daily station records.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}{#if closed}; {closed} further stations with 50+ year records that have since closed are included for history{/if}. This site does not chart the famous downtown "Civic Center" record —
-      <a href="/methods#civic-center">here's why</a>.
+      Latest readings through {fmtISO(latest)}{#if closed}; {closed} stations with 50+ year records that have since closed are included for history{/if}.
+      Stations come and go, so the two charts use a model that fills each station's missing years from the others (<a href="/methods#regional">how</a>).
+      This site does not chart the famous downtown "Civic Center" record — <a href="/methods#civic-center">here's why</a>.
     </p>
   </div>
   <div class="tiles">
-    <StatTile label="{heroIdx.short}: nights per year that stayed at or above 70°F, {hero.windows.baseline.years[0]}–{hero.windows.baseline.years[1]}" value={n1(h.warm70_baseline)} />
-    <StatTile label="…and per year, {hero.windows.last10.years[0]}–{hero.windows.last10.years[1]}" value={n1(h.warm70_last10)} accent />
-    <StatTile label="{heroIdx.short}: days per year at or above 95°F, then" value={n1(h.hot95_baseline)} />
-    <StatTile label="…and now" value={n1(h.hot95_last10)} accent />
+    {#if reg?.metrics?.warm70}
+      <RegionalIndex series={reg.metrics.warm70} label="Nights ≥ 70°F per year, average station" unitLabel="nights" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+    {/if}
+    {#if reg?.metrics?.hot95}
+      <RegionalIndex series={reg.metrics.hot95} label="Days ≥ 95°F per year, average station" unitLabel="days" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+    {/if}
+    {#if !reg}
+      <StatTile label="{heroIdx.short}: nights per year at or above 70°F, {hero.windows.baseline.years[0]}–{hero.windows.baseline.years[1]}" value={n1(h.warm70_baseline)} />
+      <StatTile label="…and per year, {hero.windows.last10.years[0]}–{hero.windows.last10.years[1]}" value={n1(h.warm70_last10)} accent />
+    {/if}
   </div>
 </section>
 
@@ -209,7 +232,7 @@
   }
   .hero {
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
+    grid-template-columns: 1fr 1.15fr;
     gap: 2rem;
     align-items: center;
     margin-top: 2rem;
@@ -221,8 +244,8 @@
   }
   .tiles {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
   .sechead {
     display: flex;

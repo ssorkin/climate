@@ -13,6 +13,7 @@
     values = [],
     lower = [], // count over observed days; drawn hollow when the year is incomplete
     expected = [], // expected effect of the missing days on the count
+    modeled = null, // {mean:[], lo:[], hi:[]} from the regional model, drawn for years without a count
     daysValid = [],
     daysTotal = [],
     partial = [],
@@ -36,7 +37,7 @@
 
   let x = $derived(linear([years[0] - 0.5, years[years.length - 1] + 0.5], [M.left, W - M.right]));
   let bw = $derived(Math.max(1.5, Math.min(24, (innerW / years.length) * 0.78)));
-  let vmax = $derived(Math.max(1, ...values.filter((v) => v != null), ...lower.filter((v) => v != null), ...(decades?.value ?? []).filter((v) => v != null)));
+  let vmax = $derived(Math.max(1, ...values.filter((v) => v != null), ...lower.filter((v) => v != null), ...(decades?.value ?? []).filter((v) => v != null), ...(modeled ? years.map((yr, k) => (values[k] == null && modeled.hi?.[k] != null ? Math.min(modeled.hi[k], 120) : 0)) : [])));
   let yTicks = $derived(ticks(0, vmax * 1.08, 5));
   let y = $derived(linear([0, yTicks[yTicks.length - 1]], [M.top + innerH, M.top]));
 
@@ -57,8 +58,9 @@
     const obs = daysValid[k] != null && daysTotal[k] != null ? ` (${daysValid[k]} of ${daysTotal[k]} days observed)` : '';
     if (v == null) {
       if (partial[k] && lower[k] != null) return `${yr}: ${yFormat(lower[k])} ${unitLabel} so far${obs}`;
-      if (lower[k] != null) return `${yr}: at least ${yFormat(lower[k])} ${unitLabel} — incomplete year${obs}${expected[k] != null ? `, missing days expected to add ~${expected[k].toFixed(1)}` : ''}`;
-      return `${yr}: no data`;
+      const mdl = modeled?.mean?.[k] != null ? ` · model estimate ${yFormat(Math.round(modeled.mean[k]))} (90% range ${modeled.lo[k]}–${modeled.hi[k]})` : '';
+      if (lower[k] != null) return `${yr}: at least ${yFormat(lower[k])} ${unitLabel} — incomplete year${obs}${expected[k] != null ? `, missing days expected to add ~${expected[k].toFixed(1)}` : ''}${mdl}`;
+      return `${yr}: not observed${mdl}`;
     }
     const gap = daysValid[k] != null && daysTotal[k] != null && daysValid[k] < daysTotal[k] && !partial[k] ? `${obs}, on dates that ${expected[k] === 0 ? 'never' : 'rarely'} count here` : obs;
     return `${yr}: ${yFormat(v)} ${unitLabel}${partial[k] ? ' so far' : ''}${gap}`;
@@ -96,6 +98,9 @@
           stroke-dasharray={partial[k] ? null : '2 2'}
           opacity="0.8"
         />
+      {:else if v == null && modeled?.mean?.[k] != null}
+        <line x1={x(yr)} x2={x(yr)} y1={y(Math.min(modeled.hi[k], yTicks[yTicks.length - 1]))} y2={y(modeled.lo[k])} stroke={NEUTRAL} stroke-width="1" />
+        <circle cx={x(yr)} cy={y(modeled.mean[k])} r={Math.max(1.5, Math.min(3, bw / 2))} fill="none" stroke={MUTED} stroke-width="1" />
       {:else if v == null}
         <rect x={x(yr) - bw / 2} y={y(0) - 3} width={bw} height="3" fill={NEUTRAL} opacity="0.7" />
       {:else}
@@ -140,7 +145,7 @@
       <text x={W - M.right} y={M.top - 8} text-anchor="end" font-size="11.5" fill={INK}>{trendLabel}</text>
     {/if}
   </svg>
-  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · hollow bars: incomplete years, at least this many{#if annotations.some((a) => !a.label)} · ▼ dotted: site/instrument change detected by NOAA{/if}</span></div>
+  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · hollow bars: incomplete years, at least this many{#if modeled} · gray dots: model estimate for unobserved years (whisker = 90% range){/if}{#if annotations.some((a) => !a.label)} · ▼ dotted: site/instrument change detected by NOAA{/if}</span></div>
 </div>
 
 <style>

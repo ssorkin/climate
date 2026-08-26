@@ -87,6 +87,42 @@ def ghcnd_version() -> str:
     return text[i + len(marker) :].split()[0] if i >= 0 else ""
 
 
+_REGIONAL_CACHE: dict[str, dict] = {}
+
+
+def _regional(region_id: str) -> dict | None:
+    if region_id not in _REGIONAL_CACHE:
+        p = ANALYSIS_DIR / "regional" / f"{region_id}.json"
+        _REGIONAL_CACHE[region_id] = json.loads(p.read_text()) if p.exists() else None
+    return _REGIONAL_CACHE[region_id]
+
+
+def _modeled_block(
+    sid: str, region_ids: list[str], annual_years: list, season_years: list
+) -> dict | None:
+    """Per-station imputed/fitted counts from the regional model, aligned to the station's
+    own year lists (null where the model has no year)."""
+    for rid in region_ids:
+        reg = _regional(rid)
+        if not reg:
+            continue
+        out = {}
+        for key, m in reg["metrics"].items():
+            ps = m["per_station"].get(sid)
+            if not ps:
+                continue
+            yrs = {y: k for k, y in enumerate(m["years"])}
+            target = season_years if key == "frost32" else annual_years
+            out[key] = {
+                "mean": [ps["mean"][yrs[y]] if y in yrs else None for y in target],
+                "lo": [ps["lo"][yrs[y]] if y in yrs else None for y in target],
+                "hi": [ps["hi"][yrs[y]] if y in yrs else None for y in target],
+            }
+        if out:
+            return {"region": rid, **out}
+    return None
+
+
 def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict]:
     d = ANALYSIS_DIR / sid
     meta = json.loads((d / "meta.json").read_text())
@@ -137,6 +173,9 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     summary = {
         **{k: v for k, v in meta.items() if k not in ("inventory", "homogenized")},
         "homogenized": homog,
+        "modeled": _modeled_block(
+            sid, meta.get("regions", []), annual["year"].to_list(), cold["season"].to_list()
+        ),
         "baseline": cfg["baseline"],
         "thresholds_f": cfg["thresholds_f"],
         "completeness": cfg["completeness"],
@@ -423,6 +462,19 @@ def run_export(region: str = "all") -> None:
             path = SITE_DATA_DIR / ("index.json" if reg.id == "la" else f"{reg.id}/index.json")
             n = dump(path, index)
             print(f"  {path.relative_to(SITE_DATA_DIR)} {n / 1e3:.0f} KB ({len(ids)} stations)")
+            regm = _regional(reg.id)
+            if regm:
+                slim = {
+                    "region": reg.id,
+                    "n_stations": len(reg.stations),
+                    "baseline": cfg["baseline"],
+                    "metrics": {
+                        k: {**m["regional"], "alpha": m["alpha"]}
+                        for k, m in regm["metrics"].items()
+                    },
+                }
+                n = dump(SITE_DATA_DIR / "regional" / f"{reg.id}.json", slim)
+                print(f"  regional/{reg.id}.json {n / 1e3:.0f} KB")
         else:
             # Compact index + per-metric year matrices (int16, station-major) for the big map.
             compact = []

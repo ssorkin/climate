@@ -226,3 +226,26 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
         print(f"  {skipped} station(s) not ingested yet — skipped")
     if failed:
         print(f"  {failed} station(s) failed")
+
+    from climate.analysis.regional import run_regional
+
+    for reg in regions:
+        if reg.generated:
+            continue
+        last_complete = max(
+            (
+                json.loads((ANALYSIS_DIR / st.id / "meta.json").read_text()).get(
+                    "last_complete_year"
+                )
+                or 0
+            )
+            for st in reg.stations
+            if (ANALYSIS_DIR / st.id / "meta.json").exists()
+        )
+        res = run_regional(reg, ANALYSIS_DIR, last_complete)
+        out = ANALYSIS_DIR / "regional" / f"{reg.id}.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(res))
+        print(
+            f"  regional model for {reg.id}: {', '.join(res['metrics'])} (through {last_complete})"
+        )

@@ -10,5 +10,12 @@ export async function load({ fetch }) {
   } catch {
     /* no national index yet */
   }
-  return { index, hero, usCount };
+  let regional = null;
+  try {
+    const r = await fetch(dataUrl('/data/regional/la.json'));
+    if (r.ok) regional = await r.json();
+  } catch {
+    /* no regional model */
+  }
+  return { index, hero, usCount, regional };
 }

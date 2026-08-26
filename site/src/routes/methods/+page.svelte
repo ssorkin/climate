@@ -2,6 +2,8 @@
   let { data } = $props();
   let ix = $derived(data.index);
   let coop = $derived(ix.stations.filter((s) => s.kind === 'coop'));
+  let reg = $derived(data.regional);
+  const EVAL_LABELS = { hot95: 'Days ≥ 95°F', hot100: 'Days ≥ 100°F', warm65: 'Nights ≥ 65°F', warm70: 'Nights ≥ 70°F', frost32: 'Frost nights' };
 </script>
 
 <svelte:head>
@@ -90,6 +92,23 @@
   logged at 8 am mostly happened the previous afternoon. We never shift or adjust readings; the daily explorer shows
   the observation time and notes the offset. Monthly and yearly counts are essentially unaffected. Airport stations
   (USW) use automated instruments and calendar days.
+</p>
+
+<h2 id="regional">The LA-wide index: filling in the blanks</h2>
+<p>
+  Stations come and go — the 1900s network was three inland sites, the 1960s had 25, today 14 report — so a plain
+  average of whatever stations exist each year says as much about the network as about the weather. The two charts at
+  the top of the front page instead come from a model fitted to every station-year with an exact count: each count is
+  treated as a negative-binomial draw whose expected value is exp(station effect + year effect). The station effect is
+  that site's climate (Newport Beach vs. Palmdale); the year effect is the shared, latent "how hot was this year across
+  Los Angeles" variable. Every missing station-year then gets a predictive distribution from those two effects and the
+  fitted noise, with parameter uncertainty carried through 400 draws (each draw clipped to ±2.5 standard errors, and a
+  station's imputed count capped at 1.5× its own record maximum). The chart shows, for each year, the average over all
+  {ix.regions.find((r) => r.id === 'la')?.n_stations} stations of observed-or-imputed counts — what the typical station would have
+  recorded had every station reported every year — as the median of the draws with a 5–95% band. Years with few
+  observers get wide bands, as they should. On station pages, the same model's estimates appear as gray dots for years
+  the station didn't observe. The model is a description of the network, not a substitute for it: no imputed value
+  enters any per-station statistic.
 </p>
 
 <h2 id="homogenization">Site and instrument changes — the Pasadena case</h2>
