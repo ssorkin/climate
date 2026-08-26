@@ -72,7 +72,6 @@
 <div class="ri">
   <div class="head">
     <span class="lbl">{label}</span>
-    <span class="nums"><b>{f1(baseMean)}</b><span class="muted"> {baseline[0]}–{baseline[1]}</span> → <b class="accent">{f1(lastMean)}</b><span class="muted"> {last - 9}–{last}</span></span>
   </div>
   <svg viewBox="0 0 {W} {height}" role="img" aria-label={label} onpointermove={at} onpointerleave={() => (hover = null)}>
     {#each yTicks as t (t)}
