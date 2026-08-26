@@ -69,6 +69,15 @@
     return m;
   });
   let loaded = $derived(Object.keys(summaries).length === stations.length);
+  let vmax = $derived.by(() => {
+    let top = 1;
+    for (const s of stations) {
+      const sm = summaries[s.id];
+      if (!sm) continue;
+      for (const v of exportedAnnual(sm, family, threshold) ?? []) if (v != null && v > top) top = v;
+    }
+    return top;
+  });
   const num = (v) => (v == null ? null : typeof v === 'object' ? v.lower : v);
   let ranked = $derived([...stations].map((s) => ({ s, v: num(values.get(s.id)), lb: typeof values.get(s.id) === 'object' && values.get(s.id) !== null })).sort((a, b) => (b.v ?? -1) - (a.v ?? -1)));
   const closedNote = (s) => (s.active ? '' : ` (closed ${s.last_year})`);
@@ -93,7 +102,7 @@
 
 <YearScrubber years={allYears} bind:value={year} playable />
 
-<StationMap {stations} {values} unitLabel={fam.noun} cool={family === 'frost' || family === 'coldday'} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}?m=${family}&t=${threshold}&year=${year}`)} />
+<StationMap {stations} {values} {vmax} unitLabel={fam.noun} cool={family === 'frost' || family === 'coldday'} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}?m=${family}&t=${threshold}&year=${year}`)} />
 {#if !loaded}<p class="muted small">Loading station records…</p>{/if}
 
 <div class="rank">

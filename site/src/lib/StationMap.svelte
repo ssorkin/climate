@@ -16,7 +16,9 @@
     zoom = 8.3,
     height = '520px',
     onselect = null,
-    selected = null
+    selected = null,
+    compact = false, // count only, no station name; stations without data are hidden
+    vmax = null // fixed top of the color scale (else the max of the current values)
   } = $props();
 
   let el;
@@ -49,7 +51,12 @@
         name.textContent = s.short;
         const val = document.createElement('span');
         val.className = 'vl';
-        d.append(name, val);
+        if (compact) {
+          d.classList.add('compact');
+          d.append(val);
+        } else {
+          d.append(name, val);
+        }
         d.addEventListener('click', () => onselect?.(s.id));
         d.addEventListener('keydown', (e) => e.key === 'Enter' && onselect?.(s.id));
         const m = new maplibregl.Marker({ element: d, anchor: 'center' }).setLngLat([s.lon, s.lat]).addTo(map);
@@ -65,7 +72,7 @@
     if (!ready) return;
     const num = (v) => (v == null ? null : typeof v === 'object' ? v.lower : v);
     const vals = [...values.values()].map(num).filter((v) => v != null);
-    const vmax = Math.max(1, ...vals);
+    const top = vmax ?? Math.max(1, ...vals);
     for (const s of stations) {
       const mk = markers.get(s.id);
       if (!mk) continue;
@@ -73,7 +80,8 @@
       const isLower = raw != null && typeof raw === 'object';
       const v = num(raw);
       mk.val.textContent = v == null ? '—' : `${isLower ? '≥' : ''}${Math.round(v)}`;
-      const t = v == null ? null : v / vmax;
+      const t = v == null ? null : Math.min(1, v / top);
+      mk.d.style.display = compact && (v == null || (isLower && v === 0)) ? 'none' : '';
       const dark = t != null && t > 0.55;
       mk.d.style.background = v == null ? '#efe9df' : ramp(cool ? COOL_RAMP : HEAT_RAMP, t);
       mk.d.style.color = dark ? '#fff' : '#1f1b16';
@@ -87,6 +95,7 @@
     values;
     selected;
     cool;
+    vmax;
     paint();
   });
 </script>
@@ -123,6 +132,11 @@
   :global(.stpill .vl) {
     font-size: 1.05rem;
     font-weight: 800;
+  }
+  :global(.stpill.compact) {
+    padding: 0.2rem 0.6rem;
+    min-width: 2.4rem;
+    justify-content: center;
   }
   :global(.stpill.sel) {
     border-color: #1f1b16;

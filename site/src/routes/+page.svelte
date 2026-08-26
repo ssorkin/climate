@@ -65,6 +65,17 @@
     return m;
   });
 
+  // Fixed color scale: the largest annual count of this metric at any station in any year.
+  let mapVmax = $derived.by(() => {
+    let top = 1;
+    for (const s of allStations) {
+      const sm = summaries[s.id];
+      if (!sm) continue;
+      for (const v of exportedAnnual(sm, mapFamily, mapThr) ?? []) if (v != null && v > top) top = v;
+    }
+    return top;
+  });
+
   // Warm-nights chart with a station switcher.
   let barStation = $state(null);
   let bars = $derived(summaries[barStation ?? hero.id] ?? hero);
@@ -121,8 +132,8 @@
     </div>
   </div>
   <YearScrubber years={mapYears} bind:value={mapYear} playable />
-  <StationMap stations={allStations} values={mapValues} unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
-  <p class="small muted">Press play, or drag the year. Numbers are that year's count at each station; “≥” means the year is incomplete there and the count is a lower bound; a dash means no data. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
+  <StationMap stations={allStations} values={mapValues} vmax={mapVmax} compact unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
+  <p class="small muted">Press play, or drag the year. Each pill is one station's count for that year (hover for the name); “≥” means the year is incomplete there and the count is a lower bound; stations with no data that year are hidden. Colors use one scale for every year. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
 </section>
 
 <section>
