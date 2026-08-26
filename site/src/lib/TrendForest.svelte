@@ -13,11 +13,11 @@
     stations
       .map((s) => ({ s, t: s.headline?.[key] }))
       .filter((r) => r.t && r.t.slope_per_decade != null)
-      .sort((a, b) => b.t.slope_per_decade - a.t.slope_per_decade)
+      .sort((a, b) => a.t.from - b.t.from || b.t.slope_per_decade - a.t.slope_per_decade)
   );
   let noTrend = $derived(stations.filter((s) => !s.headline?.[key]));
   const W = 620;
-  const L = 178, R = 74;
+  const L = 178, R = 104;
   let H = $derived(rows.length * rowH + 30);
   let ext = $derived.by(() => {
     const v = rows.flatMap((r) => [r.t.ci[0], r.t.ci[1], r.t.slope_per_decade]);
@@ -59,7 +59,7 @@
       {@const r = rows.find((q) => q.s.id === hover)}
       <b>{r.s.short}</b>: {f1(r.t.slope_per_decade)} {unitLabel} per decade over {r.t.from}–{r.t.to} ({r.t.n} complete years; 90% range {f1(r.t.ci[0])} to {f1(r.t.ci[1])}){r.t.significant ? '' : ' — not distinguishable from zero'}
     {:else if !compact}
-      Each row is one station's own trend over its own complete years; filled dots are trends whose 90% range excludes zero.{#if noTrend.length} {noTrend.length} station{noTrend.length > 1 ? 's' : ''} with too few counting years ({noTrend.map((s) => s.short).join(', ')}) not shown.{/if}
+      One row per station, longest records first: its own trend over its own complete years; filled dots are trends whose 90% range excludes zero.{#if noTrend.length} {noTrend.length} station{noTrend.length > 1 ? 's' : ''} with too few counting years ({noTrend.map((s) => s.short).join(', ')}) not shown.{/if}
     {/if}
   </div>
 </div>
