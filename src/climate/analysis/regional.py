@@ -207,22 +207,25 @@ def evaluate_metric(
 
 def _trend_from_draws(yrs: list[int], regional: np.ndarray, from_year: int) -> dict | None:
     """Theil-Sen slope per decade of the regional series from `from_year`, computed on
-    every draw (so the interval carries imputation + parameter uncertainty), with a
-    Kendall p-value on the median series."""
+    every draw. The reported range combines the Sen 90% interval (year-to-year noise) with
+    the spread across draws (imputation + parameter uncertainty); Kendall p on the median."""
     from scipy import stats
 
     ks = [k for k, y in enumerate(yrs) if y >= from_year]
     if len(ks) < 10:
         return None
     x = np.array([yrs[k] for k in ks], float)
-    slopes = []
+    slopes, los, his = [], [], []
     for j in range(regional.shape[1]):
-        sl, *_ = stats.theilslopes(regional[ks, j], x)
+        sl, _b, lo_j, hi_j = stats.theilslopes(regional[ks, j], x, alpha=0.90)
         slopes.append(sl * 10)
+        los.append(lo_j * 10)
+        his.append(hi_j * 10)
     slopes = np.array(slopes)
     med = np.median(regional[ks, :], axis=1)
     _tau, p = stats.kendalltau(x, med)
-    lo, hi = np.percentile(slopes, [5, 95])
+    # Range = the Sen interval's own spread AND the spread across model draws.
+    lo, hi = np.percentile(los, 5), np.percentile(his, 95)
     return {
         "from": int(x[0]),
         "to": int(x[-1]),
