@@ -1,15 +1,17 @@
 # climate — project conventions
 
-Open-source pipeline + static site for long-term NOAA GHCN-Daily station records
-(Los Angeles area first). Plan of record: `acquire → ingest → check → analyze → export`
-in Python, fully static SvelteKit site at climate.sorkinlabs.com.
+Open-source pipeline + static site for long-term NOAA hourly station records (GHCNh),
+Los Angeles curated + national. Plan of record: `acquire → ingest → check → analyze →
+export` in Python, fully static SvelteKit site at climate.sorkinlabs.com.
 
 ## Commands
 
 - `uv sync` — install; `uv run clim --help` — pipeline CLI (`stations`, `acquire [--refresh]`,
-  `ingest`, `check [--strict]`, `analyze`, `export`; all take `--region la|us|all`)
-- Hourly tier (ISD-Lite, airports since 1973): `uv run clim stations --tier isd` generates
-  `stations/isd.yaml`; `uv run clim hourly acquire|ingest|analyze|export [--only WBAN,…]`.
+  `ingest`, `check [--strict]`, `analyze`, `export`; all take `--region la|us|all`). The
+  stages delegate to the GHCNh hourly tier (`clim hourly …`) for every station in
+  `stations/hourly.yaml`, which `clim stations --tier hourly` regenerates (it probes one
+  year per candidate for hourly temperature — slow, run rarely); `clim stations --region us`
+  rebuilds the national region from it.
 - `uv run pytest` — tests; `uv run ruff check src tests` — lint
 - Site: `cd site && npm run dev` / `npm run build` (static; data from `clim export`)
 - Deploy (atomic): `scripts/deploy.sh [--build]` — rsync `site/build/` to dronesclub
@@ -21,8 +23,10 @@ in Python, fully static SvelteKit site at climate.sorkinlabs.com.
 
 ## Hard rules (data integrity)
 
-- **Only rows with an empty QFLAG are data.** Flagged rows stay in Parquet and are
-  counted in the DQ report, but never enter any aggregate.
+- **Source is GHCNh hourly; a day's high/low are the extremes of that local day's
+  readings.** A day counts only with 8+ readings, no gap over 3 h, a reading by 03:00 and
+  after 21:00. Values with a failed GHCNh quality code are dropped at ingest. Hourly maxima
+  under-read a thermometer's peak by ~0.5 °C consistently — never mix in GHCN-Daily counts.
 - **Missing days are null, never 0.** A year counts only with ≥ 90% valid days *per
   element* (TMAX and TMIN separately); a month with ≥ 25. Incomplete periods export
   as `null`; the current year is `partial` and compared only in a same-window
@@ -32,13 +36,10 @@ in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   90°F is stored as 322 → 89.96 and a naive float compare misses it.
 - **Observation times are never shifted**, always displayed. COOP stations read at
   0800/1600 and log on the reading date; the site says so rather than adjusting.
-- **Civic Center (USW00093134) is excluded** and the site explains why (TM-261).
-  Exclusions live in `stations/*.yaml` with a `reason` and `source`.
+- GHCN-Daily is retired: its Parquet (`data/parquet/ghcnd_daily`) serves only as a
+  cross-check on station pages; do not add GHCN-Daily-only stations to regions.
 - Station lists live only in `stations/*.yaml`; baseline, thresholds and completeness
   rules only in `config/analysis.yaml`, echoed into every export. No duplicates in JS.
-- **Day counts come from the max/min thermometer (GHCN-Daily), never from hourly samples**
-  (hourly maxima under-read the peak by ~0.5 °C; the station page shows the measured gap).
-  Hourly data are for duration, night relief and heat index only.
 - **Charts show the raw record.** NOAA's USHCN homogenization (3 stations) is used only to
   mark detected site/instrument changes and to show an *estimated* homogenized count next
   to the raw one — never to replace it.

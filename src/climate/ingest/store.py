@@ -8,11 +8,24 @@ from climate.paths import PARQUET_DIR
 
 
 def daily_path(station_id: str):
+    """The daily max/min store the pipeline reads: derived from GHCNh hourly data."""
+    return PARQUET_DIR / "daily" / f"station={station_id}" / "data.parquet"
+
+
+def legacy_ghcnd_path(station_id: str):
+    """GHCN-Daily (retired source), kept for cross-checks where it was ingested."""
     return PARQUET_DIR / "ghcnd_daily" / f"station={station_id}" / "data.parquet"
 
 
 def load_daily_long(station_id: str) -> pl.DataFrame:
     return pl.read_parquet(daily_path(station_id))
+
+
+def load_legacy_ghcnd_wide(station_id: str) -> pl.DataFrame | None:
+    p = legacy_ghcnd_path(station_id)
+    if not p.exists():
+        return None
+    return _wide(pl.read_parquet(p))
 
 
 def load_daily_wide(station_id: str) -> pl.DataFrame:
@@ -21,7 +34,10 @@ def load_daily_wide(station_id: str) -> pl.DataFrame:
     Flagged values are nulled in the value columns and their flag kept in *_qflag so
     the export can show "withheld (QFLAG X)" instead of a number.
     """
-    long = load_daily_long(station_id)
+    return _wide(load_daily_long(station_id))
+
+
+def _wide(long: pl.DataFrame) -> pl.DataFrame:
     frames = []
     for el in ("TMAX", "TMIN", "PRCP"):
         sub = long.filter(pl.col("element") == el)

@@ -9,8 +9,7 @@ def test_la_region_loads():
     la = regs[0]
     assert la.default_station in la.station_ids
     assert all(e.reason and e.source for e in la.excluded)
-    assert "USW00093134" in {e.id for e in la.excluded}
-    assert "USW00093134" not in la.station_ids
+    assert "USW00023174" in la.station_ids
 
 
 def test_unknown_region():

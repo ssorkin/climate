@@ -36,9 +36,18 @@ def run_acquire(region: str = "all", refresh: bool = False, force: bool = False)
             failed.append(name)
 
     from climate.config import unique_stations
+    from climate.ghcnh import hourly_station
+    from climate.hourly.acquire import run_acquire as run_acquire_hourly
 
     regions = load_regions(region)
-    todo = unique_stations(regions)
+    all_todo = unique_stations(regions)
+    hourly_ids = [st.id for _r, st in all_todo if hourly_station(st.id) is not None]
+    if hourly_ids:
+        run_acquire_hourly(only=hourly_ids, refresh=refresh)
+    todo = [(r, st) for r, st in all_todo if st.id not in set(hourly_ids)]
+    if not todo:
+        flush_manifests()
+        return
     print(f"==> {len(todo)} stations across {', '.join(r.id for r in regions)}")
     from concurrent.futures import ThreadPoolExecutor
 

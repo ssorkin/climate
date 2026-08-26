@@ -11,41 +11,48 @@
 </svelte:head>
 
 <h1>Methods and data</h1>
-<p class="lede">Everything on this site is computed from NOAA's raw daily station files by an open pipeline. This page says exactly what was done — and what was left out.</p>
+<p class="lede">Everything on this site is computed from NOAA's hourly station files by an open pipeline. This page says exactly what was done — and what was left out.</p>
 
 <h2>Source</h2>
 <p>
-  Daily maximum and minimum temperatures come from NOAA's <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily">Global Historical Climatology Network – Daily</a>
-  (GHCN-D), version {ix.ghcnd_version}, the same archive behind NOAA's own climate tools. We use the per-station files
-  (<code>by_station/&lt;ID&gt;.csv.gz</code>) refreshed nightly, and keep only values that pass NOAA's quality checks —
-  flagged values are shown as "withheld" in the raw tables and excluded from every count. The URL and SHA-256 of every
-  file used is recorded in the repository's <code>manifests/</code>.
+  Every number comes from NOAA's <a href="https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly">Global
+  Historical Climatology Network – hourly</a> (GHCNh, version 1.1), the archive that replaced the Integrated Surface Database:
+  hourly (in early decades sometimes 3-hourly) temperature and dew point from airports and other stations, with NOAA's quality
+  checks applied after all sources are merged. We use the per-station, per-year Parquet files and keep only readings whose quality
+  code passed; the URL and SHA-256 of every file is recorded in the repository's <code>manifests/</code>. Readings are converted
+  to each station's local time. Earlier versions of this site used the daily max/min network (GHCN-Daily, mostly volunteer
+  cooperative observers); that source has been retired here because its stations came with once-a-day observation-time
+  quirks, undocumented moves, and gaps — though it still serves as a cross-check where both exist.
+</p>
+
+<h2>From hourly readings to a day's high and low</h2>
+<p>
+  A day's high and low are the highest and lowest readings among that local day's observations. A day counts only when it has at
+  least 8 readings, no gap longer than 3 hours, a first reading by 3 am and a last after 9 pm — so 3-hourly synoptic years count,
+  hourly years count, and a day with a 6-hour outage does not; small airports that don't observe overnight get no day counts at all.
+  Because readings are samples, a day's true peak usually falls between them: compared with a max/min thermometer at the same
+  airports, the hourly high reads about 0.5°C (0.9°F) low and the hourly low about 0.35°C high, and this gap has been steady
+  since the 1940s — so counts are comparable across decades, but a "95°F day" here means a 95°F <i>reading</i>. Station pages
+  that also have the retired daily record show the measured gap.
 </p>
 
 <h2>Stations</h2>
 <p>
-  We chose {ix.stations.length} {ix.regions[0].name} stations with long, still-active daily records and stable ground-level siting:
-  {#each ix.stations as s, i (s.id)}{s.short} ({s.first_year}–){i < ix.stations.length - 1 ? ', ' : '.'}{/each}
-  Two candidates were dropped for incompleteness (Big Tujunga Dam, Van Nuys Airport). Names and coordinates come from NOAA's station list.
+  The Los Angeles set is every station in the basin and its valleys with 20+ hourly years: {ix.stations.length} stations with
+  usable day records, the oldest airports from 1940 (LAX, Long Beach, March Field) and 1943 (Burbank, Ontario, Van Nuys),
+  closed ones included. The <a href="/us">national map</a> is not curated: it is every US station in GHCNh with 20+ hourly years
+  since 1940 that actually reports temperature (verified station by station) —
+  {ix.regions.find((r) => r.id === 'us')?.n_stations?.toLocaleString() ?? 'about 2,000'} of them — with the same rules.
+  A year counts as "hourly" when it holds at least 2,700 observations. Station moves and instrument changes are still common
+  in these records (the 1990s switch to automated ASOS sensors above all); look for agreement among neighbors.
 </p>
 
+<h2 id="civic-center">A note on downtown Los Angeles</h2>
 <p>
-  The <a href="/us">national map</a> is different: it is not curated. It includes every US station in NOAA's inventory whose
-  daily highs and lows span at least 50 years — {ix.regions.find((r) => r.id === 'us')?.n_stations?.toLocaleString() ?? 'thousands of'} stations, closed ones included — with
-  the same completeness rules applied year by year, and no judgment about siting. Station moves and instrument changes are
-  common in those records (Pasadena's are described below); treat any single station's trend with that in mind, and look for
-  agreement among neighbors.
+  The famous "Los Angeles" record — downtown, since 1877 — was produced from eight different rooftop and street sites before
+  moving to ground level at USC in 1999 (<a href="https://www.weather.gov/media/wrh/online_publications/TMs/TM-261.pdf">NWS TM-261</a>).
+  Its hourly record begins with the USC site in 1999, and that is what appears here as Downtown LA (USC).
 </p>
-
-<h2 id="civic-center">Why the famous downtown Los Angeles record isn't here</h2>
-{#each ix.excluded as e (e.id)}
-  <p>
-    {e.reason} (<a href={e.source}>{e.source_note || 'source'}</a>.) The same memorandum names Pasadena, Long Beach and Burbank
-    among the "first-rate, stable weather records" in the region, which is why those anchor this site. Downtown's
-    current ground-level site at USC (since 1999) is excellent, but a chart of "Los Angeles since 1877" would be
-    stitching together eight different thermometers on eight different rooftops.
-  </p>
-{/each}
 
 <h2>What counts as a hot day or a warm night</h2>
 <p>
@@ -68,8 +75,7 @@
   fewer than half a day to the count, and at least half the period was observed, the count is treated as exact and the
   year counts normally; the tooltip still says which days were missing. The current
   year is always "so far": it appears hatched and is compared with other years only over the same calendar window
-  ("this summer through August 23" against every other summer through August 23). Cooperative-observer stations can
-  report weeks late, so a station's latest date is always shown.
+  ("this summer through August 23" against every other summer through August 23). A station's latest date is always shown.
 </p>
 
 <h2>Baseline, decades, trends</h2>
@@ -85,29 +91,17 @@
   A daily record requires at least {ix.completeness.record_min_prior_years} prior years of data for that date, so a record set in 1895 over two prior years doesn't count.
 </p>
 
-<h2>Observation time</h2>
+<h2 id="hourly">Hour by hour</h2>
 <p>
-  {coop.length} of the stations are cooperative-observer stations (NOAA ids starting with USC): a volunteer reads a max/min
-  thermometer once a day — typically at 8 am or 4 pm — and the 24-hour extremes are logged on the reading date. A high
-  logged at 8 am mostly happened the previous afternoon. We never shift or adjust readings; the daily explorer shows
-  the observation time and notes the offset. Monthly and yearly counts are essentially unaffected. Airport stations
-  (USW) use automated instruments and calendar days.
-</p>
-
-<h2 id="hourly">The hourly layer (airports)</h2>
-<p>
-  For airports, NOAA's Integrated Surface Database (ISD-Lite) adds hourly temperature and dew point from 1973, converted to
-  local time. From it the station page shows hours at or above a threshold, "no-relief nights" (the air never fell below a
-  threshold between 6 pm and 8 am), heat-index hours (NWS formula, using humidity), and the average temperature at each hour of a
-  summer day by decade. A day counts when at least 18 of its 24 hours were observed, a night when 10 of its 14; years and months
-  follow the same 90% rule as the daily data. Day counts still come from the airport's max/min thermometer (its GHCN-Daily record):
-  hourly samples miss the true peak by about half a degree on average, and the station page reports the measured difference.
-  The hourly layer has its own history — automated ASOS instruments arrived around 1996 — so treat 1990s steps with care.
+  The same hourly readings drive each station's "Hour by hour" section: hours at or above a threshold, "no-relief nights" (the
+  air never fell below a threshold between 6 pm and 8 am), heat-index hours (NWS formula, using dew point), and the average
+  temperature at each hour of a summer day by decade. There a day counts when at least 18 of its 24 hours were observed and a night
+  when 10 of its 14; years and months follow the same 90% rule.
 </p>
 
 <h2 id="regional">The LA-wide index: filling in the blanks</h2>
 <p>
-  Stations come and go — the 1900s network was three inland sites, the 1960s had 25, today 14 report — so a plain
+  Stations come and go — the 1940s network was a handful of airfields, more joined through the decades, some closed — so a plain
   average of whatever stations exist each year says as much about the network as about the weather. The two charts at
   the top of the front page instead come from a model fitted to every station-year with an exact count: each count is
   treated as a negative-binomial draw whose expected value is exp(station effect + year effect). The station effect is
@@ -115,30 +109,11 @@
   Los Angeles" variable. Every missing station-year then gets a predictive distribution from those two effects and the
   fitted noise, with parameter uncertainty carried through 400 draws (each draw clipped to ±2.5 standard errors, and a
   station's imputed count capped at 1.5× its own record maximum). The chart shows, for each year, the average over all
-  {ix.regions.find((r) => r.id === 'la')?.n_stations} stations of observed-or-imputed counts — what the typical station would have
+  {ix.stations.length} stations of observed-or-imputed counts — what the typical station would have
   recorded had every station reported every year — as the median of the draws with a 5–95% band. Years with few
   observers get wide bands, as they should. On station pages, the same model's estimates appear as gray dots for years
   the station didn't observe. The model is a description of the network, not a substitute for it: no imputed value
   enters any per-station statistic.
-</p>
-
-<h2 id="homogenization">Site and instrument changes — the Pasadena case</h2>
-<p>
-  A century-long station record is never one instrument in one spot. NOAA's station history for Pasadena (COOP 046719, a
-  ground-level lawn site near Pasadena City Hall) records a switch to automated equipment around 2003–04, an upgrade to an
-  electronic MMTS sensor with a 12-foot relocation and a change of reading time from 4 pm to 8 am in August 2015, and sensor
-  replacements after that. NOAA's homogenization of the station's monthly record (USHCN v2.5, which compares each station with
-  its neighbors) detects steps in exactly those years: nights jumped about 2.5°F relative to neighbors in 2003, dropped about
-  3°F in 2015–16, and rose about 2.5°F again in 2020–21; daytime highs before 2015 were biased warm by the 4 pm reading time.
-</p>
-<p>
-  Does that explain Pasadena's rise? No — it changes the shape, not the conclusion. Applying NOAA's adjustments and recounting,
-  Pasadena's warm nights go from about 5 per year in 1951–1980 to about 18 in the last decade (raw: 3 → 15), and its 95°F days
-  from about 11 to about 41 (raw: 20 → 42) — the homogenized rise in hot days is <i>steeper</i>, because the afternoon reading
-  time inflated the old highs. Pasadena's night warming is also matched, in kind if not in size, at every other long-record
-  station in the region, including airports with automated instruments. For the three USHCN stations here (Pasadena, Newport
-  Beach, Tustin) each station page lists the detected changes and the raw-vs-homogenized counts; for the others no
-  homogenized version exists, and we show the raw record with its observation-time history.
 </p>
 
 <h2>What these charts can and can't say</h2>

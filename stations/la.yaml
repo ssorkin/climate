@@ -1,89 +1,35 @@
-# Greater Los Angeles stations with 50+ complete years of daily TMAX/TMIN in NOAA
-# GHCN-Daily — still-reporting stations and closed ones alike (a closed station's
-# record is still a record). Selection rule: >= 50 complete years (>= 90% of days
-# observed) and, for the "then vs now" comparisons, coverage of the 1951-1980
-# baseline. Names, coordinates and elevation come from ghcnd-stations.txt at
-# ingest time; `short` is only the display label.
+# Greater Los Angeles airports and other hourly stations in NOAA GHCNh, 1940s on.
+# Curated: every LA-basin station with 20+ hourly years, closed ones included; names,
+# coordinates and time zones come from stations/hourly.yaml. `short` is the display label.
 region: la
 name: Greater Los Angeles
-center: [34.08, -118.05]
-zoom: 7.85
-default_station: USC00046719
+center: [34.05, -118.15]
+zoom: 8.2
+default_station: USW00023174
 stations:
-  # --- still reporting ---
-  - id: USC00046719
-    short: Pasadena
-    ushcn: true
-    # NOAA station history (HOMR, COOP 046719): lawn site near City Hall.
-    notable:
-      - date: 2015-08-06
-        label: MMTS sensor, moved 12 ft, readings 4pm→8am
-        source: https://www.ncei.noaa.gov/access/homr/#ncdcstnid=10100112
-  - id: USC00047888
-    short: Santa Ana
-  - id: USC00046175
-    short: Newport Beach
-    ushcn: true
-  - id: USC00046624
-    short: Palmdale
-  - id: USW00003122
-    short: Torrance Airport
-  - id: USC00049152
-    short: UCLA
-  - id: USC00042214
-    short: Culver City
-  - id: USC00041194
-    short: Burbank
-  - id: USW00023174
-    short: LAX
-  - id: USC00046006
-    short: Mt. Wilson
-  - id: USW00023129
-    short: Long Beach Airport
-  - id: USC00049785
-    short: Woodland Hills
-  - id: USW00023182
-    short: Palmdale Airport
-  - id: USC00042805
-    short: Lake Elsinore
-  # --- closed stations (record ended) ---
-  - id: USC00047050
-    short: Pomona Fairplex
-  - id: USC00041779
-    short: Claremont
-  - id: USC00047470
-    short: Riverside
-  - id: USC00047473
-    short: Riverside Citrus Station
-  - id: USC00042031
-    short: Corona
-  - id: USC00049087
-    short: Tustin Irvine Ranch
-  - id: USC00049847
-    short: Yorba Linda
-  - id: USC00047785
-    short: San Gabriel
-  - id: USC00044647
-    short: Laguna Beach
-  - id: USC00047953
-    short: Santa Monica Pier
-  - id: USC00047759
-    short: San Fernando
-  - id: USW00093101
-    short: El Toro MCAS
-# Considered and dropped for incompleteness (not siting): Big Tujunga Dam
-# USC00040798 (2 complete years since 1932), Van Nuys Airport USW00023130
-# (28 complete years, none in the 1951-1980 baseline), Long Beach Pub Svc (46),
-# Sierra Madre (42), Dry Canyon Rsvr (42), Tustin MCAF (30), Valyermo (24),
-# Upland (22), Victorville AP (21), Saugus (18), San Gabriel Canyon PH (8).
-# Burbank Airport USW00023152 only begins in 1998.
-excluded:
-  - id: USW00093134
-    short: Downtown LA (Civic Center / USC)
-    reason: >-
-      The downtown Los Angeles record has been produced from eight different
-      locations since 1877, with instruments from four feet to over 220 feet above
-      the ground, mostly on rooftops, before moving to ground level at USC in 1999.
-      It is the best-known "Los Angeles" record but not a homogeneous one.
-    source: https://www.weather.gov/media/wrh/online_publications/TMs/TM-261.pdf
-    source_note: NWS Technical Memorandum TM-261, "Weather Records at Los Angeles", p. 9-10 (PDF p. 31)
+  - {id: USW00023174, short: LAX}
+  - {id: USW00023129, short: Long Beach Airport}
+  - {id: USW00023119, short: March Air Reserve Base}
+  - {id: USW00093184, short: John Wayne Airport}
+  - {id: USW00023152, short: Burbank Airport}
+  - {id: USW00003102, short: Ontario Airport}
+  - {id: USW00023122, short: San Bernardino Airport}
+  - {id: USW00023130, short: Van Nuys Airport}
+  - {id: USW00093110, short: Oxnard Airport}
+  - {id: USW00093111, short: Point Mugu}
+  - {id: USW00023182, short: Palmdale Airport}
+  - {id: USW00023136, short: Camarillo Airport}
+  - {id: USW00023131, short: Victorville}
+  - {id: USW00003166, short: Fullerton Airport}
+  - {id: USW00003167, short: Hawthorne Airport}
+  - {id: USW00093197, short: Santa Monica Airport}
+  - {id: USW00003174, short: Torrance Airport}
+  - {id: USW00003165, short: El Monte Airport}
+  - {id: USW00003171, short: Riverside Airport}
+  - {id: USW00053141, short: Los Alamitos}
+  - {id: USW00003179, short: Chino Airport}
+  - {id: USW00003180, short: Brackett Field (La Verne)}
+  - {id: USW00093134, short: Downtown LA (USC)}
+  - {id: USW00053130, short: Whiteman Airport (Pacoima)}
+  - {id: USW00053175, short: Corona Airport}
+  - {id: USL000ICAC1, short: Santa Monica Pier}

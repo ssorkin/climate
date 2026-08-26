@@ -35,8 +35,18 @@ def run_ingest(region: str = "all") -> None:
     inventory.write_parquet(out)
     print(f"  {stations.height:,} stations, {inventory.height:,} inventory rows")
 
+    from climate.ghcnh import hourly_station
+    from climate.hourly.ingest import run_ingest as run_ingest_hourly
+
     regions = load_regions(region)
-    todo = unique_stations(regions)
+    all_todo = unique_stations(regions)
+    hourly_ids = [st.id for _r, st in all_todo if hourly_station(st.id) is not None]
+    if hourly_ids:
+        run_ingest_hourly(only=hourly_ids)
+    todo = [(r, st) for r, st in all_todo if st.id not in set(hourly_ids)]
+    if not todo:
+        db.build()
+        return
     print(f"==> {len(todo)} stations")
     missing = [
         st.id

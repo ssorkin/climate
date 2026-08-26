@@ -428,6 +428,13 @@ def run_export(region: str = "all") -> None:
             if len(todo) > 40 and i % 500 == 0:
                 print(f"  … {i}/{len(todo)}")
 
+    from climate.ghcnh import hourly_station
+    from climate.hourly.export import run_export as run_export_hourly
+
+    hourly_ids = [sid for sid, _r in todo if hourly_station(sid) is not None]
+    if hourly_ids:
+        run_export_hourly(only=hourly_ids)
+
     year1 = max(e["last_year"] for e in entries.values())
     n_years = year1 - MATRIX_YEAR0 + 1
     for reg in regions:

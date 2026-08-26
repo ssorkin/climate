@@ -118,17 +118,17 @@
     <h1>Los Angeles nights aren't cooling off like they used to.</h1>
     <p class="lede">
       The heat you feel isn't only the afternoon high — it's whether the night gives you a break.
-      Across {allStations.length} long-running weather stations in Greater Los Angeles, from the beach to the
-      mountains to the desert, the typical station now records
+      Across {allStations.length} weather stations in Greater Los Angeles that have reported every hour or three since
+      the 1940s — airports from the beach to the desert — the typical station now records
       {#if warmBase != null && warmNow != null}about <b>{n1(warmNow)}</b> nights a year that never drop below 70°F, up from
       <b>{n1(warmBase)}</b> in {ix.baseline.start}–{ix.baseline.end}{:else}far more nights that never drop below 70°F than it did in the mid-20th century{/if}
       — and {#if hotBase != null && hotNow != null}<b>{n1(hotNow)}</b> days at or above 95°F, up from <b>{n1(hotBase)}</b>{:else}more 95°F days too{/if}.
-      Every number comes straight from NOAA's daily station records.
+      Every number comes straight from NOAA's hourly station records.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}{#if closed}; {closed} stations with 50+ year records that have since closed are included for history{/if}.
+      Latest readings through {fmtISO(latest)}{#if closed}; {closed} closed {closed === 1 ? 'station is' : 'stations are'} included for history{/if}.
       Stations come and go, so the two charts use a model that fills each station's missing years from the others (<a href="/methods#regional">how</a>); they start in {reg?.display_from ?? 1930}, when the network had grown past a handful of inland sites.
-      This site does not chart the famous downtown "Civic Center" record — <a href="/methods#civic-center">here's why</a>.
+      The famous downtown record has hourly data only since 1999 — <a href="/methods#civic-center">a note on that</a>.
     </p>
   </div>
   <div class="tiles">
@@ -156,12 +156,12 @@
   </div>
   <YearScrubber years={mapYears} bind:value={mapYear} playable />
   <StationMap stations={allStations} values={mapValues} vmax={mapVmax} compact unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
-  <p class="small muted">Press play, or drag the year. Each pill is one station's count for that year (hover for the name); “≥” means the year is incomplete there and the count is a lower bound; stations with no data that year are hidden. Colors use one scale for every year. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
+  <p class="small muted">Press play, or drag the year. Each pill is one station's count for that year (hover for the name); “≥” means the year is incomplete there and the count is a lower bound; stations with no data that year are hidden. Colors use one scale for every year. <a href="/map">Open the full map →</a></p>
 </section>
 
 <section>
   <h2>This summer so far</h2>
-  <p class="muted">Average daily high from June 1 through each station's latest reading, ranked against every other summer over the same dates. Volunteer-run stations report with a lag, so some aren't rankable yet.</p>
+  <p class="muted">Average daily high from June 1 through each station's latest reading, ranked against every other summer at that station over the same dates.</p>
   <SummerRankRow {stations} />
 </section>
 

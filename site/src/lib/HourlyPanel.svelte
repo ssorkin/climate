@@ -30,7 +30,7 @@
 </script>
 
 <p class="muted">
-  Automated hourly observations at this airport since {hourly.first_date.slice(0, 4)} (NOAA ISD, local time). Hours tell you how long
+  Hourly observations at this station since {hourly.first_date.slice(0, 4)} (NOAA GHCNh, local time). Hours tell you how long
   the heat lasted; "no-relief nights" ask whether the air ever cooled below a threshold between 6 pm and 8 am — the question a bedroom
   asks. The heat index folds in humidity.
 </p>
@@ -57,10 +57,9 @@
 
 {#if bias}
   <p class="small muted">
-    Cross-check: this airport's daily max/min thermometer (used for the day counts above) reads on average
+    Cross-check against the retired daily max/min thermometer record at this airport: it reads on average
     {fmtC(bias.tmax, units.f, { sign: true, delta: true })} above the hottest hourly reading and
-    {fmtC(bias.tmin, units.f, { sign: true, delta: true })} vs. the coolest — the peak usually falls between hourly observations, which is why
-    day counts here come from the thermometer's max/min, not from hourly samples.
+    {fmtC(bias.tmin, units.f, { sign: true, delta: true })} vs. the coolest — the peak usually falls between hourly observations; the gap has been steady, so hourly-derived counts compare across decades.
   </p>
 {/if}
 

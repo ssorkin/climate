@@ -6,10 +6,13 @@
 
 <div class="note card">
   <b>How to read this station.</b>
-  Every count is what this one thermometer recorded, from NOAA's daily archive, with NOAA's quality-flagged
+  Every count is what this one station recorded, from NOAA's hourly archive, with NOAA's quality-flagged
   values excluded. A year is shown only if at least 90% of its days were observed (a month, 25 days);
   missing years are gaps, never zeros. Thresholds are in whole °F exactly as the observer wrote them down.
-  {#if summary.kind === 'coop'}
+  {#if summary.source === 'ghcnh'}
+    Highs and lows are the highest and lowest hourly readings of each local day (a day needs 8+ readings with no gap over
+    3 hours); a true peak between readings is missed by about half a degree, consistently across the record.
+  {:else if summary.kind === 'coop'}
     This is a cooperative-observer station: the thermometer's 24-hour max and min are read once a day
     {#if latest?.hhmm}(currently at {latest.hhmm.slice(0, 2)}:{latest.hhmm.slice(2)}){/if} and logged on the
     reading date{#if latest?.hhmm && latest.hhmm < '1200'}, so a "high" here mostly happened the previous

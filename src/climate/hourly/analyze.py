@@ -17,8 +17,8 @@ import polars as pl
 
 from climate.analysis.metrics import f_whole_expr
 from climate.config import load_analysis_config
+from climate.ghcnh import HourlyStation, load_hourly_stations
 from climate.hourly.ingest import hourly_path
-from climate.isd import IsdStation, load_isd_stations
 from climate.paths import ANALYSIS_DIR
 
 HOUR_THRESHOLDS_F = (90, 95, 100, 105)
@@ -54,7 +54,7 @@ def rh_from_dewpoint(t_c: np.ndarray, td_c: np.ndarray) -> np.ndarray:
     return np.clip(100 * np.exp(a * td_c / (b + td_c)) / np.exp(a * t_c / (b + t_c)), 0, 100)
 
 
-def analyze_station(st: IsdStation) -> str:
+def analyze_station(st: HourlyStation) -> str:
     p = hourly_path(st.id)
     if not p.exists():
         return f"  {st.id}: not ingested"
@@ -202,27 +202,26 @@ def analyze_station(st: IsdStation) -> str:
 
     # cross-check vs the GHCN twin: how much a hourly max/min under-reads the true extreme
     bias = None
-    if st.ghcn:
-        gp = __import__("climate.ingest.store", fromlist=["daily_path"]).daily_path(st.ghcn)
-        if gp.exists():
-            from climate.ingest.store import load_daily_wide
+    from climate.ingest.store import load_legacy_ghcnd_wide
 
-            g = load_daily_wide(st.ghcn).select("date", "tmax", "tmin")
-            j = (
-                day.filter(pl.col("complete"))
-                .join(g, on="date")
-                .filter(pl.col("tmax").is_not_null() & pl.col("tmin").is_not_null())
+    legacy = load_legacy_ghcnd_wide(st.id)
+    if legacy is not None and legacy.height:
+        g = legacy.select("date", "tmax", "tmin")
+        j = (
+            day.filter(pl.col("complete"))
+            .join(g, on="date")
+            .filter(pl.col("tmax").is_not_null() & pl.col("tmin").is_not_null())
+        )
+        b = (
+            j.group_by("year")
+            .agg(
+                ((pl.col("tmax") - pl.col("tmax_h")).mean() / 10).alias("tmax_minus_hourly_c"),
+                ((pl.col("tmin") - pl.col("tmin_h")).mean() / 10).alias("tmin_minus_hourly_c"),
+                pl.len().alias("n"),
             )
-            b = (
-                j.group_by("year")
-                .agg(
-                    ((pl.col("tmax") - pl.col("tmax_h")).mean() / 10).alias("tmax_minus_hourly_c"),
-                    ((pl.col("tmin") - pl.col("tmin_h")).mean() / 10).alias("tmin_minus_hourly_c"),
-                    pl.len().alias("n"),
-                )
-                .sort("year")
-            )
-            bias = b
+            .sort("year")
+        )
+        bias = b
 
     out = ANALYSIS_DIR / "hourly" / st.id
     out.mkdir(parents=True, exist_ok=True)
@@ -233,8 +232,7 @@ def analyze_station(st: IsdStation) -> str:
         bias.write_parquet(out / "ghcn_bias.parquet")
     meta = {
         "id": st.id,
-        "wban": st.wban,
-        "ghcn": st.ghcn,
+        "ghcn": st.id,
         "short": st.short,
         "name": st.name,
         "state": st.state,
@@ -248,10 +246,14 @@ def analyze_station(st: IsdStation) -> str:
     }
     (out / "meta.json").write_text(json.dumps(meta))
     a = annual.filter(pl.col("complete"))
-    return f"  {st.id} {st.short:<32} {meta['first_date'][:4]}-{meta['last_date']}  complete years {meta['complete_years']:>3}  hours>=95F last10 {a.tail(10)['hours_95'].mean():.0f}"
+    h95 = a.tail(10)["hours_95"].mean()
+    return (
+        f"  {st.id} {st.short:<32} {meta['first_date'][:4]}-{meta['last_date']}  "
+        f"complete years {meta['complete_years']:>3}  hours>=95F last10 {h95 if h95 is None else round(h95)}"
+    )
 
 
-def _safe(st: IsdStation) -> str:
+def _safe(st: HourlyStation) -> str:
     try:
         return analyze_station(st)
     except Exception as exc:  # noqa: BLE001 — one station must not sink the run
@@ -259,7 +261,7 @@ def _safe(st: IsdStation) -> str:
 
 
 def run_analyze(only: list[str] | None = None) -> None:
-    stations = load_isd_stations(only)
+    stations = load_hourly_stations(only)
     print(f"==> analyzing {len(stations)} hourly stations")
     problems = 0
     with ProcessPoolExecutor() as pool:

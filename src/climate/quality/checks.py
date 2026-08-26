@@ -72,6 +72,8 @@ def check_station_config() -> list[Finding]:
     year = _today().year
     curated = {sid for sid, _ in _stations(curated_only=True)}
     for sid, short in _stations():
+        if sid.startswith("ISD"):
+            continue
         if stations.filter(pl.col("id") == sid).is_empty():
             out.append(
                 Finding("station_config", "anomaly", None, sid, f"{sid} not in ghcnd-stations")

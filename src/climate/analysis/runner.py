@@ -30,6 +30,32 @@ _CTX: dict = {}
 
 
 def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataFrame) -> dict:
+    from climate.ghcnh import hourly_station
+
+    hs = hourly_station(st.id)
+    if hs is not None:
+        return {
+            "id": st.id,
+            "short": st.short,
+            "name": hs.name.title().replace("Airport", "Airport").replace("Afb", "AFB"),
+            "noaa_name": hs.name,
+            "region": reg.id,
+            "regions": region_ids_for(_REGIONS, st.id),
+            "state": hs.state,
+            "lat": hs.lat,
+            "lon": hs.lon,
+            "elev_m": hs.elev_m,
+            "kind": "airport" if st.id[2] == "W" else "hourly",
+            "source": "ghcnh",
+            "icao": hs.icao,
+            "tz": hs.tz,
+            "ushcn": hs.hcn == "HCN",
+            "inventory": {
+                "TMAX": [hs.first_year, hs.last_year],
+                "TMIN": [hs.first_year, hs.last_year],
+            },
+            "notable": list(st.notable),
+        }
     row = stations.filter(pl.col("id") == st.id)
     if row.is_empty():
         raise SystemExit(f"analyze: {st.id} not in ghcnd-stations.txt")
@@ -174,6 +200,10 @@ def _analyze_one(args: tuple[str, str]) -> str:
 
     if not daily_path(sid).exists():
         return f"  SKIPPED {sid} {st.short}: not ingested"
+    import polars as _pl
+
+    if _pl.read_parquet(daily_path(sid)).height < 2 * 300:
+        return f"  SKIPPED {sid} {st.short}: fewer than 300 complete days"
     try:
         meta = analyze_station(
             st, reg, _CTX["cfg"], _CTX["stations"], _CTX["inv"], _CTX["today"], _CTX["ush"]
@@ -228,6 +258,12 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
         print(f"  {failed} station(s) failed")
 
     from climate.analysis.regional import run_regional
+    from climate.ghcnh import hourly_station
+    from climate.hourly.analyze import run_analyze as run_analyze_hourly
+
+    hourly_ids = [sid for _r, sid in todo if hourly_station(sid) is not None]
+    if hourly_ids:
+        run_analyze_hourly(only=hourly_ids)
 
     cfg = load_analysis_config()
 

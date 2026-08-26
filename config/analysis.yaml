@@ -26,7 +26,7 @@ completeness:
 
 # The regional (LA-wide) charts start here: before 1930 the network is five inland stations
 # with no recorded observation times and large homogenization breaks.
-regional_display_from: 1930
+regional_display_from: 1945
 summer_months: [6, 7, 8]
 # Cold-season metrics (frost nights) run Jul->Jun and are labeled by the January year.
 cold_season:

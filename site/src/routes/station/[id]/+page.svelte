@@ -219,7 +219,7 @@
     <p class="crumb"><a href={s.regions?.includes('la') ? '/map' : '/us'}>Stations</a> · {s.regions?.includes('la') ? 'Greater Los Angeles' : s.state}</p>
     <h1>{s.short}</h1>
     <p class="meta muted">
-      {s.name} · NOAA {s.id}{#if s.ushcn} · US Historical Climatology Network{/if} · {Math.round(s.elev_m * 3.281)} ft ·
+      {s.name} · NOAA {s.id}{#if s.icao} · {s.icao}{/if} · {Math.round(s.elev_m * 3.281)} ft · hourly readings ·
       {#if s.active}records since {s.first_year} · latest reading {fmtISO(s.last_date)}{:else}records {s.first_year}–{s.last_year} · <b>station closed</b> (last reading {fmtISO(s.last_date)}){/if}
     </p>
   </div>

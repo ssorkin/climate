@@ -8,8 +8,8 @@ import json
 import polars as pl
 
 from climate.analysis.export import col, dump
+from climate.ghcnh import load_hourly_stations
 from climate.hourly.analyze import HI_THRESHOLDS_F, HOUR_THRESHOLDS_F, NIGHT_THRESHOLDS_F
-from climate.isd import load_isd_stations
 from climate.paths import ANALYSIS_DIR, SITE_DATA_DIR
 
 
@@ -87,13 +87,13 @@ def export_station(st) -> tuple[str, int] | None:
             else None
         ),
     }
-    key = st.ghcn or st.id
+    key = st.id
     n = dump(SITE_DATA_DIR / "hourly" / f"{key}.json", payload)
     return key, n
 
 
 def run_export(only: list[str] | None = None) -> None:
-    stations = load_isd_stations(only)
+    stations = load_hourly_stations(only)
     print(f"==> exporting {len(stations)} hourly stations")
     index = []
     for st in stations:

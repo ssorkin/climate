@@ -23,14 +23,14 @@ def acquire(
 def stations(
     region: str = typer.Option("us", help="Region id to (re)generate, e.g. us"),
     min_span: int = typer.Option(50, help="Minimum years spanned by TMAX and TMIN"),
-    tier: str = typer.Option("", help="'isd' to generate the hourly-tier list instead"),
+    tier: str = typer.Option("", help="'hourly' generates stations/hourly.yaml from GHCNh"),
 ) -> None:
     """Generate stations/<region>.yaml (or stations/isd.yaml) from NOAA's inventories."""
-    if tier == "isd":
-        from climate.isd import write_isd_list
+    if tier == "hourly":
+        from climate.ghcnh import write_list
 
-        n = write_isd_list(min_span=min_span)
-        print(f"  wrote stations/isd.yaml with {n} stations")
+        n = write_list(min_years=20)
+        print(f"  wrote stations/hourly.yaml with {n} stations")
         return
     from climate.stations import write_region
 

@@ -14,7 +14,9 @@ import yaml
 
 from climate.paths import CONFIG_PATH, STATIONS_DIR
 
-STATION_ID_RE = re.compile(r"^US[CW]\d{8}$")
+STATION_ID_RE = re.compile(
+    r"^US[A-Z][A-Z0-9]{8}$"
+)  # any US GHCN id (W airports, C coop, I icao, …)
 
 
 @dataclass(frozen=True)
