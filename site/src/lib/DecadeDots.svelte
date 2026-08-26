@@ -34,7 +34,7 @@
     {@const ymax = sharedScale ? gmax : Math.max(1, ...p.pts.map((q) => q.v))}
     {@const y = linear([0, ymax * 1.15], [H - M.bottom, M.top])}
     <div class="panel">
-      <div class="name"><a href="/station/{p.s.id}?m={metric.startsWith('hot') ? 'hot' : metric.startsWith('warm') ? 'warm' : 'frost'}">{p.s.short}</a> <span class="muted small">since {p.s.first_year}</span></div>
+      <div class="name"><a href="/station/{p.s.id}?m={metric.startsWith('hot') ? 'hot' : metric.startsWith('warm') ? 'warm' : 'frost'}">{p.s.short}</a> <span class="muted small">{p.s.active ? `since ${p.s.first_year}` : `${p.s.first_year}–${p.s.last_year}`}</span></div>
       <svg viewBox="0 0 {W} {H}" role="img" aria-label="{p.s.short}: {unitLabel} per year by decade" onpointerleave={() => (hover = null)}>
         <line x1={M.left} x2={W - M.right} y1={y(0)} y2={y(0)} stroke={AXIS} />
         <polyline points={p.pts.map((q) => `${x(q.dec)},${y(q.v)}`).join(' ')} fill="none" stroke={color} stroke-width="1.5" opacity="0.6" />

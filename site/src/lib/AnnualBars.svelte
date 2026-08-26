@@ -93,10 +93,15 @@
     {#if baseline}
       <text x={x(baseline.years[0])} y={y(baseline.value) - 5} font-size="10.5" fill={INK}>avg {baseline.years[0]}–{baseline.years[1]}: {yFormat(baseline.value)}</text>
     {/if}
-    {#each annotations as a (a.year)}
+    {#each annotations as a (a.year + ':' + a.label)}
       {#if a.year >= years[0] && a.year <= years[years.length - 1]}
-        <line x1={x(a.year)} x2={x(a.year)} y1={M.top - 4} y2={y(0)} stroke={INK} stroke-width="1" opacity="0.35" />
-        <text x={x(a.year) + 4} y={M.top + 6} font-size="10.5" fill={INK}>{a.label}</text>
+        {#if a.label}
+          <line x1={x(a.year)} x2={x(a.year)} y1={M.top - 4} y2={y(0)} stroke={INK} stroke-width="1" opacity="0.35" />
+          <text x={x(a.year) + (x(a.year) > W * 0.7 ? -4 : 4)} y={M.top + 6} text-anchor={x(a.year) > W * 0.7 ? 'end' : 'start'} font-size="10.5" fill={INK}>{a.label}</text>
+        {:else}
+          <line x1={x(a.year)} x2={x(a.year)} y1={M.top + 8} y2={y(0)} stroke={INK} stroke-width="1" stroke-dasharray="2 3" opacity="0.5" />
+          <path d="M{x(a.year) - 4} {M.top} l8 0 l-4 6 z" fill={INK} opacity="0.6" />
+        {/if}
       {/if}
     {/each}
     {#if selected != null && years.includes(selected)}
@@ -112,7 +117,7 @@
       <text x={W - M.right} y={M.top - 8} text-anchor="end" font-size="11.5" fill={INK}>{trendLabel}</text>
     {/if}
   </svg>
-  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · gray ticks: incomplete years</span></div>
+  <div class="tip">{tip}<span class="muted"> · bars: each year · dark steps: decade averages · gray ticks: incomplete years{#if annotations.some((a) => !a.label)} · ▼ dotted: site/instrument change detected by NOAA{/if}</span></div>
 </div>
 
 <style>

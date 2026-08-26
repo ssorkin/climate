@@ -48,6 +48,10 @@ def run_acquire(region: str = "all", refresh: bool = False, force: bool = False)
             if path is None:
                 failed.append(st.id)
 
+    from climate.acquire.ushcn import run_acquire_ushcn
+
+    failed += run_acquire_ushcn(refresh=refresh, force=force)
+
     if failed:
         # Leave previous files and manifests intact; the nightly refresh must stop here
         # rather than rebuild the site from a partial pull.

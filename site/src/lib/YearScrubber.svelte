@@ -3,9 +3,29 @@
    * Draggable year track with decade ticks. Keyboard: arrows step, PageUp/Down by 10.
    * `years` are the selectable years (in order); `disabled` is a Set of years to gray.
    */
-  let { years = [], value = $bindable(), disabled = new Set(), label = 'Year' } = $props();
+  let { years = [], value = $bindable(), disabled = new Set(), label = 'Year', playable = false, stepMs = 220 } = $props();
   let el;
   let dragging = $state(false);
+  let playing = $state(false);
+  let timer = null;
+
+  function stop() {
+    playing = false;
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+  function play() {
+    if (playing) return stop();
+    // Restart from the beginning when already at the end.
+    if (idx >= years.length - 1) value = years[0];
+    playing = true;
+    timer = setInterval(() => {
+      const k = years.indexOf(value);
+      if (k >= years.length - 1) return stop();
+      value = years[k + 1];
+    }, stepMs);
+  }
+  $effect(() => () => stop());
 
   let idx = $derived(Math.max(0, years.indexOf(value)));
   let pct = $derived(years.length > 1 ? (idx / (years.length - 1)) * 100 : 0);
@@ -17,6 +37,7 @@
     value = years[Math.round(t * (years.length - 1))];
   }
   function down(e) {
+    stop();
     dragging = true;
     el.setPointerCapture(e.pointerId);
     pick(e.clientX);
@@ -28,6 +49,10 @@
     dragging = false;
   }
   function key(e) {
+    if (e.key === ' ' && playable) {
+      e.preventDefault();
+      return play();
+    }
     const step = e.key === 'PageUp' ? 10 : e.key === 'PageDown' ? -10 : e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
     if (!step) return;
     e.preventDefault();
@@ -35,7 +60,16 @@
   }
 </script>
 
-<div class="scrub">
+<div class="scrub" class:playable>
+  {#if playable}
+    <button class="play" onclick={play} aria-label={playing ? 'Pause' : 'Play through the years'} title={playing ? 'Pause' : 'Play'}>
+      {#if playing}
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="4" y="3" width="4.5" height="14" rx="1" fill="currentColor" /><rect x="11.5" y="3" width="4.5" height="14" rx="1" fill="currentColor" /></svg>
+      {:else}
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M5 3.5v13l11-6.5z" fill="currentColor" /></svg>
+      {/if}
+    </button>
+  {/if}
   <div class="readout"><span class="lbl">{label}</span> <b>{value}</b></div>
   <div
     class="track"
@@ -74,6 +108,28 @@
     gap: 1rem;
     align-items: center;
     padding: 0.4rem 0 1.4rem;
+  }
+  .scrub.playable {
+    grid-template-columns: auto auto 1fr;
+  }
+  .play {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 0;
+    background: #c2410c;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  }
+  .play:hover {
+    background: #9a2f0c;
+  }
+  .play:focus-visible {
+    outline: 3px solid rgba(28, 92, 171, 0.4);
   }
   .readout {
     font-size: 1.05rem;
@@ -150,6 +206,12 @@
     .scrub {
       grid-template-columns: 1fr;
       gap: 0.3rem;
+    }
+    .scrub.playable {
+      grid-template-columns: auto 1fr;
+    }
+    .scrub.playable .track {
+      grid-column: 1 / -1;
     }
     .tick.odd span {
       display: none;

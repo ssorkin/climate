@@ -33,6 +33,9 @@ in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   Exclusions live in `stations/*.yaml` with a `reason` and `source`.
 - Station lists live only in `stations/*.yaml`; baseline, thresholds and completeness
   rules only in `config/analysis.yaml`, echoed into every export. No duplicates in JS.
+- **Charts show the raw record.** NOAA's USHCN homogenization (3 stations) is used only to
+  mark detected site/instrument changes and to show an *estimated* homogenized count next
+  to the raw one — never to replace it.
 - Data problems go in `known_issues/` and the DQ report — never silently patched.
 - `data/` is gitignored; provenance lives in `manifests/` (URL, sha256, dates).
 

@@ -92,8 +92,35 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
         (pl.col("tmin_mean_c") - base_tmin).alias("tmin_anom_c"),
     )
 
+    homog = None
+    if meta.get("homogenized") and (d / "homogenized.parquet").exists():
+        h = pl.read_parquet(d / "homogenized.parquet")
+        homog = {
+            **meta["homogenized"],
+            "year": col(h, "year"),
+            "tmax_offset_c": col(h, "tmax_off"),
+            "tmin_offset_c": col(h, "tmin_off"),
+            "hot_95_adj": col(h, "hot_95_adj"),
+            "warm_70_adj": col(h, "warm_70_adj"),
+        }
+        hw = {}
+        last = meta.get("last_complete_year")
+        if last:
+            for key, (y0, y1) in {
+                "baseline": (b0, b1),
+                "last10": (last - 9, last),
+            }.items():
+                sub = h.filter((pl.col("year") >= y0) & (pl.col("year") <= y1))
+                hw[key] = {
+                    "years": [y0, y1],
+                    "hot_95_adj": _clean(sub["hot_95_adj"].mean()),
+                    "warm_70_adj": _clean(sub["warm_70_adj"].mean()),
+                }
+        homog["windows"] = hw
+
     summary = {
-        **{k: v for k, v in meta.items() if k not in ("inventory",)},
+        **{k: v for k, v in meta.items() if k not in ("inventory", "homogenized")},
+        "homogenized": homog,
         "baseline": cfg["baseline"],
         "thresholds_f": cfg["thresholds_f"],
         "completeness": cfg["completeness"],
@@ -246,6 +273,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
                 "last_complete_year",
                 "complete_years",
                 "obs_hhmm_now",
+                "active",
             )
         },
         "headline": {

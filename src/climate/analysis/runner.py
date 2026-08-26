@@ -8,10 +8,12 @@ from datetime import date
 import numpy as np
 import polars as pl
 
+from climate.analysis import homogenized as H
 from climate.analysis import metrics as M
 from climate.analysis.obs_time import segments
 from climate.config import Region, Station, load_analysis_config, load_regions
 from climate.ingest.store import load_daily_wide, load_inventory, load_stations
+from climate.ingest.ushcn import load_ushcn
 from climate.paths import ANALYSIS_DIR
 
 OBS_SEGMENT_MIN_DAYS = 30
@@ -42,7 +44,9 @@ def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataF
     }
 
 
-def analyze_station(st: Station, reg: Region, cfg: dict, stations, inv, today: date) -> dict:
+def analyze_station(
+    st: Station, reg: Region, cfg: dict, stations, inv, today: date, ush=None
+) -> dict:
     out_dir = ANALYSIS_DIR / st.id
     out_dir.mkdir(parents=True, exist_ok=True)
     daily = load_daily_wide(st.id)
@@ -65,6 +69,16 @@ def analyze_station(st: Station, reg: Region, cfg: dict, stations, inv, today: d
         out_dir / "records.parquet"
     )
     summer["table"].write_parquet(out_dir / "summer.parquet")
+
+    homog = None
+    off = H.offsets(ush, st.id) if ush is not None else None
+    if off is not None:
+        ann_off = H.annual_offsets(off)
+        adj = H.adjusted_counts(daily, off, annual)
+        ann_off.join(adj, on="year", how="full", coalesce=True).sort("year").write_parquet(
+            out_dir / "homogenized.parquet"
+        )
+        homog = {"breaks": H.breaks(ann_off), "source": "USHCN v2.5 FLs.52j vs raw"}
 
     b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
     complete_years = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"]
@@ -113,12 +127,16 @@ def analyze_station(st: Station, reg: Region, cfg: dict, stations, inv, today: d
 
     valid = daily.filter(pl.col("tmax").is_not_null() | pl.col("tmin").is_not_null())
     obs = segments(daily, min_days=OBS_SEGMENT_MIN_DAYS)
+    last_valid = valid["date"].max()
+    active = (today - last_valid).days <= 400
     meta = {
         **station_meta(st, reg, stations, inv),
         "first_date": str(valid["date"].min()),
         "last_date": str(valid["date"].max()),
         "first_year": int(valid["date"].min().year),
         "last_year": int(valid["date"].max().year),
+        "active": bool(active),
+        "homogenized": homog,
         "last_complete_year": last_complete,
         "complete_years": len(complete_years),
         "obs_time": [
@@ -141,10 +159,11 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
     cfg = load_analysis_config()
     stations = load_stations()
     inv = load_inventory()
+    ush = load_ushcn()
     for reg in load_regions(region):
         print(f"==> region {reg.id}")
         for st in reg.stations:
-            meta = analyze_station(st, reg, cfg, stations, inv, today)
+            meta = analyze_station(st, reg, cfg, stations, inv, today, ush)
             w = meta["windows"]
             b = w.get("baseline", {}).get("hot_95")
             l10 = w.get("last10", {}).get("hot_95")

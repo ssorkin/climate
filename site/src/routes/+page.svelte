@@ -19,7 +19,8 @@
   let { data } = $props();
   let ix = $derived(data.index);
   let region = $derived(ix.regions[0]);
-  let stations = $derived(ix.stations.filter((s) => s.region === region.id));
+  let allStations = $derived(ix.stations.filter((s) => s.region === region.id));
+  let stations = $derived(allStations.filter((s) => s.active));
   let hero = $derived(data.hero); // default station summary (Pasadena)
   let heroIdx = $derived(stations.find((s) => s.id === hero.id));
 
@@ -27,7 +28,7 @@
   let summaries = $state({});
   let daily = $state(null);
   onMount(async () => {
-    const all = await Promise.all(stations.map((s) => fetch(dataUrl(`/data/stations/${s.id}/summary.json`)).then((r) => r.json())));
+    const all = await Promise.all(allStations.map((s) => fetch(dataUrl(`/data/stations/${s.id}/summary.json`)).then((r) => r.json())));
     const out = {};
     for (const s of all) out[s.id] = s;
     summaries = out;
@@ -39,14 +40,14 @@
   let mapThr = $derived(mapFamily === 'warm' ? 70 : mapFamily === 'hot' ? 95 : 32);
   let mapYear = $state(2025);
   let mapYears = $derived.by(() => {
-    const y0 = Math.min(...stations.map((s) => s.first_year));
-    const y1 = Math.max(...stations.map((s) => s.last_year));
+    const y0 = Math.min(...allStations.map((s) => s.first_year));
+    const y1 = Math.max(...allStations.map((s) => s.last_year));
     return Array.from({ length: y1 - y0 + 1 }, (_, i) => y0 + i);
   });
   onMount(() => (mapYear = Math.max(...stations.map((s) => s.last_complete_year ?? 0))));
   let mapValues = $derived.by(() => {
     const m = new Map();
-    for (const s of stations) {
+    for (const s of allStations) {
       const sm = summaries[s.id];
       if (!sm) {
         m.set(s.id, null);
@@ -74,6 +75,7 @@
   const h = $derived(heroIdx.headline);
   const n1 = (v) => (v == null ? '—' : v < 10 ? v.toFixed(1) : Math.round(v).toString());
   let latest = $derived(stations.map((s) => s.last_date).sort().at(-1));
+  let closed = $derived(allStations.length - stations.length);
 </script>
 
 <svelte:head>
@@ -92,7 +94,7 @@
       nights since {heroIdx.first_year}, straight from NOAA's daily records.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}. This site does not chart the famous downtown "Civic Center" record —
+      Latest readings through {fmtISO(latest)}{#if closed}; {closed} further stations with 50+ year records that have since closed are included for history{/if}. This site does not chart the famous downtown "Civic Center" record —
       <a href="/methods#civic-center">here's why</a>.
     </p>
   </div>
@@ -113,9 +115,9 @@
       <button class="pill" class:on={mapFamily === 'frost'} onclick={() => (mapFamily = 'frost')}>Frost nights</button>
     </div>
   </div>
-  <YearScrubber years={mapYears} bind:value={mapYear} />
-  <StationMap {stations} excluded={ix.excluded} values={mapValues} unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
-  <p class="small muted">Drag the year. Numbers are that year's count at each station; a dash means the year is incomplete there. <a href="/map">Open the full map →</a></p>
+  <YearScrubber years={mapYears} bind:value={mapYear} playable />
+  <StationMap stations={allStations} values={mapValues} unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
+  <p class="small muted">Press play, or drag the year. Numbers are that year's count at each station; a dash means the year is incomplete there. The downtown Civic Center record is deliberately absent (<a href="/methods#civic-center">why</a>). <a href="/map">Open the full map →</a></p>
 </section>
 
 <section>
@@ -128,7 +130,7 @@
   <div class="sechead">
     <h2>Warm nights, year by year</h2>
     <div class="pillrow">
-      {#each stations as s (s.id)}
+      {#each allStations as s (s.id)}
         <button class="pill" class:on={(barStation ?? hero.id) === s.id} onclick={() => (barStation = s.id)} disabled={!summaries[s.id]}>{s.short}</button>
       {/each}
     </div>
@@ -141,10 +143,10 @@
 <section>
   <h2>The same shift, at the beach, in the valleys, on the mountain, in the desert</h2>
   <p class="muted">Nights per year at or above {fmtThresholdF(70, units.f)}, averaged by decade, at every station.</p>
-  <DecadeDots {stations} metric="warm70" unitLabel="nights" />
+  <DecadeDots stations={allStations} metric="warm70" unitLabel="nights" cols={5} />
   <h2>Hot days: up inland, flat at the coast</h2>
   <p class="muted">Days per year at or above {fmtThresholdF(95, units.f)}. The marine layer keeps coastal afternoons in check; the valleys and the desert get the extra heat.</p>
-  <DecadeDots {stations} metric="hot95" unitLabel="days" />
+  <DecadeDots stations={allStations} metric="hot95" unitLabel="days" cols={5} />
 </section>
 
 <section>
@@ -175,7 +177,8 @@
 <section class="about card">
   <b>How this was made.</b> Daily highs and lows from NOAA's GHCN-Daily archive for {stations.length} long-running stations,
   quality-flagged values removed, years with missing data shown as gaps rather than zeros, thresholds in whole °F as the
-  observers recorded them, "then" = {ix.baseline.start}–{ix.baseline.end}. Every chart is one thermometer at one place. Details, caveats and the
+  observers recorded them, "then" = {ix.baseline.start}–{ix.baseline.end}. Every chart is one thermometer at one place, raw as NOAA published it; instrument and site changes NOAA
+  has detected are marked on the station pages. Details, caveats, the Pasadena instrument history and the
   excluded downtown record: <a href="/methods">Methods</a>. Everything is open source: <a href="https://github.com/ssorkin/climate">github.com/ssorkin/climate</a>.
 </section>
 

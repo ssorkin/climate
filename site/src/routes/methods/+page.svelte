@@ -79,6 +79,25 @@
   (USW) use automated instruments and calendar days.
 </p>
 
+<h2 id="homogenization">Site and instrument changes — the Pasadena case</h2>
+<p>
+  A century-long station record is never one instrument in one spot. NOAA's station history for Pasadena (COOP 046719, a
+  ground-level lawn site near Pasadena City Hall) records a switch to automated equipment around 2003–04, an upgrade to an
+  electronic MMTS sensor with a 12-foot relocation and a change of reading time from 4 pm to 8 am in August 2015, and sensor
+  replacements after that. NOAA's homogenization of the station's monthly record (USHCN v2.5, which compares each station with
+  its neighbors) detects steps in exactly those years: nights jumped about 2.5°F relative to neighbors in 2003, dropped about
+  3°F in 2015–16, and rose about 2.5°F again in 2020–21; daytime highs before 2015 were biased warm by the 4 pm reading time.
+</p>
+<p>
+  Does that explain Pasadena's rise? No — it changes the shape, not the conclusion. Applying NOAA's adjustments and recounting,
+  Pasadena's warm nights go from about 5 per year in 1951–1980 to about 18 in the last decade (raw: 3 → 15), and its 95°F days
+  from about 11 to about 41 (raw: 20 → 42) — the homogenized rise in hot days is <i>steeper</i>, because the afternoon reading
+  time inflated the old highs. Pasadena's night warming is also matched, in kind if not in size, at every other long-record
+  station in the region, including airports with automated instruments. For the three USHCN stations here (Pasadena, Newport
+  Beach, Tustin) each station page lists the detected changes and the raw-vs-homogenized counts; for the others no
+  homogenized version exists, and we show the raw record with its observation-time history.
+</p>
+
 <h2>What these charts can and can't say</h2>
 <p>
   Each chart is one thermometer at one place. Station surroundings change over a century — pavement, buildings,

@@ -60,7 +60,10 @@ def _parse_region(path: Path) -> Region:
             id=s["id"],
             short=s["short"],
             ushcn=bool(s.get("ushcn", False)),
-            notable=tuple(s.get("notable", []) or []),
+            notable=tuple(
+                {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in n.items()}
+                for n in (s.get("notable", []) or [])
+            ),
         )
         for s in raw["stations"]
     )

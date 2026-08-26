@@ -1,15 +1,24 @@
-# Los Angeles-area stations with long, still-active daily TMAX/TMIN records in
-# NOAA GHCN-Daily. Names, coordinates and elevation come from ghcnd-stations.txt
-# at ingest time; `short` is only the display label.
+# Greater Los Angeles stations with 50+ complete years of daily TMAX/TMIN in NOAA
+# GHCN-Daily — still-reporting stations and closed ones alike (a closed station's
+# record is still a record). Selection rule: >= 50 complete years (>= 90% of days
+# observed) and, for the "then vs now" comparisons, coverage of the 1951-1980
+# baseline. Names, coordinates and elevation come from ghcnd-stations.txt at
+# ingest time; `short` is only the display label.
 region: la
-name: Los Angeles area
-center: [34.05, -118.30]
-zoom: 8.3
+name: Greater Los Angeles
+center: [34.08, -118.05]
+zoom: 7.85
 default_station: USC00046719
 stations:
+  # --- still reporting ---
   - id: USC00046719
     short: Pasadena
     ushcn: true
+    # NOAA station history (HOMR, COOP 046719): lawn site near City Hall.
+    notable:
+      - date: 2015-08-06
+        label: MMTS sensor, moved 12 ft, readings 4pm→8am
+        source: https://www.ncei.noaa.gov/access/homr/#ncdcstnid=10100112
   - id: USC00047888
     short: Santa Ana
   - id: USC00046175
@@ -33,10 +42,41 @@ stations:
     short: Long Beach Airport
   - id: USC00049785
     short: Woodland Hills
+  - id: USW00023182
+    short: Palmdale Airport
+  - id: USC00042805
+    short: Lake Elsinore
+  # --- closed stations (record ended) ---
+  - id: USC00047050
+    short: Pomona Fairplex
+  - id: USC00041779
+    short: Claremont
+  - id: USC00047470
+    short: Riverside
+  - id: USC00047473
+    short: Riverside Citrus Station
+  - id: USC00042031
+    short: Corona
+  - id: USC00049087
+    short: Tustin Irvine Ranch
+  - id: USC00049847
+    short: Yorba Linda
+  - id: USC00047785
+    short: San Gabriel
+  - id: USC00044647
+    short: Laguna Beach
+  - id: USC00047953
+    short: Santa Monica Pier
+  - id: USC00047759
+    short: San Fernando
+  - id: USW00093101
+    short: El Toro MCAS
 # Considered and dropped for incompleteness (not siting): Big Tujunga Dam
-# USC00040798 (2 complete years since 1932) and Van Nuys Airport USW00023130
-# (28 complete years, none in the 1951-1980 baseline). Burbank Airport
-# USW00023152 only begins in 1998.
+# USC00040798 (2 complete years since 1932), Van Nuys Airport USW00023130
+# (28 complete years, none in the 1951-1980 baseline), Long Beach Pub Svc (46),
+# Sierra Madre (42), Dry Canyon Rsvr (42), Tustin MCAF (30), Valyermo (24),
+# Upland (22), Victorville AP (21), Saugus (18), San Gabriel Canyon PH (8).
+# Burbank Airport USW00023152 only begins in 1998.
 excluded:
   - id: USW00093134
     short: Downtown LA (Civic Center / USC)

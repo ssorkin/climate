@@ -6,6 +6,7 @@ from climate.acquire.ghcnd import meta_dataset, region_dataset
 from climate.config import load_regions
 from climate.ingest import db
 from climate.ingest.ghcnd import parse_inventory, parse_station_csv, parse_stations_txt
+from climate.ingest.ushcn import ingest_ushcn
 from climate.paths import PARQUET_DIR, RAW_DIR
 
 
@@ -35,5 +36,11 @@ def run_ingest(region: str = "all") -> None:
             df.write_parquet(dest)
             first, last = df["date"].min(), df["date"].max()
             print(f"  {st.id} {st.short:<20} {df.height:>8,} rows  {first} .. {last}")
+
+    ids = [st.id for reg in load_regions(region) for st in reg.stations]
+    ush = ingest_ushcn(ids)
+    print(
+        f"==> USHCN monthly: {ush['id'].n_unique()} of {len(ids)} stations are USHCN ({ush.height:,} rows)"
+    )
 
     db.build()

@@ -1,8 +1,7 @@
 <script>
   /**
    * MapLibre map (OpenFreeMap tiles, no key) with one pill marker per station showing
-   * `values` for the scrubbed year. The excluded downtown record appears as a gray
-   * outlined pill that explains itself. maplibre is dynamically imported so pages
+   * `values` for the scrubbed year. maplibre is dynamically imported so pages
    * render their charts before the map bundle arrives.
    */
   import { onMount } from 'svelte';
@@ -10,7 +9,6 @@
 
   let {
     stations = [],
-    excluded = [],
     values = new Map(), // id -> number|null
     unitLabel = '',
     cool = false,
@@ -56,15 +54,6 @@
         d.addEventListener('keydown', (e) => e.key === 'Enter' && onselect?.(s.id));
         const m = new maplibregl.Marker({ element: d, anchor: 'center' }).setLngLat([s.lon, s.lat]).addTo(map);
         markers.set(s.id, { m, d, val });
-      }
-      for (const e of excluded) {
-        if (e.lat == null || e.lon == null) continue;
-        const d = document.createElement('div');
-        d.className = 'stpill excluded';
-        d.textContent = e.short + ' · not charted';
-        d.title = e.reason;
-        d.addEventListener('click', () => (window.location.href = '/methods#civic-center'));
-        new maplibregl.Marker({ element: d, anchor: 'center' }).setLngLat([e.lon, e.lat]).addTo(map);
       }
       ready = true;
       paint();

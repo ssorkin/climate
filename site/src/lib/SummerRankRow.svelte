@@ -8,7 +8,7 @@
   let rows = $derived(
     stations
       .map((s) => ({ s, h: s.headline.summer_to_date }))
-      .filter((r) => r.h?.ref_year)
+      .filter((r) => r.s.active && r.h?.ref_year)
       .sort((a, b) => (a.h.rank_tmax ?? 1e9) - (b.h.rank_tmax ?? 1e9))
   );
 </script>

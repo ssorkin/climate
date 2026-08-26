@@ -25,7 +25,7 @@
     if (q.get('m') in FAMILIES) family = q.get('m');
     if (q.get('t')) threshold = Number(q.get('t'));
     if (q.get('year')) year = Number(q.get('year'));
-    else year = Math.max(...stations.map((s) => s.last_complete_year ?? 0));
+    else year = Math.max(...stations.filter((s) => s.active).map((s) => s.last_complete_year ?? 0));
     const all = await Promise.all(stations.map((s) => fetch(dataUrl(`/data/stations/${s.id}/summary.json`)).then((r) => r.json())));
     const out = {};
     for (const s of all) out[s.id] = s;
@@ -67,6 +67,7 @@
   });
   let loaded = $derived(Object.keys(summaries).length === stations.length);
   let ranked = $derived([...stations].map((s) => ({ s, v: values.get(s.id) })).sort((a, b) => (b.v ?? -1) - (a.v ?? -1)));
+  const closedNote = (s) => (s.active ? '' : ` (closed ${s.last_year})`);
 </script>
 
 <svelte:head>
@@ -86,15 +87,15 @@
   {/each}
 </div>
 
-<YearScrubber years={allYears} bind:value={year} />
+<YearScrubber years={allYears} bind:value={year} playable />
 
-<StationMap {stations} excluded={data.index.excluded} {values} unitLabel={fam.noun} cool={family === 'frost' || family === 'coldday'} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}?m=${family}&t=${threshold}&year=${year}`)} />
+<StationMap {stations} {values} unitLabel={fam.noun} cool={family === 'frost' || family === 'coldday'} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}?m=${family}&t=${threshold}&year=${year}`)} />
 {#if !loaded}<p class="muted small">Loading station records…</p>{/if}
 
 <div class="rank">
   {#each ranked as r (r.s.id)}
     <a class="row" href="/station/{r.s.id}?m={family}&t={threshold}&year={year}">
-      <span class="nm">{r.s.short}</span>
+      <span class="nm">{r.s.short}<span class="muted small">{closedNote(r.s)}</span></span>
       <span class="bar"><i style:width="{r.v == null ? 0 : (100 * r.v) / Math.max(1, ranked[0].v ?? 1)}%"></i></span>
       <span class="vl">{r.v == null ? 'no complete data' : `${r.v} ${fam.noun}`}</span>
     </a>

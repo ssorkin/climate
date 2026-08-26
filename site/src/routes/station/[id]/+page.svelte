@@ -114,7 +114,19 @@
     const l = key ? w.last10[key] : w.last10.season?.[`coldnight_${threshold}`];
     return b == null || l == null ? null : { b, l };
   });
-  let annotations = $derived((s.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label })));
+  // Only the large detected changes (>= 0.8 °C in either element) are marked on the chart;
+  // the full list is in the table below.
+  let breakAnnotations = $derived(
+    (s.homogenized?.breaks ?? [])
+      .filter((b) => Math.abs(b.tmax_c) >= 0.8 || Math.abs(b.tmin_c) >= 0.8)
+      .map((b) => ({ year: b.year, label: '' }))
+  );
+  let annotations = $derived([
+    ...(s.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label })),
+    ...breakAnnotations
+  ]);
+  let homog = $derived(s.homogenized);
+  const shiftF = (c) => (c == null ? '—' : fmtC(c, units.f, { sign: true, delta: true }));
 </script>
 
 <svelte:head>
@@ -128,14 +140,14 @@
     <h1>{s.short}</h1>
     <p class="meta muted">
       {s.name} · NOAA {s.id}{#if s.ushcn} · US Historical Climatology Network{/if} · {Math.round(s.elev_m * 3.281)} ft ·
-      records since {s.first_year} · latest reading {fmtISO(s.last_date)}
+      {#if s.active}records since {s.first_year} · latest reading {fmtISO(s.last_date)}{:else}records {s.first_year}–{s.last_year} · <b>station closed</b> (last reading {fmtISO(s.last_date)}){/if}
     </p>
   </div>
   <div class="switch">
     <label class="small muted" for="st">Other stations</label>
     <select id="st" onchange={(e) => (window.location.href = `/station/${e.target.value}${window.location.search}`)}>
       {#each others as o (o.id)}
-        <option value={o.id} selected={o.id === s.id}>{o.short} ({o.first_year}–)</option>
+        <option value={o.id} selected={o.id === s.id}>{o.short} ({o.first_year}–{o.active ? '' : o.last_year})</option>
       {/each}
     </select>
   </div>
@@ -192,6 +204,40 @@
   </details>
 {:else}
   <p class="muted">Loading the daily record…</p>
+{/if}
+
+{#if homog}
+  <h2>What NOAA's homogenization says about this station</h2>
+  <p class="muted">
+    This is a US Historical Climatology Network station, so NOAA also publishes a homogenized version of its monthly record
+    (USHCN v2.5), adjusted by comparison with neighboring stations for observation-time changes, instrument changes and moves.
+    The steps NOAA detected in the raw record — and how much the raw values shifted relative to neighbors — are:
+  </p>
+  <div class="scroll">
+    <table class="data">
+      <thead><tr><th>Year</th><th class="num">Daily highs shifted by</th><th class="num">Daily lows shifted by</th></tr></thead>
+      <tbody>
+        {#each homog.breaks as b (b.year)}
+          <tr><td>{b.year}</td><td class="num">{shiftF(b.tmax_c)}</td><td class="num">{shiftF(b.tmin_c)}</td></tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+  {#if homog.windows?.baseline}
+    <p class="muted">
+      Applying NOAA's monthly adjustments to the daily readings and recounting (an estimate — NOAA does not publish homogenized daily data):
+    </p>
+    <div class="scroll">
+      <table class="data">
+        <thead><tr><th>Per year</th><th class="num">{homog.windows.baseline.years[0]}–{homog.windows.baseline.years[1]} raw</th><th class="num">homogenized</th><th class="num">{homog.windows.last10.years[0]}–{homog.windows.last10.years[1]} raw</th><th class="num">homogenized</th></tr></thead>
+        <tbody>
+          <tr><td>Days at or above {fmtThresholdF(95, units.f)}</td><td class="num">{s.windows.baseline.hot_95?.toFixed(1)}</td><td class="num">{homog.windows.baseline.hot_95_adj?.toFixed(1) ?? '—'}</td><td class="num">{s.windows.last10.hot_95?.toFixed(1)}</td><td class="num">{homog.windows.last10.hot_95_adj?.toFixed(1) ?? '—'}</td></tr>
+          <tr><td>Nights at or above {fmtThresholdF(70, units.f)}</td><td class="num">{s.windows.baseline.warm_70?.toFixed(1)}</td><td class="num">{homog.windows.baseline.warm_70_adj?.toFixed(1) ?? '—'}</td><td class="num">{s.windows.last10.warm_70?.toFixed(1)}</td><td class="num">{homog.windows.last10.warm_70_adj?.toFixed(1) ?? '—'}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  {/if}
+  <p class="small muted">The charts on this page show the raw record; changes of at least {fmtC(0.8, units.f, { delta: true })} are marked ▼ on the yearly chart. See <a href="/methods#homogenization">Methods</a>.</p>
 {/if}
 
 <h2>About this record</h2>
