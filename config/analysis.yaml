@@ -24,6 +24,9 @@ completeness:
   partial_year_min_days: 60         # current year shown as "so far" only past this
   decade_min_years: 5                # the current decade shows as partial ("so far") past this
 
+# The regional (LA-wide) charts start here: before 1930 the network is five inland stations
+# with no recorded observation times and large homogenization breaks.
+regional_display_from: 1930
 summer_months: [6, 7, 8]
 # Cold-season metrics (frost nights) run Jul->Jun and are labeled by the January year.
 cold_season:

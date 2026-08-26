@@ -229,6 +229,8 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
 
     from climate.analysis.regional import run_regional
 
+    cfg = load_analysis_config()
+
     for reg in regions:
         if reg.generated:
             continue
@@ -242,7 +244,9 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
             for st in reg.stations
             if (ANALYSIS_DIR / st.id / "meta.json").exists()
         )
-        res = run_regional(reg, ANALYSIS_DIR, last_complete)
+        res = run_regional(
+            reg, ANALYSIS_DIR, last_complete, int(cfg.get("regional_display_from", 1930))
+        )
         out = ANALYSIS_DIR / "regional" / f"{reg.id}.json"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(res))

@@ -127,16 +127,16 @@
     </p>
     <p class="small muted">
       Latest readings through {fmtISO(latest)}{#if closed}; {closed} stations with 50+ year records that have since closed are included for history{/if}.
-      Stations come and go, so the two charts use a model that fills each station's missing years from the others (<a href="/methods#regional">how</a>).
+      Stations come and go, so the two charts use a model that fills each station's missing years from the others (<a href="/methods#regional">how</a>); they start in {reg?.display_from ?? 1930}, when the network had grown past a handful of inland sites.
       This site does not chart the famous downtown "Civic Center" record — <a href="/methods#civic-center">here's why</a>.
     </p>
   </div>
   <div class="tiles">
     {#if reg?.metrics?.warm70}
-      <RegionalIndex series={reg.metrics.warm70} label="Nights ≥ 70°F per year, average station" unitLabel="nights" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+      <RegionalIndex series={reg.metrics.warm70} from={reg.display_from} label="Nights ≥ 70°F per year, average station" unitLabel="nights" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
     {/if}
     {#if reg?.metrics?.hot95}
-      <RegionalIndex series={reg.metrics.hot95} label="Days ≥ 95°F per year, average station" unitLabel="days" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
+      <RegionalIndex series={reg.metrics.hot95} from={reg.display_from} label="Days ≥ 95°F per year, average station" unitLabel="days" baseline={[ix.baseline.start, ix.baseline.end]} height={210} compact />
     {/if}
     {#if !reg}
       <StatTile label="{heroIdx.short}: nights per year at or above 70°F, {hero.windows.baseline.years[0]}–{hero.windows.baseline.years[1]}" value={n1(h.warm70_baseline)} />

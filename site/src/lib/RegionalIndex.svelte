@@ -7,7 +7,21 @@
   import { linear, ticks } from '$lib/scales.js';
   import { GRID, AXIS, MUTED, INK, HIGHLIGHT } from '$lib/palette.js';
 
-  let { series, label = '', unitLabel = 'days', color = '#d94f22', baseline = [1951, 1980], height = 230, compact = false } = $props();
+  let { series: full, from = null, label = '', unitLabel = 'days', color = '#d94f22', baseline = [1951, 1980], height = 230, compact = false } = $props();
+  // Slice the series at `from` (the front page starts at 1930: before that the network is too thin).
+  let series = $derived.by(() => {
+    if (from == null) return full;
+    const keep = full.year.map((y) => y >= from);
+    const pick = (arr) => (Array.isArray(arr) ? arr.filter((_, i) => keep[i]) : arr);
+    return { ...full, year: pick(full.year), mean: pick(full.mean), p05: pick(full.p05), p25: pick(full.p25), p75: pick(full.p75), p95: pick(full.p95), n_observed: pick(full.n_observed) };
+  });
+  let trend = $derived(full.trend);
+  let trendLabel = $derived.by(() => {
+    if (!trend) return '';
+    if (!trend.significant) return `no clear trend since ${trend.from}`;
+    const s = trend.slope_per_decade;
+    return `${s > 0 ? '+' : ''}${s.toFixed(1)} ${unitLabel} per decade since ${trend.from} (90% range ${trend.ci[0] > 0 ? '+' : ''}${trend.ci[0].toFixed(1)} to ${trend.ci[1] > 0 ? '+' : ''}${trend.ci[1].toFixed(1)})`;
+  });
 
   const W = 620;
   const M = { top: 22, right: 12, bottom: 26, left: 32 };
@@ -79,6 +93,9 @@
     {#each years.filter((yr) => yr % 20 === 0) as yr (yr)}
       <text x={x(yr)} y={height - 8} text-anchor="middle" font-size="10" fill={MUTED}>{yr}</text>
     {/each}
+    {#if trendLabel}
+      <text x={M.left + 4} y={M.top - 8} font-size="10.5" fill={INK}>{trendLabel}</text>
+    {/if}
   </svg>
   <div class="tip small">
     {#if k >= 0}

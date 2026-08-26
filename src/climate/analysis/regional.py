@@ -205,8 +205,41 @@ def evaluate_metric(
     return {"random": random_eval, "blocks": block_eval}
 
 
+def _trend_from_draws(yrs: list[int], regional: np.ndarray, from_year: int) -> dict | None:
+    """Theil-Sen slope per decade of the regional series from `from_year`, computed on
+    every draw (so the interval carries imputation + parameter uncertainty), with a
+    Kendall p-value on the median series."""
+    from scipy import stats
+
+    ks = [k for k, y in enumerate(yrs) if y >= from_year]
+    if len(ks) < 10:
+        return None
+    x = np.array([yrs[k] for k in ks], float)
+    slopes = []
+    for j in range(regional.shape[1]):
+        sl, *_ = stats.theilslopes(regional[ks, j], x)
+        slopes.append(sl * 10)
+    slopes = np.array(slopes)
+    med = np.median(regional[ks, :], axis=1)
+    _tau, p = stats.kendalltau(x, med)
+    lo, hi = np.percentile(slopes, [5, 95])
+    return {
+        "from": int(x[0]),
+        "to": int(x[-1]),
+        "slope_per_decade": round(float(np.median(slopes)), 3) + 0.0,
+        "ci": [round(float(lo), 3) + 0.0, round(float(hi), 3) + 0.0],
+        "p": round(float(p), 4),
+        "significant": bool(p < 0.05 and not (lo <= 0 <= hi)),
+        "n": len(ks),
+    }
+
+
 def fit_metric(
-    table: pl.DataFrame, years: list[int], station_ids: list[str], rng: np.random.Generator
+    table: pl.DataFrame,
+    years: list[int],
+    station_ids: list[str],
+    rng: np.random.Generator,
+    display_from: int = 1930,
 ) -> dict | None:
     """table: columns id, year, value (exact counts only). Returns per-station-year
     predictive summaries and the regional series."""
@@ -262,6 +295,8 @@ def fit_metric(
         "years": yrs,
         "station_ids": ids,
         "alpha": alpha,
+        "trend": _trend_from_draws(yrs, regional, display_from),
+        "display_from": display_from,
         "regional": {
             "year": yrs,
             "mean": [round(float(v), 2) for v in q[2]],  # median of the draws
@@ -298,7 +333,7 @@ REGIONAL_METRICS = {
 }
 
 
-def run_regional(region, analysis_dir, last_complete_year: int) -> dict:
+def run_regional(region, analysis_dir, last_complete_year: int, display_from: int = 1930) -> dict:
     rng = np.random.default_rng(SEED)
     out = {"region": region.id, "metrics": {}}
     ids = region.station_ids
@@ -314,7 +349,7 @@ def run_regional(region, analysis_dir, last_complete_year: int) -> dict:
             continue
         table = pl.concat(frames)
         years = [y for y in sorted(set(table["year"].to_list())) if y <= last_complete_year]
-        res = fit_metric(table, years, ids, rng)
+        res = fit_metric(table, years, ids, rng, display_from)
         if res:
             res["evaluation"] = evaluate_metric(table, years, ids, rng)
             out["metrics"][key] = res

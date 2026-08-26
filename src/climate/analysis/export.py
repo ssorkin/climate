@@ -468,8 +468,14 @@ def run_export(region: str = "all") -> None:
                     "region": reg.id,
                     "n_stations": len(reg.stations),
                     "baseline": cfg["baseline"],
+                    "display_from": cfg.get("regional_display_from", 1930),
                     "metrics": {
-                        k: {**m["regional"], "alpha": m["alpha"]}
+                        k: {
+                            **m["regional"],
+                            "alpha": m["alpha"],
+                            "trend": m.get("trend"),
+                            "evaluation": m.get("evaluation"),
+                        }
                         for k, m in regm["metrics"].items()
                     },
                 }
