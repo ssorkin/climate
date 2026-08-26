@@ -90,3 +90,32 @@ def test_incomplete_year_keeps_a_lower_bound(cfg):
     assert row["hot_95"] is None  # not a count
     assert row["hot_95_lb"] == 31  # but at least 31: every July day was observed
     assert row["days_valid_tmax"] == 305
+
+
+def seasonal(d: date) -> float:
+    return 100 if d.month == 7 else 58 if d.month == 1 else 80
+
+
+def test_missing_winter_days_do_not_block_a_hot_day_count(cfg):
+    # 40 missing days in January-February at a station whose winters never reach 95°F:
+    # the year is incomplete for means, but the 95°F count is exact.
+    gone = {date(2001, 1, 5) + timedelta(days=i) for i in range(40)}
+    frames = [make_daily(date(y, 1, 1), date(y, 12, 31), seasonal, 55) for y in range(1995, 2001)]
+    frames.append(make_daily(date(2001, 1, 1), date(2001, 12, 31), seasonal, 55, missing=gone))
+    daily = pl.concat(frames)
+    a = M.annual_metrics(daily, cfg, TODAY)
+    row = a.filter(pl.col("year") == 2001).row(0, named=True)
+    assert not row["complete_tmax"]
+    assert row["hot_95_risk"] == 0 and row["hot_95"] == 31 and row["hot_95_lb"] == 31
+    # ...but a ≤60°F-day count stays a lower bound: Januaries here do reach 58°F
+    assert row["coldday_60_risk"] > 0 and row["coldday_60"] is None
+
+
+def test_missing_summer_days_keep_the_lower_bound(cfg):
+    gone = {date(2001, 7, 1) + timedelta(days=i) for i in range(40)}
+    frames = [make_daily(date(y, 1, 1), date(y, 12, 31), hot_summer, 55) for y in range(1995, 2001)]
+    frames.append(make_daily(date(2001, 1, 1), date(2001, 12, 31), hot_summer, 55, missing=gone))
+    a = M.annual_metrics(pl.concat(frames), cfg, TODAY)
+    row = a.filter(pl.col("year") == 2001).row(0, named=True)
+    # 31 July days plus the first 7 of August (within ±7 days of a 100°F date)
+    assert row["hot_95_risk"] == 38 and row["hot_95"] is None and row["hot_95_lb"] == 0

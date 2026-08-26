@@ -69,6 +69,166 @@ def threshold_columns(cfg: dict) -> dict[str, list[str]]:
     }
 
 
+def _doy_expr() -> pl.Expr:
+    """Leap-year day-of-year slot (Feb 29 = 60) for a date column."""
+    return pl.struct(["date"]).map_elements(
+        lambda r: doy366(r["date"].month, r["date"].day), return_dtype=pl.Int32
+    )
+
+
+def doy_window_extremes(daily: pl.DataFrame, window: int) -> pl.DataFrame:
+    """Per calendar-date slot: the hottest/coldest values ever observed within ±window days."""
+    d = daily.select("date", "tmax", "tmin").with_columns(_doy_expr().alias("doy"))
+    per = d.group_by("doy").agg(
+        pl.col("tmax").max().alias("mx"),
+        pl.col("tmax").min().alias("mnx"),
+        pl.col("tmin").max().alias("mn"),
+        pl.col("tmin").min().alias("mnn"),
+    )
+    lookup = {r["doy"]: r for r in per.iter_rows(named=True)}
+    rows = []
+    for k in range(1, 367):
+        vals = {"mx": [], "mnx": [], "mn": [], "mnn": []}
+        for off in range(-window, window + 1):
+            r = lookup.get((k - 1 + off) % 366 + 1)
+            if r:
+                for key, acc in vals.items():
+                    if r[key] is not None:
+                        acc.append(r[key])
+        rows.append(
+            {
+                "doy": k,
+                "ever_max_tmax": max(vals["mx"]) if vals["mx"] else None,
+                "ever_min_tmax": min(vals["mnx"]) if vals["mnx"] else None,
+                "ever_max_tmin": max(vals["mn"]) if vals["mn"] else None,
+                "ever_min_tmin": min(vals["mnn"]) if vals["mnn"] else None,
+            }
+        )
+    return pl.DataFrame(
+        rows,
+        schema={
+            "doy": pl.Int32,
+            "ever_max_tmax": pl.Int32,
+            "ever_min_tmax": pl.Int32,
+            "ever_max_tmin": pl.Int32,
+            "ever_min_tmin": pl.Int32,
+        },
+    )
+
+
+def doy_pass_rates(daily: pl.DataFrame, cfg: dict, window: int = 3) -> pl.DataFrame:
+    """Per calendar-date slot and threshold: the share of observed days within ±window days
+    (across all years) that crossed the threshold — how often this date counts here."""
+    d = _with_flags(daily, cfg).with_columns(_doy_expr().alias("doy"))
+    names = [c for cols in threshold_columns(cfg).values() for c in cols]
+    per = d.group_by("doy").agg(
+        pl.col("tmax").is_not_null().sum().alias("n_x"),
+        pl.col("tmin").is_not_null().sum().alias("n_n"),
+        *[pl.col(c).sum().alias(c) for c in names],
+    )
+    lookup = {r["doy"]: r for r in per.iter_rows(named=True)}
+    rows = []
+    for k in range(1, 367):
+        acc = {c: 0 for c in names}
+        n = {"n_x": 0, "n_n": 0}
+        for off in range(-window, window + 1):
+            r = lookup.get((k - 1 + off) % 366 + 1)
+            if r:
+                n["n_x"] += r["n_x"]
+                n["n_n"] += r["n_n"]
+                for c in names:
+                    acc[c] += r[c] or 0
+        row = {"doy": k}
+        for c in names:
+            nn = n["n_x"] if c.startswith(("hot", "coldday")) else n["n_n"]
+            row[f"{c}_rate"] = (acc[c] / nn) if nn else None
+        rows.append(row)
+    return pl.DataFrame(rows, schema={"doy": pl.Int32, **{f"{c}_rate": pl.Float64 for c in names}})
+
+
+def risk_days(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
+    """One row per calendar day of the record span. For each threshold:
+    `<name>_risk`  — this day is missing AND the threshold has been reached on this calendar
+                     date (±doy_window_days) at this station (a missing day that *could* count);
+    `<name>_exp`   — if missing, how often this date crosses the threshold here (0..1), i.e.
+                     the expected contribution of the missing day to the count."""
+    start, end = daily["date"].min(), daily["date"].max()
+    start, end = date(start.year, 1, 1), date(end.year, 12, 31)
+    full = pl.DataFrame({"date": pl.date_range(start, end, "1d", eager=True)})
+    d = full.join(daily.select("date", "tmax", "tmin"), on="date", how="left")
+    d = (
+        d.with_columns(_doy_expr().alias("doy"))
+        .join(doy_window_extremes(daily, cfg["doy_window_days"]), on="doy", how="left")
+        .join(doy_pass_rates(daily, cfg), on="doy", how="left")
+    )
+    t = cfg["thresholds_f"]
+    miss_x, miss_n = pl.col("tmax").is_null(), pl.col("tmin").is_null()
+    exprs = []
+
+    def add(name: str, missing: pl.Expr, could: pl.Expr) -> None:
+        exprs.append((missing & could.fill_null(True)).alias(f"{name}_risk"))
+        exprs.append(
+            pl.when(missing)
+            .then(pl.col(f"{name}_rate").fill_null(1.0))
+            .otherwise(0.0)
+            .alias(f"{name}_exp")
+        )
+
+    for thr in t["hot_days"]:
+        add(f"hot_{thr}", miss_x, f_whole_expr(pl.col("ever_max_tmax")) >= thr)
+    for thr in t["warm_nights"]:
+        add(f"warm_{thr}", miss_n, f_whole_expr(pl.col("ever_max_tmin")) >= thr)
+    for thr in t["cold_days"]:
+        add(f"coldday_{thr}", miss_x, f_whole_expr(pl.col("ever_min_tmax")) <= thr)
+    for thr in t["cold_nights"]:
+        add(f"coldnight_{thr}", miss_n, f_whole_expr(pl.col("ever_min_tmin")) <= thr)
+    return d.select("date", *exprs).with_columns(
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
+    )
+
+
+def risk_columns(cfg: dict) -> list[str]:
+    return [f"{c}_risk" for names in threshold_columns(cfg).values() for c in names]
+
+
+def exp_columns(cfg: dict) -> list[str]:
+    return [f"{c}_exp" for names in threshold_columns(cfg).values() for c in names]
+
+
+def _risk_aggs(cfg: dict) -> list[pl.Expr]:
+    return [
+        *[pl.col(c).sum().cast(pl.Int32).alias(c) for c in risk_columns(cfg)],
+        *[pl.col(c).sum().round(2).alias(c) for c in exp_columns(cfg)],
+    ]
+
+
+# A lower bound is promoted to an exact count when the missing days are expected to add
+# fewer than this many days to it (see doy_pass_rates).
+EXACT_MAX_EXPECTED = 0.5
+
+
+def _apply_risk(
+    df: pl.DataFrame, cfg: dict, elem_ok: dict[str, str], min_frac: float = 0.5
+) -> pl.DataFrame:
+    """Promote a lower bound to an exact count when no missing day could have counted and at
+    least min_frac of the period was observed. Requires <name>_lb, <name>_risk, days_valid_*,
+    days_in_* and partial columns."""
+    total = next(c for c in df.columns if c.startswith("days_in_"))
+    exprs = []
+    for family, names in threshold_columns(cfg).items():
+        elem = "tmax" if family in ("hot_days", "cold_days") else "tmin"
+        for n in names:
+            if f"{n}_lb" not in df.columns:
+                continue
+            exact = pl.col(elem_ok[elem]) | (
+                ((pl.col(f"{n}_risk") == 0) | (pl.col(f"{n}_exp") < EXACT_MAX_EXPECTED))
+                & (pl.col(f"days_valid_{elem}") >= (pl.col(total) * min_frac).ceil())
+                & ~pl.col("partial")
+            )
+            exprs.append(pl.when(exact).then(pl.col(f"{n}_lb")).otherwise(None).alias(n))
+    return df.with_columns(exprs)
+
+
 def _with_flags(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
     return daily.with_columns(
         pl.col("date").dt.year().alias("year"),
@@ -207,7 +367,13 @@ def annual_metrics(daily: pl.DataFrame, cfg: dict, today: date | None = None) ->
         .drop("_tmax", "_tmin", "partial", *_jja_cols(cfg))
     )
 
-    out = years.join(full, on="year", how="left").join(summer, on="year", how="left")
+    risk = risk_days(daily, cfg).group_by("year").agg(*_risk_aggs(cfg))
+    out = (
+        years.join(full, on="year", how="left")
+        .join(summer, on="year", how="left")
+        .join(risk, on="year", how="left")
+    )
+    out = _apply_risk(out, cfg, ok)
     return out.sort("year")
 
 
@@ -267,7 +433,11 @@ def monthly_metrics(daily: pl.DataFrame, cfg: dict, today: date | None = None) -
         *_count_exprs(cfg, ok),
         *_extreme_exprs(ok),
     )
-    return counts.join(agg, on=["year", "month"], how="left").sort(["year", "month"])
+    risk = risk_days(daily, cfg).group_by(["year", "month"]).agg(*_risk_aggs(cfg))
+    out = counts.join(agg, on=["year", "month"], how="left").join(
+        risk, on=["year", "month"], how="left"
+    )
+    return _apply_risk(out, cfg, ok).sort(["year", "month"])
 
 
 # --- cold season (Jul -> Jun, labeled by the January year) ------------------------------
@@ -320,6 +490,18 @@ def cold_season_metrics(daily: pl.DataFrame, cfg: dict, today: date | None = Non
     out = out.with_columns(
         *[pl.col(c).alias(f"{c}_lb") for c in night_cols + day_cols],
     )
+    risk = (
+        risk_days(daily, cfg)
+        .with_columns(
+            pl.when(pl.col("month") >= start_month)
+            .then(pl.col("year") + 1)
+            .otherwise(pl.col("year"))
+            .alias("season")
+        )
+        .group_by("season")
+        .agg(*_risk_aggs(cfg))
+    )
+    out = out.join(risk, on="season", how="left")
     out = out.with_columns(
         *[
             pl.when(pl.col("complete_tmin")).then(pl.col(c)).otherwise(None).alias(c)
@@ -346,6 +528,11 @@ def cold_season_metrics(daily: pl.DataFrame, cfg: dict, today: date | None = Non
         .otherwise(None)
         .alias("coldest_date"),
     ).drop("_cn_date", "_cd_date", "first_partial")
+    out = _apply_risk(
+        out.rename({"days_in_season": "days_in_period"}),
+        cfg,
+        {"tmax": "complete_tmax", "tmin": "complete_tmin"},
+    ).rename({"days_in_period": "days_in_season"})
     return out.sort("season")
 
 

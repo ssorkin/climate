@@ -12,6 +12,7 @@
     years = [],
     values = [],
     lower = [], // count over observed days; drawn hollow when the year is incomplete
+    expected = [], // expected effect of the missing days on the count
     daysValid = [],
     daysTotal = [],
     partial = [],
@@ -56,10 +57,11 @@
     const obs = daysValid[k] != null && daysTotal[k] != null ? ` (${daysValid[k]} of ${daysTotal[k]} days observed)` : '';
     if (v == null) {
       if (partial[k] && lower[k] != null) return `${yr}: ${yFormat(lower[k])} ${unitLabel} so far${obs}`;
-      if (lower[k] != null) return `${yr}: at least ${yFormat(lower[k])} ${unitLabel} — incomplete year${obs}`;
+      if (lower[k] != null) return `${yr}: at least ${yFormat(lower[k])} ${unitLabel} — incomplete year${obs}${expected[k] != null ? `, missing days expected to add ~${expected[k].toFixed(1)}` : ''}`;
       return `${yr}: no data`;
     }
-    return `${yr}: ${yFormat(v)} ${unitLabel}${partial[k] ? ' so far' : ''}${obs}`;
+    const gap = daysValid[k] != null && daysTotal[k] != null && daysValid[k] < daysTotal[k] && !partial[k] ? `${obs}, on dates that ${expected[k] === 0 ? 'never' : 'rarely'} count here` : obs;
+    return `${yr}: ${yFormat(v)} ${unitLabel}${partial[k] ? ' so far' : ''}${gap}`;
   });
   let decadeSegs = $derived(
     decades

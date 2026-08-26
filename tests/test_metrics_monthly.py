@@ -62,5 +62,7 @@ def test_cold_season_lower_bound(cfg):
     daily = make_daily(date(1999, 7, 1), date(2001, 6, 30), 60, frosty, missing=gone)
     cs = M.cold_season_metrics(daily, cfg, TODAY)
     s2000 = cs.filter(pl.col("season") == 2000).row(0, named=True)
-    assert not s2000["complete_tmin"] and s2000["coldnight_32"] is None
-    assert s2000["coldnight_32_lb"] == 62
+    # Incomplete season, but the missing March-April days never frost here -> exact count.
+    assert not s2000["complete_tmin"]
+    assert s2000["coldnight_32_lb"] == 62 and s2000["coldnight_32_risk"] == 0
+    assert s2000["coldnight_32"] == 62

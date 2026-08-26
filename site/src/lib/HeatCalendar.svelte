@@ -7,7 +7,7 @@
   import { MONTHS } from '$lib/dates.js';
   import { HEAT_RAMP, COOL_RAMP, ramp, MUTED, INK, HIGHLIGHT } from '$lib/palette.js';
 
-  let { years = [], months = [], values = [], lower = [], daysValid = [], daysTotal = [], complete = [], cool = false, selected = null, onselect = null, unitLabel = 'days' } = $props();
+  let { years = [], months = [], values = [], lower = [], expected = [], daysValid = [], daysTotal = [], complete = [], cool = false, selected = null, onselect = null, unitLabel = 'days' } = $props();
 
   const W = 860;
   const LEFT = 34;
@@ -23,7 +23,7 @@
 
   let grid = $derived.by(() => {
     const g = new Map();
-    for (let k = 0; k < years.length; k++) g.set(years[k] * 100 + months[k], { v: values[k], lb: lower[k], ok: complete[k], nv: daysValid[k], nt: daysTotal[k] });
+    for (let k = 0; k < years.length; k++) g.set(years[k] * 100 + months[k], { v: values[k], lb: lower[k], ex: expected[k], ok: complete[k], nv: daysValid[k], nt: daysTotal[k] });
     return g;
   });
   let hover = $state(null);
@@ -40,8 +40,8 @@
     const c = grid.get(hover.yr * 100 + hover.mo);
     if (!c) return `${MONTHS[hover.mo - 1]} ${hover.yr}: no data`;
     const obs = c.nv != null && c.nt != null ? ` (${c.nv} of ${c.nt} days observed)` : '';
-    if (!c.ok) return c.lb != null && c.nv > 0 ? `${MONTHS[hover.mo - 1]} ${hover.yr}: at least ${c.lb} ${unitLabel} — incomplete${obs}` : `${MONTHS[hover.mo - 1]} ${hover.yr}: no data`;
-    return `${MONTHS[hover.mo - 1]} ${hover.yr}: ${c.v} ${unitLabel}${obs}`;
+    if (c.v == null) return c.lb != null && c.nv > 0 ? `${MONTHS[hover.mo - 1]} ${hover.yr}: at least ${c.lb} ${unitLabel} — incomplete${obs}${c.ex != null ? `, missing days expected to add ~${c.ex.toFixed(1)}` : ''}` : `${MONTHS[hover.mo - 1]} ${hover.yr}: no data`;
+    return `${MONTHS[hover.mo - 1]} ${hover.yr}: ${c.v} ${unitLabel}${obs}${!c.ok ? ', missing days on dates that rarely count here' : ''}`;
   });
 </script>
 
@@ -59,7 +59,7 @@
       {@const mo = months[k]}
       {@const v = values[k]}
       {@const lb = lower[k]}
-      {#if complete[k]}
+      {#if v != null}
         <rect x={LEFT + (yr - y0) * cw} y={TOP + (mo - 1) * ch} width={Math.max(0.5, cw - 0.6)} height={ch - 1} fill={v === 0 ? '#f3efe7' : ramp(colors, v / vmax)} />
       {:else}
         <rect x={LEFT + (yr - y0) * cw} y={TOP + (mo - 1) * ch} width={Math.max(0.5, cw - 0.6)} height={ch - 1} fill={lb > 0 ? ramp(colors, lb / vmax) : '#f3efe7'} opacity={lb > 0 ? 0.55 : 1} />

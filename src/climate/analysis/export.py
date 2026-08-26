@@ -53,17 +53,25 @@ def _family_block(df: pl.DataFrame, cfg: dict, prefix: str = "") -> dict:
     }
     out = {}
     for family, stem in names.items():
-        block, lb = {}, {}
+        block, lb, risk, exp = {}, {}, {}, {}
         for thr in t[family]:
             c = f"{prefix}{stem}_{thr}"
             if c in df.columns:
                 block[str(thr)] = col(df, c)
             if f"{c}_lb" in df.columns:
                 lb[str(thr)] = col(df, f"{c}_lb")
+            if f"{c}_risk" in df.columns:
+                risk[str(thr)] = col(df, f"{c}_risk")
+            if f"{c}_exp" in df.columns:
+                exp[str(thr)] = col(df, f"{c}_exp")
         if block:
             out[family] = block
         if lb:
             out[f"{family}_lb"] = lb
+        if risk:
+            out[f"{family}_risk"] = risk
+        if exp:
+            out[f"{family}_exp"] = exp
     return out
 
 

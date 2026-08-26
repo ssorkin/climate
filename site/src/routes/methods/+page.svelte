@@ -51,7 +51,12 @@
 <h2>Missing data</h2>
 <p>
   A year is counted only if at least {Math.round(ix.completeness.annual_min_frac * 100)}% of its days were observed (for highs and
-  lows separately); a month needs {ix.completeness.monthly_min_days} days. Anything less is shown as a gap, never as a low count. The current
+  lows separately); a month needs {ix.completeness.monthly_min_days} days. Anything less is never shown as a low count: the chart shows a hollow "at least N" bar (the count over the days
+  that were observed is a true lower bound) and the station page lists the missing dates. A missing January day can't
+  hide a 95°F afternoon at Newport Beach, though — so for each threshold we also ask how often each missing date crosses
+  it at that station (that calendar date ±3 days, over all years). If the missing days together are expected to add
+  fewer than half a day to the count, and at least half the period was observed, the count is treated as exact and the
+  year counts normally; the tooltip still says which days were missing. The current
   year is always "so far": it appears hatched and is compared with other years only over the same calendar window
   ("this summer through August 23" against every other summer through August 23). Cooperative-observer stations can
   report weeks late, so a station's latest date is always shown.
