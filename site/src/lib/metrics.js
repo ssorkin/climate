@@ -77,3 +77,11 @@ export const partialOf = (summary, family) =>
   family === 'frost' ? summary.cold_season.partial : summary.annual.partial;
 
 export { parseISO };
+
+// Trend label: a slope only when the Theil-Sen fit is significant; otherwise say so.
+export function trendLabel(t, noun) {
+  if (!t) return '';
+  if (!t.significant) return `no clear trend since ${t.from}`;
+  const sign = t.slope_per_decade > 0 ? '+' : '';
+  return `${sign}${t.slope_per_decade.toFixed(1)} ${noun} per decade since ${t.from}`;
+}

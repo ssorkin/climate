@@ -61,8 +61,11 @@
 <p>
   "Then" is {ix.baseline.start}–{ix.baseline.end}: every station has a complete record over it, it is the reference period used by
   NASA GISS and Berkeley Earth, and it predates most of the local warming. Decade averages use complete years only
-  (at least {ix.completeness.decade_min_years}); the current decade is marked "so far". Trend lines are Theil–Sen slopes
-  (a median-based fit that is robust to single extreme years) over complete years since {ix.baseline.start}. Daily
+  (at least {ix.completeness.decade_min_years}); the current decade is marked "so far". Trend labels are Theil–Sen slopes
+  (a median-based fit that is robust to single extreme years) over complete years since {ix.baseline.start}; a slope is shown only
+  when its 95% confidence interval excludes zero (Kendall p &lt; 0.05), otherwise the chart says "no clear trend". Count series that
+  are almost all zeros — 95°F days at a beach station, frost nights at the coast — get no trend at all, because a median slope through
+  zeros is meaningless. Daily
   "typical range" bands are the 10th–90th percentile of the baseline years for each calendar date (±{ix.completeness.doy_window_days ?? 7} days).
   A daily record requires at least {ix.completeness.record_min_prior_years} prior years of data for that date, so a record set in 1895 over two prior years doesn't count.
 </p>

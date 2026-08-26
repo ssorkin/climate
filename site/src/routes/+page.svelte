@@ -5,7 +5,7 @@
   import { units } from '$lib/units.svelte.js';
   import { fmtC, fmtThresholdF } from '$lib/units.js';
   import { fmtISO } from '$lib/dates.js';
-  import { FAMILIES, exportedAnnual, yearsOf } from '$lib/metrics.js';
+  import { FAMILIES, exportedAnnual, yearsOf, trendLabel } from '$lib/metrics.js';
   import { HEAT, COOL } from '$lib/palette.js';
   import StatTile from '$lib/StatTile.svelte';
   import StationMap from '$lib/StationMap.svelte';
@@ -62,20 +62,14 @@
   // Warm-nights chart with a station switcher.
   let barStation = $state(null);
   let bars = $derived(summaries[barStation ?? hero.id] ?? hero);
-  let barsTrend = $derived.by(() => {
-    const t = bars.trends?.warm_70;
-    return t ? `${t.slope_per_decade > 0 ? '+' : ''}${t.slope_per_decade.toFixed(1)} nights per decade since ${t.from}` : '';
-  });
+  let barsTrend = $derived(trendLabel(bars.trends?.warm_70, 'nights'));
   let barsBaseline = $derived(bars.windows?.baseline?.warm_70 == null ? null : { years: bars.windows.baseline.years, value: bars.windows.baseline.warm_70 });
 
   // Frost chart: the station with the most baseline frost nights.
   let frostStation = $derived([...stations].sort((a, b) => (b.headline.frost_baseline ?? 0) - (a.headline.frost_baseline ?? 0))[0]);
   let frost = $derived(summaries[frostStation?.id]);
   let frostBaseline = $derived(frost?.windows?.baseline?.season?.coldnight_32 == null ? null : { years: frost.windows.baseline.years, value: frost.windows.baseline.season.coldnight_32 });
-  let frostTrend = $derived.by(() => {
-    const t = frost?.trends?.frost_nights;
-    return t ? `${t.slope_per_decade > 0 ? '+' : ''}${t.slope_per_decade.toFixed(1)} nights per decade since ${t.from}` : '';
-  });
+  let frostTrend = $derived(trendLabel(frost?.trends?.frost_nights, 'nights'));
 
   const h = $derived(heroIdx.headline);
   const n1 = (v) => (v == null ? '—' : v < 10 ? v.toFixed(1) : Math.round(v).toString());

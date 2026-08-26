@@ -582,20 +582,32 @@ def summer_to_date(daily: pl.DataFrame, cfg: dict, today: date | None = None) ->
 # --- trends, anomalies, windows --------------------------------------------------------
 
 
-def trend(years: np.ndarray, values: np.ndarray) -> dict | None:
-    """Theil-Sen slope per decade with 95% CI and a Kendall tau p-value (complete years only)."""
+def trend(years: np.ndarray, values: np.ndarray, min_nonzero: int = 10) -> dict | None:
+    """Theil-Sen slope per decade with 95% CI and a Kendall tau p-value (complete years only).
+
+    Count series that are almost all zeros (e.g. 95°F days at a beach station) make the
+    median pairwise slope degenerate, so those return None rather than a misleading 0.0.
+    `significant` is False when the CI spans zero or p >= 0.05; the site then says
+    "no clear trend" instead of printing a slope.
+    """
     from scipy import stats
 
     mask = ~np.isnan(values)
     x, y = years[mask].astype(float), values[mask].astype(float)
-    if len(x) < 10:
+    if len(x) < 10 or np.count_nonzero(y) < min_nonzero:
         return None
     slope, _intercept, lo, hi = stats.theilslopes(y, x, alpha=0.95)
     _tau, p = stats.kendalltau(x, y)
+
+    def dec(v: float) -> float:
+        return round(float(v) * 10, 3) + 0.0  # + 0.0 turns -0.0 into 0.0
+
+    lo10, hi10 = dec(lo), dec(hi)
     return {
-        "slope_per_decade": round(float(slope) * 10, 3),
-        "ci": [round(float(lo) * 10, 3), round(float(hi) * 10, 3)],
+        "slope_per_decade": dec(slope),
+        "ci": [lo10, hi10],
         "p": round(float(p), 4),
+        "significant": bool(p < 0.05 and not (lo10 <= 0 <= hi10)),
         "n": len(x),
         "from": int(x.min()),
         "to": int(x.max()),

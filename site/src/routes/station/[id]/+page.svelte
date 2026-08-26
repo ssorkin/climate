@@ -7,7 +7,7 @@
   import { units } from '$lib/units.svelte.js';
   import { fmtC, fmtTenths, fmtThresholdF } from '$lib/units.js';
   import { fmtISO } from '$lib/dates.js';
-  import { FAMILIES, annualCounts, monthlyCounts, seasonCounts, exportedAnnual, exportedMonthly, isStandard, yearsOf, partialOf } from '$lib/metrics.js';
+  import { FAMILIES, annualCounts, monthlyCounts, seasonCounts, exportedAnnual, exportedMonthly, isStandard, yearsOf, partialOf, trendLabel as fmtTrend } from '$lib/metrics.js';
   import { HEAT, COOL } from '$lib/palette.js';
   import Controls from '$lib/Controls.svelte';
   import YearScrubber from '$lib/YearScrubber.svelte';
@@ -89,10 +89,9 @@
   });
   const stem = { hot: 'hot', warm: 'warm', coldday: 'coldday', frost: 'coldnight' };
   let trendLabel = $derived.by(() => {
+    if (!standard) return '';
     const t = s.trends?.[`${stem[family]}_${threshold}`] ?? (family === 'frost' && threshold === 32 ? s.trends?.frost_nights : null);
-    if (!t) return '';
-    const sign = t.slope_per_decade > 0 ? '+' : '';
-    return `${sign}${t.slope_per_decade.toFixed(1)} ${fam.noun} per decade since ${t.from}`;
+    return fmtTrend(t, fam.noun);
   });
   let baseline = $derived.by(() => {
     const w = s.windows?.baseline;
