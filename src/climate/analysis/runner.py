@@ -170,6 +170,10 @@ def _analyze_one(args: tuple[str, str]) -> str:
     region_id, sid = args
     reg = next(r for r in _CTX["regions"] if r.id == region_id)
     st = next(x for x in reg.stations if x.id == sid)
+    from climate.ingest.store import daily_path
+
+    if not daily_path(sid).exists():
+        return f"  SKIPPED {sid} {st.short}: not ingested"
     try:
         meta = analyze_station(
             st, reg, _CTX["cfg"], _CTX["stations"], _CTX["inv"], _CTX["today"], _CTX["ush"]
@@ -206,15 +210,19 @@ def run_analysis(region: str = "all", today: date | None = None) -> None:
     }
     todo = [(reg.id, st.id) for reg, st in unique_stations(regions)]
     print(f"==> analyzing {len(todo)} stations")
-    failed = 0
+    failed = skipped = 0
     with ProcessPoolExecutor(initializer=_init, initargs=(ctx,)) as pool:
         for i, line in enumerate(pool.map(_analyze_one, todo, chunksize=4), 1):
-            if "FAILED" in line:
+            if "SKIPPED" in line:
+                skipped += 1
+            elif "FAILED" in line:
                 failed += 1
                 print(line)
             elif len(todo) <= 40:
                 print(line)
             elif i % 500 == 0:
                 print(f"  … {i}/{len(todo)}")
+    if skipped:
+        print(f"  {skipped} station(s) not ingested yet — skipped")
     if failed:
         print(f"  {failed} station(s) failed")

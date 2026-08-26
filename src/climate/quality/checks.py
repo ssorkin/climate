@@ -70,6 +70,7 @@ def check_station_config() -> list[Finding]:
     stations = load_stations()
     inv = load_inventory()
     year = _today().year
+    curated = {sid for sid, _ in _stations(curated_only=True)}
     for sid, short in _stations():
         if stations.filter(pl.col("id") == sid).is_empty():
             out.append(
@@ -84,7 +85,7 @@ def check_station_config() -> list[Finding]:
                         "station_config", "anomaly", None, sid, f"{short}: no {el} in inventory"
                     )
                 )
-            elif row["last_year"][0] < year - 1:
+            elif row["last_year"][0] < year - 1 and sid in curated:
                 out.append(
                     Finding(
                         "station_config",
@@ -101,13 +102,14 @@ def check_station_config() -> list[Finding]:
     return out
 
 
-def check_completeness() -> list[Finding]:
+def check_completeness(only=None) -> list[Finding]:
     cfg = load_analysis_config()
     frac = cfg["completeness"]["annual_min_frac"]
     year = _today().year
     out = []
-    curated = {sid for sid, _ in _stations(curated_only=True)}
-    for sid, short in _stations():
+    sid, short, is_curated = only
+    curated = {sid} if is_curated else set()
+    if True:
         d = load_daily_wide(sid).with_columns(pl.col("date").dt.year().alias("year"))
         g = d.group_by("year").agg(
             pl.col("tmax").is_not_null().sum().alias("tmax"),
@@ -144,7 +146,7 @@ def check_completeness() -> list[Finding]:
                     ),
                 )
             )
-        recent = all_years.filter(pl.col("year") >= year - 5)
+        recent = all_years.filter(pl.col("year") >= year - 5) if is_curated else all_years.head(0)
         for r in recent.iter_rows(named=True):
             if r["tmax"] < r["n"] * frac or r["tmin"] < r["n"] * frac:
                 out.append(
@@ -159,9 +161,10 @@ def check_completeness() -> list[Finding]:
     return out
 
 
-def check_gaps(min_days: int = 30) -> list[Finding]:
+def check_gaps(min_days: int = 30, only=None) -> list[Finding]:
     out = []
-    for sid, short in _stations(curated_only=True):
+    sid, short, is_curated = only
+    if is_curated:
         d = load_daily_wide(sid).select("date", "tmax").sort("date")
         dates = d.filter(pl.col("tmax").is_not_null())["date"].to_list()
         examples = []
@@ -183,11 +186,12 @@ def check_gaps(min_days: int = 30) -> list[Finding]:
     return out
 
 
-def check_qflags() -> list[Finding]:
+def check_qflags(only=None) -> list[Finding]:
     out = []
     year = _today().year
-    curated = {sid for sid, _ in _stations(curated_only=True)}
-    for sid, short in _stations():
+    sid, short, is_curated = only
+    curated = {sid} if is_curated else set()
+    if True:
         long = load_daily_long(sid).filter(pl.col("element").is_in(["TMAX", "TMIN"]))
         flagged = long.filter(pl.col("qflag") != "")
         counts = dict(flagged.group_by("qflag").len().sort("qflag").iter_rows())
@@ -218,11 +222,12 @@ def check_qflags() -> list[Finding]:
     return out
 
 
-def check_obs_time_segments() -> list[Finding]:
+def check_obs_time_segments(only=None) -> list[Finding]:
     out = []
     cutoff = _today() - timedelta(days=730)
-    curated = {sid for sid, _ in _stations(curated_only=True)}
-    for sid, short in _stations():
+    sid, short, is_curated = only
+    curated = {sid} if is_curated else set()
+    if True:
         segs = segments(load_daily_wide(sid), min_days=30)
         desc = "; ".join(f"{s['from']}→{s['to']} {s['hhmm'] or 'n/a'}" for s in segs)
         if sid in curated:
@@ -241,10 +246,11 @@ def check_obs_time_segments() -> list[Finding]:
     return out
 
 
-def check_suspicious_values() -> list[Finding]:
+def check_suspicious_values(only=None) -> list[Finding]:
     out = []
     recent_cutoff = _today() - timedelta(days=90)
-    for sid, short in _stations():
+    sid, short, is_curated = only
+    if True:
         d = load_daily_wide(sid).sort("date")
         d = d.with_columns(
             (pl.col("tmax") < pl.col("tmin")).alias("inverted"),
@@ -272,7 +278,8 @@ def check_suspicious_values() -> list[Finding]:
         if problems:
             problems.sort()
             recent = [p for p in problems if p[0] >= recent_cutoff]
-            sev = "anomaly" if recent else "warning"
+            # Only a curated station's live headline can be corrupted badly enough to block a deploy.
+            sev = "anomaly" if recent and is_curated else "warning"
             out.append(
                 Finding(
                     "suspicious_values",
@@ -287,11 +294,14 @@ def check_suspicious_values() -> list[Finding]:
     return out
 
 
-def check_whole_degree_f() -> list[Finding]:
+def check_whole_degree_f(only=None) -> list[Finding]:
     """US observers report whole °F; NOAA stores tenths °C. Check the conversion round-trips."""
     out = []
-    for sid, short in _stations():
+    sid, short, _c = only
+    if True:
         d = load_daily_wide(sid).filter(pl.col("tmax").is_not_null())
+        if d.is_empty():
+            return out
         f = f_whole_expr(pl.col("tmax"))
         exact = (f - 32) * 50 / 9
         ok = (exact.round(0).cast(pl.Int64) == pl.col("tmax")) | (
@@ -308,38 +318,74 @@ def check_whole_degree_f() -> list[Finding]:
                     f"{short}: only {share:.2%} of TMAX values round-trip to whole °F",
                 )
             )
-    if not out:
-        out.append(
-            Finding(
-                "whole_degree_f",
-                "info",
-                None,
-                "all",
-                "≥99.5% of values round-trip to whole °F everywhere",
-            )
-        )
     return out
 
 
-def check_freshness() -> list[Finding]:
+def check_duplicates(only=None) -> list[Finding]:
     out = []
-    today = _today()
-    ages = []
-    for sid, short in _stations():
-        d = load_daily_wide(sid).filter(pl.col("tmax").is_not_null())
-        last = d["date"].max()
-        age = (today - last).days
-        ages.append(age)
-        if 14 < age <= 400:
+    sid, short, _c = only
+    if True:
+        long = load_daily_long(sid)
+        dup = long.group_by(["date", "element"]).len().filter(pl.col("len") > 1)
+        if dup.height:
             out.append(
                 Finding(
-                    "freshness",
-                    "warning",
-                    last.year,
+                    "duplicates",
+                    "anomaly",
+                    None,
                     sid,
-                    f"{short}: last TMAX is {last} ({age} days ago)",
+                    f"{short}: {dup.height} duplicate (date, element) rows",
                 )
             )
+    return out
+
+
+def _station_pass(args: tuple[str, str, bool]) -> tuple[list[Finding], int | None]:
+    """All per-station checks for one station, from one load of its frames."""
+    sid, short, curated = args
+    findings: list[Finding] = []
+    from climate.ingest.store import daily_path
+
+    if not daily_path(sid).exists():
+        return [
+            Finding("ingest", "warning", None, sid, f"{short}: not ingested yet (no Parquet)")
+        ], None
+    for fn in (
+        check_completeness,
+        check_gaps,
+        check_qflags,
+        check_obs_time_segments,
+        check_suspicious_values,
+        check_whole_degree_f,
+        check_duplicates,
+    ):
+        findings.extend(fn(only=(sid, short, curated)))
+    d = load_daily_wide(sid).filter(pl.col("tmax").is_not_null())
+    age = (_today() - d["date"].max()).days if d.height else None
+    return findings, age
+
+
+def check_all_stations() -> list[Finding]:
+    """Fan the per-station checks out over a process pool; freshness is judged here."""
+    from concurrent.futures import ProcessPoolExecutor
+
+    curated = {sid for sid, _ in _stations(curated_only=True)}
+    todo = [(sid, short, sid in curated) for sid, short in _stations()]
+    out: list[Finding] = []
+    ages = []
+    with ProcessPoolExecutor() as pool:
+        for (findings, age), (sid, short, _c) in zip(
+            pool.map(_station_pass, todo, chunksize=16), todo, strict=True
+        ):
+            out.extend(findings)
+            if age is not None:
+                ages.append(age)
+                if 14 < age <= 400:
+                    out.append(
+                        Finding(
+                            "freshness", "warning", None, sid, f"{short}: last TMAX {age} days ago"
+                        )
+                    )
     if ages and min(ages) > 45:
         out.append(
             Finding(
@@ -353,35 +399,4 @@ def check_freshness() -> list[Finding]:
     return out
 
 
-def check_duplicates() -> list[Finding]:
-    out = []
-    for sid, short in _stations():
-        long = load_daily_long(sid)
-        dup = long.group_by(["date", "element"]).len().filter(pl.col("len") > 1)
-        if dup.height:
-            out.append(
-                Finding(
-                    "duplicates",
-                    "anomaly",
-                    None,
-                    sid,
-                    f"{short}: {dup.height} duplicate (date, element) rows",
-                )
-            )
-    if not out:
-        out.append(Finding("duplicates", "info", None, "all", "no duplicate rows"))
-    return out
-
-
-ALL_CHECKS = [
-    check_manifests,
-    check_station_config,
-    check_completeness,
-    check_gaps,
-    check_qflags,
-    check_obs_time_segments,
-    check_suspicious_values,
-    check_whole_degree_f,
-    check_freshness,
-    check_duplicates,
-]
+ALL_CHECKS = [check_manifests, check_station_config, check_all_stations]

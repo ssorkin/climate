@@ -27,6 +27,14 @@
   Two candidates were dropped for incompleteness (Big Tujunga Dam, Van Nuys Airport). Names and coordinates come from NOAA's station list.
 </p>
 
+<p>
+  The <a href="/us">national map</a> is different: it is not curated. It includes every US station in NOAA's inventory whose
+  daily highs and lows span at least 50 years — {ix.regions.find((r) => r.id === 'us')?.n_stations?.toLocaleString() ?? 'thousands of'} stations, closed ones included — with
+  the same completeness rules applied year by year, and no judgment about siting. Station moves and instrument changes are
+  common in those records (Pasadena's are described below); treat any single station's trend with that in mind, and look for
+  agreement among neighbors.
+</p>
+
 <h2 id="civic-center">Why the famous downtown Los Angeles record isn't here</h2>
 {#each ix.excluded as e (e.id)}
   <p>

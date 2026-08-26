@@ -130,20 +130,29 @@ def download(
         headers["If-Modified-Since"] = entry["last_modified"]
 
     tmp = dest.with_suffix(dest.suffix + f".{threading.get_ident()}.part")
-    h = hashlib.sha256()
-    try:
-        with client().stream("GET", url, headers=headers) as resp:
-            if resp.status_code == 304:
-                return dest
-            resp.raise_for_status()
-            last_modified = resp.headers.get("last-modified", "")
-            with tmp.open("wb") as f:
-                for chunk in resp.iter_bytes(1 << 20):
-                    h.update(chunk)
-                    f.write(chunk)
-    except httpx.HTTPError as exc:
-        tmp.unlink(missing_ok=True)
-        print(f"  FAILED {url}: {exc}")
+    last_error: Exception | None = None
+    for attempt in range(3):
+        h = hashlib.sha256()
+        try:
+            with client().stream("GET", url, headers=headers) as resp:
+                if resp.status_code == 304:
+                    return dest
+                resp.raise_for_status()
+                last_modified = resp.headers.get("last-modified", "")
+                with tmp.open("wb") as f:
+                    for chunk in resp.iter_bytes(1 << 20):
+                        h.update(chunk)
+                        f.write(chunk)
+            last_error = None
+            break
+        except httpx.HTTPError as exc:
+            tmp.unlink(missing_ok=True)
+            last_error = exc
+            if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code == 404:
+                break
+            time.sleep(2 * (attempt + 1))
+    if last_error is not None:
+        print(f"  FAILED {url}: {last_error}", flush=True)
         return None
 
     tmp.replace(dest)

@@ -52,6 +52,39 @@ ABBREV = {
 }
 
 
+KEEP_UPPER = {
+    "NAS",
+    "AFB",
+    "MCAS",
+    "MCAF",
+    "NWS",
+    "USC",
+    "UCLA",
+    "LAX",
+    "AAF",
+    "NAF",
+    "USGS",
+    "WSO",
+    "WSFO",
+    "FAA",
+    "NPS",
+    "TVA",
+    "KOA",
+    "NE",
+    "NW",
+    "SE",
+    "SW",
+    "N",
+    "S",
+    "E",
+    "W",
+    "II",
+    "III",
+    "SR",
+    "JR",
+}
+
+
 def short_name(noaa: str) -> str:
     words = []
     for w in noaa.split():
@@ -62,11 +95,11 @@ def short_name(noaa: str) -> str:
             if ABBREV[w]:
                 words.append(ABBREV[w])
             continue
-        if re.fullmatch(r"[A-Z]+", w) and len(w) > 3:
-            words.append(w.title())
+        if re.fullmatch(r"[A-Z]{1,4}", w) and w in KEEP_UPPER:
+            words.append(w)
         else:
-            words.append(w.title() if not re.fullmatch(r"[A-Z]{2,3}", w) else w)
-    return " ".join(words).replace("Ucla", "UCLA").replace("Usc", "USC")
+            words.append(w.title())
+    return " ".join(words)
 
 
 def generate(region_id: str, name: str, min_span: int, exclude: set[str]) -> str:

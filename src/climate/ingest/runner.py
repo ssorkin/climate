@@ -44,9 +44,10 @@ def run_ingest(region: str = "all") -> None:
         if not (RAW_DIR / region_dataset(reg.id) / f"{st.id}.csv.gz").exists()
     ]
     if missing:
-        raise SystemExit(
-            f"ingest: {len(missing)} raw files missing (e.g. {missing[0]}); run `clim acquire`"
+        print(
+            f"  {len(missing)} raw files not downloaded yet (e.g. {missing[0]}) — skipped; run `clim acquire`"
         )
+        todo = [(reg, st) for reg, st in todo if st.id not in set(missing)]
     with ProcessPoolExecutor() as pool:
         for i, line in enumerate(
             pool.map(_ingest_one, [(reg.id, st.id, st.short) for reg, st in todo], chunksize=8), 1
