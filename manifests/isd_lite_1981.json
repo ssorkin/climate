@@ -539,6 +539,26 @@
     "last_modified": "Sun, 10 May 2020 15:13:59 GMT",
     "note": ""
   },
+  "722080-13880-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722080-13880-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722080-13880-1981.gz",
+    "sha256": "d3a6ae925fcbed7665a307d431b30f6c422f6a4cdc356ff61f9835c206e18036",
+    "size": 89328,
+    "downloaded_at": "2026-08-26T22:46:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:14:06 GMT",
+    "note": ""
+  },
+  "722085-93831-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722085-93831-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722085-93831-1981.gz",
+    "sha256": "0ab48691b3ac9a0717da94646985a8a63736a6551945a30000d49e55a6b8afc4",
+    "size": 85284,
+    "downloaded_at": "2026-08-26T22:46:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:14:08 GMT",
+    "note": ""
+  },
   "722106-12835-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "722106-12835-1981.gz",
@@ -849,6 +869,666 @@
     "last_modified": "Sun, 10 May 2020 15:15:43 GMT",
     "note": ""
   },
+  "722310-12916-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722310-12916-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722310-12916-1981.gz",
+    "sha256": "fb07678d870e88d3d6bb6ca64f65e9d260d65123f7e11b9651eec1e1a9d466d3",
+    "size": 87412,
+    "downloaded_at": "2026-08-26T22:41:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:15:45 GMT",
+    "note": ""
+  },
+  "722315-53917-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722315-53917-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722315-53917-1981.gz",
+    "sha256": "9f49d30972f004b9ede424c2e8c8f00551f94f3e5c8ea950a6670c184c7d3c7c",
+    "size": 49168,
+    "downloaded_at": "2026-08-26T22:41:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:15:47 GMT",
+    "note": ""
+  },
+  "722316-12958-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722316-12958-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722316-12958-1981.gz",
+    "sha256": "4d30936d05bbc8b69d6ed2bd53511e0edbddb4f3d36ed9a4399dcade0c0438e4",
+    "size": 82597,
+    "downloaded_at": "2026-08-26T22:41:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:15:52 GMT",
+    "note": ""
+  },
+  "722317-13970-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722317-13970-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722317-13970-1981.gz",
+    "sha256": "4a6d63bf950f490086f265b3f6ba01f69cd59d97312a280ca775c26541b33ada",
+    "size": 83510,
+    "downloaded_at": "2026-08-26T22:40:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:15:56 GMT",
+    "note": ""
+  },
+  "722340-13865-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722340-13865-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722340-13865-1981.gz",
+    "sha256": "2e2824bd39b3a080d8b8c2a3ce3dd3c3ecfd580e6ecf76f5e70e48605db4876f",
+    "size": 87579,
+    "downloaded_at": "2026-08-26T22:42:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:05 GMT",
+    "note": ""
+  },
+  "722345-03866-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722345-03866-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722345-03866-1981.gz",
+    "sha256": "3ca67fed0ac372c3036ccc2229ca5501fb30b7de35ecc68c7865736e0052aae1",
+    "size": 83280,
+    "downloaded_at": "2026-08-26T22:42:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:08 GMT",
+    "note": ""
+  },
+  "722350-03940-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722350-03940-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722350-03940-1981.gz",
+    "sha256": "b00708261a407a5fad33f285e28e2d6512b9e9420872ac02df932eba1e7fd414",
+    "size": 87326,
+    "downloaded_at": "2026-08-26T22:42:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:10 GMT",
+    "note": ""
+  },
+  "722356-13939-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722356-13939-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722356-13939-1981.gz",
+    "sha256": "dda05ebe85a9c774b36709fa0f3dcc2092b9351e9cd0213c94f356dc7f689334",
+    "size": 47928,
+    "downloaded_at": "2026-08-26T22:42:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:11 GMT",
+    "note": ""
+  },
+  "722358-93919-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722358-93919-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722358-93919-1981.gz",
+    "sha256": "49c4c5dcb20b3459664e0ebff0c543b02dc17bc276be9ba9229a063df27c1465",
+    "size": 81534,
+    "downloaded_at": "2026-08-26T22:42:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:14 GMT",
+    "note": ""
+  },
+  "722359-13978-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722359-13978-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722359-13978-1981.gz",
+    "sha256": "cc37783d68a67378a5150ae8b8c46c1014e7af08e3cbba70296ef79b7eefa1a8",
+    "size": 80259,
+    "downloaded_at": "2026-08-26T22:42:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:15 GMT",
+    "note": ""
+  },
+  "722390-03931-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722390-03931-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722390-03931-1981.gz",
+    "sha256": "53870c10327c3486954c5aa48c9c11e2eb8e9faa4bc11f323a12f1bfed6e1406",
+    "size": 77334,
+    "downloaded_at": "2026-08-26T22:41:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:17 GMT",
+    "note": ""
+  },
+  "722400-03937-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722400-03937-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722400-03937-1981.gz",
+    "sha256": "283cf4a87c37a84cac72d5cd0d442573846c4ef5d7a8d08a30715ad963a6705c",
+    "size": 86333,
+    "downloaded_at": "2026-08-26T22:41:03+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:22 GMT",
+    "note": ""
+  },
+  "722405-13976-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722405-13976-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722405-13976-1981.gz",
+    "sha256": "90408cb038ca802d85ce05c76fd5b67435ec5942ce8982efd9a771566162167e",
+    "size": 78566,
+    "downloaded_at": "2026-08-26T22:41:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:25 GMT",
+    "note": ""
+  },
+  "722410-12917-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722410-12917-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722410-12917-1981.gz",
+    "sha256": "6968e8dc05e1901bdd9a18388c8366bbd05b4b9d5609adb373e364ee814ac396",
+    "size": 88829,
+    "downloaded_at": "2026-08-26T22:48:17+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:28 GMT",
+    "note": ""
+  },
+  "722422-12923-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722422-12923-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722422-12923-1981.gz",
+    "sha256": "f2538794013f1ac7038bc8a7100476aee255cc7efa43ba4417d60936357f35cc",
+    "size": 69136,
+    "downloaded_at": "2026-08-26T22:48:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:30 GMT",
+    "note": ""
+  },
+  "722430-12960-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722430-12960-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722430-12960-1981.gz",
+    "sha256": "2b4d8da9fe9ea6a3a6b22eeaad071672b8631bda769981be19fe81a5349e1e35",
+    "size": 88379,
+    "downloaded_at": "2026-08-26T22:47:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:32 GMT",
+    "note": ""
+  },
+  "722435-12918-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722435-12918-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722435-12918-1981.gz",
+    "sha256": "7ebea2bc6b108cd274c4ce2230959321eb7ae0b4c2076a54527003bcee24cce3",
+    "size": 68177,
+    "downloaded_at": "2026-08-26T22:48:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:34 GMT",
+    "note": ""
+  },
+  "722436-12906-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722436-12906-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722436-12906-1981.gz",
+    "sha256": "2d7b6076ec84d205553ed1123ea9694219b05a4c346b5a044e5c3e32afe3e9c0",
+    "size": 82268,
+    "downloaded_at": "2026-08-26T22:47:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:35 GMT",
+    "note": ""
+  },
+  "722445-03904-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722445-03904-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722445-03904-1981.gz",
+    "sha256": "75013588dab5290be4b3ac300eca90f3a4c0d1161ee4939b077f8d324d63c94b",
+    "size": 80217,
+    "downloaded_at": "2026-08-26T22:47:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:38 GMT",
+    "note": ""
+  },
+  "722446-93987-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722446-93987-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722446-93987-1981.gz",
+    "sha256": "7d8f7893754fceff4b340b426afc44e05866abf6c969dc4dd08ef9d20b1bab85",
+    "size": 84839,
+    "downloaded_at": "2026-08-26T22:47:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:40 GMT",
+    "note": ""
+  },
+  "722447-03901-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722447-03901-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722447-03901-1981.gz",
+    "sha256": "5484e5e46d942b9f26127814a00346b1868d9d70d15797a0858e6e4b83ff064b",
+    "size": 57821,
+    "downloaded_at": "2026-08-26T22:47:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:45 GMT",
+    "note": ""
+  },
+  "722448-13972-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722448-13972-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722448-13972-1981.gz",
+    "sha256": "b3545a5d2891548f8ba8321856f0cfa8a9c856a6b4af0d0ac1ed39d38dfecc6f",
+    "size": 66034,
+    "downloaded_at": "2026-08-26T22:48:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:49 GMT",
+    "note": ""
+  },
+  "722480-13957-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722480-13957-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722480-13957-1981.gz",
+    "sha256": "3727e949d9fecac4747de0529ad7614531c4e2cdf4aa14dea731984d6e2bffd8",
+    "size": 87156,
+    "downloaded_at": "2026-08-26T22:41:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:53 GMT",
+    "note": ""
+  },
+  "722485-13944-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722485-13944-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722485-13944-1981.gz",
+    "sha256": "cb64915b5a148816247fa7dbd9f02038ff98fd9390751d125170ef0b3eb14020",
+    "size": 83358,
+    "downloaded_at": "2026-08-26T22:40:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:16:56 GMT",
+    "note": ""
+  },
+  "722486-13942-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722486-13942-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722486-13942-1981.gz",
+    "sha256": "5dc69ddb5b4db5c1452913f1a520c21c8b61ba51c1bd1b7458a741bf34827aa8",
+    "size": 79413,
+    "downloaded_at": "2026-08-26T22:41:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:00 GMT",
+    "note": ""
+  },
+  "722487-13935-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722487-13935-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722487-13935-1981.gz",
+    "sha256": "0be202265413c52aa12effcae9d0601ec2f4e3d98b49df4d85000db1868d19d5",
+    "size": 52732,
+    "downloaded_at": "2026-08-26T22:40:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:02 GMT",
+    "note": ""
+  },
+  "722500-12919-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722500-12919-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722500-12919-1981.gz",
+    "sha256": "bf0e96b304eaebb87fc6bce3b2c1ea94a697d14c05f935c1bc02b36dd1521d05",
+    "size": 85580,
+    "downloaded_at": "2026-08-26T22:47:26+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:06 GMT",
+    "note": ""
+  },
+  "722505-12904-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722505-12904-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722505-12904-1981.gz",
+    "sha256": "4b7ad8e68e592e8f3d7e7b3a6f12d163fc1b46341415164ef2b0eb48d0d43658",
+    "size": 1461,
+    "downloaded_at": "2026-08-26T22:48:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:06 GMT",
+    "note": ""
+  },
+  "722506-12959-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722506-12959-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722506-12959-1981.gz",
+    "sha256": "7620f5d0628dc16f152b3f871c364cab4b6e1f44aa5823370597691b60e5b99f",
+    "size": 76207,
+    "downloaded_at": "2026-08-26T22:48:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:09 GMT",
+    "note": ""
+  },
+  "722510-12924-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722510-12924-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722510-12924-1981.gz",
+    "sha256": "efa1fd4eff1fa393f6a14366561a51f0235b16e75375ad1c4d6d38463ce3a27e",
+    "size": 84862,
+    "downloaded_at": "2026-08-26T22:47:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:11 GMT",
+    "note": ""
+  },
+  "722515-12926-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722515-12926-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722515-12926-1981.gz",
+    "sha256": "123969cf7e7dc86844b714e5407c3b5210ea0c6eb030b0dd3a18947c40a742d9",
+    "size": 81526,
+    "downloaded_at": "2026-08-26T22:47:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:14 GMT",
+    "note": ""
+  },
+  "722516-12928-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722516-12928-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722516-12928-1981.gz",
+    "sha256": "d056343468ba3a7f69b50358ae1b7317b0b0061a706cdceff8630e702530c8cb",
+    "size": 84370,
+    "downloaded_at": "2026-08-26T22:47:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:15 GMT",
+    "note": ""
+  },
+  "722517-12932-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722517-12932-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722517-12932-1981.gz",
+    "sha256": "a32fefaae205ad4f3b7da59f422da101a053af352b3e5d9c3cdf2fca5e2d1ef4",
+    "size": 79770,
+    "downloaded_at": "2026-08-26T22:47:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:18 GMT",
+    "note": ""
+  },
+  "722526-12947-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722526-12947-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722526-12947-1981.gz",
+    "sha256": "1521d8ada23c3aa010cd6fcb0aa39dfd9270e2ecafc9d7fb6ac89be1e3a11593",
+    "size": 67812,
+    "downloaded_at": "2026-08-26T22:47:31+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:23 GMT",
+    "note": ""
+  },
+  "722530-12921-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722530-12921-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722530-12921-1981.gz",
+    "sha256": "fb7b6d57321584a8c1981abee5ba865612e733e8381d44f6d885d8fc608c5d4d",
+    "size": 88393,
+    "downloaded_at": "2026-08-26T22:48:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:29 GMT",
+    "note": ""
+  },
+  "722535-12909-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722535-12909-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722535-12909-1981.gz",
+    "sha256": "9e9c361afcc3ae2f0765b2d550336f4a491f2e3996a0137e29625ef6f12d7b08",
+    "size": 82950,
+    "downloaded_at": "2026-08-26T22:47:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:32 GMT",
+    "note": ""
+  },
+  "722536-12911-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722536-12911-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722536-12911-1981.gz",
+    "sha256": "32b157e238087898ca9883e69690d1c075f0c06c4ee0db2d9fb5dff18901dfcd",
+    "size": 84890,
+    "downloaded_at": "2026-08-26T22:48:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:37 GMT",
+    "note": ""
+  },
+  "722540-13958-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722540-13958-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722540-13958-1981.gz",
+    "sha256": "d50f52130cd898032463b01097b0d0f5ec9a5933c4bb7b02f43000cc1bc07839",
+    "size": 87457,
+    "downloaded_at": "2026-08-26T22:47:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:40 GMT",
+    "note": ""
+  },
+  "722550-12912-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722550-12912-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722550-12912-1981.gz",
+    "sha256": "ab71580d85abe936af98b2be03354580b64140dd10ae4b3170419d89df23bf71",
+    "size": 85783,
+    "downloaded_at": "2026-08-26T22:48:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:44 GMT",
+    "note": ""
+  },
+  "722555-12935-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722555-12935-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722555-12935-1981.gz",
+    "sha256": "831b0cae7df4bfd7c3fd544f445d88a37b4e1bf009a13b23168a1acc8055ec29",
+    "size": 74974,
+    "downloaded_at": "2026-08-26T22:48:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:46 GMT",
+    "note": ""
+  },
+  "722560-13959-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722560-13959-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722560-13959-1981.gz",
+    "sha256": "2893c2b76056cd0b7560ba87adf7a5dd4a1dbe422f248aba364918681981afe8",
+    "size": 87064,
+    "downloaded_at": "2026-08-26T22:48:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:52 GMT",
+    "note": ""
+  },
+  "722570-03933-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722570-03933-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722570-03933-1981.gz",
+    "sha256": "10103c877daf75277b3f542b0605737326eae4f092d96b76d6ebc7fa0ed2203b",
+    "size": 40919,
+    "downloaded_at": "2026-08-26T22:47:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:52 GMT",
+    "note": ""
+  },
+  "722576-03902-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722576-03902-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722576-03902-1981.gz",
+    "sha256": "1711a34eb8236f583cda846e68f4e7dc9c8d6d528d0bf0a0909e23557da8e52a",
+    "size": 82554,
+    "downloaded_at": "2026-08-26T22:48:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:55 GMT",
+    "note": ""
+  },
+  "722580-13960-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722580-13960-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722580-13960-1981.gz",
+    "sha256": "bf7f21a30cae29880703d118d0f15fa45c95a0473f8c5cdd989cfafa6dc44cb4",
+    "size": 69671,
+    "downloaded_at": "2026-08-26T22:47:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:17:58 GMT",
+    "note": ""
+  },
+  "722590-03927-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722590-03927-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722590-03927-1981.gz",
+    "sha256": "b7b887091a4e736f8f2c2ad040a6d23646b4770f84b260ebaf01decd4a0988d6",
+    "size": 88420,
+    "downloaded_at": "2026-08-26T22:47:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:02 GMT",
+    "note": ""
+  },
+  "722595-13911-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722595-13911-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722595-13911-1981.gz",
+    "sha256": "a8a605a11a19e7f6b1df0fa0fc4bf7863918bc774399c4e17da585f85306f7cd",
+    "size": 85400,
+    "downloaded_at": "2026-08-26T22:47:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:03 GMT",
+    "note": ""
+  },
+  "722596-13961-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722596-13961-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722596-13961-1981.gz",
+    "sha256": "71b29acde48d429d201b9b2dd641febc79a9434f0daf8f77b4ded55c418e8259",
+    "size": 70734,
+    "downloaded_at": "2026-08-26T22:47:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:05 GMT",
+    "note": ""
+  },
+  "722597-93985-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722597-93985-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722597-93985-1981.gz",
+    "sha256": "7140f2ebfdf20425955e4834b0201d14b26df624e1c8384a15389b674ab971e9",
+    "size": 56778,
+    "downloaded_at": "2026-08-26T22:48:03+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:07 GMT",
+    "note": ""
+  },
+  "722610-22010-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722610-22010-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722610-22010-1981.gz",
+    "sha256": "358a1b22c12ef034e4bdfd1ade4b2899ac8c8f302ede4038bf94dbac0b439e9d",
+    "size": 64387,
+    "downloaded_at": "2026-08-26T22:47:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:10 GMT",
+    "note": ""
+  },
+  "722615-22001-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722615-22001-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722615-22001-1981.gz",
+    "sha256": "ea31fd5c31d9b3eafe5481206d80e3e0cae4bd6e008674d327ae9182c2d0a381",
+    "size": 84396,
+    "downloaded_at": "2026-08-26T22:47:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:14 GMT",
+    "note": ""
+  },
+  "722620-23055-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722620-23055-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722620-23055-1981.gz",
+    "sha256": "a114720feed99ea6008c247b57dc93b774fb4fd26a8bfe1d8da33c3bf9fb7300",
+    "size": 68185,
+    "downloaded_at": "2026-08-26T22:47:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:17 GMT",
+    "note": ""
+  },
+  "722630-23034-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722630-23034-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722630-23034-1981.gz",
+    "sha256": "b1e5b048036489f433b6ef2a02196b0b1d6cab7b16142c9c97d1cb8965acd4aa",
+    "size": 89722,
+    "downloaded_at": "2026-08-26T22:48:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:20 GMT",
+    "note": ""
+  },
+  "722636-93042-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722636-93042-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722636-93042-1981.gz",
+    "sha256": "2e2397ff106babf7b09778ac92e15f913739d37af7fd305720e5f5dd4429d08d",
+    "size": 89383,
+    "downloaded_at": "2026-08-26T22:48:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:23 GMT",
+    "note": ""
+  },
+  "722640-93035-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722640-93035-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722640-93035-1981.gz",
+    "sha256": "df539a5f59010ca5e2fa2bf44841b65988e47e7538eadc930fb1b6da29240449",
+    "size": 74879,
+    "downloaded_at": "2026-08-26T22:48:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:27 GMT",
+    "note": ""
+  },
+  "722650-23023-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722650-23023-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722650-23023-1981.gz",
+    "sha256": "bdcd847097c021d37e84e6565ef9cf1ca34c6b882d059e2f1834dc50ee8a36cb",
+    "size": 90691,
+    "downloaded_at": "2026-08-26T22:48:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:29 GMT",
+    "note": ""
+  },
+  "722656-23040-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722656-23040-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722656-23040-1981.gz",
+    "sha256": "0ff992435a2a37f91c88ac4c2736fcc2f687d5c4b499dbfd718bd4baede1876d",
+    "size": 80892,
+    "downloaded_at": "2026-08-26T22:48:26+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:34 GMT",
+    "note": ""
+  },
+  "722660-13962-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722660-13962-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722660-13962-1981.gz",
+    "sha256": "ecc7e5ab3e64e0ecfdb86e3d12358b8db252f7174fe59d19dbfd43e9afdb31a9",
+    "size": 90125,
+    "downloaded_at": "2026-08-26T22:47:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:39 GMT",
+    "note": ""
+  },
+  "722665-13910-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722665-13910-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722665-13910-1981.gz",
+    "sha256": "7c5dda63eb2d382a05d00dac78cdd98d22ac3a651e0fd42f3603ea0cdfa06561",
+    "size": 86860,
+    "downloaded_at": "2026-08-26T22:47:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:40 GMT",
+    "note": ""
+  },
+  "722670-23042-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722670-23042-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722670-23042-1981.gz",
+    "sha256": "25b5bd6af7aa7782fddc86c5ed3c9e314e9a6d900c140406227abc54c57aff16",
+    "size": 91455,
+    "downloaded_at": "2026-08-26T22:47:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:43 GMT",
+    "note": ""
+  },
+  "722680-23009-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722680-23009-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722680-23009-1981.gz",
+    "sha256": "87afd50efdf1d91a551bb48c819f3ed868a03b26afec6a17b663ed711aafb34f",
+    "size": 92412,
+    "downloaded_at": "2026-08-26T22:44:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:53 GMT",
+    "note": ""
+  },
+  "722686-23008-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722686-23008-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722686-23008-1981.gz",
+    "sha256": "24390a228f3eef44b84976d498433a33da8295081c50cdcf836059509fa7ade2",
+    "size": 88929,
+    "downloaded_at": "2026-08-26T22:44:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:56 GMT",
+    "note": ""
+  },
+  "722687-93033-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722687-93033-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722687-93033-1981.gz",
+    "sha256": "8aa69b5b8c86f1b800854e210b4c979c917b020525ee2d69813865230428c2d7",
+    "size": 80863,
+    "downloaded_at": "2026-08-26T22:44:17+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:57 GMT",
+    "note": ""
+  },
+  "722688-93034-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722688-93034-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722688-93034-1981.gz",
+    "sha256": "0e71a8fbb957a1f2036116cd30166d375774fd06e54976585819c752a0cf1442",
+    "size": 47261,
+    "downloaded_at": "2026-08-26T22:44:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:18:59 GMT",
+    "note": ""
+  },
+  "722700-23044-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722700-23044-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722700-23044-1981.gz",
+    "sha256": "e6ebb1d971117056418cb3e21dee59c184b63019bb7f3c34a2f0fcc226cc009a",
+    "size": 91341,
+    "downloaded_at": "2026-08-26T22:47:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:19:04 GMT",
+    "note": ""
+  },
+  "722710-93045-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722710-93045-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722710-93045-1981.gz",
+    "sha256": "8ca0d4e334c5177f4026cc1bdb5f435f3752cda1642827f86de489d7bc61976d",
+    "size": 80963,
+    "downloaded_at": "2026-08-26T22:44:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:19:06 GMT",
+    "note": ""
+  },
+  "722720-93063-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "722720-93063-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/722720-93063-1981.gz",
+    "sha256": "fe8f84c3f04cc36bc1d7b20116a25e365754e63c969271cccce077e419f3ee4b",
+    "size": 8339,
+    "downloaded_at": "2026-08-26T22:44:21+00:00",
+    "last_modified": "Sun, 10 May 2020 15:19:06 GMT",
+    "note": ""
+  },
   "722730-03124-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "722730-03124-1981.gz",
@@ -1069,6 +1749,156 @@
     "last_modified": "Sun, 10 May 2020 15:20:13 GMT",
     "note": ""
   },
+  "723011-13748-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723011-13748-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723011-13748-1981.gz",
+    "sha256": "1aec80f48c7a22924aba7c6baf1aeddf8d641dbe620e6b1bacde7fa17be22088",
+    "size": 88390,
+    "downloaded_at": "2026-08-26T22:43:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:15 GMT",
+    "note": ""
+  },
+  "723030-13714-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723030-13714-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723030-13714-1981.gz",
+    "sha256": "09c23e0beb58773f15bd8328c7e93ee849ccf4baecb0a38e936f305481c6f30d",
+    "size": 85348,
+    "downloaded_at": "2026-08-26T22:43:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:18 GMT",
+    "note": ""
+  },
+  "723040-93729-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723040-93729-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723040-93729-1981.gz",
+    "sha256": "d024e2efbfa579251b1b6c67c0e239b73b00dedeb9c58e18c40745081bb00956",
+    "size": 87560,
+    "downloaded_at": "2026-08-26T22:43:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:21 GMT",
+    "note": ""
+  },
+  "723060-13722-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723060-13722-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723060-13722-1981.gz",
+    "sha256": "016117c36bdf37913e5e17749a44172a994d9e09d82463c706b743ca182294af",
+    "size": 90473,
+    "downloaded_at": "2026-08-26T22:43:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:25 GMT",
+    "note": ""
+  },
+  "723066-13713-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723066-13713-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723066-13713-1981.gz",
+    "sha256": "f41482accc0b5b6493fea07c9bc2a4ec259f462f9005fb74c5ea1198e2bf9644",
+    "size": 84538,
+    "downloaded_at": "2026-08-26T22:43:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:29 GMT",
+    "note": ""
+  },
+  "723067-93726-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723067-93726-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723067-93726-1981.gz",
+    "sha256": "3c4a676fc333a2f0fae1a2f72dd183d9fae5907dfb60de61b32c2c18e9d4ba7a",
+    "size": 48014,
+    "downloaded_at": "2026-08-26T22:43:21+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:30 GMT",
+    "note": ""
+  },
+  "723075-13769-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723075-13769-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723075-13769-1981.gz",
+    "sha256": "7d28f0de3135d8bc8fccca4f13a15baa260613837ca1fbdc23b7b27666d99895",
+    "size": 84675,
+    "downloaded_at": "2026-08-26T22:48:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:32 GMT",
+    "note": ""
+  },
+  "723080-13737-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723080-13737-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723080-13737-1981.gz",
+    "sha256": "c1e404f29b6a866ee7efd52fe54096c97e8dab34272631b1dbbcabc264401143",
+    "size": 88861,
+    "downloaded_at": "2026-08-26T22:48:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:36 GMT",
+    "note": ""
+  },
+  "723085-13750-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723085-13750-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723085-13750-1981.gz",
+    "sha256": "5e7eea776e37dbae2d8799f0218db868783ed4588c58f12981e56adadef11c72",
+    "size": 87896,
+    "downloaded_at": "2026-08-26T22:48:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:38 GMT",
+    "note": ""
+  },
+  "723087-93735-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723087-93735-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723087-93735-1981.gz",
+    "sha256": "efa5f70f782da8eb640113ba2a7611627ba68a7f026ec9a0c433bbf9ba5ae6d6",
+    "size": 45707,
+    "downloaded_at": "2026-08-26T22:48:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:41 GMT",
+    "note": ""
+  },
+  "723090-13754-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723090-13754-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723090-13754-1981.gz",
+    "sha256": "be2af21df852ed736a7ccd4a597af0a4fcae726f3e684e00565733868d837cfc",
+    "size": 85717,
+    "downloaded_at": "2026-08-26T22:43:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:43 GMT",
+    "note": ""
+  },
+  "723095-93719-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723095-93719-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723095-93719-1981.gz",
+    "sha256": "58d4acbcedd28094bc5ed7dd85d93bd769b28e1b2d0e12ff3725b6120fb47a0a",
+    "size": 82529,
+    "downloaded_at": "2026-08-26T22:43:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:45 GMT",
+    "note": ""
+  },
+  "723096-93727-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723096-93727-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723096-93727-1981.gz",
+    "sha256": "81ed3b945aa4058379dfcd083860c4b42887de81f40815ecdf6f52b44b1dea2e",
+    "size": 86314,
+    "downloaded_at": "2026-08-26T22:43:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:47 GMT",
+    "note": ""
+  },
+  "723100-13883-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723100-13883-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723100-13883-1981.gz",
+    "sha256": "7a9897326eeea0831750c2ee1b6cc719ca0a30bf36fbedac6c07212a002e908a",
+    "size": 87783,
+    "downloaded_at": "2026-08-26T22:46:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:49 GMT",
+    "note": ""
+  },
+  "723106-13744-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723106-13744-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723106-13744-1981.gz",
+    "sha256": "99a60e4d51c3b0f3d189243e00085d811719bb34eb5789af2364d78158c545d8",
+    "size": 81783,
+    "downloaded_at": "2026-08-26T22:46:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:51 GMT",
+    "note": ""
+  },
   "723110-13873-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "723110-13873-1981.gz",
@@ -1077,6 +1907,86 @@
     "size": 88139,
     "downloaded_at": "2026-08-26T22:39:08+00:00",
     "last_modified": "Sun, 10 May 2020 15:20:52 GMT",
+    "note": ""
+  },
+  "723120-03870-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723120-03870-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723120-03870-1981.gz",
+    "sha256": "045b8196c5c1523107a0c79d8a729cdcb959b4a8c09c0ab1aa812d2932d18413",
+    "size": 88961,
+    "downloaded_at": "2026-08-26T22:46:48+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:54 GMT",
+    "note": ""
+  },
+  "723125-93846-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723125-93846-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723125-93846-1981.gz",
+    "sha256": "ba579ff140a20cdd7dd25376c4e43b47a41bae3f027dc91a3fa1eafb9daf52eb",
+    "size": 60042,
+    "downloaded_at": "2026-08-26T22:46:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:55 GMT",
+    "note": ""
+  },
+  "723126-93804-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723126-93804-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723126-93804-1981.gz",
+    "sha256": "f6580f4c604078f937721c8ecf380153bf144ed93203d6cb367345b5b2835404",
+    "size": 30551,
+    "downloaded_at": "2026-08-26T22:46:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:55 GMT",
+    "note": ""
+  },
+  "723140-13881-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723140-13881-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723140-13881-1981.gz",
+    "sha256": "c1c0bcbc9f83dc9394cf5112506fdbf03a8a3784c66dbcbed3e4afa39964e841",
+    "size": 90564,
+    "downloaded_at": "2026-08-26T22:43:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:56 GMT",
+    "note": ""
+  },
+  "723145-03810-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723145-03810-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723145-03810-1981.gz",
+    "sha256": "ccc6b2281c48a4c6309f24b7ebc901d01ed0f91a5a787197dda0d406264d877e",
+    "size": 83280,
+    "downloaded_at": "2026-08-26T22:43:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:58 GMT",
+    "note": ""
+  },
+  "723150-03812-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723150-03812-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723150-03812-1981.gz",
+    "sha256": "657c764130f0db6c1a8406f2fd7fa0aba166c306fb0b74ae8aef903e72521e3a",
+    "size": 89470,
+    "downloaded_at": "2026-08-26T22:43:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:20:59 GMT",
+    "note": ""
+  },
+  "723170-13723-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723170-13723-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723170-13723-1981.gz",
+    "sha256": "5c3e14eae1fb94d5b8d3ebe885f472c622b66164eacc67ecf270196d49ee221a",
+    "size": 90013,
+    "downloaded_at": "2026-08-26T22:43:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:02 GMT",
+    "note": ""
+  },
+  "723181-13877-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723181-13877-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723181-13877-1981.gz",
+    "sha256": "0b5f10d0ea1322f628cb1c73593731935acb778de0686449d76049f64f31df77",
+    "size": 89088,
+    "downloaded_at": "2026-08-26T22:47:16+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:03 GMT",
     "note": ""
   },
   "723200-93801-1981.gz": {
@@ -1107,6 +2017,116 @@
     "size": 81031,
     "downloaded_at": "2026-08-26T22:36:13+00:00",
     "last_modified": "Sun, 10 May 2020 15:21:11 GMT",
+    "note": ""
+  },
+  "723240-13882-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723240-13882-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723240-13882-1981.gz",
+    "sha256": "c75b1ead57eebf4665da816d070bffa3f130f0c652eedd953396b5a8e14f5c5c",
+    "size": 88161,
+    "downloaded_at": "2026-08-26T22:47:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:14 GMT",
+    "note": ""
+  },
+  "723260-13891-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723260-13891-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723260-13891-1981.gz",
+    "sha256": "35ae65f00175327efd1018e65397cc5773597c8047f49a7c053d717ba0b44dbd",
+    "size": 87524,
+    "downloaded_at": "2026-08-26T22:47:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:16 GMT",
+    "note": ""
+  },
+  "723265-03847-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723265-03847-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723265-03847-1981.gz",
+    "sha256": "5bebb68f1cf326205dd5943174a86a951076a0fa4a683dbc5c7d7c3e313c67a5",
+    "size": 83705,
+    "downloaded_at": "2026-08-26T22:47:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:17 GMT",
+    "note": ""
+  },
+  "723270-13897-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723270-13897-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723270-13897-1981.gz",
+    "sha256": "d947f712b2e20241b4ec88455457b09d0c92bb137bf6067715addcbe11104425",
+    "size": 90457,
+    "downloaded_at": "2026-08-26T22:47:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:19 GMT",
+    "note": ""
+  },
+  "723290-03849-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723290-03849-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723290-03849-1981.gz",
+    "sha256": "aa4f5c82278727c6dbe63ca0dce0e805ed6db35e2ab74400bbfaf0f044a53c95",
+    "size": 81342,
+    "downloaded_at": "2026-08-26T22:40:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:21 GMT",
+    "note": ""
+  },
+  "723301-93862-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723301-93862-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723301-93862-1981.gz",
+    "sha256": "8851a045e7b13ebd665d181c955a8a6a7685006644115a6b4ae774b2db07e348",
+    "size": 34028,
+    "downloaded_at": "2026-08-26T22:42:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:22 GMT",
+    "note": ""
+  },
+  "723306-13825-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723306-13825-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723306-13825-1981.gz",
+    "sha256": "94d86f352f27fd717922910a7f545721bad1854f3a1016a5d9df583ae979ae11",
+    "size": 80927,
+    "downloaded_at": "2026-08-26T22:42:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:23 GMT",
+    "note": ""
+  },
+  "723340-13893-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723340-13893-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723340-13893-1981.gz",
+    "sha256": "cfdd4339355bc4c5b76c42fa6d0e5b79780fb4f7be708fc2d858dbe9ac2a9b7b",
+    "size": 87688,
+    "downloaded_at": "2026-08-26T22:47:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:26 GMT",
+    "note": ""
+  },
+  "723345-93839-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723345-93839-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723345-93839-1981.gz",
+    "sha256": "63e03904f85c68f05d9e58206da3e6b8c30acc41edcb4e1f2701f31a550c93f7",
+    "size": 86162,
+    "downloaded_at": "2026-08-26T22:47:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:29 GMT",
+    "note": ""
+  },
+  "723346-03811-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723346-03811-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723346-03811-1981.gz",
+    "sha256": "b3b19b5ea201c79d3109c9e7906877911b7b434fda9aff8568b12583cdd1afe1",
+    "size": 83207,
+    "downloaded_at": "2026-08-26T22:47:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:31 GMT",
+    "note": ""
+  },
+  "723347-03809-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723347-03809-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723347-03809-1981.gz",
+    "sha256": "89fde4f13eeb46e0d3cf97de5a025b51e71a001e65a27a6ab0a7be785d72e108",
+    "size": 59005,
+    "downloaded_at": "2026-08-26T22:47:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:33 GMT",
     "note": ""
   },
   "723401-13963-1981.gz": {
@@ -1197,6 +2217,236 @@
     "size": 82832,
     "downloaded_at": "2026-08-26T22:36:18+00:00",
     "last_modified": "Sun, 10 May 2020 15:21:49 GMT",
+    "note": ""
+  },
+  "723489-03935-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723489-03935-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723489-03935-1981.gz",
+    "sha256": "50e6691c1cf0ef0549a1c24c9ce8b6c2e2d2c48a71805182fbfa1d763f7a9a1d",
+    "size": 83013,
+    "downloaded_at": "2026-08-26T22:42:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:51 GMT",
+    "note": ""
+  },
+  "723495-13987-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723495-13987-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723495-13987-1981.gz",
+    "sha256": "8917fb6d643bd5e6a7f1a9dd4f2414fb68a18749f20bfd3e91f71d04858b9e53",
+    "size": 83993,
+    "downloaded_at": "2026-08-26T22:42:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:54 GMT",
+    "note": ""
+  },
+  "723510-13966-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723510-13966-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723510-13966-1981.gz",
+    "sha256": "f1a6d24ee0e22ab75a0b2da74be021cbeba42876e190c86aa9dc4cdbcf1d5f29",
+    "size": 89947,
+    "downloaded_at": "2026-08-26T22:48:16+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:57 GMT",
+    "note": ""
+  },
+  "723520-13902-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723520-13902-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723520-13902-1981.gz",
+    "sha256": "6f89c5a2095e6a697f3094cd85db58ae589ab52a0a790e075c361acc7f8ffec4",
+    "size": 87250,
+    "downloaded_at": "2026-08-26T22:45:33+00:00",
+    "last_modified": "Sun, 10 May 2020 15:21:59 GMT",
+    "note": ""
+  },
+  "723525-93986-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723525-93986-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723525-93986-1981.gz",
+    "sha256": "eedeb5098e1daea943e1f5f4ff6ade950ee979ce81ef319c9edeaee787e818d1",
+    "size": 82376,
+    "downloaded_at": "2026-08-26T22:45:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:01 GMT",
+    "note": ""
+  },
+  "723527-13975-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723527-13975-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723527-13975-1981.gz",
+    "sha256": "6cd75ff63e5d2bd5304e4fb86f008ae23bb0c6b1f94e8470df1e3366a748ccc9",
+    "size": 76684,
+    "downloaded_at": "2026-08-26T22:45:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:02 GMT",
+    "note": ""
+  },
+  "723530-13967-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723530-13967-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723530-13967-1981.gz",
+    "sha256": "95a086cfbb3905bac6807739a408fb60dc01aece5b6c3910c27f4dba215d21be",
+    "size": 90639,
+    "downloaded_at": "2026-08-26T22:45:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:03 GMT",
+    "note": ""
+  },
+  "723540-13919-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723540-13919-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723540-13919-1981.gz",
+    "sha256": "81876c4115e421495491ebf9ce78847c8716d2771e9b1b16bd9840d27de8a13e",
+    "size": 86065,
+    "downloaded_at": "2026-08-26T22:45:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:06 GMT",
+    "note": ""
+  },
+  "723546-13969-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723546-13969-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723546-13969-1981.gz",
+    "sha256": "15c57742d38eb6837693039d3e7ce3e70362c27abb616f00f84e4d9b3b61c1bd",
+    "size": 82758,
+    "downloaded_at": "2026-08-26T22:45:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:07 GMT",
+    "note": ""
+  },
+  "723550-13945-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723550-13945-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723550-13945-1981.gz",
+    "sha256": "95bf6fb7aa7e0e5fbc6e2c82c0b2b50ee3a9aea0170b9f4a034f4e69c805f94c",
+    "size": 87082,
+    "downloaded_at": "2026-08-26T22:45:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:09 GMT",
+    "note": ""
+  },
+  "723560-13968-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723560-13968-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723560-13968-1981.gz",
+    "sha256": "ad7774a3e480009b070a539eaaafd01a011e1da2fc12803ce44162aa79d68aba",
+    "size": 87383,
+    "downloaded_at": "2026-08-26T22:45:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:10 GMT",
+    "note": ""
+  },
+  "723566-93950-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723566-93950-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723566-93950-1981.gz",
+    "sha256": "bd6a34d6d3e34277fa7993701c10672c195df02eb35b981aa92b413ac8c02170",
+    "size": 81782,
+    "downloaded_at": "2026-08-26T22:45:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:12 GMT",
+    "note": ""
+  },
+  "723600-23051-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723600-23051-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723600-23051-1981.gz",
+    "sha256": "a722b7261910d2e6452a2989aba19b80c3d6e1a93a4070f58ba38ce29e0f513e",
+    "size": 80584,
+    "downloaded_at": "2026-08-26T22:44:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:14 GMT",
+    "note": ""
+  },
+  "723604-23007-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723604-23007-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723604-23007-1981.gz",
+    "sha256": "3c7114e106aa4924a8ed5b6229796d18319d0e09f3ae2c5d72a057bf4ca2acc7",
+    "size": 88467,
+    "downloaded_at": "2026-08-26T22:47:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:15 GMT",
+    "note": ""
+  },
+  "723625-93057-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723625-93057-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723625-93057-1981.gz",
+    "sha256": "bfd63d4365b9e0f569b70559dc24c48ab023072f9970c24f3a8b5e9fdbd15b0b",
+    "size": 6562,
+    "downloaded_at": "2026-08-26T22:44:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:15 GMT",
+    "note": ""
+  },
+  "723627-23081-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723627-23081-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723627-23081-1981.gz",
+    "sha256": "003364ed8f3cea25f7b8878e295edea24e23c7a9d2e2f247326d2cafef0e63a9",
+    "size": 88774,
+    "downloaded_at": "2026-08-26T22:44:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:17 GMT",
+    "note": ""
+  },
+  "723630-23047-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723630-23047-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723630-23047-1981.gz",
+    "sha256": "72485c3eabfdc249d7301c411b7314b8e0763242441221f04a2f17d852d48444",
+    "size": 83520,
+    "downloaded_at": "2026-08-26T22:47:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:19 GMT",
+    "note": ""
+  },
+  "723650-23050-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723650-23050-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723650-23050-1981.gz",
+    "sha256": "d33b085e872307abedd1b02386411192b819e1ee096453b3742a7a37273f6dd2",
+    "size": 93596,
+    "downloaded_at": "2026-08-26T22:44:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:21 GMT",
+    "note": ""
+  },
+  "723656-23049-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723656-23049-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723656-23049-1981.gz",
+    "sha256": "18d8fbed7f9a77d5dc229f126a8277cefbc7493a52b9b12959c8b021e40d9d4a",
+    "size": 48779,
+    "downloaded_at": "2026-08-26T22:44:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:23 GMT",
+    "note": ""
+  },
+  "723658-23090-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723658-23090-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723658-23090-1981.gz",
+    "sha256": "00feb3b1b22db768ba0c5769099c806d2fd567c68dd82688bcce79f9db34beaa",
+    "size": 69164,
+    "downloaded_at": "2026-08-26T22:44:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:26 GMT",
+    "note": ""
+  },
+  "723676-23048-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723676-23048-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723676-23048-1981.gz",
+    "sha256": "bee61a803d1707536fd2ec927175447842bdfd870da4dfaaea6e21792b6cde46",
+    "size": 92348,
+    "downloaded_at": "2026-08-26T22:44:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:28 GMT",
+    "note": ""
+  },
+  "723677-23054-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723677-23054-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723677-23054-1981.gz",
+    "sha256": "646e4ed6d604b7fd6bbab3d451dafeea62975ebeeac7b8c34bcf8696a1a6f193",
+    "size": 86399,
+    "downloaded_at": "2026-08-26T22:44:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:29 GMT",
+    "note": ""
+  },
+  "723678-23052-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723678-23052-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723678-23052-1981.gz",
+    "sha256": "64c673a3a0bac9e7e0b768143f908fa302d259ae10e96bd4d5d1d266a9d7fcff",
+    "size": 103,
+    "downloaded_at": "2026-08-26T22:44:26+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:29 GMT",
     "note": ""
   },
   "723721-23184-1981.gz": {
@@ -1319,6 +2569,16 @@
     "last_modified": "Sun, 10 May 2020 15:22:49 GMT",
     "note": ""
   },
+  "723860-23169-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "723860-23169-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/723860-23169-1981.gz",
+    "sha256": "ed329c31b681bbb64f5bd3753c071ae2a565449cc139fd71f16a854328d62590",
+    "size": 91632,
+    "downloaded_at": "2026-08-26T22:44:41+00:00",
+    "last_modified": "Sun, 10 May 2020 15:22:51 GMT",
+    "note": ""
+  },
   "723890-93193-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "723890-93193-1981.gz",
@@ -1379,6 +2639,156 @@
     "last_modified": "Sun, 10 May 2020 15:23:05 GMT",
     "note": ""
   },
+  "724010-13740-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724010-13740-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724010-13740-1981.gz",
+    "sha256": "11c8768639288be69f8aa8c62ad89963e859109122b1d9d04615892b5a228580",
+    "size": 89558,
+    "downloaded_at": "2026-08-26T22:49:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:06 GMT",
+    "note": ""
+  },
+  "724016-93736-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724016-93736-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724016-93736-1981.gz",
+    "sha256": "d6d3e13bd901408669a24aee255fc26d7958540de41597269a934b3c74795106",
+    "size": 62374,
+    "downloaded_at": "2026-08-26T22:48:41+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:07 GMT",
+    "note": ""
+  },
+  "724024-93739-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724024-93739-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724024-93739-1981.gz",
+    "sha256": "b577f527c874d10fee3352dbee44d62d7184fc8fee9d7b186cf6ae9c77de77b2",
+    "size": 30382,
+    "downloaded_at": "2026-08-26T22:49:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:07 GMT",
+    "note": ""
+  },
+  "724030-93738-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724030-93738-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724030-93738-1981.gz",
+    "sha256": "9ccbab3f9132cca62fc465cca97479061c1b94d4e1062a373de60d356092bc60",
+    "size": 88770,
+    "downloaded_at": "2026-08-26T22:49:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:10 GMT",
+    "note": ""
+  },
+  "724035-13773-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724035-13773-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724035-13773-1981.gz",
+    "sha256": "5fc0b09b22d62de7fb7636a921496268036b70200aec005e1a38a7b466e98846",
+    "size": 26356,
+    "downloaded_at": "2026-08-26T22:48:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:11 GMT",
+    "note": ""
+  },
+  "724037-93728-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724037-93728-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724037-93728-1981.gz",
+    "sha256": "c6ad1a169e7d4278c2e8cf6475602afa0e50033ee9b513662e17c2c8e3beb3a7",
+    "size": 82767,
+    "downloaded_at": "2026-08-26T22:48:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:13 GMT",
+    "note": ""
+  },
+  "724040-13721-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724040-13721-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724040-13721-1981.gz",
+    "sha256": "8890bef78192586fc8336fa7ae8e4d8c8c0147c59ff21b84e6205123c19ce648",
+    "size": 84616,
+    "downloaded_at": "2026-08-26T22:41:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:14 GMT",
+    "note": ""
+  },
+  "724045-93720-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724045-93720-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724045-93720-1981.gz",
+    "sha256": "77b891146e8b6761cff4e3ff32bfd86b48801ef67e9724d8e0c7ac68fde0bb56",
+    "size": 83234,
+    "downloaded_at": "2026-08-26T22:41:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:17 GMT",
+    "note": ""
+  },
+  "724050-13743-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724050-13743-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724050-13743-1981.gz",
+    "sha256": "2ef20db09142308cc9fac9c6df213c8b7b126e259244bdacdfa028f4601f5384",
+    "size": 86185,
+    "downloaded_at": "2026-08-26T22:49:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:22 GMT",
+    "note": ""
+  },
+  "724060-93721-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724060-93721-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724060-93721-1981.gz",
+    "sha256": "001bd1b7914cdf0a3c221981391f5c34b8336d3412ffef44835f5cf915a7cc2a",
+    "size": 92204,
+    "downloaded_at": "2026-08-26T22:41:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:24 GMT",
+    "note": ""
+  },
+  "724070-93730-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724070-93730-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724070-93730-1981.gz",
+    "sha256": "0e465ad3bf0a91f41b4452e4de8361520387e7fdd6c1e9059b04b25d8a8371ab",
+    "size": 89642,
+    "downloaded_at": "2026-08-26T22:44:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:30 GMT",
+    "note": ""
+  },
+  "724075-13735-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724075-13735-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724075-13735-1981.gz",
+    "sha256": "7222f778015a9102dab4836f7272e424cb59557174ec948943e997615703db63",
+    "size": 81632,
+    "downloaded_at": "2026-08-26T22:44:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:31 GMT",
+    "note": ""
+  },
+  "724076-13724-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724076-13724-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724076-13724-1981.gz",
+    "sha256": "a97bddca08fae4cece5601cb6428329d86b73ec4811dd44d22e8ec61d8a601c9",
+    "size": 17074,
+    "downloaded_at": "2026-08-26T22:44:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:31 GMT",
+    "note": ""
+  },
+  "724080-13739-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724080-13739-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724080-13739-1981.gz",
+    "sha256": "51ddd9bfa69f47dc44a468f886d45a6641550f44b6393e8020c2737d08e8db62",
+    "size": 88902,
+    "downloaded_at": "2026-08-26T22:46:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:32 GMT",
+    "note": ""
+  },
+  "724085-94732-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724085-94732-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724085-94732-1981.gz",
+    "sha256": "f43403e558e834ae27f12f23522308ea6db00e264b8b0a438e014fb38a065fa2",
+    "size": 66239,
+    "downloaded_at": "2026-08-26T22:46:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:34 GMT",
+    "note": ""
+  },
   "724088-13707-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "724088-13707-1981.gz",
@@ -1399,6 +2809,256 @@
     "last_modified": "Sun, 10 May 2020 15:23:44 GMT",
     "note": ""
   },
+  "724090-14780-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724090-14780-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724090-14780-1981.gz",
+    "sha256": "1593edca47941f4ccadb3a7506c10d5e195b75d630e69568dc405b01ede28e35",
+    "size": 65617,
+    "downloaded_at": "2026-08-26T22:44:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:45 GMT",
+    "note": ""
+  },
+  "724095-14792-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724095-14792-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724095-14792-1981.gz",
+    "sha256": "4f1226883f87bc651dba9665cedb4c95e8a91a002fafec74aa75e4f4e09ae13d",
+    "size": 60769,
+    "downloaded_at": "2026-08-26T22:44:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:49 GMT",
+    "note": ""
+  },
+  "724096-14706-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724096-14706-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724096-14706-1981.gz",
+    "sha256": "b77c9af83698011511aa7e1ef4b0f383d0adca58a55656c8516f26bcb13cfe11",
+    "size": 87187,
+    "downloaded_at": "2026-08-26T22:44:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:53 GMT",
+    "note": ""
+  },
+  "724100-13733-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724100-13733-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724100-13733-1981.gz",
+    "sha256": "f03a91975ae2112dfcfa39c1f34e7f92f6b747968ca48b3b260d3e00f22f5d7f",
+    "size": 74305,
+    "downloaded_at": "2026-08-26T22:48:50+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:57 GMT",
+    "note": ""
+  },
+  "724106-13728-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724106-13728-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724106-13728-1981.gz",
+    "sha256": "e4b8c88a25e2b251f5d7115a413b3f36f79b08be28b5ac9be2af2af262c31781",
+    "size": 61287,
+    "downloaded_at": "2026-08-26T22:48:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:23:59 GMT",
+    "note": ""
+  },
+  "724110-13741-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724110-13741-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724110-13741-1981.gz",
+    "sha256": "eb417c7f21ebdc027306873771d615bf5e2c5aba32140b2704e294c4cd9071c9",
+    "size": 91095,
+    "downloaded_at": "2026-08-26T22:49:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:01 GMT",
+    "note": ""
+  },
+  "724120-03872-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724120-03872-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724120-03872-1981.gz",
+    "sha256": "451e7b729c88203785cf4ac71daef42783a0d53b30c5400141132312e011d0d4",
+    "size": 90210,
+    "downloaded_at": "2026-08-26T22:49:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:05 GMT",
+    "note": ""
+  },
+  "724140-13866-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724140-13866-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724140-13866-1981.gz",
+    "sha256": "05c27c127b8f65a8ca145f218d676eae4ec0e2c93ad5d086053c5edddaf625bb",
+    "size": 91301,
+    "downloaded_at": "2026-08-26T22:50:03+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:11 GMT",
+    "note": ""
+  },
+  "724170-13729-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724170-13729-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724170-13729-1981.gz",
+    "sha256": "ec34ae97e1ed7392edf9cc024d6aaef69f71213922cca05229714c7bbb4713ec",
+    "size": 77656,
+    "downloaded_at": "2026-08-26T22:49:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:13 GMT",
+    "note": ""
+  },
+  "724176-13736-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724176-13736-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724176-13736-1981.gz",
+    "sha256": "50c0f201088a7e024fbe3d96fd67a030ecc39a70a5f68c547d18a99e7f04415d",
+    "size": 86784,
+    "downloaded_at": "2026-08-26T22:49:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:16 GMT",
+    "note": ""
+  },
+  "724177-13734-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724177-13734-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724177-13734-1981.gz",
+    "sha256": "79770d9cae5a33635930704244ed018fc2b7a30baf4b67bd8f61a34a625ca2b5",
+    "size": 84091,
+    "downloaded_at": "2026-08-26T22:49:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:18 GMT",
+    "note": ""
+  },
+  "724210-93814-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724210-93814-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724210-93814-1981.gz",
+    "sha256": "5d5d3e2f7957196d62a55fb624d80468f7ced4e5bf0bc8c0280734bb43d07267",
+    "size": 90076,
+    "downloaded_at": "2026-08-26T22:40:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:20 GMT",
+    "note": ""
+  },
+  "724220-93820-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724220-93820-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724220-93820-1981.gz",
+    "sha256": "75f371f507bf07b6469e1140540d3e2be4a64da28e81b5af5df973e48d357f9d",
+    "size": 89817,
+    "downloaded_at": "2026-08-26T22:40:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:24 GMT",
+    "note": ""
+  },
+  "724230-93821-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724230-93821-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724230-93821-1981.gz",
+    "sha256": "21974a867d348ebacfc3cfcd92eda7b02989c1997bbc91a56ed1364b342b747e",
+    "size": 90092,
+    "downloaded_at": "2026-08-26T22:40:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:26 GMT",
+    "note": ""
+  },
+  "724235-13810-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724235-13810-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724235-13810-1981.gz",
+    "sha256": "0ec43d05ed90e070d91ccaaeea4f28d1d74c2375b3c06b92527ae4eb439ad949",
+    "size": 69990,
+    "downloaded_at": "2026-08-26T22:40:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:28 GMT",
+    "note": ""
+  },
+  "724236-03889-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724236-03889-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724236-03889-1981.gz",
+    "sha256": "69db7a8d45424f42c9526f55bd400794749d4ba842df673ef832e8305a367baf",
+    "size": 54597,
+    "downloaded_at": "2026-08-26T22:40:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:30 GMT",
+    "note": ""
+  },
+  "724240-13807-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724240-13807-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724240-13807-1981.gz",
+    "sha256": "80690e298f63027ce11fd37f8b92f6357bd454c8b889a66a9f9e86d7f8e22c4d",
+    "size": 54545,
+    "downloaded_at": "2026-08-26T22:40:50+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:33 GMT",
+    "note": ""
+  },
+  "724250-03860-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724250-03860-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724250-03860-1981.gz",
+    "sha256": "f4b42f67c663d80521e31db55700116b0b83fbde1ce3158766fc27896e059655",
+    "size": 90835,
+    "downloaded_at": "2026-08-26T22:50:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:35 GMT",
+    "note": ""
+  },
+  "724270-03804-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724270-03804-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724270-03804-1981.gz",
+    "sha256": "f985be01533f3fa36d4418d403cdc287d4ae86eb75390f6747c410c3f48dc973",
+    "size": 81139,
+    "downloaded_at": "2026-08-26T22:49:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:37 GMT",
+    "note": ""
+  },
+  "724275-14894-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724275-14894-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724275-14894-1981.gz",
+    "sha256": "64a53d34b02c1be9f80c713a71306b8dd2666fec2493865ad1772ffb952a5e34",
+    "size": 52984,
+    "downloaded_at": "2026-08-26T22:50:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:39 GMT",
+    "note": ""
+  },
+  "724280-14821-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724280-14821-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724280-14821-1981.gz",
+    "sha256": "bcafde7d1af3cf3e45d86545576a52eb877d422837d1dc443f7f7808c062c92d",
+    "size": 90692,
+    "downloaded_at": "2026-08-26T22:45:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:42 GMT",
+    "note": ""
+  },
+  "724285-13812-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724285-13812-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724285-13812-1981.gz",
+    "sha256": "d2047832e70dab62e903933aa4aa0fa996d30502b7ff783015b81bd004d4b4ec",
+    "size": 86948,
+    "downloaded_at": "2026-08-26T22:45:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:43 GMT",
+    "note": ""
+  },
+  "724286-93824-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724286-93824-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724286-93824-1981.gz",
+    "sha256": "a52fa597d0f477adeefa295024dfd26d41434d3e1e908c0c6c74a05e58dc7f7b",
+    "size": 85667,
+    "downloaded_at": "2026-08-26T22:45:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:45 GMT",
+    "note": ""
+  },
+  "724290-93815-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724290-93815-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724290-93815-1981.gz",
+    "sha256": "918341546167a376f1cd9daabafe13173880fd2261170d726c10b46601648fff",
+    "size": 91254,
+    "downloaded_at": "2026-08-26T22:45:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:47 GMT",
+    "note": ""
+  },
+  "724297-93812-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724297-93812-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724297-93812-1981.gz",
+    "sha256": "2d0e4196959170da3fab526657117596470e91b15ee6cbe2d8e3c435d86350b6",
+    "size": 85480,
+    "downloaded_at": "2026-08-26T22:45:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:49 GMT",
+    "note": ""
+  },
   "724320-93817-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "724320-93817-1981.gz",
@@ -1417,6 +3077,26 @@
     "size": 85449,
     "downloaded_at": "2026-08-26T22:40:10+00:00",
     "last_modified": "Sun, 10 May 2020 15:24:55 GMT",
+    "note": ""
+  },
+  "724340-13994-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724340-13994-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724340-13994-1981.gz",
+    "sha256": "a4eed52876bd4edbeb681d67e72030baa2436f63af1d00488f110e88614fe3ba",
+    "size": 90496,
+    "downloaded_at": "2026-08-26T22:42:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:58 GMT",
+    "note": ""
+  },
+  "724345-03966-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724345-03966-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724345-03966-1981.gz",
+    "sha256": "1061db358ff15685362e20eb6df4f4544b60bf224d4ab8291660d1fc980042ba",
+    "size": 47427,
+    "downloaded_at": "2026-08-26T22:42:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:24:59 GMT",
     "note": ""
   },
   "724380-93819-1981.gz": {
@@ -1459,6 +3139,246 @@
     "last_modified": "Sun, 10 May 2020 15:25:12 GMT",
     "note": ""
   },
+  "724400-13995-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724400-13995-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724400-13995-1981.gz",
+    "sha256": "94addb49ede8528175d89aaf2ef029b5483f21156592ed4ca9fe4ebb8e464d54",
+    "size": 89486,
+    "downloaded_at": "2026-08-26T22:42:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:16 GMT",
+    "note": ""
+  },
+  "724450-03945-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724450-03945-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724450-03945-1981.gz",
+    "sha256": "8006c852847d93413f599dd2873df839e57e4c0ee34e275276ce35a6461dc7b0",
+    "size": 90917,
+    "downloaded_at": "2026-08-26T22:42:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:18 GMT",
+    "note": ""
+  },
+  "724455-14938-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724455-14938-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724455-14938-1981.gz",
+    "sha256": "13b2aa3b0a018f345dbc55c0abeec420915e423c2366ba2231a3e5199c615ce5",
+    "size": 63587,
+    "downloaded_at": "2026-08-26T22:42:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:20 GMT",
+    "note": ""
+  },
+  "724456-13997-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724456-13997-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724456-13997-1981.gz",
+    "sha256": "df40cdfbefa67524bc60c16b09752a62b1c0666185046f85abac5210d228ff07",
+    "size": 83540,
+    "downloaded_at": "2026-08-26T22:42:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:23 GMT",
+    "note": ""
+  },
+  "724457-03938-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724457-03938-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724457-03938-1981.gz",
+    "sha256": "9df9e16911ff136291a8cf88e4e0bd7ef6c30c3269da9e72fd3a8972c408ed73",
+    "size": 55831,
+    "downloaded_at": "2026-08-26T22:42:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:25 GMT",
+    "note": ""
+  },
+  "724460-03947-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724460-03947-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724460-03947-1981.gz",
+    "sha256": "e306e9d0f4d5f940ec33324841ab729706ff6528db64d90ec7357b100a70e649",
+    "size": 88987,
+    "downloaded_at": "2026-08-26T22:42:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:28 GMT",
+    "note": ""
+  },
+  "724461-13988-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724461-13988-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724461-13988-1981.gz",
+    "sha256": "deb5a40d03de6f9723d14589fb25b8bc2c9397f2f3c555f8697a3556af4821af",
+    "size": 75162,
+    "downloaded_at": "2026-08-26T22:42:16+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:30 GMT",
+    "note": ""
+  },
+  "724466-03929-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724466-03929-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724466-03929-1981.gz",
+    "sha256": "aea97ab6002d588c6d5e850ba27474e752c37f462a9ca5c08342adfd2db69c86",
+    "size": 57570,
+    "downloaded_at": "2026-08-26T22:42:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:31 GMT",
+    "note": ""
+  },
+  "724467-13930-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724467-13930-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724467-13930-1981.gz",
+    "sha256": "367716fcf3a8d02250c1551cf6d833f752578b1e31272f135b8f5a756554badc",
+    "size": 87670,
+    "downloaded_at": "2026-08-26T22:42:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:32 GMT",
+    "note": ""
+  },
+  "724475-93909-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724475-93909-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724475-93909-1981.gz",
+    "sha256": "3bd424ac7c9783b2623131364ca993a048e3b4ab875cd5a7bb10e0b4ffc2c9be",
+    "size": 41406,
+    "downloaded_at": "2026-08-26T22:40:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:33 GMT",
+    "note": ""
+  },
+  "724490-13993-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724490-13993-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724490-13993-1981.gz",
+    "sha256": "a5ea1dd815d6f0be303a09edd29b8792d9a802fc8724e7ee2dbcdc4c6efabf6f",
+    "size": 42695,
+    "downloaded_at": "2026-08-26T22:42:31+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:35 GMT",
+    "note": ""
+  },
+  "724500-03928-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724500-03928-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724500-03928-1981.gz",
+    "sha256": "8a529dbfaf00c328bd44159d9876ec98a151ac5cad1bddc6060d9444845845fa",
+    "size": 91682,
+    "downloaded_at": "2026-08-26T22:40:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:37 GMT",
+    "note": ""
+  },
+  "724505-03923-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724505-03923-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724505-03923-1981.gz",
+    "sha256": "15628a5dcd7ac7ee62d341930010e527ed762df90ca5822376a1979047311991",
+    "size": 87446,
+    "downloaded_at": "2026-08-26T22:40:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:40 GMT",
+    "note": ""
+  },
+  "724506-13986-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724506-13986-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724506-13986-1981.gz",
+    "sha256": "e825e7615f3c141c31d75531982cf2c03710fe61d6852a2e00a047fafc5246db",
+    "size": 43717,
+    "downloaded_at": "2026-08-26T22:40:31+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:42 GMT",
+    "note": ""
+  },
+  "724507-13981-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724507-13981-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724507-13981-1981.gz",
+    "sha256": "e2db95192a87a5af8e3cb517b3d414199460e6b04ec5594fc63c35fcb20e2cf7",
+    "size": 85145,
+    "downloaded_at": "2026-08-26T22:40:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:44 GMT",
+    "note": ""
+  },
+  "724510-13985-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724510-13985-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724510-13985-1981.gz",
+    "sha256": "f177882dc21e728cc5432b21f49de160e63afedf321fe212c88b83e75273f6ee",
+    "size": 92534,
+    "downloaded_at": "2026-08-26T22:40:25+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:46 GMT",
+    "note": ""
+  },
+  "724515-23064-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724515-23064-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724515-23064-1981.gz",
+    "sha256": "083c7659293263152a9e066c234e5b6b54af961012c10c4d150f3d1e317449c8",
+    "size": 89276,
+    "downloaded_at": "2026-08-26T22:40:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:48 GMT",
+    "note": ""
+  },
+  "724550-13947-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724550-13947-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724550-13947-1981.gz",
+    "sha256": "52e5c8e74193a09611d4a3ffe05bafd55cb97fc20d5b19c5fed5de1cb8408a5a",
+    "size": 87561,
+    "downloaded_at": "2026-08-26T22:40:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:52 GMT",
+    "note": ""
+  },
+  "724556-13989-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724556-13989-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724556-13989-1981.gz",
+    "sha256": "cb1c90876ff9a7f8869b2ed405649feef55bd3f01d3a33a300c8cefb5c44eba3",
+    "size": 60938,
+    "downloaded_at": "2026-08-26T22:40:26+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:54 GMT",
+    "note": ""
+  },
+  "724560-13996-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724560-13996-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724560-13996-1981.gz",
+    "sha256": "787d8f969aaf4a3eaed90c8239b1d6a8d88e3f7487ac8550632ad2e1aebbad36",
+    "size": 90711,
+    "downloaded_at": "2026-08-26T22:40:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:56 GMT",
+    "note": ""
+  },
+  "724565-13920-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724565-13920-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724565-13920-1981.gz",
+    "sha256": "dacbaf3177e2e7887189993b1df372d6d311edd1202cb8a676d84f1257a943ab",
+    "size": 68505,
+    "downloaded_at": "2026-08-26T22:40:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:25:58 GMT",
+    "note": ""
+  },
+  "724580-13984-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724580-13984-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724580-13984-1981.gz",
+    "sha256": "aea040635fd111cfa8785564b8db12ce063d9b9d1738a508b3ef4c2f75c42bf1",
+    "size": 93358,
+    "downloaded_at": "2026-08-26T22:40:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:00 GMT",
+    "note": ""
+  },
+  "724585-93997-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724585-93997-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724585-93997-1981.gz",
+    "sha256": "f880005f356a4a6585db5d9fc20dff25ec908b90646852b07394037f1dc95cc9",
+    "size": 89992,
+    "downloaded_at": "2026-08-26T22:40:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:01 GMT",
+    "note": ""
+  },
+  "724586-03919-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724586-03919-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724586-03919-1981.gz",
+    "sha256": "d2def65e6d520f1de372c76b7f78cc8c1ff02035441f523a401a09a4ea6a6c5a",
+    "size": 87930,
+    "downloaded_at": "2026-08-26T22:40:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:03 GMT",
+    "note": ""
+  },
   "724620-23061-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "724620-23061-1981.gz",
@@ -1497,6 +3417,26 @@
     "size": 89189,
     "downloaded_at": "2026-08-26T22:38:10+00:00",
     "last_modified": "Sun, 10 May 2020 15:26:17 GMT",
+    "note": ""
+  },
+  "724650-23065-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724650-23065-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724650-23065-1981.gz",
+    "sha256": "34c13869ea7dca65b37b3a635a767218fa4773524a377fd4071d836c2bcec444",
+    "size": 94131,
+    "downloaded_at": "2026-08-26T22:40:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:18 GMT",
+    "note": ""
+  },
+  "724655-93990-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724655-93990-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724655-93990-1981.gz",
+    "sha256": "5de5211cb2226144dd89000083a657d99d3f6f482490b0581c84afd2e12b4aed",
+    "size": 49173,
+    "downloaded_at": "2026-08-26T22:40:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:19 GMT",
     "note": ""
   },
   "724660-93037-1981.gz": {
@@ -1567,6 +3507,46 @@
     "size": 78723,
     "downloaded_at": "2026-08-26T22:38:02+00:00",
     "last_modified": "Sun, 10 May 2020 15:26:42 GMT",
+    "note": ""
+  },
+  "724735-23170-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724735-23170-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724735-23170-1981.gz",
+    "sha256": "8dd8703412875f60c3b358e4d4bb88bc877b328f5f41941259d483f0171bbee2",
+    "size": 17379,
+    "downloaded_at": "2026-08-26T22:48:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:45 GMT",
+    "note": ""
+  },
+  "724755-93129-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724755-93129-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724755-93129-1981.gz",
+    "sha256": "24003e598b69bcf3e5c9f52d23d1a891353d234be13a9d069083fd10d00c9f48",
+    "size": 89846,
+    "downloaded_at": "2026-08-26T22:48:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:48 GMT",
+    "note": ""
+  },
+  "724756-23159-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724756-23159-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724756-23159-1981.gz",
+    "sha256": "ca0100e2495fc4ac6825f805f287f5fdf414248946b4a71ce03c327a16b128f2",
+    "size": 22061,
+    "downloaded_at": "2026-08-26T22:48:27+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:49 GMT",
+    "note": ""
+  },
+  "724757-23176-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724757-23176-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724757-23176-1981.gz",
+    "sha256": "ccf3ba1ec0c9191203c5c3e6d078eed3defa15c0b13ccbf5069bb2f3813bc87e",
+    "size": 54146,
+    "downloaded_at": "2026-08-26T22:48:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:26:51 GMT",
     "note": ""
   },
   "724760-23066-1981.gz": {
@@ -1649,6 +3629,46 @@
     "last_modified": "Sun, 10 May 2020 15:27:16 GMT",
     "note": ""
   },
+  "724855-23153-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724855-23153-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724855-23153-1981.gz",
+    "sha256": "77641b95c7f2818ce76dc3d7b302a26524839b4f6a78f1a5c273617b76ca1725",
+    "size": 91111,
+    "downloaded_at": "2026-08-26T22:44:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:27:18 GMT",
+    "note": ""
+  },
+  "724860-23154-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724860-23154-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724860-23154-1981.gz",
+    "sha256": "5769f3ef47eb216cfb15de859c829803e3806220e58d863b9dd386b0af26450c",
+    "size": 94346,
+    "downloaded_at": "2026-08-26T22:44:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:27:21 GMT",
+    "note": ""
+  },
+  "724880-23185-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724880-23185-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724880-23185-1981.gz",
+    "sha256": "7b91a7c70a9fe2e19344ba0391e24f4616d44e617a721ebbfe2a75a35012a5eb",
+    "size": 89786,
+    "downloaded_at": "2026-08-26T22:44:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:27:23 GMT",
+    "note": ""
+  },
+  "724885-93102-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "724885-93102-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/724885-93102-1981.gz",
+    "sha256": "953d0f8732c903f25836128c59b284cabd014a5b2b7d99f049cbc873baa3aaca",
+    "size": 65200,
+    "downloaded_at": "2026-08-26T22:44:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:27:25 GMT",
+    "note": ""
+  },
   "724917-23233-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "724917-23233-1981.gz",
@@ -1719,6 +3739,76 @@
     "last_modified": "Sun, 10 May 2020 15:27:46 GMT",
     "note": ""
   },
+  "725020-14734-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725020-14734-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725020-14734-1981.gz",
+    "sha256": "08616bd985f738548655ca208e3b7673aeea8d9ef4a5be798027b8c9f88ac24c",
+    "size": 90330,
+    "downloaded_at": "2026-08-26T22:44:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:00 GMT",
+    "note": ""
+  },
+  "725025-94741-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725025-94741-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725025-94741-1981.gz",
+    "sha256": "a14a4b245235ceb3beccf044f564635999e2a70a5868d080a4fbd3c4e3bcf0d3",
+    "size": 69799,
+    "downloaded_at": "2026-08-26T22:44:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:02 GMT",
+    "note": ""
+  },
+  "725030-14732-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725030-14732-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725030-14732-1981.gz",
+    "sha256": "3e4875a97350ef6cc4e49458880f3c60455653f54aac4ac4677e7ea1ca67a036",
+    "size": 89978,
+    "downloaded_at": "2026-08-26T22:45:03+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:03 GMT",
+    "note": ""
+  },
+  "725035-04781-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725035-04781-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725035-04781-1981.gz",
+    "sha256": "047c07a0e2466c3e88a9dc1f9d913c119e1fdeb85f0501a54aa0c1271831364b",
+    "size": 84172,
+    "downloaded_at": "2026-08-26T22:45:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:04 GMT",
+    "note": ""
+  },
+  "725036-14757-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725036-14757-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725036-14757-1981.gz",
+    "sha256": "13321c667edd4b36fa70b1be9d8f648583b0edfe04b6df3aafab925345d70bc5",
+    "size": 76682,
+    "downloaded_at": "2026-08-26T22:44:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:05 GMT",
+    "note": ""
+  },
+  "725037-94745-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725037-94745-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725037-94745-1981.gz",
+    "sha256": "f707256033567f3c5018c4739557acf85d4298beac2bd82f722d74b623103d30",
+    "size": 81066,
+    "downloaded_at": "2026-08-26T22:45:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:08 GMT",
+    "note": ""
+  },
+  "725038-14714-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725038-14714-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725038-14714-1981.gz",
+    "sha256": "aaa2d3acaf0da5fb7a3f35147e26402be6f11eccb5785a630cb4c64c0de3a2b0",
+    "size": 55897,
+    "downloaded_at": "2026-08-26T22:45:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:09 GMT",
+    "note": ""
+  },
   "725040-94702-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "725040-94702-1981.gz",
@@ -1749,6 +3839,26 @@
     "last_modified": "Sun, 10 May 2020 15:28:13 GMT",
     "note": ""
   },
+  "725061-14756-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725061-14756-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725061-14756-1981.gz",
+    "sha256": "baff24f230a6882d6ab39e57caa620a19de34f38ca7b1c5d1b535c1c2a9d1810",
+    "size": 47659,
+    "downloaded_at": "2026-08-26T22:41:17+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:22 GMT",
+    "note": ""
+  },
+  "725070-14765-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725070-14765-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725070-14765-1981.gz",
+    "sha256": "d1a017c30ecba2ad64e5c48fe70217dcc09bdf955bfc8e167134b7baf00b400f",
+    "size": 92675,
+    "downloaded_at": "2026-08-26T22:46:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:29 GMT",
+    "note": ""
+  },
   "725080-14740-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "725080-14740-1981.gz",
@@ -1767,6 +3877,296 @@
     "size": 49300,
     "downloaded_at": "2026-08-26T22:38:17+00:00",
     "last_modified": "Sun, 10 May 2020 15:28:34 GMT",
+    "note": ""
+  },
+  "725090-14739-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725090-14739-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725090-14739-1981.gz",
+    "sha256": "b27f031a305b9d2ae68da4927089f0350e5ef0ed2e0289d5b7e4fa143f12e018",
+    "size": 90514,
+    "downloaded_at": "2026-08-26T22:41:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:40 GMT",
+    "note": ""
+  },
+  "725095-94746-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725095-94746-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725095-94746-1981.gz",
+    "sha256": "3171be1ed38ba6ab2b3314fc95227b45bd4eade46167012990eac93af374a0ae",
+    "size": 89952,
+    "downloaded_at": "2026-08-26T22:41:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:43 GMT",
+    "note": ""
+  },
+  "725101-14712-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725101-14712-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725101-14712-1981.gz",
+    "sha256": "653b8aaeb9ee96d3915337deb0f628a8aceda47bf74b04144c398e910d8925b4",
+    "size": 57470,
+    "downloaded_at": "2026-08-26T22:46:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:46 GMT",
+    "note": ""
+  },
+  "725110-14751-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725110-14751-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725110-14751-1981.gz",
+    "sha256": "2287f1907b821e961430d5ce5de45ec04ad44be298f5457fc0223f71d0493aff",
+    "size": 85643,
+    "downloaded_at": "2026-08-26T22:46:16+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:47 GMT",
+    "note": ""
+  },
+  "725115-14711-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725115-14711-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725115-14711-1981.gz",
+    "sha256": "d4e72d6be9258e660ebb1346ea47c4f6c01907a7e0640b9efa546fa5c5305926",
+    "size": 59977,
+    "downloaded_at": "2026-08-26T22:46:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:51 GMT",
+    "note": ""
+  },
+  "725125-04787-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725125-04787-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725125-04787-1981.gz",
+    "sha256": "a50d37267fe87a543fa8d360f39e2c178992e7e0d54b6ce33c89f3db9904c864",
+    "size": 85570,
+    "downloaded_at": "2026-08-26T22:46:17+00:00",
+    "last_modified": "Sun, 10 May 2020 15:28:58 GMT",
+    "note": ""
+  },
+  "725126-14736-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725126-14736-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725126-14736-1981.gz",
+    "sha256": "aca0cea0b9e0bc5cafd6bdc025a46926f19dbbf2eacb946f18be2672102bb1ae",
+    "size": 84529,
+    "downloaded_at": "2026-08-26T22:46:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:00 GMT",
+    "note": ""
+  },
+  "725127-04726-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725127-04726-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725127-04726-1981.gz",
+    "sha256": "e17fa698f8ec477e8a3f3ce6a2541bc05d3caff9f7a3b9d726c0724d368e4d86",
+    "size": 49685,
+    "downloaded_at": "2026-08-26T22:46:21+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:01 GMT",
+    "note": ""
+  },
+  "725130-14777-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725130-14777-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725130-14777-1981.gz",
+    "sha256": "610b6fdc3637d2d4db1cfb2bbe0a37a518bc27f2bf72799d056b0c26b33b404a",
+    "size": 92569,
+    "downloaded_at": "2026-08-26T22:46:33+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:04 GMT",
+    "note": ""
+  },
+  "725140-14778-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725140-14778-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725140-14778-1981.gz",
+    "sha256": "0d131cb52d22ca140c657b1d0744b86f8691e0f1421c63b1fe91151be6460b34",
+    "size": 89909,
+    "downloaded_at": "2026-08-26T22:46:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:06 GMT",
+    "note": ""
+  },
+  "725150-04725-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725150-04725-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725150-04725-1981.gz",
+    "sha256": "a9dd74757408116c37a56c07e7e67215a84927f6e0b6a8445168ca5477d4bdbe",
+    "size": 91928,
+    "downloaded_at": "2026-08-26T22:45:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:09 GMT",
+    "note": ""
+  },
+  "725156-14748-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725156-14748-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725156-14748-1981.gz",
+    "sha256": "c91bf00b910e9c99460c1581f2964e064c63bedc962f95144de6bd61cd760664",
+    "size": 86622,
+    "downloaded_at": "2026-08-26T22:44:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:12 GMT",
+    "note": ""
+  },
+  "725170-14737-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725170-14737-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725170-14737-1981.gz",
+    "sha256": "921b1261b660359c774f682e2cc9e0852619f1175c6ad9a701eb88a4e3f67cb5",
+    "size": 91164,
+    "downloaded_at": "2026-08-26T22:46:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:17 GMT",
+    "note": ""
+  },
+  "725180-14735-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725180-14735-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725180-14735-1981.gz",
+    "sha256": "142bc683fbd21841fc862a7d0c1e5bdb3f940fa77d6e47f3b8634ea909bfde96",
+    "size": 89425,
+    "downloaded_at": "2026-08-26T22:44:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:20 GMT",
+    "note": ""
+  },
+  "725185-14750-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725185-14750-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725185-14750-1981.gz",
+    "sha256": "20ce611d97dbdd9f1efc16cc6a69195239a5708ab87c83921fb4affe39e3231c",
+    "size": 84472,
+    "downloaded_at": "2026-08-26T22:44:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:22 GMT",
+    "note": ""
+  },
+  "725190-14771-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725190-14771-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725190-14771-1981.gz",
+    "sha256": "7838866d0ff4e1cea412378bed69ed08079b1286974b7d78d3cc2a0180499682",
+    "size": 91074,
+    "downloaded_at": "2026-08-26T22:45:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:26 GMT",
+    "note": ""
+  },
+  "725200-94823-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725200-94823-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725200-94823-1981.gz",
+    "sha256": "db7328c08144d90bb82a5acd1a5babb51b20c81d8630ba358417e3838236d931",
+    "size": 91220,
+    "downloaded_at": "2026-08-26T22:46:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:33 GMT",
+    "note": ""
+  },
+  "725205-14762-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725205-14762-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725205-14762-1981.gz",
+    "sha256": "85ae7a13b2dccf9e7feb8ba3e84db539b3cad4b14a04ced71fdfa0e74e2ad43f",
+    "size": 69155,
+    "downloaded_at": "2026-08-26T22:46:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:34 GMT",
+    "note": ""
+  },
+  "725210-14895-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725210-14895-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725210-14895-1981.gz",
+    "sha256": "46c13e4c5dcbabe23f8668ed119c7e412f42266100d660fadb7090ba5e1aade5",
+    "size": 91122,
+    "downloaded_at": "2026-08-26T22:45:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:37 GMT",
+    "note": ""
+  },
+  "725230-94704-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725230-94704-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725230-94704-1981.gz",
+    "sha256": "5687ae5bbfd5cba02f4ac148f4eec26cc69cc03ebf08dfa09921559d779a47f3",
+    "size": 10753,
+    "downloaded_at": "2026-08-26T22:44:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:38 GMT",
+    "note": ""
+  },
+  "725240-14820-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725240-14820-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725240-14820-1981.gz",
+    "sha256": "3be81ad1c7dbcb7bdf9681821f19c4c5440beec4311a6458464134ae2b173780",
+    "size": 91412,
+    "downloaded_at": "2026-08-26T22:45:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:41 GMT",
+    "note": ""
+  },
+  "725246-14891-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725246-14891-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725246-14891-1981.gz",
+    "sha256": "1a0c55e5a50cde66b658d475221ea4cf9019e32daff7e386d6e8b62298f23f3c",
+    "size": 85773,
+    "downloaded_at": "2026-08-26T22:45:24+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:47 GMT",
+    "note": ""
+  },
+  "725250-14852-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725250-14852-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725250-14852-1981.gz",
+    "sha256": "2473a474fcaad87c25ba8b1d9c8616bbd6283bb637bf325a3a55c79f108c9ef3",
+    "size": 84844,
+    "downloaded_at": "2026-08-26T22:45:31+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:53 GMT",
+    "note": ""
+  },
+  "725260-14860-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725260-14860-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725260-14860-1981.gz",
+    "sha256": "5e481a4c9c9fb73ecdeb818e2b63a8f7333009fd04b1337e88a3fa1b0fcf3c50",
+    "size": 89747,
+    "downloaded_at": "2026-08-26T22:46:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:29:57 GMT",
+    "note": ""
+  },
+  "725266-04751-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725266-04751-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725266-04751-1981.gz",
+    "sha256": "1b035647f3dd76a9ce4350f604cc0de539ea2f14320f3f0e0177e348247d9ec2",
+    "size": 89126,
+    "downloaded_at": "2026-08-26T22:46:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:00 GMT",
+    "note": ""
+  },
+  "725267-94868-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725267-94868-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725267-94868-1981.gz",
+    "sha256": "a0dda95cb8c41fbacc343e3362cc5565037c4658393fc2750fa4cc0e4fdcd048",
+    "size": 39251,
+    "downloaded_at": "2026-08-26T22:46:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:00 GMT",
+    "note": ""
+  },
+  "725280-14733-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725280-14733-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725280-14733-1981.gz",
+    "sha256": "e20b4442abbe3d6e10d336d2544b4297ad1db213ccaed58d8474a36e2c235613",
+    "size": 91300,
+    "downloaded_at": "2026-08-26T22:44:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:02 GMT",
+    "note": ""
+  },
+  "725287-04724-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725287-04724-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725287-04724-1981.gz",
+    "sha256": "44568835d65d917b13ac262399d9755b43e3f2cfd1d9b275b5a2f86cc2299e4d",
+    "size": 87357,
+    "downloaded_at": "2026-08-26T22:45:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:04 GMT",
+    "note": ""
+  },
+  "725290-14768-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725290-14768-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725290-14768-1981.gz",
+    "sha256": "03010da01cd47f076a76a1cbe5d03ceb08a050fed85825c0be8d3737c59cddf3",
+    "size": 90939,
+    "downloaded_at": "2026-08-26T22:45:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:05 GMT",
     "note": ""
   },
   "725300-94846-1981.gz": {
@@ -1807,6 +4207,106 @@
     "size": 71107,
     "downloaded_at": "2026-08-26T22:39:59+00:00",
     "last_modified": "Sun, 10 May 2020 15:30:26 GMT",
+    "note": ""
+  },
+  "725350-14848-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725350-14848-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725350-14848-1981.gz",
+    "sha256": "f633e5913ed5024f3920308964b0d9d4b06254b1b299f7faa8aa8d34de4c50e6",
+    "size": 91143,
+    "downloaded_at": "2026-08-26T22:40:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:31 GMT",
+    "note": ""
+  },
+  "725360-94830-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725360-94830-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725360-94830-1981.gz",
+    "sha256": "6b3a0f572e6bd448a6a371d86a1754090a9721f6d24fce04f6a6360b1bac3c61",
+    "size": 91500,
+    "downloaded_at": "2026-08-26T22:45:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:33 GMT",
+    "note": ""
+  },
+  "725366-14825-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725366-14825-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725366-14825-1981.gz",
+    "sha256": "e856124da2e0f8a24794e1e6119a2036e12945d519820582010d1aeb3694cc70",
+    "size": 85036,
+    "downloaded_at": "2026-08-26T22:45:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:35 GMT",
+    "note": ""
+  },
+  "725370-94847-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725370-94847-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725370-94847-1981.gz",
+    "sha256": "a63e1288849d1ce3e2cd2b8b0dae78881eb5d41aea8500c6b641c7526eefb3b1",
+    "size": 91718,
+    "downloaded_at": "2026-08-26T22:41:48+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:38 GMT",
+    "note": ""
+  },
+  "725375-14822-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725375-14822-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725375-14822-1981.gz",
+    "sha256": "75f8d2939f680949f47150241582b334758ed0cd65d9ebad6c4b1c29f3ce56f7",
+    "size": 74585,
+    "downloaded_at": "2026-08-26T22:41:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:40 GMT",
+    "note": ""
+  },
+  "725376-14853-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725376-14853-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725376-14853-1981.gz",
+    "sha256": "bffe1fed7104158bba3511f88d133964bf04d5a31ff144340a2ad184a2143e24",
+    "size": 48211,
+    "downloaded_at": "2026-08-26T22:42:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:42 GMT",
+    "note": ""
+  },
+  "725377-14804-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725377-14804-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725377-14804-1981.gz",
+    "sha256": "edf83af14096fecdae32960812f2afa4b08bdd75184a60af51c5a818fb0b5b0d",
+    "size": 86642,
+    "downloaded_at": "2026-08-26T22:42:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:43 GMT",
+    "note": ""
+  },
+  "725390-14836-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725390-14836-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725390-14836-1981.gz",
+    "sha256": "9a5950f92890282c570175904c781c73d0906d745076fe6e030afbcdf7261dae",
+    "size": 90983,
+    "downloaded_at": "2026-08-26T22:41:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:48 GMT",
+    "note": ""
+  },
+  "725395-14833-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725395-14833-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725395-14833-1981.gz",
+    "sha256": "f354821d18d28c06e3226b9594bf3fbf938e535aed4b81a75e43067e4ebe1f24",
+    "size": 80923,
+    "downloaded_at": "2026-08-26T22:41:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:51 GMT",
+    "note": ""
+  },
+  "725396-14815-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725396-14815-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725396-14815-1981.gz",
+    "sha256": "4507ced59f1d4948440bea00971098029f500fb207d42bd3ebf167022264bc10",
+    "size": 45548,
+    "downloaded_at": "2026-08-26T22:42:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:30:52 GMT",
     "note": ""
   },
   "725430-94822-1981.gz": {
@@ -1899,6 +4399,56 @@
     "last_modified": "Sun, 10 May 2020 15:31:19 GMT",
     "note": ""
   },
+  "725500-14942-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725500-14942-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725500-14942-1981.gz",
+    "sha256": "2fd2f9fe409abbd5252922ce1ce135bbb4aa31e4da4a6ec6b498952f6212e4c8",
+    "size": 74935,
+    "downloaded_at": "2026-08-26T22:43:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:24 GMT",
+    "note": ""
+  },
+  "725510-14939-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725510-14939-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725510-14939-1981.gz",
+    "sha256": "e2eb365072506712856f377f69fdc76abc980b5b5be0979e4462ee6a80472b2e",
+    "size": 92950,
+    "downloaded_at": "2026-08-26T22:43:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:26 GMT",
+    "note": ""
+  },
+  "725520-14935-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725520-14935-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725520-14935-1981.gz",
+    "sha256": "8427735c438858be49909f1babbc0af68277d55f7352db1d4ef0919e26c2f812",
+    "size": 93349,
+    "downloaded_at": "2026-08-26T22:43:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:29 GMT",
+    "note": ""
+  },
+  "725540-14949-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725540-14949-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725540-14949-1981.gz",
+    "sha256": "2bab31c6336175d738b166f49f2742d7e2f394b12924f7c438ed5e7aa75871de",
+    "size": 88472,
+    "downloaded_at": "2026-08-26T22:43:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:36 GMT",
+    "note": ""
+  },
+  "725560-14941-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725560-14941-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725560-14941-1981.gz",
+    "sha256": "f653c298978b89fe71a51121be7d7ee536f7f0e7d20387d18e5e9edae11b2658",
+    "size": 94635,
+    "downloaded_at": "2026-08-26T22:43:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:42 GMT",
+    "note": ""
+  },
   "725570-14943-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "725570-14943-1981.gz",
@@ -1907,6 +4457,176 @@
     "size": 92359,
     "downloaded_at": "2026-08-26T22:39:45+00:00",
     "last_modified": "Sun, 10 May 2020 15:31:45 GMT",
+    "note": ""
+  },
+  "725610-24030-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725610-24030-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725610-24030-1981.gz",
+    "sha256": "0f6da0f070ab192c24f75bfe4e74e0dc8073007dec0097eb315584edd0ae17f3",
+    "size": 87409,
+    "downloaded_at": "2026-08-26T22:43:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:48 GMT",
+    "note": ""
+  },
+  "725620-24023-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725620-24023-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725620-24023-1981.gz",
+    "sha256": "f170ab63e4586946156c166f1161cb7cd6cec659ad6e01091bb2d38e8deee666",
+    "size": 94821,
+    "downloaded_at": "2026-08-26T22:43:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:50 GMT",
+    "note": ""
+  },
+  "725626-24091-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725626-24091-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725626-24091-1981.gz",
+    "sha256": "883d9326c103fcf40b27d610da789ff33ae4e6ba7bf0410af449d345a6f05417",
+    "size": 52822,
+    "downloaded_at": "2026-08-26T22:43:48+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:53 GMT",
+    "note": ""
+  },
+  "725636-24017-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725636-24017-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725636-24017-1981.gz",
+    "sha256": "051c82f2d62b6b012c781f47f17920f5faff2ebf3c146608d442c54d80a2a4d7",
+    "size": 64656,
+    "downloaded_at": "2026-08-26T22:43:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:31:57 GMT",
+    "note": ""
+  },
+  "725640-24018-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725640-24018-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725640-24018-1981.gz",
+    "sha256": "65177526dd900137f1cd07097fe82492447cfcc621079c72668965ac230c278e",
+    "size": 95260,
+    "downloaded_at": "2026-08-26T22:50:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:00 GMT",
+    "note": ""
+  },
+  "725645-24022-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725645-24022-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725645-24022-1981.gz",
+    "sha256": "87366b60cad29f6d8c6f8168e833968df0892f1faf1106fe1c12a34fca8d257c",
+    "size": 85956,
+    "downloaded_at": "2026-08-26T22:50:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:04 GMT",
+    "note": ""
+  },
+  "725660-24028-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725660-24028-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725660-24028-1981.gz",
+    "sha256": "706c7d4ea31214ee7bf9e222d431453e26e9142e7b2bb5888182215dd35f7ed2",
+    "size": 92195,
+    "downloaded_at": "2026-08-26T22:43:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:06 GMT",
+    "note": ""
+  },
+  "725670-24032-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725670-24032-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725670-24032-1981.gz",
+    "sha256": "7ae0b9decd40702284fb40606570df89931a9032ac76e63953ff18cb7a231262",
+    "size": 88359,
+    "downloaded_at": "2026-08-26T22:43:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:09 GMT",
+    "note": ""
+  },
+  "725690-24089-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725690-24089-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725690-24089-1981.gz",
+    "sha256": "bd4003c79762b37261088f5eecfca935924e7605773e2afc68130aed171ada35",
+    "size": 95486,
+    "downloaded_at": "2026-08-26T22:50:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:10 GMT",
+    "note": ""
+  },
+  "725720-24127-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725720-24127-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725720-24127-1981.gz",
+    "sha256": "c71ea2bb8306b1ba26514843acc32d4e0a2ebb483235421a0e1394423cdee80b",
+    "size": 91291,
+    "downloaded_at": "2026-08-26T22:48:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:17 GMT",
+    "note": ""
+  },
+  "725740-24027-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725740-24027-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725740-24027-1981.gz",
+    "sha256": "f9d2c7858b3efce5d1ec79f4c4a2325903b8c449516b198b085b031c7d737805",
+    "size": 91824,
+    "downloaded_at": "2026-08-26T22:50:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:19 GMT",
+    "note": ""
+  },
+  "725745-24057-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725745-24057-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725745-24057-1981.gz",
+    "sha256": "f8f62226e03b7e5d4ba4a99e2ee7515eb5fb07f0133d3f427e9ed6e03baac428",
+    "size": 71313,
+    "downloaded_at": "2026-08-26T22:50:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:22 GMT",
+    "note": ""
+  },
+  "725750-24126-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725750-24126-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725750-24126-1981.gz",
+    "sha256": "90b286f4692abc112de428da58993ac3e4e7de452a2cb6e5e2fef7fc9860a345",
+    "size": 43424,
+    "downloaded_at": "2026-08-26T22:48:37+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:23 GMT",
+    "note": ""
+  },
+  "725755-24101-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725755-24101-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725755-24101-1981.gz",
+    "sha256": "34f3690ebb9b4fbc81dcb1815de8969330a768999957a7a6dd239c6928760bfa",
+    "size": 87911,
+    "downloaded_at": "2026-08-26T22:48:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:27 GMT",
+    "note": ""
+  },
+  "725760-24021-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725760-24021-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725760-24021-1981.gz",
+    "sha256": "c2a2d3f0bca3e8be1991a9adcb596ae2eabad38ec9a8c738595c5a70cf5cf79b",
+    "size": 93383,
+    "downloaded_at": "2026-08-26T22:50:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:31 GMT",
+    "note": ""
+  },
+  "725765-24061-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725765-24061-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725765-24061-1981.gz",
+    "sha256": "c5c4c7e773c2231955de585521ba2bc21a9fae70e6a7133db8e97159ec59a875",
+    "size": 36532,
+    "downloaded_at": "2026-08-26T22:50:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:32 GMT",
+    "note": ""
+  },
+  "725775-04111-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725775-04111-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725775-04111-1981.gz",
+    "sha256": "d62bcf3420796a315fa1bab95cafbe223745411d6d43fc4d0b0bf3741f742b34",
+    "size": 18943,
+    "downloaded_at": "2026-08-26T22:50:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:33 GMT",
     "note": ""
   },
   "725780-24156-1981.gz": {
@@ -1939,6 +4659,56 @@
     "last_modified": "Sun, 10 May 2020 15:32:41 GMT",
     "note": ""
   },
+  "725805-24172-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725805-24172-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725805-24172-1981.gz",
+    "sha256": "f1148630a9ea3b7b769a62694297c65fb777568a8d4ff0b9113d033294102022",
+    "size": 82107,
+    "downloaded_at": "2026-08-26T22:44:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:44 GMT",
+    "note": ""
+  },
+  "725810-24193-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725810-24193-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725810-24193-1981.gz",
+    "sha256": "257b0463dfd9c647261e81fbec35c99b4c87f177e68ae775976ff82ff2dbd178",
+    "size": 60711,
+    "downloaded_at": "2026-08-26T22:48:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:46 GMT",
+    "note": ""
+  },
+  "725825-24121-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725825-24121-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725825-24121-1981.gz",
+    "sha256": "597169b5eb6cd1561c1ecc22791536d29701422057693a777c1305e78bfeed9e",
+    "size": 87353,
+    "downloaded_at": "2026-08-26T22:44:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:49 GMT",
+    "note": ""
+  },
+  "725830-24128-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725830-24128-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725830-24128-1981.gz",
+    "sha256": "144727adf6ac4ac9efc2436eb920820324362330d9541b2ec0f198015149389d",
+    "size": 93881,
+    "downloaded_at": "2026-08-26T22:44:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:50 GMT",
+    "note": ""
+  },
+  "725835-24119-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725835-24119-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725835-24119-1981.gz",
+    "sha256": "acd5f693a1cb97ec7a05c01686ada701e9bc4bf16cfab8109f68abd7999532ce",
+    "size": 34737,
+    "downloaded_at": "2026-08-26T22:44:33+00:00",
+    "last_modified": "Sun, 10 May 2020 15:32:51 GMT",
+    "note": ""
+  },
   "725845-23225-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "725845-23225-1981.gz",
@@ -1957,6 +4727,16 @@
     "size": 84681,
     "downloaded_at": "2026-08-26T22:39:48+00:00",
     "last_modified": "Sun, 10 May 2020 15:33:00 GMT",
+    "note": ""
+  },
+  "725895-94236-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725895-94236-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725895-94236-1981.gz",
+    "sha256": "f90f195e376ec2c21b15a4c4d8f3558cb63a76ab22b608fbbef1c907a7c62135",
+    "size": 65547,
+    "downloaded_at": "2026-08-26T22:45:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:02 GMT",
     "note": ""
   },
   "725905-23275-1981.gz": {
@@ -2029,6 +4809,486 @@
     "last_modified": "Sun, 10 May 2020 15:33:13 GMT",
     "note": ""
   },
+  "725970-24225-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725970-24225-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725970-24225-1981.gz",
+    "sha256": "0d81bdf948d0684b07e5e25297829cca0acfa4f02550f47fda7029c08dc4a182",
+    "size": 87158,
+    "downloaded_at": "2026-08-26T22:46:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:16 GMT",
+    "note": ""
+  },
+  "725975-24235-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "725975-24235-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/725975-24235-1981.gz",
+    "sha256": "9a4acbc54c339b3888028ae59946f0a432679258cb74c7f0129c9d5d1c02e854",
+    "size": 81677,
+    "downloaded_at": "2026-08-26T22:46:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:19 GMT",
+    "note": ""
+  },
+  "726050-14745-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726050-14745-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726050-14745-1981.gz",
+    "sha256": "15381751a97eafd576c76f5ceb23c79644cdc2df62022ae3b65af8ed36825c20",
+    "size": 91061,
+    "downloaded_at": "2026-08-26T22:43:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:25 GMT",
+    "note": ""
+  },
+  "726060-14764-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726060-14764-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726060-14764-1981.gz",
+    "sha256": "5da3ed2fdc600b0bb911e483e15afff92b0da81be6c2fca3023cccc0fdb48a2f",
+    "size": 90067,
+    "downloaded_at": "2026-08-26T22:41:41+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:33 GMT",
+    "note": ""
+  },
+  "726071-14606-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726071-14606-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726071-14606-1981.gz",
+    "sha256": "37bb34d7899c58888eec30ecda750b302c95b4bbc11905478e6715ac83a714a5",
+    "size": 87305,
+    "downloaded_at": "2026-08-26T22:41:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:39 GMT",
+    "note": ""
+  },
+  "726140-54742-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726140-54742-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726140-54742-1981.gz",
+    "sha256": "2d41f9ef61012aafdb11e7e205ead5e921617e65d6e15604f81f11ce96ff2b7d",
+    "size": 101,
+    "downloaded_at": "2026-08-26T22:49:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:48 GMT",
+    "note": ""
+  },
+  "726145-94705-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726145-94705-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726145-94705-1981.gz",
+    "sha256": "eb14805f624dff4a5c659eada1928dcce2f2160594605b98eb9462a2e0491fc7",
+    "size": 77965,
+    "downloaded_at": "2026-08-26T22:49:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:33:53 GMT",
+    "note": ""
+  },
+  "726170-14742-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726170-14742-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726170-14742-1981.gz",
+    "sha256": "667dcf9e5f255919f821099c83a2a37f817d6f3392081c7eefe1e62e0eea63ff",
+    "size": 91344,
+    "downloaded_at": "2026-08-26T22:49:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:01 GMT",
+    "note": ""
+  },
+  "726185-14605-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726185-14605-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726185-14605-1981.gz",
+    "sha256": "7e6676df1c943b1ebeec2aef5a2cc68d68a282c7a25a540f990b5f67a6c55664",
+    "size": 88755,
+    "downloaded_at": "2026-08-26T22:41:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:04 GMT",
+    "note": ""
+  },
+  "726196-14610-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726196-14610-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726196-14610-1981.gz",
+    "sha256": "74d055888ef36359b0e3ebb9d7191fd64c9ef979c9dc969d379632b11698eb02",
+    "size": 168,
+    "downloaded_at": "2026-08-26T22:41:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:05 GMT",
+    "note": ""
+  },
+  "726221-94725-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726221-94725-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726221-94725-1981.gz",
+    "sha256": "5383c788946d911593849a320e6dbdca8bd41f165fa77c72219025803b2cc39a",
+    "size": 87029,
+    "downloaded_at": "2026-08-26T22:45:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:07 GMT",
+    "note": ""
+  },
+  "726227-94790-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726227-94790-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726227-94790-1981.gz",
+    "sha256": "75127ba6c3297c5e2fc03eda8c0821f886c37029f9bfba011ed1f7eb12f9a63f",
+    "size": 88058,
+    "downloaded_at": "2026-08-26T22:45:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:09 GMT",
+    "note": ""
+  },
+  "726350-94860-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726350-94860-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726350-94860-1981.gz",
+    "sha256": "118d2c24a43bdba08e315690291d8f65ef444826bbe7251de24561fbd5da43d4",
+    "size": 90960,
+    "downloaded_at": "2026-08-26T22:41:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:12 GMT",
+    "note": ""
+  },
+  "726360-14840-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726360-14840-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726360-14840-1981.gz",
+    "sha256": "814ae041f7e195404deeab5794a3fea1c24824583e3995a15b914072f04059a5",
+    "size": 90566,
+    "downloaded_at": "2026-08-26T22:41:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:18 GMT",
+    "note": ""
+  },
+  "726370-14826-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726370-14826-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726370-14826-1981.gz",
+    "sha256": "db930f92c757c1d1b5fc73383a3b017a5eb604ce137c0ee4c52a2771dd6ddbc2",
+    "size": 89844,
+    "downloaded_at": "2026-08-26T22:41:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:21 GMT",
+    "note": ""
+  },
+  "726379-14845-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726379-14845-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726379-14845-1981.gz",
+    "sha256": "e047af748ebba49e6ad2dd4deaa40a165afb4adb065bc23da3e64a2e86514d7f",
+    "size": 84207,
+    "downloaded_at": "2026-08-26T22:41:54+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:28 GMT",
+    "note": ""
+  },
+  "726380-94814-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726380-94814-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726380-94814-1981.gz",
+    "sha256": "6a0adaf930c722538615cd96051017e443c00d1bbda6aa105f208fa0f8ae7656",
+    "size": 66307,
+    "downloaded_at": "2026-08-26T22:41:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:31 GMT",
+    "note": ""
+  },
+  "726387-14850-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726387-14850-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726387-14850-1981.gz",
+    "sha256": "1493578dafa629ef4acd0830b91bbefe81bd2f66db612a3bdfa3e5aaa20adbd0",
+    "size": 86964,
+    "downloaded_at": "2026-08-26T22:41:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:36 GMT",
+    "note": ""
+  },
+  "726390-94849-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726390-94849-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726390-94849-1981.gz",
+    "sha256": "5df2692ae4486dcebbfe29405dd91a42c2bf8b0a8665ac11338f53be6918a9d3",
+    "size": 91667,
+    "downloaded_at": "2026-08-26T22:41:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:39 GMT",
+    "note": ""
+  },
+  "726395-14808-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726395-14808-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726395-14808-1981.gz",
+    "sha256": "935761f50d11274e3b781b51365344380451d5bf133db727dd4c590ad48e1113",
+    "size": 87105,
+    "downloaded_at": "2026-08-26T22:41:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:41 GMT",
+    "note": ""
+  },
+  "726400-14839-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726400-14839-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726400-14839-1981.gz",
+    "sha256": "6a1461bf05ae87b8fd49f6a94338d6b816df16e37f8d88bb7cd0ae6a3f2be75e",
+    "size": 91404,
+    "downloaded_at": "2026-08-26T22:49:46+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:46 GMT",
+    "note": ""
+  },
+  "726405-94869-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726405-94869-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726405-94869-1981.gz",
+    "sha256": "69ebe979bc53865e9a5e2b37c7d6a45178c977d75d5ad1a0f37a57abcc2c8f6a",
+    "size": 33483,
+    "downloaded_at": "2026-08-26T22:49:48+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:47 GMT",
+    "note": ""
+  },
+  "726410-14837-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726410-14837-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726410-14837-1981.gz",
+    "sha256": "5720559cc1dd1edc969e64a2d924d3ce6195efa018957a8c6dc27ec582b6a51f",
+    "size": 90770,
+    "downloaded_at": "2026-08-26T22:49:44+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:52 GMT",
+    "note": ""
+  },
+  "726416-14921-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726416-14921-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726416-14921-1981.gz",
+    "sha256": "06dbfadcb4afa95d7b2d2eca6943c89565544bc1330386ccf1eaec5a2e98cf95",
+    "size": 29160,
+    "downloaded_at": "2026-08-26T22:49:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:54 GMT",
+    "note": ""
+  },
+  "726430-14920-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726430-14920-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726430-14920-1981.gz",
+    "sha256": "10ffe11c0bbf6f1c99a61a04b2a756c5181f1fcec1f7d350d21f91700f837ef5",
+    "size": 90067,
+    "downloaded_at": "2026-08-26T22:49:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:34:56 GMT",
+    "note": ""
+  },
+  "726435-14991-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726435-14991-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726435-14991-1981.gz",
+    "sha256": "738558adda61db3efa9bb81b9e8c927833fad978264f43af4a8faacb21a019d3",
+    "size": 90374,
+    "downloaded_at": "2026-08-26T22:49:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:00 GMT",
+    "note": ""
+  },
+  "726436-94930-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726436-94930-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726436-94930-1981.gz",
+    "sha256": "d7bf26fa139d5f68d585fb8c983550923200d7f0a433990d2f41d42efa453d4f",
+    "size": 28475,
+    "downloaded_at": "2026-08-26T22:49:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:00 GMT",
+    "note": ""
+  },
+  "726440-14925-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726440-14925-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726440-14925-1981.gz",
+    "sha256": "280949d3845354bc80783aba65800b557556c54e681ab15a83eab369f466ad43",
+    "size": 92366,
+    "downloaded_at": "2026-08-26T22:42:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:03 GMT",
+    "note": ""
+  },
+  "726450-14898-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726450-14898-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726450-14898-1981.gz",
+    "sha256": "bd73c3db61de8d58afe889fccd768ffdd0c624c3e2406403072202e346f9fae8",
+    "size": 88899,
+    "downloaded_at": "2026-08-26T22:49:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:05 GMT",
+    "note": ""
+  },
+  "726460-14897-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726460-14897-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726460-14897-1981.gz",
+    "sha256": "a6633b151ea1d1364e984dd4f944216adf750b288171266b586da9ea676d0f1c",
+    "size": 87878,
+    "downloaded_at": "2026-08-26T22:49:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:09 GMT",
+    "note": ""
+  },
+  "726510-14944-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726510-14944-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726510-14944-1981.gz",
+    "sha256": "183e1ec0316e97afe6459069bc45e55900db081adf96f6ff8045abdaa19c6c99",
+    "size": 93675,
+    "downloaded_at": "2026-08-26T22:46:59+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:22 GMT",
+    "note": ""
+  },
+  "726540-14936-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726540-14936-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726540-14936-1981.gz",
+    "sha256": "5578c74ea2c7f7b0e7237add29abae2dbfff93e79013e1d132469980209b2b38",
+    "size": 93277,
+    "downloaded_at": "2026-08-26T22:46:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:32 GMT",
+    "note": ""
+  },
+  "726546-14946-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726546-14946-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726546-14946-1981.gz",
+    "sha256": "df5fbe11ed0d836d7a61f43066b26ec1ae0fc381471ffdcaf647872eeba569ce",
+    "size": 87680,
+    "downloaded_at": "2026-08-26T22:47:05+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:35 GMT",
+    "note": ""
+  },
+  "726550-14926-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726550-14926-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726550-14926-1981.gz",
+    "sha256": "2374675fa189ae89b0a95bc3c15ed9ecd5d73ed45ec3fca96708a830611e77a4",
+    "size": 56554,
+    "downloaded_at": "2026-08-26T22:42:14+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:37 GMT",
+    "note": ""
+  },
+  "726557-14910-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726557-14910-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726557-14910-1981.gz",
+    "sha256": "b0d4eb91c676a48bdd2a60f72aa217cac1083fbe99b4f48c688e0ec4be5a02e8",
+    "size": 86274,
+    "downloaded_at": "2026-08-26T22:42:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:41 GMT",
+    "note": ""
+  },
+  "726580-14922-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726580-14922-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726580-14922-1981.gz",
+    "sha256": "a7f6a057d21b574378e4b589492956c55a4e5b528ebec426f673d5979bb65099",
+    "size": 92423,
+    "downloaded_at": "2026-08-26T22:42:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:44 GMT",
+    "note": ""
+  },
+  "726590-14929-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726590-14929-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726590-14929-1981.gz",
+    "sha256": "6755aeea02ae0ade10f2cdf28bc5a6e9719102b45d44408a9b168b9bc709035b",
+    "size": 74247,
+    "downloaded_at": "2026-08-26T22:46:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:49 GMT",
+    "note": ""
+  },
+  "726620-24090-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726620-24090-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726620-24090-1981.gz",
+    "sha256": "d598f345945bc384375518c80f2a1ffe206eed4bb3f616b87c7f6981ddfcec39",
+    "size": 94769,
+    "downloaded_at": "2026-08-26T22:47:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:54 GMT",
+    "note": ""
+  },
+  "726625-24006-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726625-24006-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726625-24006-1981.gz",
+    "sha256": "1c67265ad9f0419086c717311b40131ea04658c578db257abb7d0cb2d2b36a4d",
+    "size": 90193,
+    "downloaded_at": "2026-08-26T22:46:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:35:57 GMT",
+    "note": ""
+  },
+  "726660-24029-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726660-24029-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726660-24029-1981.gz",
+    "sha256": "8f0468707fa8e5b1aa1ef203d780c67198ddaed2abe877caa6feb36573461c50",
+    "size": 89814,
+    "downloaded_at": "2026-08-26T22:50:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:04 GMT",
+    "note": ""
+  },
+  "726675-24037-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726675-24037-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726675-24037-1981.gz",
+    "sha256": "2b810eeac2713cfca1aa141250871767b9b67214d1e18c40ca4f7f4794e67b41",
+    "size": 92784,
+    "downloaded_at": "2026-08-26T22:42:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:10 GMT",
+    "note": ""
+  },
+  "726686-24025-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726686-24025-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726686-24025-1981.gz",
+    "sha256": "72e3b8bb8eeae7b206d713ab23e7dee31a26f8bc5d0c1c6bda184c10a1894582",
+    "size": 93477,
+    "downloaded_at": "2026-08-26T22:47:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:13 GMT",
+    "note": ""
+  },
+  "726770-24033-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726770-24033-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726770-24033-1981.gz",
+    "sha256": "a9c8ba4ca5b66e58e05ccc2c7125d1cf450af19d53564a8bc8a8c8fb2cd8d2ef",
+    "size": 93420,
+    "downloaded_at": "2026-08-26T22:42:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:20 GMT",
+    "note": ""
+  },
+  "726776-24036-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726776-24036-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726776-24036-1981.gz",
+    "sha256": "f3044b005763b8d7edb743dd7103f7ca3ebd5007169612b56d2b592145d06647",
+    "size": 90189,
+    "downloaded_at": "2026-08-26T22:43:03+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:22 GMT",
+    "note": ""
+  },
+  "726785-24135-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726785-24135-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726785-24135-1981.gz",
+    "sha256": "6e90ec293c5ccdc44a616ae814b16127261df0a5dbd4e81274b167aa7d012244",
+    "size": 85363,
+    "downloaded_at": "2026-08-26T22:42:50+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:24 GMT",
+    "note": ""
+  },
+  "726796-24138-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726796-24138-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726796-24138-1981.gz",
+    "sha256": "5aa22a03f9ecdf32252cb1b753cd8f9a2b0a64de85235bb73c2208d348fdce46",
+    "size": 45211,
+    "downloaded_at": "2026-08-26T22:42:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:28 GMT",
+    "note": ""
+  },
+  "726797-24132-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726797-24132-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726797-24132-1981.gz",
+    "sha256": "a62b88693c9b383d9a62b3040cf16d625ebd4c9f2bbc1913fb894fa355165e73",
+    "size": 83391,
+    "downloaded_at": "2026-08-26T22:42:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:31 GMT",
+    "note": ""
+  },
+  "726798-24150-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726798-24150-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726798-24150-1981.gz",
+    "sha256": "83c3e0a18155c227c728238d87b2f7bb870441c1a749e972e3d0b91663b489a7",
+    "size": 60170,
+    "downloaded_at": "2026-08-26T22:43:06+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:32 GMT",
+    "note": ""
+  },
   "726810-24131-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "726810-24131-1981.gz",
@@ -2049,6 +5309,416 @@
     "last_modified": "Sun, 10 May 2020 15:36:39 GMT",
     "note": ""
   },
+  "726835-24230-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726835-24230-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726835-24230-1981.gz",
+    "sha256": "1ad62b19ba6eeb6a9ddfdb1f4e1c54a4271eafa1b11b7edb2bd74616e4021a6c",
+    "size": 89558,
+    "downloaded_at": "2026-08-26T22:46:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:44 GMT",
+    "note": ""
+  },
+  "726838-94185-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726838-94185-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726838-94185-1981.gz",
+    "sha256": "32b84c24a2db52b26a63fe859b77664862e3199793cd6ce7de3b81cf830346e3",
+    "size": 87150,
+    "downloaded_at": "2026-08-26T22:45:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:46 GMT",
+    "note": ""
+  },
+  "726880-24155-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726880-24155-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726880-24155-1981.gz",
+    "sha256": "9bf988ee20b143919e03dc4a06bbe3d6d8da55b64fd833d75f752ad52fabbb84",
+    "size": 89549,
+    "downloaded_at": "2026-08-26T22:45:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:49 GMT",
+    "note": ""
+  },
+  "726885-24152-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726885-24152-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726885-24152-1981.gz",
+    "sha256": "f0d662d650135625a44cee950cca6e7c2cd4d266f0d413f6e8f57e65428af9cb",
+    "size": 63900,
+    "downloaded_at": "2026-08-26T22:45:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:50 GMT",
+    "note": ""
+  },
+  "726886-24130-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726886-24130-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726886-24130-1981.gz",
+    "sha256": "485e79a2188770f7f53a7275be2e1f15d0d3c21dde3567ec16577190980c756a",
+    "size": 59260,
+    "downloaded_at": "2026-08-26T22:45:48+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:52 GMT",
+    "note": ""
+  },
+  "726904-24231-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726904-24231-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726904-24231-1981.gz",
+    "sha256": "ea84b6858c9dafc76b8b398179e7a6c5eed62434fbaa741fa7302899df9d6706",
+    "size": 22101,
+    "downloaded_at": "2026-08-26T22:46:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:52 GMT",
+    "note": ""
+  },
+  "726917-24284-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726917-24284-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726917-24284-1981.gz",
+    "sha256": "16886fa4ddbf7f744b09cbe45deed98c675cd1d6b1b9c5556eec7193ecbaec28",
+    "size": 79911,
+    "downloaded_at": "2026-08-26T22:46:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:36:55 GMT",
+    "note": ""
+  },
+  "726930-24221-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726930-24221-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726930-24221-1981.gz",
+    "sha256": "565c1f6c62b67233222940f430d1a8f43d587b21bf2742a9dd3db313aaceea9b",
+    "size": 86973,
+    "downloaded_at": "2026-08-26T22:45:55+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:00 GMT",
+    "note": ""
+  },
+  "726940-24232-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726940-24232-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726940-24232-1981.gz",
+    "sha256": "726200da31ed5cdf24a6ff4d5ae99f47cc580299b9ca6bd24e8d6608a9d6e5a7",
+    "size": 86947,
+    "downloaded_at": "2026-08-26T22:45:56+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:02 GMT",
+    "note": ""
+  },
+  "726958-24285-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726958-24285-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726958-24285-1981.gz",
+    "sha256": "e1c9350b1b2157e50108665b4b8942639f4f7f24e6709ca5ee06f755f3759c0d",
+    "size": 39760,
+    "downloaded_at": "2026-08-26T22:45:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:05 GMT",
+    "note": ""
+  },
+  "726980-24229-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726980-24229-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726980-24229-1981.gz",
+    "sha256": "98894ae6c833e37e66160e19ecf67388676a2abb4cddea0301af9137b111750b",
+    "size": 89936,
+    "downloaded_at": "2026-08-26T22:46:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:11 GMT",
+    "note": ""
+  },
+  "726988-24219-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "726988-24219-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/726988-24219-1981.gz",
+    "sha256": "7b173f834260a461e7aefdbe5ac34339f230624fd068bc9b201a114a78908e30",
+    "size": 53120,
+    "downloaded_at": "2026-08-26T22:49:28+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:18 GMT",
+    "note": ""
+  },
+  "727120-14607-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727120-14607-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727120-14607-1981.gz",
+    "sha256": "89cf66855ffb17f2efcd1850b2dc2264a84be6d3ee5aecfbcb5ec2b909bc06a4",
+    "size": 82711,
+    "downloaded_at": "2026-08-26T22:41:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:26 GMT",
+    "note": ""
+  },
+  "727130-14604-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727130-14604-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727130-14604-1981.gz",
+    "sha256": "3a2ed1e41cf0d16810dbf597fe4302cfff661eabbfe3350204d472b7fed16907",
+    "size": 21267,
+    "downloaded_at": "2026-08-26T22:41:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:30 GMT",
+    "note": ""
+  },
+  "727340-14847-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727340-14847-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727340-14847-1981.gz",
+    "sha256": "f43f34c503118fae79a5412587d5d9eb0b67d972ad4c466247bb6a19dd821453",
+    "size": 92037,
+    "downloaded_at": "2026-08-26T22:42:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:32 GMT",
+    "note": ""
+  },
+  "727347-14841-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727347-14841-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727347-14841-1981.gz",
+    "sha256": "c514f369d594152b1d5018d64884b611d9242397449466aa2aa2326e1973e788",
+    "size": 86755,
+    "downloaded_at": "2026-08-26T22:41:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:36 GMT",
+    "note": ""
+  },
+  "727430-94850-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727430-94850-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727430-94850-1981.gz",
+    "sha256": "1575d7ffb90743efb707871c18835343f93db772ac4a0ae2dcb3198a0f824306",
+    "size": 15834,
+    "downloaded_at": "2026-08-26T22:41:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:41 GMT",
+    "note": ""
+  },
+  "727440-14858-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727440-14858-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727440-14858-1981.gz",
+    "sha256": "7bd096d10c1faa82bbefc5b9ddf8695239f4b460d64d932a3a15473493ae5e40",
+    "size": 82055,
+    "downloaded_at": "2026-08-26T22:41:50+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:48 GMT",
+    "note": ""
+  },
+  "727450-14913-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727450-14913-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727450-14913-1981.gz",
+    "sha256": "34505dac690f90bd129779a884f723af3917e711dbb17c319b6933e8f46cfac9",
+    "size": 90839,
+    "downloaded_at": "2026-08-26T22:42:09+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:53 GMT",
+    "note": ""
+  },
+  "727455-94931-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727455-94931-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727455-94931-1981.gz",
+    "sha256": "c8d6c2cbae59172ac72b3a174240eac59b13f0b438158c3ceebd96aaa9e355e7",
+    "size": 86147,
+    "downloaded_at": "2026-08-26T22:42:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:37:57 GMT",
+    "note": ""
+  },
+  "727470-14918-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727470-14918-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727470-14918-1981.gz",
+    "sha256": "877b7b9de481ad757eee8e06c3637f5514af408c13c1a81ce36653ddced497b0",
+    "size": 89591,
+    "downloaded_at": "2026-08-26T22:42:10+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:00 GMT",
+    "note": ""
+  },
+  "727530-14914-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727530-14914-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727530-14914-1981.gz",
+    "sha256": "7f1033702385c7ec46fde2124cc8a2de5705837a9ac46617779881eef1d11f86",
+    "size": 91569,
+    "downloaded_at": "2026-08-26T22:43:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:05 GMT",
+    "note": ""
+  },
+  "727535-14919-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727535-14919-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727535-14919-1981.gz",
+    "sha256": "999aad5da2bfe1381ab31bae7fbc824d6488c519db638f56de4cc4276962be25",
+    "size": 86666,
+    "downloaded_at": "2026-08-26T22:43:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:08 GMT",
+    "note": ""
+  },
+  "727575-94925-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727575-94925-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727575-94925-1981.gz",
+    "sha256": "8aa5d00eaf7955e350bd163dc8f80319d0120c7822ec660d25077e9b9513b725",
+    "size": 88725,
+    "downloaded_at": "2026-08-26T22:43:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:16 GMT",
+    "note": ""
+  },
+  "727576-14916-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727576-14916-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727576-14916-1981.gz",
+    "sha256": "55a5756bc2dc3152b311a917557f383f4655f5c9ff8bfb91f634e5472779ed56",
+    "size": 86956,
+    "downloaded_at": "2026-08-26T22:43:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:18 GMT",
+    "note": ""
+  },
+  "727640-24011-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727640-24011-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727640-24011-1981.gz",
+    "sha256": "4cd1fd61646a47a6dc458fa294add877c2eb452560002f503cb76dbd33d2e15c",
+    "size": 92315,
+    "downloaded_at": "2026-08-26T22:43:34+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:22 GMT",
+    "note": ""
+  },
+  "727645-24012-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727645-24012-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727645-24012-1981.gz",
+    "sha256": "e645936fa5d12269aa5bfe26078239770e7de50d2c5dcc9925966fe8210795ec",
+    "size": 88143,
+    "downloaded_at": "2026-08-26T22:43:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:24 GMT",
+    "note": ""
+  },
+  "727675-94011-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727675-94011-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727675-94011-1981.gz",
+    "sha256": "092e74520691bc2c9325a7a85bf926c3199816f34149260af0a2935363faac47",
+    "size": 89572,
+    "downloaded_at": "2026-08-26T22:43:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:30 GMT",
+    "note": ""
+  },
+  "727676-24013-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727676-24013-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727676-24013-1981.gz",
+    "sha256": "6bbb51d57e1f8030b559cc635234c11717568cd670b51e221a6a893870a0e0a4",
+    "size": 92202,
+    "downloaded_at": "2026-08-26T22:43:43+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:33 GMT",
+    "note": ""
+  },
+  "727680-94008-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727680-94008-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727680-94008-1981.gz",
+    "sha256": "60ce1626e86a901e54b4849118eaf60210950e202144b346913a6de08548eca1",
+    "size": 93234,
+    "downloaded_at": "2026-08-26T22:43:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:36 GMT",
+    "note": ""
+  },
+  "727720-24144-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727720-24144-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727720-24144-1981.gz",
+    "sha256": "fe934deda15f5e2aa55357ed96fc6a71a7802eccaf8ef9ac0476645afc425733",
+    "size": 90550,
+    "downloaded_at": "2026-08-26T22:43:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:41 GMT",
+    "note": ""
+  },
+  "727730-24153-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727730-24153-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727730-24153-1981.gz",
+    "sha256": "c04dfd9a937c02e88f893f2aa8c81fd4d569ff894f021920f1f0a656a6b9ecb1",
+    "size": 89753,
+    "downloaded_at": "2026-08-26T22:43:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:43 GMT",
+    "note": ""
+  },
+  "727750-24143-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727750-24143-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727750-24143-1981.gz",
+    "sha256": "b4598851d53961326c78b105c4cc8e286b6b1f93017aec681505debee9de4ff6",
+    "size": 93103,
+    "downloaded_at": "2026-08-26T22:43:00+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:49 GMT",
+    "note": ""
+  },
+  "727755-24112-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727755-24112-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727755-24112-1981.gz",
+    "sha256": "991eb6a045f61ee0f9ddd814ad84ad7508c3dbe67ee8f403743c8eb6fbcc0077",
+    "size": 89058,
+    "downloaded_at": "2026-08-26T22:43:04+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:52 GMT",
+    "note": ""
+  },
+  "727770-94012-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727770-94012-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727770-94012-1981.gz",
+    "sha256": "f5a519f5aa30e7d88d881c103218ab41a9d31d0134991e78fd249c25de4e10c3",
+    "size": 85132,
+    "downloaded_at": "2026-08-26T22:43:01+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:54 GMT",
+    "note": ""
+  },
+  "727790-24146-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727790-24146-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727790-24146-1981.gz",
+    "sha256": "9e8389e132befc8df6535028dee2ab673736f5afe9a778b744745a7f53b6b5dc",
+    "size": 88781,
+    "downloaded_at": "2026-08-26T22:42:58+00:00",
+    "last_modified": "Sun, 10 May 2020 15:38:57 GMT",
+    "note": ""
+  },
+  "727796-24137-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727796-24137-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727796-24137-1981.gz",
+    "sha256": "92b157be8a12f00ee305465f826eba55d312a020d6c5d6e0d754db693464717d",
+    "size": 86013,
+    "downloaded_at": "2026-08-26T22:42:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:00 GMT",
+    "note": ""
+  },
+  "727810-24243-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727810-24243-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727810-24243-1981.gz",
+    "sha256": "de766810762a03430e407a09e37798576971f3424b0e2ea903bf6f9c3f1675b8",
+    "size": 88502,
+    "downloaded_at": "2026-08-26T22:49:40+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:03 GMT",
+    "note": ""
+  },
+  "727815-24237-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727815-24237-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727815-24237-1981.gz",
+    "sha256": "1ab4970b233892ad504ec8e25b1c3d5e90c90cb734aa3f0d51dc6cc2d89838e6",
+    "size": 83564,
+    "downloaded_at": "2026-08-26T22:49:35+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:06 GMT",
+    "note": ""
+  },
+  "727826-24141-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727826-24141-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727826-24141-1981.gz",
+    "sha256": "83bd59daaea704a0c18e9b4af3d0008f47ea1599e9632bcb088869397f0cee9c",
+    "size": 50357,
+    "downloaded_at": "2026-08-26T22:49:18+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:11 GMT",
+    "note": ""
+  },
+  "727827-24110-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727827-24110-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727827-24110-1981.gz",
+    "sha256": "3c503dd2b6a271ed2d3d91cda1636346ca1bb704c628ed7a140e80dd9aa3556f",
+    "size": 44631,
+    "downloaded_at": "2026-08-26T22:49:21+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:12 GMT",
+    "note": ""
+  },
   "727830-24149-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "727830-24149-1981.gz",
@@ -2057,6 +5727,226 @@
     "size": 87113,
     "downloaded_at": "2026-08-26T22:39:51+00:00",
     "last_modified": "Sun, 10 May 2020 15:39:14 GMT",
+    "note": ""
+  },
+  "727845-24163-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727845-24163-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727845-24163-1981.gz",
+    "sha256": "cf73cb2a90f41c3003685126c1dd19b68bb655612c620eef47a6eb42e53d270f",
+    "size": 46051,
+    "downloaded_at": "2026-08-26T22:49:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:17 GMT",
+    "note": ""
+  },
+  "727846-24160-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727846-24160-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727846-24160-1981.gz",
+    "sha256": "931e01704f6ada71b9d9072a98cd1f97236afe29e704ca3c9b40da17e619d08d",
+    "size": 83389,
+    "downloaded_at": "2026-08-26T22:49:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:19 GMT",
+    "note": ""
+  },
+  "727850-24157-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727850-24157-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727850-24157-1981.gz",
+    "sha256": "a95aea7f12b1dd92d567bfaf52c979131ee69a874b26431cf9e602f72a14b141",
+    "size": 89020,
+    "downloaded_at": "2026-08-26T22:49:33+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:21 GMT",
+    "note": ""
+  },
+  "727855-24114-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727855-24114-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727855-24114-1981.gz",
+    "sha256": "79a13806783cdb2f8d85f1f11d0afa8421fc902ca59696e4d8fc8a7755e0de34",
+    "size": 84197,
+    "downloaded_at": "2026-08-26T22:49:19+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:26 GMT",
+    "note": ""
+  },
+  "727910-94224-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727910-94224-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727910-94224-1981.gz",
+    "sha256": "8e320a93e9bd38e093029ec6172d13c461f2d414589bdc419547b570776affed",
+    "size": 87512,
+    "downloaded_at": "2026-08-26T22:45:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:34 GMT",
+    "note": ""
+  },
+  "727920-24227-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727920-24227-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727920-24227-1981.gz",
+    "sha256": "1bb9cf57e25873071d5c961ec92080a873592fa37ed6d2cc91cd4b9268514ab2",
+    "size": 87558,
+    "downloaded_at": "2026-08-26T22:49:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:41 GMT",
+    "note": ""
+  },
+  "727927-94225-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727927-94225-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727927-94225-1981.gz",
+    "sha256": "7dc62ebe1e35ca347b4ad10f09213794b5b1468930a912d489dc1c416ab7824a",
+    "size": 82314,
+    "downloaded_at": "2026-08-26T22:49:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:44 GMT",
+    "note": ""
+  },
+  "727930-24233-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727930-24233-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727930-24233-1981.gz",
+    "sha256": "3a4d6d8ab25b207564ddb5b9e858b3dc4365adececb233a78cf9f6c91dd70b08",
+    "size": 87167,
+    "downloaded_at": "2026-08-26T22:49:32+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:46 GMT",
+    "note": ""
+  },
+  "727935-24234-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727935-24234-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727935-24234-1981.gz",
+    "sha256": "749bbe0a9d2652c913c805e3487ab3c1947c66a4073089e4806599a3722c75f8",
+    "size": 64218,
+    "downloaded_at": "2026-08-26T22:49:13+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:49 GMT",
+    "note": ""
+  },
+  "727970-94240-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727970-94240-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727970-94240-1981.gz",
+    "sha256": "02522e6c596a72952a3448e8e31af7ec7a717f21ffeeb69721603f956eab0de2",
+    "size": 86016,
+    "downloaded_at": "2026-08-26T22:49:31+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:54 GMT",
+    "note": ""
+  },
+  "727975-24255-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727975-24255-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727975-24255-1981.gz",
+    "sha256": "9ab9e00f799c49db95d9492a5af54100482229f2f7934f0652000697bbcd3c20",
+    "size": 81358,
+    "downloaded_at": "2026-08-26T22:49:39+00:00",
+    "last_modified": "Sun, 10 May 2020 15:39:58 GMT",
+    "note": ""
+  },
+  "727976-24217-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "727976-24217-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/727976-24217-1981.gz",
+    "sha256": "d316bede3da4ce5b41c5d4a6b0ee4004162ee259e1e0104e93302b59e132fa52",
+    "size": 80652,
+    "downloaded_at": "2026-08-26T22:49:12+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:02 GMT",
+    "note": ""
+  },
+  "742060-24207-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "742060-24207-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/742060-24207-1981.gz",
+    "sha256": "79b24f3f9e686e3a4e905c58fe4078030bcf35cd10eafe91bc06d60c477979bb",
+    "size": 80164,
+    "downloaded_at": "2026-08-26T22:49:26+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:13 GMT",
+    "note": ""
+  },
+  "742070-24201-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "742070-24201-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/742070-24201-1981.gz",
+    "sha256": "b6a969b47bc5e153049e8fa5a978660e63777108cedb104b3f183fa7e438f468",
+    "size": 77980,
+    "downloaded_at": "2026-08-26T22:49:22+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:17 GMT",
+    "note": ""
+  },
+  "743920-14611-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "743920-14611-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/743920-14611-1981.gz",
+    "sha256": "d3888280351d15d0cdddc159c46de008aa4be00a7bbbe13a3b891c5c4ad34a7c",
+    "size": 83134,
+    "downloaded_at": "2026-08-26T22:41:38+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:20 GMT",
+    "note": ""
+  },
+  "743945-14710-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "743945-14710-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/743945-14710-1981.gz",
+    "sha256": "e10d951f1149468a3ba8d7df6832f5095b78882e56630c08e02ff2e881db72db",
+    "size": 39404,
+    "downloaded_at": "2026-08-26T22:44:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:24 GMT",
+    "note": ""
+  },
+  "744860-94789-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744860-94789-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744860-94789-1981.gz",
+    "sha256": "c11b58dd168b13eaa0975fcf46d51b2f117d345b00f245dfa40cc3fb51849589",
+    "size": 89034,
+    "downloaded_at": "2026-08-26T22:45:02+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:28 GMT",
+    "note": ""
+  },
+  "744865-14719-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744865-14719-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744865-14719-1981.gz",
+    "sha256": "f3b478f970de71c3b852e339ec8bc72ca50ee1c8bcb9b8c6a436a8b468458a7a",
+    "size": 41453,
+    "downloaded_at": "2026-08-26T22:44:57+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:30 GMT",
+    "note": ""
+  },
+  "744900-14702-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744900-14702-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744900-14702-1981.gz",
+    "sha256": "d2c70bd6c31a9b2d967a456139cfc7cc26d43283654eef8d75ce7c0cc1ebdf6b",
+    "size": 34729,
+    "downloaded_at": "2026-08-26T22:41:15+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:31 GMT",
+    "note": ""
+  },
+  "744910-14703-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744910-14703-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744910-14703-1981.gz",
+    "sha256": "1afb1eed8ea175a556eb235e612cf581055e4922e4f983c19a314dc58f64170c",
+    "size": 60686,
+    "downloaded_at": "2026-08-26T22:41:20+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:34 GMT",
+    "note": ""
+  },
+  "744915-14775-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744915-14775-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744915-14775-1981.gz",
+    "sha256": "0bd8223d7150b1132a45d9189f7f17060dd922c098d8a7517beac7536788328b",
+    "size": 46218,
+    "downloaded_at": "2026-08-26T22:41:11+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:36 GMT",
+    "note": ""
+  },
+  "744994-04741-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "744994-04741-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/744994-04741-1981.gz",
+    "sha256": "15d601918abcb6668a0823bbe7b59c9f5b13e3df570264746434eea458b8beb5",
+    "size": 351,
+    "downloaded_at": "2026-08-26T22:45:08+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:41 GMT",
     "note": ""
   },
   "745090-23244-1981.gz": {
@@ -2089,6 +5979,36 @@
     "last_modified": "Sun, 10 May 2020 15:40:51 GMT",
     "note": ""
   },
+  "745700-13840-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "745700-13840-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/745700-13840-1981.gz",
+    "sha256": "61e8c8785f442116ea479383d54f7e61c8044af9a6c53aa943e57c820e8e783e",
+    "size": 85668,
+    "downloaded_at": "2026-08-26T22:45:30+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:52 GMT",
+    "note": ""
+  },
+  "745940-13705-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "745940-13705-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/745940-13705-1981.gz",
+    "sha256": "4a23a8de7e559c18f6fc148c601ba348ab53dde7d858be63bcde916972590c8f",
+    "size": 86872,
+    "downloaded_at": "2026-08-26T22:41:23+00:00",
+    "last_modified": "Sun, 10 May 2020 15:40:57 GMT",
+    "note": ""
+  },
+  "745980-13702-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "745980-13702-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/745980-13702-1981.gz",
+    "sha256": "1a5cde8b914465cbff9619cb8eea41209e1d401e494224882d08f26f90fcbf67",
+    "size": 86667,
+    "downloaded_at": "2026-08-26T22:48:49+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:01 GMT",
+    "note": ""
+  },
   "746120-93104-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "746120-93104-1981.gz",
@@ -2097,6 +6017,56 @@
     "size": 61770,
     "downloaded_at": "2026-08-26T22:36:58+00:00",
     "last_modified": "Sun, 10 May 2020 15:41:03 GMT",
+    "note": ""
+  },
+  "746710-13806-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "746710-13806-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/746710-13806-1981.gz",
+    "sha256": "8f94a1ef9a0c7f974cfa6d685f10a5bd4f4f7075982c0e06944f2b6d243fc3f3",
+    "size": 83567,
+    "downloaded_at": "2026-08-26T22:40:47+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:07 GMT",
+    "note": ""
+  },
+  "746715-03816-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "746715-03816-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/746715-03816-1981.gz",
+    "sha256": "a91a3f9ec99de525e419b92aaedbefe8e91a88dcd4e5e9a0df3bec2925aa2739",
+    "size": 79764,
+    "downloaded_at": "2026-08-26T22:40:42+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:09 GMT",
+    "note": ""
+  },
+  "746716-93808-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "746716-93808-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/746716-93808-1981.gz",
+    "sha256": "2dd0b38509911eb95549fa04ad0bc01ea27fd3584abb1effe8dd174112cad462",
+    "size": 81774,
+    "downloaded_at": "2026-08-26T22:40:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:11 GMT",
+    "note": ""
+  },
+  "746930-93737-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "746930-93737-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/746930-93737-1981.gz",
+    "sha256": "93c97646eefc6104b663a4a36b75f5560e0769c19c4d38adbf0ec8f345a4247d",
+    "size": 84755,
+    "downloaded_at": "2026-08-26T22:43:29+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:14 GMT",
+    "note": ""
+  },
+  "746941-13786-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "746941-13786-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/746941-13786-1981.gz",
+    "sha256": "594e65238c5eae4548af3d70fa49678c6a097f697f828b80d4bebb3e11995dfb",
+    "size": 59399,
+    "downloaded_at": "2026-08-26T22:43:17+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:16 GMT",
     "note": ""
   },
   "747020-23110-1981.gz": {
@@ -2129,6 +6099,26 @@
     "last_modified": "Sun, 10 May 2020 15:41:26 GMT",
     "note": ""
   },
+  "747400-13973-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "747400-13973-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/747400-13973-1981.gz",
+    "sha256": "c6ebfa67a283e2d3ebb0bd9cb706ded163ae74abc200c3719b650dfcb672e183",
+    "size": 67602,
+    "downloaded_at": "2026-08-26T22:47:53+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:29 GMT",
+    "note": ""
+  },
+  "747686-13820-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "747686-13820-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/747686-13820-1981.gz",
+    "sha256": "91836ce279bcf23d202a37a1c766c8f62b94bbc55824a5a3bcb183f8d0d14dfc",
+    "size": 81719,
+    "downloaded_at": "2026-08-26T22:42:41+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:39 GMT",
+    "note": ""
+  },
   "747750-13846-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "747750-13846-1981.gz",
@@ -2159,6 +6149,36 @@
     "last_modified": "Sun, 10 May 2020 15:41:51 GMT",
     "note": ""
   },
+  "747900-13849-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "747900-13849-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/747900-13849-1981.gz",
+    "sha256": "6f53a8376fd66d5ebc6911de43544554c79c6c22cb534cea099e77e8a74e159b",
+    "size": 84844,
+    "downloaded_at": "2026-08-26T22:46:52+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:52 GMT",
+    "note": ""
+  },
+  "747910-13717-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "747910-13717-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/747910-13717-1981.gz",
+    "sha256": "371aec104ef14fcf90a0842a325f336de8f450792e8bdba20adb5a0bca696c35",
+    "size": 85328,
+    "downloaded_at": "2026-08-26T22:46:51+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:54 GMT",
+    "note": ""
+  },
+  "747915-93718-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "747915-93718-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/747915-93718-1981.gz",
+    "sha256": "243dbef28e56524a83e084b10b0cda58b0b4a335ec40002dc63302d68f2e5105",
+    "size": 45086,
+    "downloaded_at": "2026-08-26T22:46:45+00:00",
+    "last_modified": "Sun, 10 May 2020 15:41:55 GMT",
+    "note": ""
+  },
   "747950-12867-1981.gz": {
     "dataset": "isd_lite_1981",
     "filename": "747950-12867-1981.gz",
@@ -2167,6 +6187,26 @@
     "size": 60162,
     "downloaded_at": "2026-08-26T22:38:57+00:00",
     "last_modified": "Sun, 10 May 2020 15:42:01 GMT",
+    "note": ""
+  },
+  "785350-11630-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "785350-11630-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/785350-11630-1981.gz",
+    "sha256": "78db3321334717483743e1ae3e9e323d52941063d71afcb8aa725b4e7599b3ac",
+    "size": 71792,
+    "downloaded_at": "2026-08-26T22:46:36+00:00",
+    "last_modified": "Sun, 10 May 2020 15:44:20 GMT",
+    "note": ""
+  },
+  "785430-11640-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "785430-11640-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/785430-11640-1981.gz",
+    "sha256": "a7a606efcbe8272d2aa23c8d17515fc5a71781c3fa58343e210c259ba30fbc83",
+    "size": 33109,
+    "downloaded_at": "2026-08-26T22:49:07+00:00",
+    "last_modified": "Sun, 10 May 2020 15:44:22 GMT",
     "note": ""
   },
   "911620-22501-1981.gz": {
@@ -2247,6 +6287,16 @@
     "size": 77624,
     "downloaded_at": "2026-08-26T22:37:10+00:00",
     "last_modified": "Sun, 10 May 2020 16:00:01 GMT",
+    "note": ""
+  },
+  "999999-94728-1981.gz": {
+    "dataset": "isd_lite_1981",
+    "filename": "999999-94728-1981.gz",
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/1981/999999-94728-1981.gz",
+    "sha256": "00dea919729b29916cd9130e5f03f2832296d1cc4329d384a737c6626a5afe65",
+    "size": 47527,
+    "downloaded_at": "2026-08-26T22:44:49+00:00",
+    "last_modified": "Sun, 10 May 2020 16:00:02 GMT",
     "note": ""
   }
 }

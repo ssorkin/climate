@@ -60,6 +60,8 @@ def analyze_station(st: IsdStation) -> str:
         return f"  {st.id}: not ingested"
     cfg = load_analysis_config()
     h = pl.read_parquet(p).filter(pl.col("temp").is_not_null())
+    if h.height < 24 * 300:
+        return f"  {st.id} {st.short}: too little hourly data ({h.height} obs) — skipped"
     fw = f_whole_expr(pl.col("temp"))
     # heat index per hour (needs dew point)
     t_c = h["temp"].to_numpy() / 10.0
@@ -249,10 +251,25 @@ def analyze_station(st: IsdStation) -> str:
     return f"  {st.id} {st.short:<32} {meta['first_date'][:4]}-{meta['last_date']}  complete years {meta['complete_years']:>3}  hours>=95F last10 {a.tail(10)['hours_95'].mean():.0f}"
 
 
+def _safe(st: IsdStation) -> str:
+    try:
+        return analyze_station(st)
+    except Exception as exc:  # noqa: BLE001 — one station must not sink the run
+        return f"  FAILED {st.id} {st.short}: {exc!r}"
+
+
 def run_analyze(only: list[str] | None = None) -> None:
     stations = load_isd_stations(only)
     print(f"==> analyzing {len(stations)} hourly stations")
+    problems = 0
     with ProcessPoolExecutor() as pool:
-        for i, line in enumerate(pool.map(analyze_station, stations, chunksize=2), 1):
-            if len(stations) <= 20 or i % 100 == 0 or "not ingested" in line:
-                print(line if len(stations) <= 20 else f"  … {i}/{len(stations)}", flush=True)
+        for i, line in enumerate(pool.map(_safe, stations, chunksize=2), 1):
+            bad = "FAILED" in line or "skipped" in line or "not ingested" in line
+            if bad:
+                problems += 1
+            if len(stations) <= 20 or bad:
+                print(line, flush=True)
+            elif i % 100 == 0:
+                print(f"  … {i}/{len(stations)}", flush=True)
+    if problems:
+        print(f"  {problems} station(s) skipped or failed")
