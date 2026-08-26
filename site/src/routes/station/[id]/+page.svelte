@@ -20,7 +20,24 @@
 
   let { data } = $props();
   let s = $derived(data.summary);
-  let others = $derived(data.index.stations.filter((x) => x.region === s.region));
+  // "Other stations" switcher: the curated region's list when this station belongs to one,
+  // otherwise the stations of the same state from the national index (loaded lazily).
+  let peers = $state([]);
+  $effect(() => {
+    if (!s) return;
+    if (s.regions?.includes('la')) {
+      peers = data.index.stations;
+      return;
+    }
+    fetch(dataUrl('/data/us/index.json')).then((r) => r.json()).then((j) => {
+      const c = j.columns;
+      peers = j.stations
+        .filter((r) => r[c.indexOf('state')] === s.state)
+        .map((r) => ({ id: r[0], short: r[c.indexOf('short')], first_year: r[c.indexOf('first_year')], last_year: r[c.indexOf('last_year')], active: !!r[c.indexOf('active')] }))
+        .sort((a, b) => a.short.localeCompare(b.short));
+    });
+  });
+  let others = $derived(peers);
 
   // URL-driven state: ?m=hot&t=95&year=2024 (u= handled in the layout).
   let family = $state('hot');
@@ -36,6 +53,7 @@
   });
 
   onMount(() => {
+    if (!s) return;
     const q = page.url.searchParams;
     if (q.get('m') in FAMILIES) family = q.get('m');
     const t = Number(q.get('t'));
@@ -59,6 +77,7 @@
   // daily.json is loaded lazily: needed for the daily explorer, raw table, and custom thresholds.
   let daily = $state(null);
   $effect(() => {
+    if (!s) return;
     const id = s.id;
     daily = null;
     fetch(dataUrl(`/data/stations/${id}/daily.json`)).then((r) => r.json()).then((d) => {
@@ -173,13 +192,17 @@
 </script>
 
 <svelte:head>
-  <title>{s.short} — hot days, warm nights and frost since {s.first_year} · climate.sorkinlabs</title>
-  <meta name="description" content="{s.name}: days above {threshold}°F, warm nights and frost nights every year since {s.first_year}, from NOAA's raw daily records." />
+  <title>{data.short} — hot days, warm nights and frost · climate.sorkinlabs</title>
+  <meta name="description" content="{data.short}: days above 95°F, warm nights and frost nights every year, from NOAA's raw daily station records." />
 </svelte:head>
+
+{#if !s}
+  <div class="head"><div><p class="crumb"><a href="/us">Stations</a></p><h1>{data.short}</h1><p class="meta muted">Loading the station record…</p></div></div>
+{:else}
 
 <div class="head">
   <div>
-    <p class="crumb"><a href="/map">Stations</a> · {data.index.regions.find((r) => r.id === s.region)?.name}</p>
+    <p class="crumb"><a href={s.regions?.includes('la') ? '/map' : '/us'}>Stations</a> · {s.regions?.includes('la') ? 'Greater Los Angeles' : s.state}</p>
     <h1>{s.short}</h1>
     <p class="meta muted">
       {s.name} · NOAA {s.id}{#if s.ushcn} · US Historical Climatology Network{/if} · {Math.round(s.elev_m * 3.281)} ft ·
@@ -288,6 +311,7 @@
 
 <h2>About this record</h2>
 <MethodsNote summary={s} />
+{/if}
 
 <style>
   .head {

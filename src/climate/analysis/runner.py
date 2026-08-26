@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from concurrent.futures import ProcessPoolExecutor
 from datetime import date
 
 import numpy as np
@@ -11,12 +12,21 @@ import polars as pl
 from climate.analysis import homogenized as H
 from climate.analysis import metrics as M
 from climate.analysis.obs_time import segments
-from climate.config import Region, Station, load_analysis_config, load_regions
+from climate.config import (
+    Region,
+    Station,
+    load_analysis_config,
+    load_regions,
+    region_ids_for,
+    unique_stations,
+)
 from climate.ingest.store import load_daily_wide, load_inventory, load_stations
 from climate.ingest.ushcn import load_ushcn
 from climate.paths import ANALYSIS_DIR
 
 OBS_SEGMENT_MIN_DAYS = 30
+_REGIONS: list[Region] = []
+_CTX: dict = {}
 
 
 def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataFrame) -> dict:
@@ -34,6 +44,8 @@ def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataF
         "name": r["name"].title().replace(" Ap", " Airport").replace("Ucla", "UCLA"),
         "noaa_name": r["name"],
         "region": reg.id,
+        "regions": region_ids_for(_REGIONS, st.id),
+        "state": r["state"],
         "lat": r["lat"],
         "lon": r["lon"],
         "elev_m": r["elev_m"],
@@ -154,21 +166,55 @@ def analyze_station(
     return meta
 
 
+def _analyze_one(args: tuple[str, str]) -> str:
+    region_id, sid = args
+    reg = next(r for r in _CTX["regions"] if r.id == region_id)
+    st = next(x for x in reg.stations if x.id == sid)
+    try:
+        meta = analyze_station(
+            st, reg, _CTX["cfg"], _CTX["stations"], _CTX["inv"], _CTX["today"], _CTX["ush"]
+        )
+    except Exception as exc:  # noqa: BLE001 — one bad station must not sink the run
+        return f"  FAILED {sid} {st.short}: {exc!r}"
+    w = meta["windows"]
+    b = w.get("baseline", {}).get("hot_95")
+    l10 = w.get("last10", {}).get("hot_95")
+    return (
+        f"  {sid} {st.short:<20} {meta['first_year']}-{meta['last_date']}  "
+        f"complete years {meta['complete_years']:>3}  hot95 baseline {b} -> last10 {l10}"
+    )
+
+
+def _init(ctx: dict) -> None:
+    global _REGIONS
+    _CTX.update(ctx)
+    _REGIONS = ctx["regions"]
+
+
 def run_analysis(region: str = "all", today: date | None = None) -> None:
+    global _REGIONS
     today = today or M.today_utc()
-    cfg = load_analysis_config()
-    stations = load_stations()
-    inv = load_inventory()
-    ush = load_ushcn()
-    for reg in load_regions(region):
-        print(f"==> region {reg.id}")
-        for st in reg.stations:
-            meta = analyze_station(st, reg, cfg, stations, inv, today, ush)
-            w = meta["windows"]
-            b = w.get("baseline", {}).get("hot_95")
-            l10 = w.get("last10", {}).get("hot_95")
-            print(
-                f"  {st.id} {st.short:<20} {meta['first_year']}-{meta['last_date']}  "
-                f"complete years {meta['complete_years']:>3}  "
-                f"hot95 baseline {b} -> last10 {l10}"
-            )
+    regions = load_regions(region)
+    _REGIONS = load_regions()  # membership is judged against every region
+    ctx = {
+        "regions": _REGIONS,
+        "cfg": load_analysis_config(),
+        "stations": load_stations(),
+        "inv": load_inventory(),
+        "today": today,
+        "ush": load_ushcn(),
+    }
+    todo = [(reg.id, st.id) for reg, st in unique_stations(regions)]
+    print(f"==> analyzing {len(todo)} stations")
+    failed = 0
+    with ProcessPoolExecutor(initializer=_init, initargs=(ctx,)) as pool:
+        for i, line in enumerate(pool.map(_analyze_one, todo, chunksize=4), 1):
+            if "FAILED" in line:
+                failed += 1
+                print(line)
+            elif len(todo) <= 40:
+                print(line)
+            elif i % 500 == 0:
+                print(f"  … {i}/{len(todo)}")
+    if failed:
+        print(f"  {failed} station(s) failed")

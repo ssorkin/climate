@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly climate.sorkinlabs.com national refresh
+
+[Timer]
+OnCalendar=Sun *-*-* 09:00:00 UTC
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

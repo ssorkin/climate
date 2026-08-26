@@ -6,7 +6,7 @@ detects site/instrument changes and how much its adjustments move the counts.
 
 from __future__ import annotations
 
-from climate.acquire.base import download
+from climate.acquire.base import download, flush_manifests
 
 BASE = "https://www.ncei.noaa.gov/pub/data/ushcn/v2.5/"
 FILES = [
@@ -24,4 +24,5 @@ def run_acquire_ushcn(refresh: bool = False, force: bool = False) -> list[str]:
     for name in FILES:
         if download(DATASET, BASE + name, refresh=refresh, force=force) is None:
             failed.append(name)
+    flush_manifests()
     return failed

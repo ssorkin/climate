@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import threading
 import time
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -25,6 +26,7 @@ USER_AGENT = (
 )
 
 _client: httpx.Client | None = None
+_manifest_lock = threading.Lock()
 
 
 def client() -> httpx.Client:
@@ -54,17 +56,39 @@ def _manifest_path(dataset: str) -> Path:
     return MANIFEST_DIR / f"{dataset}.json"
 
 
+# Manifests are cached in memory during a run: bulk downloads (thousands of files) update
+# them from several threads, and rewriting a multi-MB JSON per file is wasteful.
+_manifests: dict[str, dict[str, dict]] = {}
+_dirty: set[str] = set()
+_since_flush = 0
+FLUSH_EVERY = 50
+
+
 def load_manifest(dataset: str) -> dict[str, dict]:
-    path = _manifest_path(dataset)
-    if path.exists():
-        return json.loads(path.read_text())
-    return {}
+    with _manifest_lock:
+        if dataset not in _manifests:
+            path = _manifest_path(dataset)
+            _manifests[dataset] = json.loads(path.read_text()) if path.exists() else {}
+        return _manifests[dataset]
 
 
-def save_manifest(dataset: str, manifest: dict[str, dict]) -> None:
-    path = _manifest_path(dataset)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(dict(sorted(manifest.items())), indent=2) + "\n")
+def save_manifest(dataset: str, manifest: dict[str, dict] | None = None) -> None:
+    """Atomic write (tmp + rename) of the dataset's manifest."""
+    with _manifest_lock:
+        if manifest is not None:
+            _manifests[dataset] = manifest
+        data = _manifests.get(dataset, {})
+        path = _manifest_path(dataset)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(dict(sorted(data.items())), indent=2) + "\n")
+        tmp.replace(path)
+        _dirty.discard(dataset)
+
+
+def flush_manifests() -> None:
+    for dataset in list(_dirty):
+        save_manifest(dataset)
 
 
 def sha256_file(path: Path) -> str:
@@ -105,7 +129,7 @@ def download(
     if cached and refresh and not force and entry.get("last_modified"):
         headers["If-Modified-Since"] = entry["last_modified"]
 
-    tmp = dest.with_suffix(dest.suffix + ".part")
+    tmp = dest.with_suffix(dest.suffix + f".{threading.get_ident()}.part")
     h = hashlib.sha256()
     try:
         with client().stream("GET", url, headers=headers) as resp:
@@ -123,17 +147,26 @@ def download(
         return None
 
     tmp.replace(dest)
-    manifest[filename] = ManifestEntry(
-        dataset=dataset,
-        filename=filename,
-        url=url,
-        sha256=h.hexdigest(),
-        size=dest.stat().st_size,
-        downloaded_at=datetime.now(UTC).isoformat(timespec="seconds"),
-        last_modified=last_modified,
-        note=note,
-    ).__dict__
-    save_manifest(dataset, manifest)
-    print(f"  ok {filename} ({dest.stat().st_size:,} bytes)")
+    global _since_flush
+    manifest = load_manifest(dataset)
+    with _manifest_lock:
+        manifest[filename] = ManifestEntry(
+            dataset=dataset,
+            filename=filename,
+            url=url,
+            sha256=h.hexdigest(),
+            size=dest.stat().st_size,
+            downloaded_at=datetime.now(UTC).isoformat(timespec="seconds"),
+            last_modified=last_modified,
+            note=note,
+        ).__dict__
+        _dirty.add(dataset)
+        _since_flush += 1
+        flush = _since_flush >= FLUSH_EVERY
+        if flush:
+            _since_flush = 0
+    if flush:
+        save_manifest(dataset)
+    print(f"  ok {filename} ({dest.stat().st_size:,} bytes)", flush=True)
     time.sleep(throttle_seconds)
     return dest

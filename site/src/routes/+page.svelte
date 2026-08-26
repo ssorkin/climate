@@ -190,6 +190,11 @@
   </section>
 {/if}
 
+<section>
+  <h2>The whole country</h2>
+  <p class="muted">The same records exist for every long-running station in the United States — {data.usCount ? data.usCount.toLocaleString() : 'thousands of'} of them with 50+ years of daily readings. <a href="/us">Open the national map →</a></p>
+</section>
+
 <section class="about card">
   <b>How this was made.</b> Daily highs and lows from NOAA's GHCN-Daily archive for {stations.length} long-running stations,
   quality-flagged values removed, years with missing data shown as gaps rather than zeros, thresholds in whole °F as the

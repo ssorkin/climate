@@ -15,11 +15,12 @@ cd "$repo_root"
 export PATH="$HOME/.local/bin:$PATH"
 
 echo "==> $(date -u +%FT%TZ) nightly refresh"
-uv run clim acquire --refresh
-uv run clim ingest
+# Nightly: the curated LA region (26 files). The national set refreshes weekly (weekly-us.sh).
+uv run clim acquire --region la --refresh
+uv run clim ingest --region la
 uv run clim check --strict
-uv run clim analyze
-uv run clim export
+uv run clim analyze --region la
+uv run clim export --region la
 (cd site && npm run build)
 scripts/deploy.sh
 echo "==> $(date -u +%FT%TZ) done"

@@ -34,8 +34,16 @@ def _today() -> date:
     return today_utc()
 
 
-def _stations() -> list[tuple[str, str]]:
-    return [(s.id, s.short) for r in load_regions() for s in r.stations]
+CURATED_MAX = 100  # regions with more stations than this get no per-station info findings
+
+
+def _stations(curated_only: bool = False) -> list[tuple[str, str]]:
+    from climate.config import unique_stations
+
+    regions = load_regions()
+    if curated_only:
+        regions = [r for r in regions if len(r.stations) <= CURATED_MAX]
+    return [(s.id, s.short) for _, s in unique_stations(regions)]
 
 
 def check_manifests() -> list[Finding]:
@@ -98,6 +106,7 @@ def check_completeness() -> list[Finding]:
     frac = cfg["completeness"]["annual_min_frac"]
     year = _today().year
     out = []
+    curated = {sid for sid, _ in _stations(curated_only=True)}
     for sid, short in _stations():
         d = load_daily_wide(sid).with_columns(pl.col("date").dt.year().alias("year"))
         g = d.group_by("year").agg(
@@ -119,21 +128,22 @@ def check_completeness() -> list[Finding]:
         )
         all_years = g.filter(pl.col("year") < year)
         gaps = all_years.filter(~pl.col("year").is_in(complete["year"]))["year"].to_list()
-        out.append(
-            Finding(
-                "completeness",
-                "info",
-                None,
-                sid,
-                f"{short}: {complete.height} complete years of {all_years.height} "
-                f"({all_years['year'].min()}-{all_years['year'].max()}); incomplete: "
-                + (
-                    ", ".join(str(y) for y in gaps[:40]) + (" …" if len(gaps) > 40 else "")
-                    if gaps
-                    else "none"
-                ),
+        if sid in curated:
+            out.append(
+                Finding(
+                    "completeness",
+                    "info",
+                    None,
+                    sid,
+                    f"{short}: {complete.height} complete years of {all_years.height} "
+                    f"({all_years['year'].min()}-{all_years['year'].max()}); incomplete: "
+                    + (
+                        ", ".join(str(y) for y in gaps[:40]) + (" …" if len(gaps) > 40 else "")
+                        if gaps
+                        else "none"
+                    ),
+                )
             )
-        )
         recent = all_years.filter(pl.col("year") >= year - 5)
         for r in recent.iter_rows(named=True):
             if r["tmax"] < r["n"] * frac or r["tmin"] < r["n"] * frac:
@@ -151,7 +161,7 @@ def check_completeness() -> list[Finding]:
 
 def check_gaps(min_days: int = 30) -> list[Finding]:
     out = []
-    for sid, short in _stations():
+    for sid, short in _stations(curated_only=True):
         d = load_daily_wide(sid).select("date", "tmax").sort("date")
         dates = d.filter(pl.col("tmax").is_not_null())["date"].to_list()
         examples = []
@@ -176,11 +186,12 @@ def check_gaps(min_days: int = 30) -> list[Finding]:
 def check_qflags() -> list[Finding]:
     out = []
     year = _today().year
+    curated = {sid for sid, _ in _stations(curated_only=True)}
     for sid, short in _stations():
         long = load_daily_long(sid).filter(pl.col("element").is_in(["TMAX", "TMIN"]))
         flagged = long.filter(pl.col("qflag") != "")
         counts = dict(flagged.group_by("qflag").len().sort("qflag").iter_rows())
-        if counts:
+        if counts and sid in curated:
             out.append(
                 Finding(
                     "qflags",
@@ -210,10 +221,12 @@ def check_qflags() -> list[Finding]:
 def check_obs_time_segments() -> list[Finding]:
     out = []
     cutoff = _today() - timedelta(days=730)
+    curated = {sid for sid, _ in _stations(curated_only=True)}
     for sid, short in _stations():
         segs = segments(load_daily_wide(sid), min_days=30)
         desc = "; ".join(f"{s['from']}→{s['to']} {s['hhmm'] or 'n/a'}" for s in segs)
-        out.append(Finding("obs_time", "info", None, sid, f"{short}: {desc}"))
+        if sid in curated:
+            out.append(Finding("obs_time", "info", None, sid, f"{short}: {desc}"))
         for s in segs[1:]:
             if s["from"] >= cutoff:
                 out.append(
@@ -317,7 +330,7 @@ def check_freshness() -> list[Finding]:
         last = d["date"].max()
         age = (today - last).days
         ages.append(age)
-        if age > 14:
+        if 14 < age <= 400:
             out.append(
                 Finding(
                     "freshness",

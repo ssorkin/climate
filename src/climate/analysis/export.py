@@ -8,14 +8,16 @@ threshold keys are whole °F. The site converts for display.
 from __future__ import annotations
 
 import json
+from concurrent.futures import ProcessPoolExecutor
 from datetime import UTC, date, datetime
 
+import numpy as np
 import polars as pl
 
 from climate.acquire.base import load_manifest
 from climate.acquire.ghcnd import meta_dataset, region_dataset, station_url
 from climate.analysis import metrics as M
-from climate.config import load_analysis_config, load_regions
+from climate.config import load_analysis_config, load_regions, unique_stations
 from climate.ingest.store import load_daily_wide, load_stations
 from climate.paths import ANALYSIS_DIR, RAW_DIR, SITE_DATA_DIR
 
@@ -85,7 +87,7 @@ def ghcnd_version() -> str:
     return text[i + len(marker) :].split()[0] if i >= 0 else ""
 
 
-def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
+def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict]:
     d = ANALYSIS_DIR / sid
     meta = json.loads((d / "meta.json").read_text())
     annual = pl.read_parquet(d / "annual.parquet")
@@ -288,6 +290,8 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
                 "complete_years",
                 "obs_hhmm_now",
                 "active",
+                "state",
+                "regions",
             )
         },
         "headline": {
@@ -325,47 +329,187 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
             "frost32": col(dec, "season_coldnight_32"),
         },
     }
-    return entry, n1 + n2
+    return entry, n1 + n2, summary
+
+
+MATRIX_METRICS = ("hot95", "warm70", "frost32")
+MATRIX_YEAR0 = 1880
+NO_DATA = -1  # matrix sentinel; lower bounds are stored as -(lb + 2)
+
+
+def _metric_series(summary: dict, metric: str) -> tuple[list, list, list]:
+    if metric == "hot95":
+        blk, lb = summary["annual"]["hot_days"]["95"], summary["annual"]["hot_days_lb"]["95"]
+        years = summary["annual"]["year"]
+    elif metric == "warm70":
+        blk, lb = summary["annual"]["warm_nights"]["70"], summary["annual"]["warm_nights_lb"]["70"]
+        years = summary["annual"]["year"]
+    else:
+        blk = summary["cold_season"]["cold_nights"]["32"]
+        lb = summary["cold_season"]["cold_nights_lb"]["32"]
+        years = summary["cold_season"]["year"]
+    return years, blk, lb
+
+
+def _export_one(args: tuple[str, str]) -> tuple[str, dict | None, str]:
+    sid, region_id = args
+    try:
+        entry, _n, summary = export_station(sid, _CFG, region_id)
+    except Exception as exc:  # noqa: BLE001
+        return sid, None, f"  FAILED {sid}: {exc!r}"
+    # compact per-metric rows for the national matrices
+    rows = {}
+    for m in MATRIX_METRICS:
+        years, blk, lb = _metric_series(summary, m)
+        rows[m] = [(y, v, l) for y, v, l in zip(years, blk, lb)]
+    entry["_matrix"] = rows
+    return sid, entry, ""
+
+
+_CFG: dict = {}
+
+
+def _init_export(cfg: dict) -> None:
+    _CFG.update(cfg)
 
 
 def run_export(region: str = "all") -> None:
     cfg = load_analysis_config()
     regions = load_regions(region)
-    stations_out, regions_out, excluded = [], [], []
+    all_regions = load_regions()
+    todo = [(st.id, reg.id) for reg, st in unique_stations(regions)]
+    print(f"==> exporting {len(todo)} stations")
+    entries: dict[str, dict] = {}
+    with ProcessPoolExecutor(initializer=_init_export, initargs=(cfg,)) as pool:
+        for i, (sid, entry, err) in enumerate(pool.map(_export_one, todo, chunksize=4), 1):
+            if entry is None:
+                print(err)
+            else:
+                entries[sid] = entry
+            if len(todo) > 40 and i % 500 == 0:
+                print(f"  … {i}/{len(todo)}")
+
+    year1 = max(e["last_year"] for e in entries.values())
+    n_years = year1 - MATRIX_YEAR0 + 1
     for reg in regions:
-        print(f"==> region {reg.id}")
-        regions_out.append(
-            {
-                "id": reg.id,
-                "name": reg.name,
-                "center": list(reg.center),
-                "zoom": reg.zoom,
-                "default_station": reg.default_station,
-                "stations": reg.station_ids,
+        ids = [sid for sid in reg.station_ids if sid in entries]
+        if not ids:
+            continue
+        if not reg.generated:
+            index = {
+                "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
+                "ghcnd_version": ghcnd_version(),
+                "baseline": cfg["baseline"],
+                "thresholds_f": cfg["thresholds_f"],
+                "completeness": cfg["completeness"],
+                "regions": [
+                    {
+                        "id": r.id,
+                        "name": r.name,
+                        "center": list(r.center),
+                        "zoom": r.zoom,
+                        "default_station": r.default_station,
+                        "n_stations": len(r.stations),
+                    }
+                    for r in all_regions
+                ],
+                "stations": [
+                    {k: v for k, v in entries[sid].items() if k != "_matrix"} for sid in ids
+                ],
+                "excluded": [
+                    {"region": reg.id, **e.__dict__, **_excluded_geo(e.id)} for e in reg.excluded
+                ],
             }
-        )
-        for st in reg.stations:
-            entry, nbytes = export_station(st.id, cfg, reg.id)
-            stations_out.append(entry)
-            print(f"  {st.id} {st.short:<20} {nbytes / 1e3:7.0f} KB")
-        stations_meta = load_stations()
-        for e in reg.excluded:
-            row = stations_meta.filter(pl.col("id") == e.id)
-            geo = (
-                {"lat": row["lat"][0], "lon": row["lon"][0], "name": row["name"][0]}
-                if row.height
-                else {"lat": None, "lon": None, "name": ""}
+            path = SITE_DATA_DIR / ("index.json" if reg.id == "la" else f"{reg.id}/index.json")
+            n = dump(path, index)
+            print(f"  {path.relative_to(SITE_DATA_DIR)} {n / 1e3:.0f} KB ({len(ids)} stations)")
+        else:
+            # Compact index + per-metric year matrices (int16, station-major) for the big map.
+            compact = []
+            mats = {
+                m: np.full((len(ids), n_years), NO_DATA, dtype=np.int16) for m in MATRIX_METRICS
+            }
+            for row, sid in enumerate(ids):
+                e = entries[sid]
+                h = e["headline"]
+                compact.append(
+                    [
+                        sid,
+                        e["short"],
+                        e.get("state", ""),
+                        round(e["lat"], 3),
+                        round(e["lon"], 3),
+                        e["first_year"],
+                        e["last_year"],
+                        1 if e["active"] else 0,
+                        h.get("hot95_baseline"),
+                        h.get("hot95_last10"),
+                        h.get("warm70_baseline"),
+                        h.get("warm70_last10"),
+                        h.get("frost_baseline"),
+                        h.get("frost_last10"),
+                        h.get("tmin_trend_per_decade_c"),
+                        h.get("tmax_trend_per_decade_c"),
+                    ]
+                )
+                for m in MATRIX_METRICS:
+                    for y, v, lb in e["_matrix"][m]:
+                        k = y - MATRIX_YEAR0
+                        if 0 <= k < n_years:
+                            if v is not None:
+                                mats[m][row, k] = min(v, 32000)
+                            elif lb is not None and lb > 0:
+                                mats[m][row, k] = -(min(lb, 32000) + 2)
+            out_dir = SITE_DATA_DIR / reg.id
+            out_dir.mkdir(parents=True, exist_ok=True)
+            n = dump(
+                out_dir / "index.json",
+                {
+                    "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
+                    "region": {
+                        "id": reg.id,
+                        "name": reg.name,
+                        "center": list(reg.center),
+                        "zoom": reg.zoom,
+                    },
+                    "baseline": cfg["baseline"],
+                    "columns": [
+                        "id",
+                        "short",
+                        "state",
+                        "lat",
+                        "lon",
+                        "first_year",
+                        "last_year",
+                        "active",
+                        "hot95_baseline",
+                        "hot95_last10",
+                        "warm70_baseline",
+                        "warm70_last10",
+                        "frost_baseline",
+                        "frost_last10",
+                        "tmin_trend_per_decade_c",
+                        "tmax_trend_per_decade_c",
+                    ],
+                    "stations": compact,
+                    "matrix": {
+                        "year0": MATRIX_YEAR0,
+                        "n_years": n_years,
+                        "metrics": list(MATRIX_METRICS),
+                        "dtype": "int16",
+                        "no_data": NO_DATA,
+                        "lower_bound": "-(lb+2)",
+                    },
+                },
             )
-            excluded.append({"region": reg.id, **e.__dict__, **geo})
-    index = {
-        "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
-        "ghcnd_version": ghcnd_version(),
-        "baseline": cfg["baseline"],
-        "thresholds_f": cfg["thresholds_f"],
-        "completeness": cfg["completeness"],
-        "regions": regions_out,
-        "stations": stations_out,
-        "excluded": excluded,
-    }
-    n = dump(SITE_DATA_DIR / "index.json", index)
-    print(f"  index.json {n / 1e3:.0f} KB")
+            print(f"  {reg.id}/index.json {n / 1e3:.0f} KB ({len(ids)} stations)")
+            for m in MATRIX_METRICS:
+                (out_dir / f"matrix-{m}.bin").write_bytes(mats[m].tobytes())
+            print(f"  {reg.id}/matrix-*.bin {mats['hot95'].nbytes / 1e3:.0f} KB each")
+
+
+def _excluded_geo(sid: str) -> dict:
+    row = load_stations().filter(pl.col("id") == sid)
+    if row.is_empty():
+        return {"lat": None, "lon": None, "name": ""}
+    return {"lat": row["lat"][0], "lon": row["lon"][0], "name": row["name"][0]}

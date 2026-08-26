@@ -20,6 +20,18 @@ def acquire(
 
 
 @app.command()
+def stations(
+    region: str = typer.Option("us", help="Region id to (re)generate, e.g. us"),
+    min_span: int = typer.Option(50, help="Minimum years spanned by TMAX and TMIN"),
+) -> None:
+    """Generate stations/<region>.yaml from NOAA's inventory (needs `clim ingest` metadata)."""
+    from climate.stations import write_region
+
+    n = write_region(region_id=region, min_span=min_span)
+    print(f"  wrote stations/{region}.yaml with {n} stations")
+
+
+@app.command()
 def ingest(region: str = typer.Option("all", help=REGION_HELP)) -> None:
     """Parse raw files into Parquet + DuckDB views."""
     from climate.ingest.runner import run_ingest

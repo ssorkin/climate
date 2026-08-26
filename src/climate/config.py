@@ -22,6 +22,7 @@ class Station:
     id: str
     short: str
     ushcn: bool = False
+    state: str = ""
     notable: tuple[dict, ...] = ()
 
 
@@ -43,6 +44,7 @@ class Region:
     default_station: str
     stations: tuple[Station, ...]
     excluded: tuple[Excluded, ...] = field(default_factory=tuple)
+    generated: bool = False  # built by `clim stations`; exported in the compact form
 
     @property
     def station_ids(self) -> list[str]:
@@ -60,6 +62,7 @@ def _parse_region(path: Path) -> Region:
             id=s["id"],
             short=s["short"],
             ushcn=bool(s.get("ushcn", False)),
+            state=str(s.get("state", "") or ""),
             notable=tuple(
                 {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in n.items()}
                 for n in (s.get("notable", []) or [])
@@ -85,6 +88,7 @@ def _parse_region(path: Path) -> Region:
         default_station=raw["default_station"],
         stations=stations,
         excluded=excluded,
+        generated=bool(raw.get("generated", False)),
     )
     ids = region.station_ids
     if len(set(ids)) != len(ids):
@@ -115,6 +119,23 @@ def load_regions(region: str = "all", stations_dir: Path = STATIONS_DIR) -> list
 
 def all_stations(regions: list[Region]) -> list[tuple[Region, Station]]:
     return [(r, s) for r in regions for s in r.stations]
+
+
+def unique_stations(regions: list[Region]) -> list[tuple[Region, Station]]:
+    """Each station once, attributed to the first (most curated) region listing it.
+    Regions are ordered smallest first so curated lists win over generated ones."""
+    seen: set[str] = set()
+    out = []
+    for r in sorted(regions, key=lambda r: len(r.stations)):
+        for st in r.stations:
+            if st.id not in seen:
+                seen.add(st.id)
+                out.append((r, st))
+    return out
+
+
+def region_ids_for(regions: list[Region], station_id: str) -> list[str]:
+    return [r.id for r in regions if station_id in r.station_ids]
 
 
 @lru_cache(maxsize=1)
