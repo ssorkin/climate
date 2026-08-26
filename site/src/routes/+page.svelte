@@ -142,10 +142,6 @@
       <a href="/methods#civic-center">a note on that</a>.
     </p>
   </div>
-  <div class="tiles">
-    <TrendForest stations={allStations} key="trend_warm70" label="Nights ≥ 70°F per year — trend at each station" unitLabel="nights" compact />
-    <TrendForest stations={allStations} key="trend_hot95" label="Days ≥ 95°F per year — trend at each station" unitLabel="days" compact />
-  </div>
 </section>
 
 <section>
@@ -160,6 +156,15 @@
   <YearScrubber years={mapYears} bind:value={mapYear} playable />
   <StationMap stations={allStations} values={mapValues} vmax={mapVmax} compact unitLabel={FAMILIES[mapFamily].noun} cool={mapFamily === 'frost'} center={region.center} zoom={region.zoom} height="460px" onselect={(id) => goto(`/station/${id}?m=${mapFamily}&t=${mapThr}&year=${mapYear}`)} />
   <p class="small muted">Press play, or drag the year. Each pill is one station's count for that year (hover for the name); “≥” means the year is incomplete there and the count is a lower bound; stations with no data that year are hidden. Colors use one scale for every year. <a href="/map">Open the full map →</a></p>
+</section>
+
+<section>
+  <h2>The trend at each station</h2>
+  <p class="muted">One row per station, longest records first: its own trend over its own complete years, with a 90% range. Filled dots are trends clearly different from zero. Nothing here averages stations together.</p>
+  <div class="two">
+    <TrendForest stations={allStations} key="trend_warm70" label="Nights ≥ 70°F per year" unitLabel="nights" />
+    <TrendForest stations={allStations} key="trend_hot95" label="Days ≥ 95°F per year" unitLabel="days" />
+  </div>
 </section>
 
 <section>
@@ -245,16 +250,13 @@
     margin-top: 2.2rem;
   }
   .hero {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 2rem;
-    align-items: center;
     margin-top: 2rem;
+    max-width: 60rem;
   }
   .hero h1 {
     font-size: 2.8rem;
     margin: 0 0 0.8rem;
-    max-width: 16ch;
+    max-width: 18ch;
   }
   .tiles {
     display: grid;

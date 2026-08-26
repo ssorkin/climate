@@ -58,8 +58,8 @@
     {#if hover}
       {@const r = rows.find((q) => q.s.id === hover)}
       <b>{r.s.short}</b>: {f1(r.t.slope_per_decade)} {unitLabel} per decade over {r.t.from}–{r.t.to} ({r.t.n} complete years; 90% range {f1(r.t.ci[0])} to {f1(r.t.ci[1])}){r.t.significant ? '' : ' — not distinguishable from zero'}
-    {:else if !compact}
-      One row per station, longest records first: its own trend over its own complete years; filled dots are trends whose 90% range excludes zero.{#if noTrend.length} {noTrend.length} station{noTrend.length > 1 ? 's' : ''} with too few counting years ({noTrend.map((s) => s.short).join(', ')}) not shown.{/if}
+    {:else if !compact && noTrend.length}
+      {noTrend.length} station{noTrend.length > 1 ? 's' : ''} with too few counting years ({noTrend.map((s) => s.short).join(', ')}) not shown.
     {/if}
   </div>
 </div>
