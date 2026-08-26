@@ -8,7 +8,7 @@ authors = [{ name = "Stephen Sorkin", email = "ssorkin@gmail.com" }]
 requires-python = ">=3.12"
 dependencies = [
     "duckdb>=1.1",
-    "polars>=1.17",
+    "polars>=1.43",
     "pyarrow>=18",
     "numpy>=2",
     "scipy>=1.14",

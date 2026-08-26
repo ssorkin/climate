@@ -1,0 +1,322 @@
+"""clim export: data/analysis/<ID>/ -> site/static/data/ JSON.
+
+Contract (see plan): index.json, stations/<ID>/summary.json, stations/<ID>/daily.json.
+Temperatures are native tenths-°C ints in daily.json and °C floats in summaries;
+threshold keys are whole °F. The site converts for display.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import UTC, date, datetime
+
+import polars as pl
+
+from climate.acquire.base import load_manifest
+from climate.acquire.ghcnd import meta_dataset, region_dataset, station_url
+from climate.analysis import metrics as M
+from climate.config import load_analysis_config, load_regions
+from climate.ingest.store import load_daily_wide
+from climate.paths import ANALYSIS_DIR, RAW_DIR, SITE_DATA_DIR
+
+
+def _clean(v):
+    if v is None:
+        return None
+    if isinstance(v, float):
+        return round(v, 2)
+    if isinstance(v, (date, datetime)):
+        return v.isoformat()
+    return v
+
+
+def col(df: pl.DataFrame, name: str) -> list:
+    return [_clean(v) for v in df[name].to_list()]
+
+
+def dump(path, obj) -> int:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(obj, separators=(",", ":"), allow_nan=False)
+    path.write_text(text)
+    return len(text)
+
+
+def _family_block(df: pl.DataFrame, cfg: dict, prefix: str = "") -> dict:
+    t = cfg["thresholds_f"]
+    names = {
+        "hot_days": "hot",
+        "warm_nights": "warm",
+        "cold_days": "coldday",
+        "cold_nights": "coldnight",
+    }
+    out = {}
+    for family, stem in names.items():
+        block = {}
+        for thr in t[family]:
+            c = f"{prefix}{stem}_{thr}"
+            if c in df.columns:
+                block[str(thr)] = col(df, c)
+        if block:
+            out[family] = block
+    return out
+
+
+def ghcnd_version() -> str:
+    p = RAW_DIR / meta_dataset() / "ghcnd-version.txt"
+    if not p.exists():
+        return ""
+    text = p.read_text()
+    marker = "GHCN Daily is "
+    i = text.find(marker)
+    return text[i + len(marker) :].split()[0] if i >= 0 else ""
+
+
+def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int]:
+    d = ANALYSIS_DIR / sid
+    meta = json.loads((d / "meta.json").read_text())
+    annual = pl.read_parquet(d / "annual.parquet")
+    monthly = pl.read_parquet(d / "monthly.parquet")
+    cold = pl.read_parquet(d / "cold_season.parquet")
+    decades = pl.read_parquet(d / "decades.parquet")
+    doy = pl.read_parquet(d / "doy.parquet")
+    records = pl.read_parquet(d / "records.parquet")
+    summer = pl.read_parquet(d / "summer.parquet")
+    manifest = load_manifest(region_dataset(region_id)).get(f"{sid}.csv.gz", {})
+
+    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+    base = annual.filter((pl.col("year") >= b0) & (pl.col("year") <= b1))
+    base_tmax = base["tmax_mean_c"].mean()
+    base_tmin = base["tmin_mean_c"].mean()
+    annual = annual.with_columns(
+        (pl.col("tmax_mean_c") - base_tmax).alias("tmax_anom_c"),
+        (pl.col("tmin_mean_c") - base_tmin).alias("tmin_anom_c"),
+    )
+
+    summary = {
+        **{k: v for k, v in meta.items() if k not in ("inventory",)},
+        "baseline": cfg["baseline"],
+        "thresholds_f": cfg["thresholds_f"],
+        "completeness": cfg["completeness"],
+        "source_url": station_url(sid),
+        "manifest": {
+            k: manifest.get(k) for k in ("sha256", "size", "downloaded_at", "last_modified")
+        },
+        "baseline_means": {"tmax_mean_c": _clean(base_tmax), "tmin_mean_c": _clean(base_tmin)},
+        "annual": {
+            "year": col(annual, "year"),
+            "complete_tmax": col(annual, "complete_tmax"),
+            "complete_tmin": col(annual, "complete_tmin"),
+            "partial": col(annual, "partial"),
+            "days_valid_tmax": col(annual, "days_valid_tmax"),
+            "days_valid_tmin": col(annual, "days_valid_tmin"),
+            "tmax_mean_c": col(annual, "tmax_mean_c"),
+            "tmin_mean_c": col(annual, "tmin_mean_c"),
+            "tmax_anom_c": col(annual, "tmax_anom_c"),
+            "tmin_anom_c": col(annual, "tmin_anom_c"),
+            **_family_block(annual, cfg),
+            "hottest_tenths": col(annual, "hottest_tenths"),
+            "hottest_date": col(annual, "hottest_date"),
+            "warmest_night_tenths": col(annual, "warmest_night_tenths"),
+            "warmest_night_date": col(annual, "warmest_night_date"),
+            "coldest_tenths": col(annual, "coldest_tenths"),
+            "coldest_date": col(annual, "coldest_date"),
+            "coldest_night_tenths": col(annual, "coldest_night_tenths"),
+            "coldest_night_date": col(annual, "coldest_night_date"),
+            "record_highs": col(annual, "record_highs"),
+            "record_warm_nights": col(annual, "record_warm_nights"),
+            "record_lows": col(annual, "record_lows"),
+            "record_cold_days": col(annual, "record_cold_days"),
+            "jja": {
+                "complete_tmax": col(annual, "jja_complete_tmax"),
+                "complete_tmin": col(annual, "jja_complete_tmin"),
+                "tmax_mean_c": col(annual, "jja_tmax_mean_c"),
+                "tmin_mean_c": col(annual, "jja_tmin_mean_c"),
+                **_family_block(annual, cfg, prefix="jja_"),
+            },
+        },
+        "cold_season": {
+            "year": col(cold, "season"),
+            "complete_tmin": col(cold, "complete_tmin"),
+            "complete_tmax": col(cold, "complete_tmax"),
+            "partial": col(cold, "partial"),
+            **_family_block(cold, cfg),
+            "coldest_night_tenths": col(cold, "coldest_night_tenths"),
+            "coldest_night_date": col(cold, "coldest_night_date"),
+            "coldest_tenths": col(cold, "coldest_tenths"),
+            "coldest_date": col(cold, "coldest_date"),
+        },
+        "monthly": {
+            "year": col(monthly, "year"),
+            "month": col(monthly, "month"),
+            "complete_tmax": col(monthly, "complete_tmax"),
+            "complete_tmin": col(monthly, "complete_tmin"),
+            "days_valid_tmax": col(monthly, "days_valid_tmax"),
+            "days_valid_tmin": col(monthly, "days_valid_tmin"),
+            "tmax_mean_c": col(monthly, "tmax_mean_c"),
+            "tmin_mean_c": col(monthly, "tmin_mean_c"),
+            **_family_block(monthly, cfg),
+            "hottest_tenths": col(monthly, "hottest_tenths"),
+            "warmest_night_tenths": col(monthly, "warmest_night_tenths"),
+            "coldest_tenths": col(monthly, "coldest_tenths"),
+            "coldest_night_tenths": col(monthly, "coldest_night_tenths"),
+        },
+        "decades": {
+            "decade": col(decades, "decade"),
+            "n_years_tmax": col(decades, "n_years_tmax"),
+            "n_years_tmin": col(decades, "n_years_tmin"),
+            "partial": col(decades, "partial"),
+            "tmax_mean_c": col(decades, "tmax_mean_c"),
+            "tmin_mean_c": col(decades, "tmin_mean_c"),
+            **_family_block(decades, cfg),
+            "season_cold_nights": {
+                str(t): col(decades, f"season_coldnight_{t}")
+                for t in cfg["thresholds_f"]["cold_nights"]
+            },
+        },
+        "summer_to_date": {
+            **meta["summer_to_date"],
+            "year": col(summer, "year"),
+            "days_valid_tmax": col(summer, "days_valid_tmax"),
+            "days_valid_tmin": col(summer, "days_valid_tmin"),
+            "tmax_mean_c": col(summer, "tmax_mean_c"),
+            "tmin_mean_c": col(summer, "tmin_mean_c"),
+            "rank_tmax": col(summer, "rank_tmax"),
+            "rank_tmin": col(summer, "rank_tmin"),
+            **_family_block(summer, cfg),
+        },
+    }
+    n1 = dump(SITE_DATA_DIR / "stations" / sid / "summary.json", summary)
+
+    # --- daily.json: compact arrays for in-browser drill-down ---
+    daily = load_daily_wide(sid)
+    start, end = daily["date"].min(), daily["date"].max()
+    full = pl.DataFrame({"date": pl.date_range(start, end, "1d", eager=True)})
+    daily = full.join(daily, on="date", how="left")
+    flagged = []
+    for el in ("tmax", "tmin", "prcp"):
+        f = daily.with_row_index("i").filter(pl.col(f"{el}_qflag").fill_null("") != "")
+        for i, v, q in f.select("i", f"{el}_raw", f"{el}_qflag").iter_rows():
+            flagged.append([i, el.upper(), v, q])
+    rec_idx = {}
+    rec = records.with_columns(((pl.col("date") - start).dt.total_days()).alias("i"))
+    for kind in M.RECORD_KINDS:
+        rec_idx[kind] = rec.filter(pl.col(kind))["i"].cast(pl.Int64).to_list()
+        rec_idx[f"{kind}_tie"] = rec.filter(pl.col(f"{kind}_tie"))["i"].cast(pl.Int64).to_list()
+    obs = [[(date.fromisoformat(s["from"]) - start).days, s["hhmm"]] for s in meta["obs_time"]]
+    daily_json = {
+        "id": sid,
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+        "n": daily.height,
+        "unit": "tenths_c",
+        "tmax": daily["tmax"].to_list(),
+        "tmin": daily["tmin"].to_list(),
+        "prcp": daily["prcp"].to_list(),
+        "obs": obs,
+        "flagged": sorted(flagged),
+        "records": rec_idx,
+        "doy": {
+            **{c: col(doy, c) for c in doy.columns if c != "doy"},
+        },
+    }
+    n2 = dump(SITE_DATA_DIR / "stations" / sid / "daily.json", daily_json)
+
+    # index entry
+    w = meta["windows"]
+    st = meta["summer_to_date"]
+    ref = summer.filter(pl.col("year") == st.get("ref_year"))
+    ranked = summer.filter(pl.col("rank_tmax").is_not_null())
+    dec = decades.filter(~pl.col("hot_95").is_null() | ~pl.col("warm_70").is_null())
+    entry = {
+        **{
+            k: meta[k]
+            for k in (
+                "id",
+                "short",
+                "name",
+                "region",
+                "lat",
+                "lon",
+                "elev_m",
+                "kind",
+                "ushcn",
+                "first_year",
+                "last_year",
+                "last_date",
+                "last_complete_year",
+                "complete_years",
+                "obs_hhmm_now",
+            )
+        },
+        "headline": {
+            "hot95_baseline": w.get("baseline", {}).get("hot_95"),
+            "hot95_last10": w.get("last10", {}).get("hot_95"),
+            "warm70_baseline": w.get("baseline", {}).get("warm_70"),
+            "warm70_last10": w.get("last10", {}).get("warm_70"),
+            "frost_baseline": w.get("baseline", {}).get("season", {}).get("coldnight_32"),
+            "frost_last10": w.get("last10", {}).get("season", {}).get("coldnight_32"),
+            "tmax_trend_per_decade_c": meta["trends"]
+            .get("tmax_mean_c", {})
+            .get("slope_per_decade"),
+            "tmin_trend_per_decade_c": meta["trends"]
+            .get("tmin_mean_c", {})
+            .get("slope_per_decade"),
+            "summer_to_date": {
+                "through": st.get("through"),
+                "ref_year": st.get("ref_year"),
+                "window_days": st.get("window_days"),
+                "days_valid": int(ref["days_valid_tmax"][0]) if ref.height else None,
+                "tmax_mean_c": _clean(ref["tmax_mean_c"][0]) if ref.height else None,
+                "tmin_mean_c": _clean(ref["tmin_mean_c"][0]) if ref.height else None,
+                "rank_tmax": _clean(ref["rank_tmax"][0]) if ref.height else None,
+                "rank_tmin": _clean(ref["rank_tmin"][0]) if ref.height else None,
+                "n_years": ranked.height,
+                "hot95": _clean(ref["hot_95"][0]) if ref.height else None,
+                "warm70": _clean(ref["warm_70"][0]) if ref.height else None,
+            },
+        },
+        "decades": {
+            "decade": col(dec, "decade"),
+            "partial": col(dec, "partial"),
+            "hot95": col(dec, "hot_95"),
+            "warm70": col(dec, "warm_70"),
+            "frost32": col(dec, "season_coldnight_32"),
+        },
+    }
+    return entry, n1 + n2
+
+
+def run_export(region: str = "all") -> None:
+    cfg = load_analysis_config()
+    regions = load_regions(region)
+    stations_out, regions_out, excluded = [], [], []
+    for reg in regions:
+        print(f"==> region {reg.id}")
+        regions_out.append(
+            {
+                "id": reg.id,
+                "name": reg.name,
+                "center": list(reg.center),
+                "zoom": reg.zoom,
+                "default_station": reg.default_station,
+                "stations": reg.station_ids,
+            }
+        )
+        for st in reg.stations:
+            entry, nbytes = export_station(st.id, cfg, reg.id)
+            stations_out.append(entry)
+            print(f"  {st.id} {st.short:<20} {nbytes / 1e3:7.0f} KB")
+        for e in reg.excluded:
+            excluded.append({"region": reg.id, **e.__dict__})
+    index = {
+        "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "ghcnd_version": ghcnd_version(),
+        "baseline": cfg["baseline"],
+        "thresholds_f": cfg["thresholds_f"],
+        "completeness": cfg["completeness"],
+        "regions": regions_out,
+        "stations": stations_out,
+        "excluded": excluded,
+    }
+    n = dump(SITE_DATA_DIR / "index.json", index)
+    print(f"  index.json {n / 1e3:.0f} KB")

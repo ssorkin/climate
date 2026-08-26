@@ -22,7 +22,7 @@ completeness:
   monthly_min_days: 25
   record_min_prior_years: 30        # a daily record needs this many prior valid years
   partial_year_min_days: 60         # current year shown as "so far" only past this
-  decade_min_years: 7
+  decade_min_years: 5                # the current decade shows as partial ("so far") past this
 
 summer_months: [6, 7, 8]
 # Cold-season metrics (frost nights) run Jul->Jun and are labeled by the January year.

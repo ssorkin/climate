@@ -12,7 +12,7 @@ import hashlib
 import json
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
@@ -129,7 +129,7 @@ def download(
         url=url,
         sha256=h.hexdigest(),
         size=dest.stat().st_size,
-        downloaded_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        downloaded_at=datetime.now(UTC).isoformat(timespec="seconds"),
         last_modified=last_modified,
         note=note,
     ).__dict__

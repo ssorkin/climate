@@ -1,0 +1,282 @@
+<script>
+  import { onMount } from 'svelte';
+  import { page } from '$app/state';
+  import { browser } from '$app/environment';
+  import { replaceState, afterNavigate } from '$app/navigation';
+  import { dataUrl } from '$lib/data.js';
+  import { units } from '$lib/units.svelte.js';
+  import { fmtC, fmtTenths, fmtThresholdF } from '$lib/units.js';
+  import { fmtISO } from '$lib/dates.js';
+  import { FAMILIES, annualCounts, monthlyCounts, seasonCounts, exportedAnnual, exportedMonthly, isStandard, yearsOf, partialOf } from '$lib/metrics.js';
+  import { HEAT, COOL } from '$lib/palette.js';
+  import Controls from '$lib/Controls.svelte';
+  import YearScrubber from '$lib/YearScrubber.svelte';
+  import AnnualBars from '$lib/AnnualBars.svelte';
+  import HeatCalendar from '$lib/HeatCalendar.svelte';
+  import DailyRibbon from '$lib/DailyRibbon.svelte';
+  import RawTable from '$lib/RawTable.svelte';
+  import WindowsTable from '$lib/WindowsTable.svelte';
+  import MethodsNote from '$lib/MethodsNote.svelte';
+
+  let { data } = $props();
+  let s = $derived(data.summary);
+  let others = $derived(data.index.stations.filter((x) => x.region === s.region));
+
+  // URL-driven state: ?m=hot&t=95&year=2024 (u= handled in the layout).
+  let family = $state('hot');
+  let threshold = $state(95);
+  let year = $state(null);
+  let restored = $state(false);
+
+  let defaultYear = $derived.by(() => {
+    const a = s.annual;
+    const last = a.year[a.year.length - 1];
+    const lastValid = a.days_valid_tmax[a.year.length - 1];
+    return a.partial[a.year.length - 1] && lastValid >= s.completeness.partial_year_min_days ? last : s.last_complete_year ?? last;
+  });
+
+  onMount(() => {
+    const q = page.url.searchParams;
+    if (q.get('m') in FAMILIES) family = q.get('m');
+    const t = Number(q.get('t'));
+    if (Number.isFinite(t) && q.get('t') !== null) threshold = Math.round(t);
+    else threshold = s.thresholds_f[FAMILIES[family].key][family === 'hot' || family === 'warm' ? 1 : 0];
+    const y = Number(q.get('year'));
+    year = Number.isFinite(y) && s.annual.year.includes(y) ? y : defaultYear;
+  });
+  afterNavigate(() => (restored = true));
+  $effect(() => {
+    if (!browser || !restored) return;
+    const q = new URLSearchParams();
+    if (family !== 'hot') q.set('m', family);
+    q.set('t', String(threshold));
+    if (year != null) q.set('year', String(year));
+    if (!units.f) q.set('u', 'C');
+    const target = window.location.pathname + '?' + q.toString();
+    if (target !== window.location.pathname + window.location.search) replaceState(target, {});
+  });
+
+  // daily.json is loaded lazily: needed for the daily explorer, raw table, and custom thresholds.
+  let daily = $state(null);
+  $effect(() => {
+    const id = s.id;
+    daily = null;
+    fetch(dataUrl(`/data/stations/${id}/daily.json`)).then((r) => r.json()).then((d) => {
+      if (d.id === id) daily = d;
+    });
+  });
+
+  let fam = $derived(FAMILIES[family]);
+  let standard = $derived(isStandard(s, family, threshold));
+  let years = $derived(yearsOf(s, family));
+  let partial = $derived(partialOf(s, family));
+  let annual = $derived.by(() => {
+    if (standard) return exportedAnnual(s, family, threshold);
+    if (!daily) return years.map(() => null);
+    return family === 'frost' ? seasonCounts(daily, s, family, threshold) : annualCounts(daily, s, family, threshold);
+  });
+  let monthly = $derived.by(() => {
+    if (standard) return exportedMonthly(s, family, threshold);
+    if (!daily) return s.monthly.year.map(() => null);
+    return monthlyCounts(daily, s, family, threshold);
+  });
+  let monthlyComplete = $derived(fam.elem === 'tmax' ? s.monthly.complete_tmax : s.monthly.complete_tmin);
+  let decades = $derived.by(() => {
+    if (!standard) return null;
+    const d = s.decades;
+    const block = family === 'frost' ? d.season_cold_nights : d[fam.key];
+    return { decade: d.decade, value: block?.[String(threshold)] ?? d.decade.map(() => null), partial: d.partial };
+  });
+  const stem = { hot: 'hot', warm: 'warm', coldday: 'coldday', frost: 'coldnight' };
+  let trendLabel = $derived.by(() => {
+    const t = s.trends?.[`${stem[family]}_${threshold}`] ?? (family === 'frost' && threshold === 32 ? s.trends?.frost_nights : null);
+    if (!t) return '';
+    const sign = t.slope_per_decade > 0 ? '+' : '';
+    return `${sign}${t.slope_per_decade.toFixed(1)} ${fam.noun} per decade since ${t.from}`;
+  });
+  let baseline = $derived.by(() => {
+    const w = s.windows?.baseline;
+    if (!w || !standard) return null;
+    const v = family === 'frost' ? w.season?.[`coldnight_${threshold}`] : w[`${stem[family]}_${threshold}`];
+    return v == null ? null : { years: w.years, value: v };
+  });
+  let selectedCount = $derived.by(() => {
+    const k = years.indexOf(year);
+    return k < 0 ? null : annual[k];
+  });
+  let incompleteYears = $derived(new Set(years.filter((y, k) => annual[k] == null && !partial[k])));
+  let thrLabel = $derived(fmtThresholdF(threshold, units.f));
+  let title = $derived(`${fam.label} · ${s.short}`);
+  let hero = $derived.by(() => {
+    const w = s.windows;
+    if (!w?.baseline || !standard) return null;
+    const key = family === 'frost' ? null : `${stem[family]}_${threshold}`;
+    const b = key ? w.baseline[key] : w.baseline.season?.[`coldnight_${threshold}`];
+    const l = key ? w.last10[key] : w.last10.season?.[`coldnight_${threshold}`];
+    return b == null || l == null ? null : { b, l };
+  });
+  let annotations = $derived((s.notable ?? []).map((n) => ({ year: Number(String(n.date).slice(0, 4)), label: n.label })));
+</script>
+
+<svelte:head>
+  <title>{s.short} — hot days, warm nights and frost since {s.first_year} · climate.sorkinlabs</title>
+  <meta name="description" content="{s.name}: days above {threshold}°F, warm nights and frost nights every year since {s.first_year}, from NOAA's raw daily records." />
+</svelte:head>
+
+<div class="head">
+  <div>
+    <p class="crumb"><a href="/map">Stations</a> · {data.index.regions.find((r) => r.id === s.region)?.name}</p>
+    <h1>{s.short}</h1>
+    <p class="meta muted">
+      {s.name} · NOAA {s.id}{#if s.ushcn} · US Historical Climatology Network{/if} · {Math.round(s.elev_m * 3.281)} ft ·
+      records since {s.first_year} · latest reading {fmtISO(s.last_date)}
+    </p>
+  </div>
+  <div class="switch">
+    <label class="small muted" for="st">Other stations</label>
+    <select id="st" onchange={(e) => (window.location.href = `/station/${e.target.value}${window.location.search}`)}>
+      {#each others as o (o.id)}
+        <option value={o.id} selected={o.id === s.id}>{o.short} ({o.first_year}–)</option>
+      {/each}
+    </select>
+  </div>
+</div>
+
+{#if hero}
+  <div class="hero">
+    <div class="stat">
+      <span class="lbl">{fam.label} ({fam.unit} {fam.op === '>=' ? '≥' : '≤'} {thrLabel}) per year, {s.windows.baseline.years[0]}–{s.windows.baseline.years[1]}</span>
+      <span class="val">{hero.b.toFixed(hero.b < 10 ? 1 : 0)}</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stat">
+      <span class="lbl">per year, {s.windows.last10.years[0]}–{s.windows.last10.years[1]}</span>
+      <span class="val" class:up={hero.l > hero.b && family !== 'frost' && family !== 'coldday'} class:down={hero.l < hero.b && (family === 'frost' || family === 'coldday')}>{hero.l.toFixed(hero.l < 10 ? 1 : 0)}</span>
+    </div>
+    <div class="stat">
+      <span class="lbl">daily lows, trend since {s.baseline.start}</span>
+      <span class="val small-val">{fmtC(s.trends?.tmin_mean_c?.slope_per_decade, units.f, { sign: true, delta: true })}<span class="per"> / decade</span></span>
+    </div>
+    <div class="stat">
+      <span class="lbl">daily highs, trend since {s.baseline.start}</span>
+      <span class="val small-val">{fmtC(s.trends?.tmax_mean_c?.slope_per_decade, units.f, { sign: true, delta: true })}<span class="per"> / decade</span></span>
+    </div>
+  </div>
+{/if}
+
+<Controls thresholds={s.thresholds_f} bind:family bind:threshold />
+
+<h2>{fam.label} per year — {fam.unit} {fam.op === '>=' ? 'at least' : 'at most'} {thrLabel}</h2>
+<p class="muted small">
+  {#if family === 'frost'}Cold seasons run July–June and are labeled by the January year.{/if}
+  {#if !standard && !daily}Computing from the daily record…{/if}
+  {#if selectedCount != null}<b>{year}: {selectedCount} {fam.noun}{partial[years.indexOf(year)] ? ' so far' : ''}.</b>{/if}
+</p>
+<AnnualBars {years} values={annual} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
+
+{#if year != null}
+  <YearScrubber years={s.annual.year} bind:value={year} disabled={incompleteYears} />
+{/if}
+
+<h2>By month</h2>
+<HeatCalendar years={s.monthly.year} months={s.monthly.month} values={monthly} complete={monthlyComplete} cool={family === 'frost' || family === 'coldday'} selected={year} onselect={(y) => (year = y)} unitLabel={fam.noun} />
+
+<h2>Then and now</h2>
+<WindowsTable summary={s} />
+
+<h2 id="daily">{year}, day by day</h2>
+{#if daily && year != null}
+  <DailyRibbon {daily} {year} {family} {threshold} />
+  <details class="raw">
+    <summary>Raw readings for {year}</summary>
+    <RawTable {daily} summary={s} {year} />
+  </details>
+{:else}
+  <p class="muted">Loading the daily record…</p>
+{/if}
+
+<h2>About this record</h2>
+<MethodsNote summary={s} />
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+  }
+  .crumb {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #898781;
+  }
+  h1 {
+    margin: 0.1rem 0 0.2rem;
+  }
+  .meta {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .switch {
+    display: grid;
+    gap: 0.2rem;
+  }
+  select {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #d9d2c5;
+    background: #fffdf9;
+  }
+  .hero {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1.4rem 0 0.8rem;
+  }
+  .stat {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .stat .lbl {
+    font-size: 0.8rem;
+    color: #52514e;
+    max-width: 14rem;
+    line-height: 1.3;
+  }
+  .stat .val {
+    font-size: 2.6rem;
+    font-weight: 750;
+    line-height: 1;
+    color: #1f1b16;
+  }
+  .stat .val.up {
+    color: #c2410c;
+  }
+  .stat .val.down {
+    color: #1c5cab;
+  }
+  .stat .small-val {
+    font-size: 1.7rem;
+  }
+  .per {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #52514e;
+  }
+  .arrow {
+    font-size: 2rem;
+    color: #b8b2a7;
+  }
+  .raw {
+    margin-top: 1rem;
+  }
+  .raw summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+</style>

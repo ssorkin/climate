@@ -1,0 +1,9 @@
+[Unit]
+Description=climate.sorkinlabs.com nightly NOAA refresh and deploy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ssorkin/src/climate
+ExecStart=/home/ssorkin/src/climate/scripts/nightly.sh

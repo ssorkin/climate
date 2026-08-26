@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily climate.sorkinlabs.com refresh (NCEI updates GHCN-D overnight US time)
+
+[Timer]
+OnCalendar=*-*-* 13:00:00 UTC
+Persistent=true
+RandomizedDelaySec=30m
+
+[Install]
+WantedBy=timers.target

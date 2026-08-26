@@ -60,7 +60,7 @@ requires-dist = [
     { name = "duckdb", specifier = ">=1.1" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "numpy", specifier = ">=2" },
-    { name = "polars", specifier = ">=1.17" },
+    { name = "polars", specifier = ">=1.43" },
     { name = "pyarrow", specifier = ">=18" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8" },
     { name = "pyyaml", specifier = ">=6" },
