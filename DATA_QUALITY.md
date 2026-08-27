@@ -1,6 +1,6 @@
 # Data Quality Report
 
-Generated 2026-08-26 by `clim check`. Problems in the source data are surfaced here and in `known_issues/`, never silently patched. Anomalies block the nightly deploy.
+Generated 2026-08-27 by `clim check`. Problems in the source data are surfaced here and in `known_issues/`, never silently patched. Anomalies block the nightly deploy.
 
 ## Known issues (documented registry)
 
@@ -22,10 +22,6 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 
 ## Check findings
 
-### station_config
-
-- 🔴 USW00003165 not in ghcnd-stations
-- 🔴 USW00003180 not in ghcnd-stations
 ### completeness
 
 - 🟡 **2025** Fullerton Airport: 2025 has 327/365 TMAX and 327/365 TMIN days
@@ -41,33 +37,42 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 - 🟡 **2024** Downtown LA (USC): 2024 has 139/366 TMAX and 139/366 TMIN days
 ### freshness
 
-- 🟡 Santa Monica Pier: last TMAX 239 days ago
-- 🟡 Ontario Airport: last TMAX 239 days ago
-- 🟡 Fullerton Airport: last TMAX 239 days ago
-- 🟡 Hawthorne Airport: last TMAX 239 days ago
-- 🟡 Riverside Airport: last TMAX 239 days ago
-- 🟡 Chino Airport: last TMAX 244 days ago
-- 🟡 March Air Reserve Base: last TMAX 239 days ago
-- 🟡 San Bernardino Airport: last TMAX 239 days ago
-- 🟡 Long Beach Airport: last TMAX 239 days ago
-- 🟡 Van Nuys Airport: last TMAX 239 days ago
-- 🟡 Camarillo Airport: last TMAX 239 days ago
-- 🟡 Burbank Airport: last TMAX 239 days ago
-- 🟡 LAX: last TMAX 239 days ago
-- 🟡 Palmdale Airport: last TMAX 239 days ago
-- 🟡 Los Alamitos: last TMAX 239 days ago
-- 🟡 Corona Airport: last TMAX 239 days ago
-- 🟡 Oxnard Airport: last TMAX 239 days ago
-- 🟡 Point Mugu: last TMAX 239 days ago
-- 🟡 John Wayne Airport: last TMAX 239 days ago
-- 🟡 Santa Monica Airport: last TMAX 239 days ago
-- 🟡 1358 national station(s): last TMAX 239 days ago …
-  - 9076070 - S.W. Pier Mi: last TMAX 239 days ago
-  - Adak Island: last TMAX 239 days ago
-  - Anaktuvuk Auto: last TMAX 239 days ago
-  - Anchorage: last TMAX 239 days ago
-  - Anchorage Elmendorf AFB: last TMAX 239 days ago
-  - Anchorage Lake Hood Sea Plane Ba: last TMAX 239 days ago
+- 🟡 Santa Monica Pier: last TMAX 240 days ago
+- 🟡 Ontario Airport: last TMAX 240 days ago
+- 🟡 Fullerton Airport: last TMAX 240 days ago
+- 🟡 Hawthorne Airport: last TMAX 240 days ago
+- 🟡 Riverside Airport: last TMAX 240 days ago
+- 🟡 Chino Airport: last TMAX 245 days ago
+- 🟡 March Air Reserve Base: last TMAX 240 days ago
+- 🟡 San Bernardino Airport: last TMAX 240 days ago
+- 🟡 Long Beach Airport: last TMAX 240 days ago
+- 🟡 Van Nuys Airport: last TMAX 240 days ago
+- 🟡 Camarillo Airport: last TMAX 240 days ago
+- 🟡 Burbank Airport: last TMAX 240 days ago
+- 🟡 LAX: last TMAX 240 days ago
+- 🟡 Palmdale Airport: last TMAX 240 days ago
+- 🟡 Los Alamitos: last TMAX 240 days ago
+- 🟡 Corona Airport: last TMAX 240 days ago
+- 🟡 Oxnard Airport: last TMAX 240 days ago
+- 🟡 Point Mugu: last TMAX 240 days ago
+- 🟡 John Wayne Airport: last TMAX 240 days ago
+- 🟡 Santa Monica Airport: last TMAX 240 days ago
+- 🟡 1353 national station(s): last TMAX 240 days ago …
+  - 9076070 - S.W. Pier Mi: last TMAX 240 days ago
+  - Adak Island: last TMAX 240 days ago
+  - Anaktuvuk Auto: last TMAX 240 days ago
+  - Anchorage: last TMAX 240 days ago
+  - Anchorage Elmendorf AFB: last TMAX 240 days ago
+  - Anchorage Lake Hood Sea Plane Ba: last TMAX 240 days ago
+### suspect_step
+
+- 🟡 33 national station(s): mean daily lows jumped +2.7 °C between 2010–2014 and 2015–20 …
+  - Aniak Airport: mean daily lows jumped +2.7 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
+  - Augustine Island: mean daily lows jumped +2.5 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
+  - Bethel Airport: mean daily highs jumped +2.8 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
+  - Bettles Airport: mean daily highs jumped +3.2 °C between 1970–1974 and 1975–1979 — likely a sensor or site change under one station id
+  - Cape Newenham Afs: mean daily lows jumped +2.6 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
+  - Dillingham Airport: mean daily highs jumped +2.6 °C between 2005–2009 and 2015–2019 — likely a sensor or site change under one station id
 ### suspicious_values
 
 - 🟡 Ontario Airport: 2 suspicious unflagged value(s)
@@ -118,7 +123,7 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
   - 11 identical TMAX values from 2001-06-03
   - 8 identical TMAX values from 2002-10-21
   - 7 identical TMAX values from 2004-07-28
-- 🟡 1445 national station(s): 2 suspicious unflagged value(s) …
+- 🟡 1441 national station(s): 2 suspicious unflagged value(s) …
   - 9076070 - S.W. Pier Mi: 2 suspicious unflagged value(s)
   - Adak Airport: 3 suspicious unflagged value(s)
   - Ambler Airport: 719 suspicious unflagged value(s)
@@ -149,7 +154,7 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 - 🟡 Downtown LA (USC): only 91.83% of TMAX values round-trip to whole °F
 - 🟡 John Wayne Airport: only 69.94% of TMAX values round-trip to whole °F
 - 🟡 Santa Monica Airport: only 81.70% of TMAX values round-trip to whole °F
-- 🟡 1935 national station(s): only 26.02% of TMAX values round-trip to whole °F …
+- 🟡 1931 national station(s): only 26.02% of TMAX values round-trip to whole °F …
   - 9076070 - S.W. Pier Mi: only 26.02% of TMAX values round-trip to whole °F
   - Adak Airport: only 38.12% of TMAX values round-trip to whole °F
   - Adak Island: only 25.79% of TMAX values round-trip to whole °F
@@ -160,13 +165,11 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 
 - ℹ️ Santa Monica Pier: 14 complete years of 17 (2009-2025); incomplete: 2009, 2016, 2019
 - ℹ️ Ontario Airport: 59 complete years of 61 (1943-2025); incomplete: 1945, 2001
-- ℹ️ El Monte Airport: 0 complete years of 0 (None-None); incomplete: none
 - ℹ️ Fullerton Airport: 26 complete years of 29 (1986-2025); incomplete: 1986, 1998, 2025
 - ℹ️ Hawthorne Airport: 27 complete years of 28 (1998-2025); incomplete: 1998
 - ℹ️ Riverside Airport: 25 complete years of 28 (1998-2025); incomplete: 1998, 2007, 2008
 - ℹ️ Torrance Airport: 0 complete years of 0 (None-None); incomplete: none
 - ℹ️ Chino Airport: 27 complete years of 28 (1998-2025); incomplete: 1998
-- ℹ️ Brackett Field (La Verne): 0 complete years of 0 (None-None); incomplete: none
 - ℹ️ March Air Reserve Base: 84 complete years of 86 (1940-2025); incomplete: 1996, 1999
 - ℹ️ San Bernardino Airport: 51 complete years of 59 (1943-2025); incomplete: 1943, 1993, 2016, 2018, 2021, 2022, 2024, 2025
 - ℹ️ Long Beach Airport: 74 complete years of 78 (1940-2025); incomplete: 1985, 1986, 1987, 1996
@@ -269,13 +272,11 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 
 - ℹ️ Santa Monica Pier: 2009-05-08→2025-12-30 2400
 - ℹ️ Ontario Airport: 1943-01-01→2025-12-30 2400
-- ℹ️ El Monte Airport: 
 - ℹ️ Fullerton Airport: 1986-09-01→2025-12-30 2400
 - ℹ️ Hawthorne Airport: 1998-11-11→2025-12-30 2400
 - ℹ️ Riverside Airport: 1998-07-24→2025-12-30 2400
 - ℹ️ Torrance Airport: 
 - ℹ️ Chino Airport: 1998-05-22→2025-12-25 2400
-- ℹ️ Brackett Field (La Verne): 
 - ℹ️ March Air Reserve Base: 1940-01-01→2025-12-30 2400
 - ℹ️ San Bernardino Airport: 1943-03-17→2025-12-30 2400
 - ℹ️ Long Beach Airport: 1940-01-01→2025-12-30 2400

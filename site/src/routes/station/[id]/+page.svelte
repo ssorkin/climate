@@ -233,6 +233,10 @@
   </div>
 </div>
 
+{#if s.suspect_step}
+  <p class="warn">⚠ Suspected sensor or site change: {s.suspect_step}. Treat trends and then-vs-now figures here with caution.</p>
+{/if}
+
 {#if hero}
   <div class="hero">
     <div class="stat">
@@ -408,6 +412,14 @@
   }
   .raw {
     margin-top: 1rem;
+  }
+  .warn {
+    background: #fff4e5;
+    border: 1px solid #f0c98a;
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.92rem;
+    margin: 1rem 0 0;
   }
   .raw summary {
     cursor: pointer;

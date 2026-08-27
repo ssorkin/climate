@@ -267,6 +267,12 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             **_family_block(summer, cfg),
         },
     }
+    # A jump of more than SUSPECT_STEP_C between consecutive 5-year means of the station's
+    # own highs or lows almost certainly marks a sensor or site change under one id (e.g. a
+    # closed airfield whose id later carried a mesonet feed). Gradual warming, however large,
+    # does not trip it. Flagged, not hidden.
+    suspect = suspect_step(annual)
+    summary["suspect_step"] = suspect
     n1 = dump(SITE_DATA_DIR / "stations" / sid / "summary.json", summary)
 
     # --- daily.json: compact arrays for in-browser drill-down ---
@@ -304,7 +310,6 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     n2 = dump(SITE_DATA_DIR / "stations" / sid / "daily.json", daily_json)
 
     # index entry
-    w = meta["windows"]
     st = meta["summer_to_date"]
     ref = summer.filter(pl.col("year") == st.get("ref_year"))
     ranked = summer.filter(pl.col("rank_tmax").is_not_null())
@@ -346,6 +351,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             "tmin_trend_per_decade_c": meta["trends"]
             .get("tmin_mean_c", {})
             .get("slope_per_decade"),
+            "suspect_step": suspect,
             "trend_warm70": meta["trends"].get("warm_70"),
             "trend_hot95": meta["trends"].get("hot_95"),
             "trend_frost32": meta["trends"].get("frost_nights"),
@@ -372,6 +378,31 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
         },
     }
     return entry, n1 + n2, summary
+
+
+SUSPECT_STEP_C = 2.5
+
+
+def suspect_step(annual: pl.DataFrame) -> str | None:
+    """Largest jump between consecutive 5-year block means of complete years, per element."""
+    for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
+        a = annual.filter(pl.col(k).is_not_null()).with_columns(
+            (pl.col("year") // 5 * 5).alias("b")
+        )
+        g = (
+            a.group_by("b")
+            .agg(pl.col(k).mean().alias("m"), pl.len().alias("n"))
+            .filter(pl.col("n") >= 3)
+            .sort("b")
+        )
+        rows = g.to_dicts()
+        for prev, cur in zip(rows, rows[1:], strict=False):
+            if cur["b"] - prev["b"] <= 10 and abs(cur["m"] - prev["m"]) > SUSPECT_STEP_C:
+                return (
+                    f"mean daily {label} jumped {cur['m'] - prev['m']:+.1f} °C between "
+                    f"{prev['b']}–{prev['b'] + 4} and {cur['b']}–{cur['b'] + 4} — likely a sensor or site change under one station id"
+                )
+    return None
 
 
 MATRIX_METRICS = ("hot95", "warm70", "frost32")
@@ -518,6 +549,7 @@ def run_export(region: str = "all") -> None:
                         h.get("frost_last10"),
                         h.get("tmin_trend_per_decade_c"),
                         h.get("tmax_trend_per_decade_c"),
+                        1 if h.get("suspect_step") else 0,
                     ]
                 )
                 for m in MATRIX_METRICS:
@@ -558,6 +590,7 @@ def run_export(region: str = "all") -> None:
                         "frost_last10",
                         "tmin_trend_per_decade_c",
                         "tmax_trend_per_decade_c",
+                        "suspect_step",
                     ],
                     "stations": compact,
                     "matrix": {

@@ -26,7 +26,7 @@
 
   <footer>
     <p>
-      Every number on this site is computed from NOAA's public daily station records by an
+      Every number on this site is computed from NOAA's public hourly station records by an
       <a href="https://github.com/ssorkin/climate">open-source pipeline</a>. Charts show what
       one thermometer recorded at one place — not a regional average. See
       <a href="/methods">Methods</a> for what is and isn't included.

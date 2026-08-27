@@ -414,4 +414,20 @@ def check_all_stations() -> list[Finding]:
     return out
 
 
-ALL_CHECKS = [check_manifests, check_station_config, check_all_stations]
+def check_suspect_steps() -> list[Finding]:
+    """Stations with a > 2.5 °C jump between consecutive 5-year means (sensor/site change)."""
+    from climate.analysis.export import suspect_step
+    from climate.paths import ANALYSIS_DIR
+
+    out = []
+    for sid, short in _stations():
+        p = ANALYSIS_DIR / sid / "annual.parquet"
+        if not p.exists():
+            continue
+        msg = suspect_step(pl.read_parquet(p))
+        if msg:
+            out.append(Finding("suspect_step", "warning", None, sid, f"{short}: {msg}"))
+    return out
+
+
+ALL_CHECKS = [check_manifests, check_station_config, check_all_stations, check_suspect_steps]

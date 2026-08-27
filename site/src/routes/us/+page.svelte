@@ -20,7 +20,7 @@
       hot95_baseline: col(r, 'hot95_baseline'), hot95_last10: col(r, 'hot95_last10'),
       warm70_baseline: col(r, 'warm70_baseline'), warm70_last10: col(r, 'warm70_last10'),
       frost_baseline: col(r, 'frost_baseline'), frost_last10: col(r, 'frost_last10'),
-      tmin_trend: col(r, 'tmin_trend_per_decade_c'), tmax_trend: col(r, 'tmax_trend_per_decade_c')
+      tmin_trend: col(r, 'tmin_trend_per_decade_c'), tmax_trend: col(r, 'tmax_trend_per_decade_c'), suspect: !!col(r, 'suspect_step')
     }))
   );
   const METRICS = {
@@ -121,7 +121,7 @@
 </svelte:head>
 
 <h1 class="title">{M.label} in {year}, across the United States</h1>
-<p class="lede">{stations.length.toLocaleString()} weather stations with 50+ years of daily records — {stations.filter((s) => s.active).length.toLocaleString()} still reporting. Press play to watch the decades go by; zoom in for counts; click a station for its full record.</p>
+<p class="lede">{stations.length.toLocaleString()} weather stations with 20+ years of hourly records since 1940 — {stations.filter((s) => s.active).length.toLocaleString()} still reporting. Press play to watch the decades go by; zoom in for counts; click a station for its full record.</p>
 
 <div class="pillrow controls">
   {#each Object.entries(METRICS) as [k, m] (k)}
@@ -155,7 +155,7 @@
     <div>
       <h2>Biggest change since {ix.baseline.start}–{ix.baseline.end}</h2>
       <ol>
-        {#each shown.filter((s) => s.active && s[metric === 'frost32' ? 'frost_baseline' : metric + '_baseline'] != null).sort((a, b) => {
+        {#each shown.filter((s) => s.active && !s.suspect && s[metric === 'frost32' ? 'frost_baseline' : metric + '_baseline'] != null).sort((a, b) => {
           const key = metric === 'frost32' ? 'frost' : metric;
           const da = a[key + '_last10'] - a[key + '_baseline'];
           const db = b[key + '_last10'] - b[key + '_baseline'];
@@ -167,6 +167,9 @@
       </ol>
     </div>
   </div>
+  {#if shown.some((s) => s.suspect)}
+    <p class="small muted">Excluded from the change ranking as suspected sensor/site changes under one station id (their own 5-year mean jumped more than 2.5 °C): {shown.filter((s) => s.suspect).map((s) => `${s.short}, ${s.state}`).join('; ')}.</p>
+  {/if}
 {/if}
 
 <style>

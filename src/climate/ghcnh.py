@@ -194,6 +194,19 @@ def write_list(min_years: int = 20) -> int:
     return text.count("\n- id:")
 
 
+def in_us(lat: float, lon: float) -> bool:
+    """CONUS, Alaska, Hawaii, Puerto Rico / USVI, Guam / CNMI, American Samoa. NOAA's list
+    tags a few Caribbean airports with US ids and state 'CA'; they are not ours."""
+    return (
+        (24 <= lat <= 50 and -125 <= lon <= -66)
+        or (lat > 50 and (lon < -129 or lon > 170))
+        or (18 <= lat <= 23 and -161 <= lon <= -154)
+        or (17.5 <= lat <= 18.6 and -68 <= lon <= -64.4)
+        or (13 <= lat <= 15.5 and 144 <= lon <= 146.5)
+        or (-15 <= lat <= -13.5 and -171.5 <= lon <= -169)
+    )
+
+
 _CACHE: list[HourlyStation] | None = None
 
 
@@ -204,7 +217,9 @@ def load_hourly_stations(only: list[str] | None = None) -> list[HourlyStation]:
         if not p.exists():
             return []
         doc = yaml.safe_load(p.read_text())
-        _CACHE = [HourlyStation(**e) for e in doc["stations"]]
+        _CACHE = [
+            HourlyStation(**e) for e in doc["stations"] if in_us(float(e["lat"]), float(e["lon"]))
+        ]
     if only is None:
         return list(_CACHE)
     want = set(only)
