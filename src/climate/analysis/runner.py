@@ -29,6 +29,17 @@ _REGIONS: list[Region] = []
 _CTX: dict = {}
 
 
+def _curated_short(sid: str, default: str) -> str:
+    """A curated region's short name wins over a generated list's, whichever region is run."""
+    for reg in _REGIONS:
+        if getattr(reg, "generated", False):
+            continue
+        for st in reg.stations:
+            if st.id == sid:
+                return st.short
+    return default
+
+
 def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataFrame) -> dict:
     from climate.ghcnh import hourly_station
 
@@ -36,7 +47,7 @@ def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataF
     if hs is not None:
         return {
             "id": st.id,
-            "short": st.short,
+            "short": _curated_short(st.id, st.short),
             "name": hs.name.title().replace("Airport", "Airport").replace("Afb", "AFB"),
             "noaa_name": hs.name,
             "region": reg.id,

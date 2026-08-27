@@ -19,9 +19,9 @@
   import RegionalIndex from '$lib/RegionalIndex.svelte';
   import TrendForest from '$lib/TrendForest.svelte';
   import TrendPairs from '$lib/TrendPairs.svelte';
-  import RankHeatmap from '$lib/RankHeatmap.svelte';
+  import SpiralMap from '$lib/SpiralMap.svelte';
   import RankDots from '$lib/RankDots.svelte';
-  import { loadRanks } from '$lib/ranks.js';
+  import { loadCurves } from '$lib/curves.js';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -29,7 +29,7 @@
   let allStations = $derived(ix.stations.filter((s) => s.region === region.id));
   let stations = $derived(allStations.filter((s) => s.active));
   let hero = $derived(data.hero); // default station summary (Pasadena)
-  let heroIdx = $derived(stations.find((s) => s.id === hero.id));
+  let heroIdx = $derived(allStations.find((s) => s.id === hero.id) ?? allStations[0]);
 
   // Lazy: every station summary (for the map + station switcher) and the hero's daily file.
   let summaries = $state({});
@@ -119,14 +119,21 @@
   let warmT = $derived(trendStats('trend_warm70'));
   let hotT = $derived(trendStats('trend_hot95'));
   let idx = $derived(data.indices);
-  let ranks = $state({});
-  let rankEl = $state('tmin');
+  let curves = $state({});
+  let rankEl = $state('tmax');
+  let curveStations = $derived(allStations.filter((s) => s.first_year <= 1975 && s.complete_years >= 40));
+  let spiralYears = $derived.by(() => {
+    const y1 = Math.max(...curveStations.map((s) => s.last_year));
+    return Array.from({ length: y1 - 1940 + 1 }, (_, i) => 1940 + i);
+  });
+  let spiralYear = $state(2025);
+  onMount(() => (spiralYear = Math.max(...curveStations.map((s) => s.last_year))));
   onMount(async () => {
-    const ids = allStations.filter((s) => s.headline?.has_baseline).map((s) => s.id);
-    const loaded = await Promise.all(ids.map((id) => loadRanks(id).catch(() => null)));
+    const ids = curveStations.map((s) => s.id);
+    const loaded = await Promise.all(ids.map((id) => loadCurves(id).catch(() => null)));
     const out = {};
     ids.forEach((id, i) => { if (loaded[i]) out[id] = loaded[i]; });
-    ranks = out;
+    curves = out;
   });
   const median = (arr) => { const a = arr.filter((v) => v != null).sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : null; };
   let nightRank = $derived(median(baseStations.map((s) => s.headline.rank_tmin_last10)));
@@ -180,31 +187,19 @@
   </div>
 </section>
 
-{#if baseStations.length}
+{#if curveStations.length}
   <section>
     <div class="sechead">
-      <h2>Every {rankEl === 'tmin' ? 'night' : 'day'} since 1951, ranked against the same date in 1951–1980</h2>
+      <h2>Every year as a ring, at every long-running station</h2>
       <div class="pillrow">
-        <button class="pill" class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights (daily low)</button>
         <button class="pill" class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days (daily high)</button>
+        <button class="pill" class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights (daily low)</button>
       </div>
     </div>
-    <p class="muted">One row per year, top to bottom; one column per day, January to December, each shown as a 7-day mean. Blue: cooler than most {rankEl === 'tmin' ? 'nights' : 'days'} at that date in 1951–1980. Red: warmer than most. If the climate had not changed, every panel would stay evenly mottled. Only the stations with a complete 1951–1980 record are shown.</p>
-    <div class="multiples">
-      {#each baseStations as s (s.id)}
-        {#if ranks[s.id]}
-          <a class="panel" href="/station/{s.id}#ranks">
-            <RankHeatmap ranks={ranks[s.id]} element={rankEl} label={s.short} compact rowPx={2} smooth={7} />
-          </a>
-        {/if}
-      {/each}
-    </div>
-    <div class="legend small">
-      <span class="scale"></span>
-      <span>0 — cooler than every baseline {rankEl === 'tmin' ? 'night' : 'day'} at that date</span>
-      <span>50 — middle</span>
-      <span>100 — warmer than every one</span>
-    </div>
+    <p class="muted">Each spiral is one station: January at the top, the year running clockwise, and the distance from the centre the {rankEl === 'tmin' ? 'daily low' : 'daily high'} (7-day mean, one scale for every station). One ring per year — the palest from the 1940s and 50s, the darkest the last few years, the dark one the year on the slider. Where a station has a complete 1951–1980 record, the dashed ring is the median of those years for each date: rings outside it are warmer than the old normal. Click a spiral for the station.</p>
+    <YearScrubber years={spiralYears} bind:value={spiralYear} playable />
+    <SpiralMap stations={curveStations} {curves} element={rankEl} year={spiralYear} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}#ranks`)} />
+    <p class="small muted">Press play to watch the rings accumulate; drag the year to pick out one ring (drawn dark) against everything before it.</p>
   </section>
 
   <section>
@@ -342,30 +337,12 @@
   .punch {
     max-width: 760px;
   }
-  .multiples {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem 1.4rem;
-  }
+
   .panel {
     color: inherit;
     text-decoration: none;
   }
-  .legend {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    color: #52514e;
-    margin-top: 0.6rem;
-    flex-wrap: wrap;
-  }
-  .legend .scale {
-    display: inline-block;
-    width: 120px;
-    height: 10px;
-    border-radius: 5px;
-    background: linear-gradient(90deg, #0d366b, #6da7ec, #f0efec, #e86b35, #732508);
-  }
+
   .two {
     display: grid;
     grid-template-columns: 1fr 1fr;

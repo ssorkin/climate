@@ -40,6 +40,44 @@ def col(df: pl.DataFrame, name: str) -> list:
 IDX_KEYS = ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "rank_tmax", "rank_tmin")
 
 
+CURVES_MISSING = -32768
+
+
+def write_curves_bin(daily: pl.DataFrame, doy: pl.DataFrame | None, path) -> None:
+    """Year × day-of-year temperatures for the year-curve charts: uint16 start_year, uint16
+    n_years, uint8 has_bands, uint8 pad; then tmax and tmin planes of n_years × 366 int16
+    tenths °C (-32768 = missing / no such day); then, if has_bands, ten 366-int16 planes of the
+    baseline percentiles (tmax p10 p25 p50 p75 p90, then tmin), in tenths °C."""
+    import struct
+
+    d = daily.select("date", "tmax", "tmin").with_columns(
+        pl.col("date").dt.year().alias("year"), M._doy_expr().alias("doy")
+    )
+    y0, y1 = int(d["year"].min()), int(d["year"].max())
+    ny = y1 - y0 + 1
+    planes = []
+    for el in ("tmax", "tmin"):
+        m = np.full((ny, 366), CURVES_MISSING, dtype=np.int16)
+        sub = d.filter(pl.col(el).is_not_null())
+        m[sub["year"].to_numpy() - y0, sub["doy"].to_numpy() - 1] = (
+            sub[el].to_numpy().astype(np.int16)
+        )
+        planes.append(m)
+    has_bands = doy is not None and doy["tmax_p50"].drop_nulls().len() > 300
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "wb") as f:
+        f.write(struct.pack("<HHBB", y0, ny, int(has_bands), 0))
+        for m in planes:
+            f.write(m.tobytes())
+        if has_bands:
+            dd = doy.sort("doy")
+            for el in ("tmax", "tmin"):
+                for q in ("p10", "p25", "p50", "p75", "p90"):
+                    v = dd[f"{el}_{q}"].to_numpy().astype(float) * 10
+                    v = np.where(np.isnan(v), CURVES_MISSING, np.rint(v)).astype(np.int16)
+                    f.write(v.tobytes())
+
+
 def write_ranks_bin(ranks: pl.DataFrame, path) -> None:
     """Year × day-of-year percentile ranks as bytes: uint16 start_year, uint16 n_years, then
     two planes (tmax, tmin) of n_years × 366 uint8 (0–100; 255 = no reading / no such day)."""
@@ -366,6 +404,11 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
         },
     }
     n2 = dump(SITE_DATA_DIR / "stations" / sid / "daily.json", daily_json)
+    write_curves_bin(
+        daily,
+        doy if meta.get("has_baseline") else None,
+        SITE_DATA_DIR / "stations" / sid / "curves.bin",
+    )
     if (d / "ranks.parquet").exists():
         write_ranks_bin(
             pl.read_parquet(d / "ranks.parquet"), SITE_DATA_DIR / "stations" / sid / "ranks.bin"
