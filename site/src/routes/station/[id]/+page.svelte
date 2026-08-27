@@ -279,15 +279,11 @@
 <h2 id="ranks">Every year as a line</h2>
 <div class="row">
   <p class="muted">
-    One line per year of {rankEl === 'tmin' ? 'daily lows' : 'daily highs'} (7-day means), palest = oldest, darkest = most recent, the thick line the year on the slider — press play to watch the years accumulate.
+    One line per year — nights (daily lows) on the left, days (daily highs) on the right, 7-day means — palest = oldest, darkest = most recent, the thick line the year on the slider; press play to watch the years accumulate.
     {#if s.base_period}The shaded band is the middle 80% and middle 50% of {s.base_period[0]}–{s.base_period[1]} readings for each date, the dashed line their median{s.baseline_fallback ? ' — this station has no 1951–1980 record, so its own earliest 20 complete years stand in' : ''}.
     {#if s.score}Over its last ten complete years ({s.score.tmin_span[0]}–{s.score.tmin_span[1]}) a typical night here sits at the <b>{Math.round(s.score.tmin)}th</b> percentile of those baseline nights and a typical day at the <b>{Math.round(s.score.tmax)}th</b>; 50 would mean no change.{/if}{/if}
   </p>
   <div class="ctl">
-    <div class="seg" role="tablist" aria-label="Nights or days">
-      <button class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights</button>
-      <button class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days</button>
-    </div>
     <div class="seg" role="tablist" aria-label="Which years">
       <button class:on={curveMode === 'all'} onclick={() => (curveMode = 'all')}>All years</button>
       <button class:on={curveMode === 'selected'} onclick={() => (curveMode = 'selected')}>Every 5th + last 5</button>
@@ -298,9 +294,11 @@
   <YearScrubber years={s.annual.year} bind:value={year} disabled={incompleteYears} playable />
 {/if}
 {#if curves}
-  <YearCurves {curves} element={rankEl} mode={curveMode} upTo={year} highlight={year} />
+  <div class="two curves">
+    <YearCurves {curves} element="tmin" mode={curveMode} upTo={year} highlight={year} label="Nights — daily low" width={540} height={300} />
+    <YearCurves {curves} element="tmax" mode={curveMode} upTo={year} highlight={year} label="Days — daily high" width={540} height={300} />
+  </div>
 {/if}
-
 
 <Controls thresholds={s.thresholds_f} bind:family bind:threshold />
 
@@ -323,7 +321,13 @@
   <h2>Every {rankEl === 'tmin' ? 'night' : 'day'}, ranked against the same date in {s.base_period[0]}–{s.base_period[1]}</h2>
   <div class="row">
     <p class="muted small">Each reading placed within this station's own {s.base_period[0]}–{s.base_period[1]} readings within a week of the same date: blue, cooler than most; red, warmer than most. One row per year, one column per day.</p>
-    <label class="small"><input type="checkbox" bind:checked={rankSmooth} /> 7-day means</label>
+    <div class="ctl">
+      <div class="seg" role="tablist" aria-label="Nights or days">
+        <button class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights</button>
+        <button class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days</button>
+      </div>
+      <label class="small"><input type="checkbox" bind:checked={rankSmooth} /> 7-day means</label>
+    </div>
   </div>
   {#if ranks}
     <RankHeatmap {ranks} element={rankEl} rowPx={4} smooth={rankSmooth ? 7 : 1} baseLabel={`${s.base_period[0]}–${s.base_period[1]}`} from={s.base_period[0]} />
@@ -486,6 +490,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 1.4rem;
+  }
+  .curves {
+    margin-top: 0.6rem;
   }
   .row {
     display: flex;

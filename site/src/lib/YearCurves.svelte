@@ -10,8 +10,8 @@
   import { yearRows, bandRows } from '$lib/curves.js';
   import { HEAT_DARK, COOL_DARK, MUTED, INK } from '$lib/palette.js';
 
-  let { curves, element = 'tmin', from = 0, mode = 'all', smooth = 7, height = 300, compact = false, label = '', sub = '', upTo = null, highlight = null } = $props();
-  const W = $derived(compact ? 360 : 760);
+  let { curves, element = 'tmin', from = 0, mode = 'all', smooth = 7, height = 300, compact = false, label = '', sub = '', upTo = null, highlight = null, width = null } = $props();
+  const W = $derived(width ?? (compact ? 360 : 760));
   const M = $derived(compact ? { top: 6, right: 6, bottom: 16, left: 26 } : { top: 14, right: 12, bottom: 24, left: 40 });
   let canvas = $state(null);
   let hover = $state(null);
