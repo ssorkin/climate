@@ -415,7 +415,7 @@ def check_all_stations() -> list[Finding]:
 
 
 def check_suspect_steps() -> list[Finding]:
-    """Stations with a > 2.5 °C jump between consecutive 5-year means (sensor/site change)."""
+    """Stations with a > 3 °C jump between consecutive 5-year means (sensor/site change)."""
     from climate.analysis.export import suspect_step
     from climate.paths import ANALYSIS_DIR
 

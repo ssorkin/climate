@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from concurrent.futures import ProcessPoolExecutor
+from itertools import pairwise
 from datetime import UTC, date, datetime
 
 import numpy as np
@@ -381,7 +382,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     return entry, n1 + n2, summary
 
 
-SUSPECT_STEP_C = 2.5
+SUSPECT_STEP_C = 3.0
 
 
 def suspect_step(annual: pl.DataFrame) -> str | None:
@@ -397,8 +398,8 @@ def suspect_step(annual: pl.DataFrame) -> str | None:
             .sort("b")
         )
         rows = g.to_dicts()
-        for prev, cur in zip(rows, rows[1:], strict=False):
-            if cur["b"] - prev["b"] <= 10 and abs(cur["m"] - prev["m"]) > SUSPECT_STEP_C:
+        for prev, cur in pairwise(rows):
+            if abs(cur["m"] - prev["m"]) > SUSPECT_STEP_C:
                 return (
                     f"mean daily {label} jumped {cur['m'] - prev['m']:+.1f} °C between "
                     f"{prev['b']}–{prev['b'] + 4} and {cur['b']}–{cur['b'] + 4} — likely a sensor or site change under one station id"

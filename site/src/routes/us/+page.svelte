@@ -168,7 +168,7 @@
     </div>
   </div>
   {#if shown.some((s) => s.suspect)}
-    <p class="small muted">Excluded from the change ranking as suspected sensor/site changes under one station id (their own 5-year mean jumped more than 2.5 °C): {shown.filter((s) => s.suspect).map((s) => `${s.short}, ${s.state}`).join('; ')}.</p>
+    <p class="small muted">Excluded from the change ranking as suspected sensor/site changes under one station id (their own 5-year mean jumped more than 3 °C): {shown.filter((s) => s.suspect).map((s) => `${s.short}, ${s.state}`).join('; ')}.</p>
   {/if}
 {/if}
 
