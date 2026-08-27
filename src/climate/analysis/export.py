@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import json
 from concurrent.futures import ProcessPoolExecutor
-from itertools import pairwise
 from datetime import UTC, date, datetime
+from itertools import pairwise
 
 import numpy as np
 import polars as pl
@@ -385,14 +385,21 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
 SUSPECT_STEP_C = 3.0
 
 
+SUSPECT_RESID_C = 3.5
+
+
 def suspect_step(annual: pl.DataFrame) -> str | None:
-    """Largest jump between consecutive 5-year block means of complete years, per element."""
+    """Two tests on the station's own complete-year means of highs and lows:
+    (a) a jump > SUSPECT_STEP_C between consecutive 5-year block means (3+ years each);
+    (b) a single year more than SUSPECT_RESID_C off the station's own straight-line trend.
+    Gradual warming, however large, trips neither."""
     for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
-        a = annual.filter(pl.col(k).is_not_null()).with_columns(
-            (pl.col("year") // 5 * 5).alias("b")
-        )
+        a = annual.filter(pl.col(k).is_not_null())
+        if a.height < 10:
+            continue
         g = (
-            a.group_by("b")
+            a.with_columns((pl.col("year") // 5 * 5).alias("b"))
+            .group_by("b")
             .agg(pl.col(k).mean().alias("m"), pl.len().alias("n"))
             .filter(pl.col("n") >= 3)
             .sort("b")
@@ -404,6 +411,16 @@ def suspect_step(annual: pl.DataFrame) -> str | None:
                     f"mean daily {label} jumped {cur['m'] - prev['m']:+.1f} °C between "
                     f"{prev['b']}–{prev['b'] + 4} and {cur['b']}–{cur['b'] + 4} — likely a sensor or site change under one station id"
                 )
+        x = a["year"].to_numpy().astype(float)
+        y = a[k].to_numpy().astype(float)
+        slope, intercept = np.polyfit(x, y, 1)
+        resid = y - (slope * x + intercept)
+        i = int(np.argmax(np.abs(resid)))
+        if abs(resid[i]) > SUSPECT_RESID_C:
+            return (
+                f"mean daily {label} in {int(x[i])} sit {resid[i]:+.1f} °C off this station's own trend line — "
+                f"likely a sensor or site change under one station id"
+            )
     return None
 
 

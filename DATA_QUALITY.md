@@ -66,13 +66,13 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
   - Anchorage Lake Hood Sea Plane Ba: last TMAX 240 days ago
 ### suspect_step
 
-- 🟡 18 national station(s): mean daily highs jumped +4.2 °C between 1985–1989 and 2015–2 …
+- 🟡 54 national station(s): mean daily highs jumped +4.2 °C between 1985–1989 and 2015–2 …
   - Barter Is WSO Airport: mean daily highs jumped +4.2 °C between 1985–1989 and 2015–2019 — likely a sensor or site change under one station id
   - Bethel Airport: mean daily lows jumped +3.0 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
   - Bettles Airport: mean daily highs jumped +3.2 °C between 1970–1974 and 1975–1979 — likely a sensor or site change under one station id
-  - Kotzebue Airport: mean daily highs jumped -3.2 °C between 2015–2019 and 2020–2024 — likely a sensor or site change under one station id
-  - Manokotak Airport: mean daily highs jumped +3.2 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
-  - Nenana Municipal Airport: mean daily highs jumped +4.8 °C between 2000–2004 and 2005–2009 — likely a sensor or site change under one station id
+  - Deadhorse: mean daily highs in 1998 sit +4.7 °C off this station's own trend line — likely a sensor or site change under one station id
+  - Igiugig Airport: mean daily lows in 2016 sit +3.9 °C off this station's own trend line — likely a sensor or site change under one station id
+  - Kaltag Airport: mean daily highs in 2012 sit -3.6 °C off this station's own trend line — likely a sensor or site change under one station id
 ### suspicious_values
 
 - 🟡 Ontario Airport: 2 suspicious unflagged value(s)

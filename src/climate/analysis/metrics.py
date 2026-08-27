@@ -807,11 +807,16 @@ def trend(years: np.ndarray, values: np.ndarray, min_nonzero: int = 10) -> dict 
     }
 
 
-def window_means(annual: pl.DataFrame, cols: list[str], y0: int, y1: int) -> dict:
+def window_means(
+    annual: pl.DataFrame, cols: list[str], y0: int, y1: int, min_n: int | None = None
+) -> dict:
+    """Means over a window of years; null when fewer than min_n (default: half the
+    window) years contribute — a 'last decade' built on one year is not a decade."""
     sub = annual.filter((pl.col("year") >= y0) & (pl.col("year") <= y1))
-    out = {"years": [y0, y1]}
+    need = min_n if min_n is not None else max(3, (y1 - y0 + 1) // 2)
+    out = {"years": [y0, y1], "min_n": need}
     for c in cols:
         s = sub[c].drop_nulls()
-        out[c] = round(float(s.mean()), 2) if len(s) else None
+        out[c] = round(float(s.mean()), 2) if len(s) >= need else None
         out[f"n_{c}"] = len(s)
     return out
