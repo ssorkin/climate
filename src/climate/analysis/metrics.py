@@ -861,12 +861,7 @@ def drop_years(df: pl.DataFrame, years: set[int], year_col: str = "year") -> pl.
     for c, dt in df.schema.items():
         if c in (year_col, "month", "days_in_year", "days_in_month", "days_in_season", "partial"):
             continue
-        if (
-            c.startswith("days_valid")
-            or c.startswith("jja_days_valid")
-            or c.endswith("_risk")
-            or c.endswith("_exp")
-        ):
+        if c.startswith(("days_valid", "jja_days_valid")) or c.endswith(("_risk", "_exp")):
             continue
         if dt == pl.Boolean:
             exprs.append(pl.when(keep).then(pl.col(c)).otherwise(False).alias(c))

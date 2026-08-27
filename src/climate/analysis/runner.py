@@ -177,6 +177,7 @@ def analyze_station(
         "last_year": int(valid["date"].max().year),
         "active": bool(active),
         "homogenized": homog,
+        "suspect_years": {str(y): msg for y, msg in sorted(suspect_years.items())},
         "last_complete_year": last_complete,
         "complete_years": len(complete_years),
         "obs_time": [
