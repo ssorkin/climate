@@ -293,7 +293,7 @@
 <h2 id="ranks">Every year as a line</h2>
 <div class="row">
   <p class="muted">
-    One line per year — nights (daily lows) on the left, days (daily highs) on the right, 7-day means — palest = oldest, darkest = most recent, the thick line the year on the slider; press play to watch the years accumulate.
+    One line per year — nights (daily lows) on the left, days (daily highs) on the right, 7-day means — palest = oldest, darkest = most recent, the black line the year on the slider; press play to watch the years accumulate.
     {#if s.base_period}The shaded band is the middle 80% and middle 50% of {s.base_period[0]}–{s.base_period[1]} readings for each date, the dashed line their median{s.baseline_fallback ? ' — this station has no 1951–1980 record, so its own earliest 20 complete years stand in' : ''}.
     {#if s.score}Over its last ten complete years ({s.score.tmin_span[0]}–{s.score.tmin_span[1]}) a typical night here sits at the <b>{Math.round(s.score.tmin)}th</b> percentile of those baseline nights and a typical day at the <b>{Math.round(s.score.tmax)}th</b>; 50 would mean no change.{/if}{/if}
   </p>

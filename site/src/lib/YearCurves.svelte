@@ -61,17 +61,26 @@
       const t = y1 === y0 ? 1 : (r.y - y0) / (y1 - y0);
       const isH = hover && hover.year === r.y;
       const isLatest = r.y === bold;
-      ctx.strokeStyle = isH ? INK : isLatest ? dark : mix(light, dark, Math.pow(t, 1.8));
-      ctx.lineWidth = isH ? 2.4 : isLatest ? (compact ? 1.6 : 2.4) : mode === 'all' ? (compact ? 0.7 : 0.9) : 1.5;
-      ctx.beginPath();
-      let pen = false;
-      for (let d = 0; d < 366; d++) {
-        const v = r.v[d];
-        if (v == null || !isRealDay(d, r.y)) { pen = false; continue; }
-        if (pen) ctx.lineTo(xs(d), ys(v)); else ctx.moveTo(xs(d), ys(v));
-        pen = true;
+      const trace = () => {
+        ctx.beginPath();
+        let pen = false;
+        for (let d = 0; d < 366; d++) {
+          const v = r.v[d];
+          if (v == null || !isRealDay(d, r.y)) { pen = false; continue; }
+          if (pen) ctx.lineTo(xs(d), ys(v)); else ctx.moveTo(xs(d), ys(v));
+          pen = true;
+        }
+        ctx.stroke();
+      };
+      if (isLatest || isH) {
+        // the chosen year: black on a white halo, so it reads against the dark recent years
+        ctx.strokeStyle = '#fffdf9'; ctx.lineWidth = compact ? 3.4 : 4.6; trace();
+        ctx.strokeStyle = '#000'; ctx.lineWidth = compact ? 1.6 : 2.4; trace();
+      } else {
+        ctx.strokeStyle = mix(light, dark, Math.pow(t, 1.8));
+        ctx.lineWidth = mode === 'all' ? (compact ? 0.7 : 0.9) : 1.5;
+        trace();
       }
-      ctx.stroke();
     }
     if (band) {
       ctx.beginPath(); ctx.strokeStyle = INK; ctx.lineWidth = compact ? 0.9 : 1.3; ctx.setLineDash([4, 3]);
@@ -113,14 +122,14 @@
   {:else}
     <div class="legend small">
       <span class="grad" style="background: linear-gradient(90deg, {light}, {dark})"></span>
-      <span>{shown[0]?.y ?? from} → {shown[shown.length - 1]?.y ?? ''}; thick line: <b>{bold ?? ''}</b></span>
+      <span>{shown[0]?.y ?? from} → {shown[shown.length - 1]?.y ?? ''}; black line: <b>{bold ?? ''}</b></span>
       {#if band}<span class="band">shaded: the baseline's middle 80% and middle 50% for each date; dashed: its median</span>{/if}
     </div>
     <div class="tip small">
       {#if hover}
         <b>{hover.year}</b>, around {hover.label}: {smooth}-day mean {element === 'tmin' ? 'low' : 'high'} {fmt(hover.v)}{hover.dMed != null ? `, ${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs the baseline median for that date` : ''}
       {:else}
-        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent; the thick line is {bold ?? 'the latest year'}.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any baseline year at that date.{/if}
+        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent; the black line is {bold ?? 'the latest year'}.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any baseline year at that date.{/if}
       {/if}
     </div>
   {/if}
