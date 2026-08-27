@@ -27,8 +27,10 @@ export` in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   readings.** A day counts only with 8+ readings, no gap over 3 h, a reading by 03:00 and
   after 21:00. Values with a failed GHCNh quality code are dropped at ingest. Hourly maxima
   under-read a thermometer's peak by ~0.5 °C consistently — never mix in GHCN-Daily counts.
-- **The statistical headline is distributional, not a °F threshold.** Primary measures are
-  the ETCCDI percentile indices (TX90p/TN90p/TX10p/TN10p against each station's *own*
+- **The headline measure is a percentile rank, not a °F threshold.** Each day's high/low is
+  ranked within the station's *own* 1951–1980 readings within ±7 days of the same date
+  (`percentile_ranks`; 50 = unchanged; exported as `ranks.bin` year×DOY bytes and as annual
+  means `rank_tmax/rank_tmin`). Alongside it: the ETCCDI percentile indices (TX90p/TN90p/TX10p/TN10p against each station's *own*
   1951–1980 calendar-day percentiles; fixed base, ±7-day window, no in-base bootstrap —
   stations without 20 baseline years get none), June–August mean high/low anomalies and
   the diurnal range. Fixed thresholds (≥95°F days, ≥70°F nights) are the intuitive layer.

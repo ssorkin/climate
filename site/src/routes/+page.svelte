@@ -18,8 +18,10 @@
   import Stripes from '$lib/Stripes.svelte';
   import RegionalIndex from '$lib/RegionalIndex.svelte';
   import TrendForest from '$lib/TrendForest.svelte';
-  import IndexLines from '$lib/IndexLines.svelte';
   import TrendPairs from '$lib/TrendPairs.svelte';
+  import RankHeatmap from '$lib/RankHeatmap.svelte';
+  import RankDots from '$lib/RankDots.svelte';
+  import { loadRanks } from '$lib/ranks.js';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -117,6 +119,18 @@
   let warmT = $derived(trendStats('trend_warm70'));
   let hotT = $derived(trendStats('trend_hot95'));
   let idx = $derived(data.indices);
+  let ranks = $state({});
+  let rankEl = $state('tmin');
+  onMount(async () => {
+    const ids = allStations.filter((s) => s.headline?.has_baseline).map((s) => s.id);
+    const loaded = await Promise.all(ids.map((id) => loadRanks(id).catch(() => null)));
+    const out = {};
+    ids.forEach((id, i) => { if (loaded[i]) out[id] = loaded[i]; });
+    ranks = out;
+  });
+  const median = (arr) => { const a = arr.filter((v) => v != null).sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : null; };
+  let nightRank = $derived(median(baseStations.map((s) => s.headline.rank_tmin_last10)));
+  let dayRank = $derived(median(baseStations.map((s) => s.headline.rank_tmax_last10)));
   let baseStations = $derived(allStations.filter((s) => s.headline?.has_baseline));
   const idxMean = (key, a, b) => {
     if (!idx) return null;
@@ -152,42 +166,51 @@
 
 <section class="hero">
   <div class="text">
-    <h1>Los Angeles isn't just getting hotter. Its nights are.</h1>
+    <h1>A typical Los Angeles night is now warmer than {nightRank == null ? '—' : Math.round(nightRank)}% of the nights people had at that time of year in 1951–1980.</h1>
     <p class="lede">
-      Ask each of Greater Los Angeles's long-running weather stations how its own temperatures have shifted, and the same
-      asymmetry appears everywhere: nights that would have counted as unusually warm in 1951–1980 — the warmest tenth for that
-      time of year — now make up about <b>{tn90Now == null ? '—' : Math.round(tn90Now)}%</b> of nights at the typical station,
-      while unusually warm days have moved far less (about <b>{tx90Now == null ? '—' : Math.round(tx90Now)}%</b>); the coolest
-      tenth of nights has nearly vanished (<b>{tn10Now == null ? '—' : tn10Now.toFixed(1)}%</b>). Nights are warming faster than days at
-      <b>{nightsFaster} of {nPairs}</b> stations. Every number comes from NOAA's hourly station records, judged against each
-      station's own history.
+      A typical day: warmer than {dayRank == null ? '—' : Math.round(dayRank)}%. If nothing had changed, both numbers would be 50. That is the whole
+      site in one idea — take every reading from NOAA's hourly station records, ask <i>how unusual is this for this date, at this station?</i>,
+      and watch the answer drift. The drift is much larger at night than by day.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}. The percentile measures are standard climate-extremes indices (TN90p, TX90p, TN10p,
-      TX10p) computed against each station's own 1951–1980 calendar-day percentiles (<a href="/methods#indices">how</a>); stations
-      that began after 1980 have no baseline and appear only in the threshold and map views. Each chart is one thermometer at one
-      place: it records urban growth around the station as well as the wider climate (<a href="/methods#attribution">more</a>).
+      Latest readings through {fmtISO(latest)}. "Typical" is the median station's average percentile over the last ten years, each day judged
+      against that station's own 1951–1980 readings within a week of the same date (<a href="/methods#ranks">how</a>). Each chart is one
+      thermometer at one place: it records the city growing around the station as well as the wider climate (<a href="/methods#attribution">more</a>).
     </p>
   </div>
 </section>
 
-{#if idx}
+{#if baseStations.length}
   <section>
-    <div class="two">
-      <IndexLines series={idx} perStation={idx.per_station} key="tn90p" label="Unusually warm nights — share of nights above the 1951–80 90th percentile for the date" color="#2a78d6" trend={medianTrend('trend_tn90p')} trendNote=" (median station)" unit="% of nights" />
-      <IndexLines series={idx} perStation={idx.per_station} key="tx90p" label="Unusually warm days — share of days above the 1951–80 90th percentile for the date" color="#d94f22" trend={medianTrend('trend_tx90p')} trendNote=" (median station)" unit="% of days" />
+    <div class="sechead">
+      <h2>Every {rankEl === 'tmin' ? 'night' : 'day'} since 1951, ranked against the same date in 1951–1980</h2>
+      <div class="pillrow">
+        <button class="pill" class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights (daily low)</button>
+        <button class="pill" class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days (daily high)</button>
+      </div>
     </div>
-    <div class="two" style="margin-top:1rem">
-      <IndexLines series={idx} perStation={idx.per_station} key="tn10p" label="Unusually cool nights — share below the 10th percentile" color="#2a78d6" trend={medianTrend('trend_tn10p')} trendNote=" (median station)" unit="% of nights" height={190} />
-      <IndexLines series={idx} perStation={idx.per_station} key="tx10p" label="Unusually cool days — share below the 10th percentile" color="#d94f22" trend={medianTrend('trend_tx10p')} trendNote=" (median station)" unit="% of days" height={190} />
+    <p class="muted">One row per year, top to bottom; one column per day, January to December, each shown as a 7-day mean. Blue: cooler than most {rankEl === 'tmin' ? 'nights' : 'days'} at that date in 1951–1980. Red: warmer than most. If the climate had not changed, every panel would stay evenly mottled. Only the stations with a complete 1951–1980 record are shown.</p>
+    <div class="multiples">
+      {#each baseStations as s (s.id)}
+        {#if ranks[s.id]}
+          <a class="panel" href="/station/{s.id}#ranks">
+            <RankHeatmap ranks={ranks[s.id]} element={rankEl} label={s.short} compact rowPx={2} smooth={7} />
+          </a>
+        {/if}
+      {/each}
     </div>
-    <p class="small muted">{baseStations.length} stations with a complete 1951–1980 baseline. If the climate had not changed, each line would hover near 10%.</p>
+    <div class="legend small">
+      <span class="scale"></span>
+      <span>0 — cooler than every baseline {rankEl === 'tmin' ? 'night' : 'day'} at that date</span>
+      <span>50 — middle</span>
+      <span>100 — warmer than every one</span>
+    </div>
   </section>
 
   <section>
-    <h2>The punchline: nights are warming faster than days</h2>
-    <p class="muted">For every station, the trend in its June–August mean daily low (filled) against its mean daily high (hollow), over the station's own complete years. Where the filled dot sits to the right, nights are warming faster — and the daily temperature range is narrowing.</p>
-    <div class="punch"><TrendPairs stations={allStations} /></div>
+    <h2>Two numbers per station</h2>
+    <p class="muted">The same idea averaged over the last ten years: where a typical night and a typical day at each station now fall among 1951–1980 readings for the same time of year.</p>
+    <div class="punch"><RankDots stations={allStations} /></div>
   </section>
 {/if}
 
@@ -207,11 +230,17 @@
 
 <section>
   <h2>What it feels like: nights that never cool below 70°F, days that reach 95°F</h2>
-  <p class="muted">The percentile measures above are the statistical test; these fixed thresholds are the lived experience — and a 70°F night means something different at the beach than in the valley. One row per station, longest records first: its own trend over its own complete years, with a 90% range. Filled dots are trends clearly different from zero.</p>
+  <p class="muted">Percentiles are the fair comparison; these fixed thresholds are the lived experience — and a 70°F night means something different at the beach than in the valley. One row per station, longest records first: its own trend over its own complete years, with a 90% range. Filled dots are trends clearly different from zero.</p>
   <div class="two">
     <TrendForest stations={allStations} key="trend_warm70" label="Nights ≥ 70°F per year" unitLabel="nights" />
     <TrendForest stations={allStations} key="trend_hot95" label="Days ≥ 95°F per year" unitLabel="days" />
   </div>
+</section>
+
+<section>
+  <h2>Why nights and days differ: the trend at each station</h2>
+  <p class="muted">For every station, the trend in its June–August mean daily low (filled) against its mean daily high (hollow), over the station's own complete years. Nights lead at most stations; at a few inland and coastal-military sites, days do.</p>
+  <div class="punch"><TrendPairs stations={allStations} /></div>
 </section>
 
 <section>
@@ -312,6 +341,30 @@
   }
   .punch {
     max-width: 760px;
+  }
+  .multiples {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem 1.4rem;
+  }
+  .panel {
+    color: inherit;
+    text-decoration: none;
+  }
+  .legend {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: #52514e;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .legend .scale {
+    display: inline-block;
+    width: 120px;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #0d366b, #6da7ec, #f0efec, #e86b35, #732508);
   }
   .two {
     display: grid;

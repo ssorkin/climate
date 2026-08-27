@@ -22,7 +22,9 @@ Website: [climate.sorkinlabs.com](https://climate.sorkinlabs.com)
   and deriving each day's high and low from the hourly readings.
 - **Checks** the data — completeness by year, gaps, flagged values, observation-time
   changes, freshness — and publishes the findings in `DATA_QUALITY.md`.
-- **Analyzes** each station: the standard climate-extremes indices TX90p / TN90p /
+- **Analyzes** each station: for every day, the percentile rank of its high and low within
+  the station's own 1951–1980 readings for that time of year (the year × day heatmaps and
+  the "typical night / typical day" numbers); the standard climate-extremes indices TX90p / TN90p /
   TX10p / TN10p (share of days and nights beyond the station's own 1951–1980
   calendar-day percentiles), warm-season mean high/low anomalies, the diurnal range,
   plus annual and monthly counts of days and nights past thresholds, frost nights,
@@ -31,10 +33,11 @@ Website: [climate.sorkinlabs.com](https://climate.sorkinlabs.com)
 
 ## Principles
 
-1. **How the distribution is changing, then what it feels like.** The headline test is
-   distributional — has the share of unusually warm nights and days shifted against
-   each station's own history? — and the answer for Los Angeles is asymmetric: nights
-   are warming much faster than days, and cool nights are disappearing. Counts of
+1. **"How unusual is this temperature for this date?"** Every reading is ranked against
+   the same station's 1951–1980 readings for the same time of year — nonparametric, no
+   cutoffs, comparable between LAX and the desert. The answer for Los Angeles is
+   asymmetric: a typical night now sits around the 65th percentile of the old climate,
+   a typical day around the 55th; nights are warming much faster than days. Counts of
    ≥95°F days and ≥70°F nights stay on the site as the lived-experience layer.
 2. **Stations, not regions.** Each chart is what one thermometer recorded at one
    place. We don't average stations into a "Los Angeles" number, and we don't chart

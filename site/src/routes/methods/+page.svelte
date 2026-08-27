@@ -78,6 +78,18 @@
   ("this summer through August 23" against every other summer through August 23). A station's latest date is always shown.
 </p>
 
+<h2 id="ranks">How unusual is this temperature for this date? — percentile ranks</h2>
+<p>
+  The site's central measure is a rank, not a threshold. For each calendar date we gather every 1951–1980 reading at the
+  station within ±7 days of that date (roughly 450 highs and 450 lows) and place each later reading within that pile: the
+  percentile rank is the share of baseline readings it exceeds, ties counted half. A 65th-percentile night was warmer than
+  65% of comparable baseline nights. It assumes nothing about the shape of the distribution — Los Angeles temperatures
+  under marine layer, onshore flow and Santa Ana regimes are not normal — and it uses every observation, so a station's
+  average rank over a year or a decade is far less noisy than a count of days past a cutoff. Under an unchanged climate
+  the average rank is 50. The year × day heatmaps draw each day's rank; "typical night" and "typical day" are the average
+  rank over the last ten complete years. Ranks are only computed for stations with at least 20 complete years in 1951–1980.
+</p>
+
 <h2 id="indices">Percentile indices: TN90p, TX90p, TN10p, TX10p, and the diurnal range</h2>
 <p>
   A 95°F day means something different at LAX and in Van Nuys, and a 70°F night is rare at the beach and routine in the desert.

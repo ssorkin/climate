@@ -37,6 +37,32 @@ def col(df: pl.DataFrame, name: str) -> list:
     return [_clean(v) for v in df[name].to_list()]
 
 
+IDX_KEYS = ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "rank_tmax", "rank_tmin")
+
+
+def write_ranks_bin(ranks: pl.DataFrame, path) -> None:
+    """Year × day-of-year percentile ranks as bytes: uint16 start_year, uint16 n_years, then
+    two planes (tmax, tmin) of n_years × 366 uint8 (0–100; 255 = no reading / no such day)."""
+    import struct
+
+    r = ranks.with_columns(pl.col("date").dt.year().alias("year"), M._doy_expr().alias("doy"))
+    y0, y1 = int(r["year"].min()), int(r["year"].max())
+    ny = y1 - y0 + 1
+    planes = []
+    for el in ("rank_tmax", "rank_tmin"):
+        m = np.full((ny, 366), 255, dtype=np.uint8)
+        sub = r.filter(pl.col(el).is_not_null())
+        yy = sub["year"].to_numpy() - y0
+        dd = sub["doy"].to_numpy() - 1
+        m[yy, dd] = np.clip(np.rint(sub[el].to_numpy()), 0, 100).astype(np.uint8)
+        planes.append(m)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "wb") as f:
+        f.write(struct.pack("<HH", y0, ny))
+        for m in planes:
+            f.write(m.tobytes())
+
+
 def dump(path, obj) -> int:
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(obj, separators=(",", ":"), allow_nan=False)
@@ -182,6 +208,8 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             "tn90p": col(indices, "tn90p"),
             "tx10p": col(indices, "tx10p"),
             "tn10p": col(indices, "tn10p"),
+            "rank_tmax": col(indices, "rank_tmax"),
+            "rank_tmin": col(indices, "rank_tmin"),
             "dtr_c": col(indices, "dtr_c"),
             "jja_tmax_anom_c": [
                 None
@@ -338,6 +366,10 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
         },
     }
     n2 = dump(SITE_DATA_DIR / "stations" / sid / "daily.json", daily_json)
+    if (d / "ranks.parquet").exists():
+        write_ranks_bin(
+            pl.read_parquet(d / "ranks.parquet"), SITE_DATA_DIR / "stations" / sid / "ranks.bin"
+        )
 
     # index entry
     st = meta["summer_to_date"]
@@ -383,6 +415,10 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             .get("slope_per_decade"),
             "suspect_step": suspect,
             "has_baseline": meta.get("has_baseline", False),
+            "rank_tmin_last10": meta.get("index_windows", {}).get("last10", {}).get("rank_tmin"),
+            "rank_tmax_last10": meta.get("index_windows", {}).get("last10", {}).get("rank_tmax"),
+            "trend_rank_tmin": meta["trends"].get("rank_tmin"),
+            "trend_rank_tmax": meta["trends"].get("rank_tmax"),
             "trend_tn90p": meta["trends"].get("tn90p"),
             "trend_tx90p": meta["trends"].get("tx90p"),
             "trend_tn10p": meta["trends"].get("tn10p"),
@@ -568,9 +604,7 @@ def run_export(region: str = "all") -> None:
                 if not dd.exists():
                     continue
                 for r in pl.read_parquet(dd).iter_rows(named=True):
-                    slot = per_year.setdefault(
-                        r["year"], {"tx90p": [], "tn90p": [], "tx10p": [], "tn10p": [], "dtr_c": []}
-                    )
+                    slot = per_year.setdefault(r["year"], {k: [] for k in IDX_KEYS})
                     for kk in slot:
                         if r[kk] is not None:
                             slot[kk].append(r[kk])
@@ -583,12 +617,29 @@ def run_export(region: str = "all") -> None:
                         round(sum(v) / len(v), 2) if (v := per_year[y][kk]) else None
                         for y in years_i
                     ]
-                    for kk in ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c")
+                    for kk in (
+                        "tx90p",
+                        "tn90p",
+                        "tx10p",
+                        "tn10p",
+                        "dtr_c",
+                        "rank_tmax",
+                        "rank_tmin",
+                    )
                 },
                 "per_station": {
                     sid: {
                         kk: col(df, kk)
-                        for kk in ("year", "tx90p", "tn90p", "tx10p", "tn10p", "dtr_c")
+                        for kk in (
+                            "year",
+                            "tx90p",
+                            "tn90p",
+                            "tx10p",
+                            "tn10p",
+                            "dtr_c",
+                            "rank_tmax",
+                            "rank_tmin",
+                        )
                     }
                     for sid in ids
                     if (ANALYSIS_DIR / sid / "indices.parquet").exists()

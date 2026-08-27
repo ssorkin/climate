@@ -19,6 +19,9 @@
   import MethodsNote from '$lib/MethodsNote.svelte';
   import HourlyPanel from '$lib/HourlyPanel.svelte';
   import IndexLines from '$lib/IndexLines.svelte';
+  import RankHeatmap from '$lib/RankHeatmap.svelte';
+  import YearCurves from '$lib/YearCurves.svelte';
+  import { loadRanks } from '$lib/ranks.js';
 
   let { data } = $props();
   let s = $derived(data.summary);
@@ -89,6 +92,15 @@
 
   // daily.json is loaded lazily: needed for the daily explorer, raw table, and custom thresholds.
   let daily = $state(null);
+  let ranks = $state(null);
+  let rankEl = $state('tmin');
+  let curveMode = $state('all');
+  let rankSmooth = $state(false);
+  $effect(() => {
+    const id = s.id;
+    ranks = null;
+    if (s.has_baseline) loadRanks(id).then((r) => { if (s.id === id) ranks = r; }).catch(() => {});
+  });
   $effect(() => {
     if (!s) return;
     const id = s.id;
@@ -280,6 +292,37 @@
 <h2>By month</h2>
 <HeatCalendar years={s.monthly.year} months={s.monthly.month} values={monthly} lower={monthlyLower} expected={monthlyExp} daysValid={monthlyDaysValid} daysTotal={monthlyDaysTotal} complete={monthlyComplete} cool={family === 'frost' || family === 'coldday'} selected={year} onselect={(y) => (year = y)} unitLabel={fam.noun} />
 
+{#if s.has_baseline}
+  <h2 id="ranks">Every {rankEl === 'tmin' ? 'night' : 'day'} since 1951, ranked against the same date in 1951–1980</h2>
+  <div class="row">
+    <p class="muted">
+      Each reading placed within this station's own 1951–1980 readings for the same time of year: blue, cooler than most; red, warmer than most.
+      {#if s.indices?.windows?.last10?.rank_tmin != null}Over the last ten years a typical night here sits at the <b>{Math.round(s.indices.windows.last10.rank_tmin)}th</b> percentile of those baseline nights and a typical day at the <b>{Math.round(s.indices.windows.last10.rank_tmax)}th</b>; 50 would mean no change.{/if}
+    </p>
+    <div class="ctl">
+      <div class="seg" role="tablist" aria-label="Nights or days">
+        <button class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights</button>
+        <button class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days</button>
+      </div>
+      <label class="small"><input type="checkbox" bind:checked={rankSmooth} /> 7-day means</label>
+    </div>
+  </div>
+  {#if ranks}
+    <RankHeatmap {ranks} element={rankEl} rowPx={4} smooth={rankSmooth ? 7 : 1} />
+  {/if}
+  {#if daily}
+    <h3>The same years as lines</h3>
+    <div class="row">
+      <p class="muted small">One line per year, lighter = older, over the 1951–1980 envelope for each date. {rankEl === 'tmin' ? 'Nights' : 'Days'} that ride above the band are warmer than almost any at that date in the baseline.</p>
+      <div class="seg" role="tablist" aria-label="Which years">
+        <button class:on={curveMode === 'all'} onclick={() => (curveMode = 'all')}>All years</button>
+        <button class:on={curveMode === 'selected'} onclick={() => (curveMode = 'selected')}>Every 5th + last 5</button>
+      </div>
+    </div>
+    <YearCurves {daily} element={rankEl} mode={curveMode} />
+  {/if}
+{/if}
+
 {#if s.indices}
   <h2 id="distribution">How this station's temperatures have shifted</h2>
   <p class="muted">
@@ -436,6 +479,39 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 1.4rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .ctl {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex: none;
+  }
+  .seg {
+    display: inline-flex;
+    border: 1px solid #c9c2b6;
+    border-radius: 999px;
+    overflow: hidden;
+    flex: none;
+  }
+  .seg button {
+    border: 0;
+    background: transparent;
+    padding: 0.3rem 0.8rem;
+    font: inherit;
+    font-size: 0.85rem;
+    color: #52514e;
+    cursor: pointer;
+  }
+  .seg button.on {
+    background: #2b2722;
+    color: #fffdf9;
   }
   @media (max-width: 800px) {
     .two {

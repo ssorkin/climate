@@ -106,7 +106,8 @@ def analyze_station(
         & pl.col("complete_tmin")
     ).height
     has_baseline = base_years >= 20
-    indices = M.percentile_indices(daily, doy, annual, cfg)
+    ranks = M.percentile_ranks(daily, cfg) if has_baseline else None
+    indices = M.percentile_indices(daily, doy, annual, cfg, ranks)
     if not has_baseline:  # fixed-base percentile indices need the baseline; trends in means do not
         indices = indices.with_columns(
             pl.lit(None, dtype=pl.Float64).alias(c) for c in ("tx90p", "tn90p", "tx10p", "tn10p")
@@ -123,6 +124,8 @@ def analyze_station(
     )
     summer["table"].write_parquet(out_dir / "summer.parquet")
     indices.write_parquet(out_dir / "indices.parquet")
+    if ranks is not None:
+        ranks.write_parquet(out_dir / "ranks.parquet")
 
     homog = None
     off = H.offsets(ush, st.id) if ush is not None else None
@@ -174,7 +177,17 @@ def analyze_station(
     if True:
         since_i = indices.filter(pl.col("year") >= b0)
         yrs_i = since_i["year"].to_numpy()
-        for c in ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "jja_tmax_c", "jja_tmin_c"):
+        for c in (
+            "tx90p",
+            "tn90p",
+            "tx10p",
+            "tn10p",
+            "dtr_c",
+            "jja_tmax_c",
+            "jja_tmin_c",
+            "rank_tmax",
+            "rank_tmin",
+        ):
             t = M.trend(
                 yrs_i, since_i[c].cast(pl.Float64).fill_null(np.nan).to_numpy(), min_nonzero=1
             )
@@ -205,7 +218,17 @@ def analyze_station(
             {
                 key: M.window_means(
                     indices,
-                    ["tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "jja_tmax_c", "jja_tmin_c"],
+                    [
+                        "tx90p",
+                        "tn90p",
+                        "tx10p",
+                        "tn10p",
+                        "dtr_c",
+                        "jja_tmax_c",
+                        "jja_tmin_c",
+                        "rank_tmax",
+                        "rank_tmin",
+                    ],
                     y0,
                     y1,
                 )

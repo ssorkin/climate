@@ -665,16 +665,16 @@ def doy_climatology(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
         row = {"doy": k}
         for name, arr in (("tmax", x), ("tmin", y)):
             if len(arr) >= 10:
-                p10, p50, p90 = np.percentile(arr, [10, 50, 90])
-                row[f"{name}_p10"] = float(p10) / 10
-                row[f"{name}_p50"] = float(p50) / 10
-                row[f"{name}_p90"] = float(p90) / 10
+                qs = np.percentile(arr, [10, 25, 50, 75, 90])
+                for q, v in zip(("p10", "p25", "p50", "p75", "p90"), qs):
+                    row[f"{name}_{q}"] = float(v) / 10
             else:
-                row[f"{name}_p10"] = row[f"{name}_p50"] = row[f"{name}_p90"] = None
+                for q in ("p10", "p25", "p50", "p75", "p90"):
+                    row[f"{name}_{q}"] = None
         rows.append(row)
     schema = {"doy": pl.Int32}
     for name in ("tmax", "tmin"):
-        for q in ("p10", "p50", "p90"):
+        for q in ("p10", "p25", "p50", "p75", "p90"):
             schema[f"{name}_{q}"] = pl.Float64
     clim = pl.DataFrame(rows, schema=schema)
 
@@ -896,8 +896,51 @@ def drop_years(df: pl.DataFrame, years: set[int], year_col: str = "year") -> pl.
 # --- distributional indices (ETCCDI-style) ----------------------------------------------
 
 
+RANK_MIN_BASELINE = 100  # baseline readings in the window needed to rank a day
+
+
+def percentile_ranks(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
+    """For every day: where its high / low falls (0–100) within the station's own baseline
+    distribution for that calendar date (all baseline readings within ±doy_window_days).
+
+    Rank = share of baseline readings below the value, ties counted half — nonparametric, no
+    normality assumed. Under an unchanged climate the annual mean rank sits near 50.
+    """
+    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+    w = cfg["doy_window_days"]
+    d = daily.select("date", "tmax", "tmin").with_columns(
+        pl.col("date").dt.year().alias("year"), _doy_expr().alias("doy")
+    )
+    doy_all = d["doy"].to_numpy()
+    base_mask = (d["year"].to_numpy() >= b0) & (d["year"].to_numpy() <= b1)
+    out = {}
+    for el in ("tmax", "tmin"):
+        vals = d[el].cast(pl.Float64).fill_null(np.nan).to_numpy()
+        rank = np.full(len(vals), np.nan)
+        for k in range(1, 367):
+            dist = np.abs(doy_all - k)
+            dist = np.minimum(dist, 366 - dist)
+            ref = vals[base_mask & (dist <= w)]
+            ref = np.sort(ref[~np.isnan(ref)])
+            if len(ref) < RANK_MIN_BASELINE:
+                continue
+            sel = (doy_all == k) & ~np.isnan(vals)
+            x = vals[sel]
+            lo = np.searchsorted(ref, x, side="left")
+            hi = np.searchsorted(ref, x, side="right")
+            rank[sel] = 100 * (lo + hi) / (2 * len(ref))
+        out[f"rank_{el}"] = rank
+    return pl.DataFrame({"date": d["date"], **out}).with_columns(
+        pl.col("rank_tmax").fill_nan(None), pl.col("rank_tmin").fill_nan(None)
+    )
+
+
 def percentile_indices(
-    daily: pl.DataFrame, doy: pl.DataFrame, annual: pl.DataFrame, cfg: dict
+    daily: pl.DataFrame,
+    doy: pl.DataFrame,
+    annual: pl.DataFrame,
+    cfg: dict,
+    ranks: pl.DataFrame | None = None,
 ) -> pl.DataFrame:
     """Per year: TX90p / TN90p / TX10p / TN10p — the share (%) of days whose high / low sits
     above the station's own baseline 90th percentile (or below the 10th) for that calendar
@@ -923,8 +966,17 @@ def percentile_indices(
         (pl.col("tmin") / 10 < pl.col("tmin_p10")).alias("tn10"),
         ((pl.col("tmax") - pl.col("tmin")) / 10).alias("dtr"),
     )
+    if ranks is not None:
+        d = d.join(ranks, on="date", how="left")
+    else:
+        d = d.with_columns(
+            pl.lit(None, dtype=pl.Float64).alias("rank_tmax"),
+            pl.lit(None, dtype=pl.Float64).alias("rank_tmin"),
+        )
     jja = cfg["summer_months"]
     g = d.group_by("year").agg(
+        pl.col("rank_tmax").mean().alias("rank_tmax"),
+        pl.col("rank_tmin").mean().alias("rank_tmin"),
         (100 * pl.col("tx90").filter(pl.col("tmax").is_not_null()).mean()).alias("tx90p"),
         (100 * pl.col("tx10").filter(pl.col("tmax").is_not_null()).mean()).alias("tx10p"),
         (100 * pl.col("tn90").filter(pl.col("tmin").is_not_null()).mean()).alias("tn90p"),
@@ -939,6 +991,14 @@ def percentile_indices(
     both = pl.col("complete_tmax") & pl.col("complete_tmin")
     return (
         out.with_columns(
+            pl.when(pl.col("complete_tmax"))
+            .then(pl.col("rank_tmax"))
+            .otherwise(None)
+            .alias("rank_tmax"),
+            pl.when(pl.col("complete_tmin"))
+            .then(pl.col("rank_tmin"))
+            .otherwise(None)
+            .alias("rank_tmin"),
             pl.when(pl.col("complete_tmax")).then(pl.col("tx90p")).otherwise(None).alias("tx90p"),
             pl.when(pl.col("complete_tmax")).then(pl.col("tx10p")).otherwise(None).alias("tx10p"),
             pl.when(pl.col("complete_tmin")).then(pl.col("tn90p")).otherwise(None).alias("tn90p"),

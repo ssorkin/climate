@@ -60,3 +60,21 @@ def test_incomplete_years_are_null(cfg):
     ix = M.percentile_indices(daily, doy, annual, cfg)
     row = ix.filter(ix["year"] == 1975).row(0, named=True)
     assert row["tx90p"] is None and row["dtr_c"] is None and row["tn90p"] is not None
+
+
+def test_percentile_ranks_center_on_fifty_and_follow_a_shift(cfg):
+    daily = _series(1990, 8.0)
+    ranks = M.percentile_ranks(daily, cfg)
+    r = ranks.with_columns(pl.col("date").dt.year().alias("year"))
+    base = r.filter((pl.col("year") >= 1951) & (pl.col("year") <= 1980))
+    assert abs(base["rank_tmin"].mean() - 50) < 1.5
+    assert abs(base["rank_tmax"].mean() - 50) < 1.5
+    late = r.filter(pl.col("year") >= 1990)
+    assert late["rank_tmin"].mean() > 85 and late["rank_tmax"].mean() > 80
+    # ranks are bounded and missing days stay missing
+    assert 0 <= r["rank_tmin"].min() and r["rank_tmin"].max() <= 100
+    annual = M.annual_metrics(daily, cfg)
+    doy = M.doy_climatology(daily, cfg)
+    ix = M.percentile_indices(daily, doy, annual, cfg, ranks)
+    assert abs(ix.filter(pl.col("year") == 1975)["rank_tmin"][0] - 50) < 4
+    assert ix.filter(pl.col("year") == 1995)["rank_tmin"][0] > 85
