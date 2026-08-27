@@ -395,11 +395,12 @@ def suspect_step(
     of the (already outlier-cleaned) record, or (b) an outlier year within the last 15 years
     (it would distort "now"), or (c) three or more outlier years."""
     sy = {int(k): v for k, v in (suspect_years or {}).items()}
-    if last_year and any(y >= last_year - 15 for y in sy):
-        y = max(y for y in sy if y >= last_year - 15)
+    late = {y: v for y, v in sy.items() if not v.startswith("early record")}
+    if last_year and any(y >= last_year - 15 for y in late):
+        y = max(y for y in late if y >= last_year - 15)
         return f"{y}: {sy[y]} — that year is excluded; likely a sensor or site change under one station id"
-    if len(sy) >= 3:
-        return f"{len(sy)} years excluded as far off this station's own trend ({', '.join(str(y) for y in sorted(sy))})"
+    if len(late) >= 3:
+        return f"{len(late)} years excluded as far off this station's own trend ({', '.join(str(y) for y in sorted(late))})"
     for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
         a = annual.filter(pl.col(k).is_not_null())
         if a.height < 10:

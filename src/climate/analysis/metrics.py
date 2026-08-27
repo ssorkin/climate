@@ -825,14 +825,20 @@ def window_means(
 # --- outlier years -----------------------------------------------------------------------
 
 OUTLIER_MIN_C = 3.5
-OUTLIER_MAD_MULT = 5.0
+OUTLIER_MAD_MULT = 4.0
+EARLY_BLOCK_JUMP_C = 3.0
 
 
 def outlier_years(annual: pl.DataFrame) -> dict[int, str]:
-    """Complete years whose mean high or low sits far off the station's own straight-line
-    trend: more than max(OUTLIER_MIN_C, OUTLIER_MAD_MULT × the median absolute residual).
-    These are almost always archive artifacts (a first year in the wrong units, a different
-    feed under the same id) and are excluded from every yearly statistic."""
+    """Complete years to exclude from every yearly statistic, with the reason:
+    - a year whose mean high or low sits more than max(OUTLIER_MIN_C, OUTLIER_MAD_MULT × the
+      median absolute residual) off the station's own Theil–Sen trend line;
+    - the record's first 5-year block when its mean sits more than EARLY_BLOCK_JUMP_C off the
+      next block's (an early-archive artifact, common in 1940–45).
+    Almost all such years are archive artifacts: a first year in the wrong units, a
+    different feed under the same id."""
+    from scipy import stats
+
     out: dict[int, str] = {}
     for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
         a = annual.filter(pl.col(k).is_not_null() & ~pl.col("partial"))
@@ -840,7 +846,7 @@ def outlier_years(annual: pl.DataFrame) -> dict[int, str]:
             continue
         x = a["year"].to_numpy().astype(float)
         y = a[k].to_numpy().astype(float)
-        slope, intercept = np.polyfit(x, y, 1)
+        slope, intercept, _lo, _hi = stats.theilslopes(y, x)
         resid = y - (slope * x + intercept)
         mad = float(np.median(np.abs(resid)))
         thr = max(OUTLIER_MIN_C, OUTLIER_MAD_MULT * mad)
@@ -849,6 +855,19 @@ def outlier_years(annual: pl.DataFrame) -> dict[int, str]:
                 out.setdefault(
                     int(yr), f"mean daily {label} {r:+.1f} °C off this station's trend line"
                 )
+        # early-record block test on the remaining years
+        keep = np.array([int(v) not in out for v in x])
+        blocks: dict[int, list[float]] = {}
+        for yr, v in zip(x[keep], y[keep], strict=True):
+            blocks.setdefault(int(yr) // 5 * 5, []).append(v)
+        bl = sorted((b, np.mean(v), len(v)) for b, v in blocks.items() if len(v) >= 3)
+        if len(bl) >= 2 and abs(bl[0][1] - bl[1][1]) > EARLY_BLOCK_JUMP_C:
+            for yr in x[keep]:
+                if int(yr) // 5 * 5 == bl[0][0]:
+                    out.setdefault(
+                        int(yr),
+                        f"early record: mean daily {label} {bl[0][1] - bl[1][1]:+.1f} °C off the following years",
+                    )
     return out
 
 
