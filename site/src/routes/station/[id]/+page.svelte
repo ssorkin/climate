@@ -93,6 +93,20 @@
 
   // daily.json is loaded lazily: needed for the daily explorer, raw table, and custom thresholds.
   let daily = $state(null);
+  // Hottest years: the share of nights / days above the baseline's 90th-percentile band
+  // (TN90p / TX90p), with the count those shares represent.
+  const hottest = (key, validKey) => {
+    const ix = s.indices;
+    if (!ix) return [];
+    const valid = new Map(s.annual.year.map((y, i) => [y, s.annual[validKey][i]]));
+    return ix.year
+      .map((y, i) => ({ y, pct: ix[key][i], n: ix[key][i] == null ? null : Math.round((ix[key][i] / 100) * (valid.get(y) ?? 365)) }))
+      .filter((r) => r.pct != null)
+      .sort((a, b) => b.pct - a.pct);
+  };
+  let hotNights = $derived(hottest('tn90p', 'days_valid_tmin'));
+  let hotDays = $derived(hottest('tx90p', 'days_valid_tmax'));
+  const rankOf = (list, y) => list.findIndex((r) => r.y === y) + 1;
   let ranks = $state(null);
   let curves = $state(null);
   let rankEl = $state('tmin');
@@ -299,6 +313,26 @@
     <YearCurves {curves} element="tmax" mode={curveMode} upTo={year} highlight={year} label="Days — daily high" width={540} height={300} />
   </div>
 {/if}
+{#if hotNights.length}
+  <div class="two hottest">
+    {#each [['Hottest nights', hotNights, 'nights'], ['Hottest days', hotDays, 'days']] as [title, list, noun] (title)}
+      <div>
+        <h3>{title} — years with the most {noun} above the baseline's 90th-percentile band</h3>
+        <ol class="rank">
+          {#each list.slice(0, 10) as r (r.y)}
+            <li class:sel={r.y === year}><button onclick={() => (year = r.y)}>{r.y}</button> <span class="n">{r.n} {noun}</span> <span class="muted small">{r.pct.toFixed(0)}% of the year</span></li>
+          {/each}
+        </ol>
+        {#if year != null && rankOf(list, year) > 10}
+          <p class="small muted">{year}: #{rankOf(list, year)} of {list.length} — {list.find((r) => r.y === year).n} {noun}</p>
+        {:else if year != null && rankOf(list, year) === 0}
+          <p class="small muted">{year} is incomplete or excluded and is not ranked.</p>
+        {/if}
+      </div>
+    {/each}
+  </div>
+  <p class="small muted">In an unchanged climate about 10% of {'nights'} and days — roughly 36 a year — would sit above that band. Click a year to set the slider.</p>
+{/if}
 
 <Controls thresholds={s.thresholds_f} bind:family bind:threshold />
 
@@ -493,6 +527,43 @@
   }
   .curves {
     margin-top: 0.6rem;
+  }
+  .hottest {
+    margin-top: 1rem;
+  }
+  .hottest h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.3rem;
+  }
+  .rank {
+    margin: 0;
+    padding-left: 1.4rem;
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+  .rank li {
+    margin: 0.1rem 0;
+    break-inside: avoid;
+  }
+  .rank li button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+    font-weight: 650;
+    color: #1f1b16;
+    cursor: pointer;
+    text-decoration: underline dotted #c9c2b6;
+  }
+  .rank li.sel button {
+    background: #2b2722;
+    color: #fffdf9;
+    padding: 0 0.35rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .rank .n {
+    color: #52514e;
   }
   .row {
     display: flex;
