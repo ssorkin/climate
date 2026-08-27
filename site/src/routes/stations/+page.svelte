@@ -73,7 +73,7 @@
 </div>
 <p class="small muted">
   Counts are per year: the 1951–1980 average, then the last ten complete years; "—" where the station has no complete years in a window. A day's high and low are the extremes of its hourly readings, which read about 0.5 °C below a thermometer's peak — the site's ≥ 95°F is "a 95°F reading" (<a href="/methods">Methods</a>).
-  The famous downtown Los Angeles record is not here: its hourly record begins at USC in 1999 and is listed as Downtown LA (USC); the older Civic Center series moved between eight sites (<a href="/methods#downtown">why</a>).
+  The famous downtown Los Angeles record is not here: its hourly record begins at USC in 1999 and is listed as Downtown LA (USC); the older Civic Center series moved between eight sites (<a href="/methods#civic-center">why</a>).
 </p>
 
 <style>
