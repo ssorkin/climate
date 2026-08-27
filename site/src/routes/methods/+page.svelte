@@ -89,7 +89,11 @@
   are almost all zeros — 95°F days at a beach station, frost nights at the coast — get no trend at all, because a median slope through
   zeros is meaningless. Daily
   "typical range" bands are the 10th–90th percentile of the baseline years for each calendar date (±{ix.completeness.doy_window_days ?? 7} days).
-  A daily record requires at least {ix.completeness.record_min_prior_years} prior years of data for that date, so a record set in 1895 over two prior years doesn't count.
+  A daily record requires at least {ix.completeness.record_min_prior_years} prior years of data for that date. One more filter: a
+  complete year whose mean high or low sits far off the station's own trend line — more than 3.5°C, or five times the
+  station's typical year-to-year deviation — is excluded from every yearly statistic and listed on the station page; almost
+  all such years are archive artifacts (a first year in the wrong units, a different feed under the same id). A station gets
+  a visible warning when such a year is recent or repeated, or when its own 5-year means jump by more than 3°C.
 </p>
 
 <h2 id="hourly">Hour by hour</h2>

@@ -820,3 +820,56 @@ def window_means(
         out[c] = round(float(s.mean()), 2) if len(s) >= need else None
         out[f"n_{c}"] = len(s)
     return out
+
+
+# --- outlier years -----------------------------------------------------------------------
+
+OUTLIER_MIN_C = 3.5
+OUTLIER_MAD_MULT = 5.0
+
+
+def outlier_years(annual: pl.DataFrame) -> dict[int, str]:
+    """Complete years whose mean high or low sits far off the station's own straight-line
+    trend: more than max(OUTLIER_MIN_C, OUTLIER_MAD_MULT × the median absolute residual).
+    These are almost always archive artifacts (a first year in the wrong units, a different
+    feed under the same id) and are excluded from every yearly statistic."""
+    out: dict[int, str] = {}
+    for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
+        a = annual.filter(pl.col(k).is_not_null() & ~pl.col("partial"))
+        if a.height < 10:
+            continue
+        x = a["year"].to_numpy().astype(float)
+        y = a[k].to_numpy().astype(float)
+        slope, intercept = np.polyfit(x, y, 1)
+        resid = y - (slope * x + intercept)
+        mad = float(np.median(np.abs(resid)))
+        thr = max(OUTLIER_MIN_C, OUTLIER_MAD_MULT * mad)
+        for yr, r in zip(x, resid, strict=True):
+            if abs(r) > thr:
+                out.setdefault(
+                    int(yr), f"mean daily {label} {r:+.1f} °C off this station's trend line"
+                )
+    return out
+
+
+def drop_years(df: pl.DataFrame, years: set[int], year_col: str = "year") -> pl.DataFrame:
+    """Null every metric of the given years and mark them incomplete (both elements)."""
+    if not years:
+        return df
+    keep = ~pl.col(year_col).is_in(list(years))
+    exprs = []
+    for c, dt in df.schema.items():
+        if c in (year_col, "month", "days_in_year", "days_in_month", "days_in_season", "partial"):
+            continue
+        if (
+            c.startswith("days_valid")
+            or c.startswith("jja_days_valid")
+            or c.endswith("_risk")
+            or c.endswith("_exp")
+        ):
+            continue
+        if dt == pl.Boolean:
+            exprs.append(pl.when(keep).then(pl.col(c)).otherwise(False).alias(c))
+        else:
+            exprs.append(pl.when(keep).then(pl.col(c)).otherwise(None).alias(c))
+    return df.with_columns(exprs)

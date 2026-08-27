@@ -272,7 +272,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     # own highs or lows almost certainly marks a sensor or site change under one id (e.g. a
     # closed airfield whose id later carried a mesonet feed). Gradual warming, however large,
     # does not trip it. Flagged, not hidden.
-    suspect = suspect_step(annual)
+    suspect = suspect_step(annual, meta.get("suspect_years"), meta.get("last_complete_year"))
     w = meta["windows"]
     summary["suspect_step"] = suspect
     n1 = dump(SITE_DATA_DIR / "stations" / sid / "summary.json", summary)
@@ -388,11 +388,18 @@ SUSPECT_STEP_C = 3.0
 SUSPECT_RESID_C = 3.5
 
 
-def suspect_step(annual: pl.DataFrame) -> str | None:
-    """Two tests on the station's own complete-year means of highs and lows:
-    (a) a jump > SUSPECT_STEP_C between consecutive 5-year block means (3+ years each);
-    (b) a single year more than SUSPECT_RESID_C off the station's own straight-line trend.
-    Gradual warming, however large, trips neither."""
+def suspect_step(
+    annual: pl.DataFrame, suspect_years: dict | None = None, last_year: int | None = None
+) -> str | None:
+    """Station-level flag: (a) a jump > SUSPECT_STEP_C between consecutive 5-year block means
+    of the (already outlier-cleaned) record, or (b) an outlier year within the last 15 years
+    (it would distort "now"), or (c) three or more outlier years."""
+    sy = {int(k): v for k, v in (suspect_years or {}).items()}
+    if last_year and any(y >= last_year - 15 for y in sy):
+        y = max(y for y in sy if y >= last_year - 15)
+        return f"{y}: {sy[y]} — that year is excluded; likely a sensor or site change under one station id"
+    if len(sy) >= 3:
+        return f"{len(sy)} years excluded as far off this station's own trend ({', '.join(str(y) for y in sorted(sy))})"
     for k, label in (("tmax_mean_c", "highs"), ("tmin_mean_c", "lows")):
         a = annual.filter(pl.col(k).is_not_null())
         if a.height < 10:
@@ -411,16 +418,6 @@ def suspect_step(annual: pl.DataFrame) -> str | None:
                     f"mean daily {label} jumped {cur['m'] - prev['m']:+.1f} °C between "
                     f"{prev['b']}–{prev['b'] + 4} and {cur['b']}–{cur['b'] + 4} — likely a sensor or site change under one station id"
                 )
-        x = a["year"].to_numpy().astype(float)
-        y = a[k].to_numpy().astype(float)
-        slope, intercept = np.polyfit(x, y, 1)
-        resid = y - (slope * x + intercept)
-        i = int(np.argmax(np.abs(resid)))
-        if abs(resid[i]) > SUSPECT_RESID_C:
-            return (
-                f"mean daily {label} in {int(x[i])} sit {resid[i]:+.1f} °C off this station's own trend line — "
-                f"likely a sensor or site change under one station id"
-            )
     return None
 
 

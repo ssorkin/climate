@@ -267,6 +267,9 @@
   {#if !standard && !daily}Computing from the daily record…{/if}
   {#if selectedCount != null}<b>{year}: {selectedCount} {fam.noun}{partial[years.indexOf(year)] ? ' so far' : ''}.</b>{#if !selectedComplete && selectedMissing} {selectedMissing} days not observed, but on dates that {selectedExp === 0 ? 'have never' : 'rarely'} reach {thrLabel} here (expected effect {selectedExp?.toFixed(1)} {fam.noun}){#if gaps.length}: {gapText}{/if}.{/if}{:else if selectedLower != null && year != null}<b>{year}: at least {selectedLower} {fam.noun}</b> — {selectedMissing} days not observed, expected to add about {selectedExp?.toFixed(1)} {fam.noun}{#if gaps.length}: {gapText}{/if}.{/if}
 </p>
+{#if s.suspect_years && Object.keys(s.suspect_years).length}
+  <p class="small muted">Excluded as far off this station's own trend line (likely archive or sensor artifacts): {Object.entries(s.suspect_years).map(([y, m]) => `${y} (${m})`).join('; ')}.</p>
+{/if}
 <AnnualBars {years} values={annual} lower={annualLower} expected={annualExp} {modeled} {daysValid} {daysTotal} {partial} {decades} selected={year} onselect={(y) => (year = y)} color={family === 'hot' || family === 'warm' ? HEAT : COOL} unitLabel={fam.noun} {trendLabel} {baseline} {annotations} />
 
 {#if year != null}

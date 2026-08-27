@@ -420,11 +420,16 @@ def check_suspect_steps() -> list[Finding]:
     from climate.paths import ANALYSIS_DIR
 
     out = []
+    import json
+
     for sid, short in _stations():
         p = ANALYSIS_DIR / sid / "annual.parquet"
         if not p.exists():
             continue
-        msg = suspect_step(pl.read_parquet(p))
+        meta = json.loads((ANALYSIS_DIR / sid / "meta.json").read_text())
+        msg = suspect_step(
+            pl.read_parquet(p), meta.get("suspect_years"), meta.get("last_complete_year")
+        )
         if msg:
             out.append(Finding("suspect_step", "warning", None, sid, f"{short}: {msg}"))
     return out
