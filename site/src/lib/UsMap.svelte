@@ -6,6 +6,9 @@
    */
   import { onMount } from 'svelte';
   import { HEAT_RAMP, COOL_RAMP } from '$lib/palette.js';
+  import '$lib/spiral.css';
+  import { loadCurves } from '$lib/curves.js';
+  import { makeSpiralMarker, removeSpiralMarker, paintSpiralMarker, layoutSpirals, pickVisible } from '$lib/spiralMarker.js';
 
   let {
     stations = [], // [{id, short, state, lat, lon, ...}]
@@ -17,8 +20,17 @@
     height = '560px',
     center = [39.5, -98],
     zoom = 3.6,
-    stateFilter = ''
+    stateFilter = '',
+    spirals = 'off', // 'off' | 'tmax' | 'tmin' | 'both': climate spirals for the longest records in view
+    year = null,
+    spiralSize = 96,
+    maxSpirals = 24
   } = $props();
+
+  let maplibregl;
+  let spiralMarkers = new Map();
+  const curveCache = new Map();
+  let spiralGen = 0;
 
   let el;
   let map;
@@ -58,7 +70,7 @@
     return ['interpolate', ['linear'], ['get', 't'], ...stops];
   }
   onMount(async () => {
-    const maplibregl = (await import('maplibre-gl')).default;
+    maplibregl = (await import('maplibre-gl')).default;
     await import('maplibre-gl/dist/maplibre-gl.css');
     map = new maplibregl.Map({
       container: el,
@@ -132,6 +144,7 @@
         popup.setLngLat(e.lngLat).setText(txt).addTo(map);
       });
       map.on('mouseleave', 'st-circles', () => popup.remove());
+      map.on('moveend', () => refreshSpirals());
       ready = true;
     };
     // The style may already be loaded (cached) — or fail (offline); add the data layer either way.
@@ -149,6 +162,45 @@
     map.getSource('st')?.setData(geojson());
     map.setPaintProperty('st-circles', 'circle-color', rampExpr(cool ? COOL_RAMP : HEAT_RAMP));
   });
+  // Spirals: pick the longest records in view that fit, load their curves, draw.
+  $effect(() => { spirals; stateFilter; if (ready) refreshSpirals(); });
+  $effect(() => { year; spirals; if (ready) paintSpirals(); });
+
+  async function refreshSpirals() {
+    if (!map) return;
+    const gen = ++spiralGen;
+    if (spirals === 'off') {
+      for (const mk of spiralMarkers.values()) removeSpiralMarker(mk);
+      spiralMarkers.clear();
+      return;
+    }
+    const pool = stations
+      .filter((s) => (s.complete_years ?? 0) >= 30 && (!stateFilter || s.state === stateFilter))
+      .sort((a, b) => (b.complete_years ?? 0) - (a.complete_years ?? 0));
+    const chosen = pickVisible(map, pool, spiralSize, maxSpirals);
+    const ids = new Set(chosen.map((s) => s.id));
+    for (const [id, mk] of spiralMarkers) if (!ids.has(id)) { removeSpiralMarker(mk); spiralMarkers.delete(id); }
+    await Promise.all(chosen.map(async (s) => {
+      if (!curveCache.has(s.id)) curveCache.set(s.id, await loadCurves(s.id).catch(() => null));
+    }));
+    if (gen !== spiralGen) return;
+    for (const s of chosen) {
+      if (!curveCache.get(s.id) || spiralMarkers.has(s.id)) continue;
+      spiralMarkers.set(s.id, makeSpiralMarker(maplibregl, map, s, spiralSize, onselect));
+    }
+    paintSpirals();
+    layoutSpirals(map, spiralMarkers, spiralSize);
+  }
+  function paintSpirals() {
+    if (spirals === 'off') return;
+    for (const mk of spiralMarkers.values()) {
+      const c = curveCache.get(mk.s.id);
+      if (!c) continue;
+      const score = mk.s.score_tmax != null || mk.s.score_tmin != null ? { tmax: mk.s.score_tmax, tmin: mk.s.score_tmin } : null;
+      paintSpiralMarker(mk, c, spirals, year, { score, base: null, fallback: !!mk.s.base_fallback });
+    }
+  }
+
   export function flyTo(lat, lon, z = 8) {
     map?.flyTo({ center: [lon, lat], zoom: z });
   }

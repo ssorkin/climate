@@ -152,17 +152,16 @@ def analyze_station(
 
     base_years = n_complete(b0, b1)
     has_baseline = base_years >= 20  # the fixed 1951–1980 base every cross-station figure uses
-    # A station without that record is scored against its own first 30 years, clearly marked,
-    # so it still gets ranks, bands and a score — never averaged with the fixed-base stations.
+    # A station without that record is scored against its own earliest complete years, clearly
+    # marked, so it still gets ranks, bands and a score — never averaged with fixed-base stations.
     baseline_used: tuple[int, int] | None = (b0, b1) if has_baseline else None
     baseline_fallback = False
     if not has_baseline:
-        comp = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"]
-        # earliest 30-year window holding 20 complete years, with 10+ years after it to score
-        for f0 in comp.to_list():
-            if n_complete(f0, f0 + 29) >= 20 and int(comp.max()) >= f0 + 39:
-                baseline_used, baseline_fallback = (f0, f0 + 29), True
-                break
+        comp = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"].to_list()
+        # its earliest 20 complete years (a gappy record may spread them over more than 30
+        # calendar years), provided ten or more years follow them to be scored
+        if len(comp) >= 20 and comp[-1] >= comp[19] + 10:
+            baseline_used, baseline_fallback = (comp[0], comp[19]), True
     scored = baseline_used is not None
     doy = M.doy_climatology(daily, cfg, baseline_used)
     ranks = M.percentile_ranks(daily, cfg, baseline_used) if scored else None

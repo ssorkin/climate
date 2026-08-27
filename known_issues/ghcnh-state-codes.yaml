@@ -1,0 +1,17 @@
+id: ghcnh-state-codes
+title: GHCNh station list carries a wrong state code for at least one NWS site
+kind: metadata
+dataset: ghcnh
+years: []
+stations:
+  - USL000SGNW3   # "SHEBOYGAN WI" at 43.75N, -87.71W — NOAA's list says state TX
+description: >-
+  NOAA's ghcnh-station-list.csv gives a wrong state for at least one NWS-network site:
+  Sheboygan, Wisconsin is listed as Texas, so it appears under the Texas state filter on
+  the national map while sitting on Lake Michigan. The station's coordinates, name and
+  data are fine; stations/us.yaml inherits NOAA's code.
+handling: >-
+  Not patched. We show NOAA's state code as published. A coordinate-based state lookup
+  (state polygons) would fix this class of error for all ~180 USL sites; until then the
+  national map's state filter follows NOAA.
+source: https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-station-list.csv

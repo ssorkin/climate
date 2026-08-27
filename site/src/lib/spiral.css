@@ -1,0 +1,79 @@
+/* Spiral map markers (LA and national maps) */
+.spiral {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  line-height: 0;
+}
+.spiral canvas {
+  display: block;
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.82);
+  box-shadow: 0 0 0 1px rgba(43, 39, 34, 0.12);
+}
+.spiral:hover canvas {
+  box-shadow: 0 0 0 2px #2b2722;
+}
+.spiral .nm {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 2px);
+  font-size: 11px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #2b2722;
+  background: rgba(255, 253, 249, 0.85);
+  padding: 1px 5px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.spiral .score {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  z-index: 1;
+  min-width: 26px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  border: 1.5px solid #fffdf9;
+  box-shadow: 0 0 0 1px rgba(43, 39, 34, 0.25);
+}
+.spiral .score.day {
+  background: #d94f22;
+  color: #fffdf9;
+}
+.spiral .score.night {
+  right: auto;
+  left: -4px;
+  background: #2a78d6;
+  color: #fffdf9;
+}
+.spiral .score.dim {
+  opacity: 0.45;
+}
+.spiral .leader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.spiral .leader line {
+  stroke: #2b2722;
+  stroke-width: 1;
+  opacity: 0.6;
+}
+.spiral-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2b2722;
+  border: 1.5px solid #fffdf9;
+}

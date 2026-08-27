@@ -757,6 +757,10 @@ def run_export(region: str = "all") -> None:
                         h.get("tmin_trend_per_decade_c"),
                         h.get("tmax_trend_per_decade_c"),
                         1 if h.get("suspect_step") else 0,
+                        (h.get("score") or {}).get("tmax"),
+                        (h.get("score") or {}).get("tmin"),
+                        1 if h.get("baseline_fallback") else 0,
+                        e.get("complete_years"),
                     ]
                 )
                 for m in MATRIX_METRICS:
@@ -798,6 +802,10 @@ def run_export(region: str = "all") -> None:
                         "tmin_trend_per_decade_c",
                         "tmax_trend_per_decade_c",
                         "suspect_step",
+                        "score_tmax",
+                        "score_tmin",
+                        "base_fallback",
+                        "complete_years",
                     ],
                     "stations": compact,
                     "matrix": {

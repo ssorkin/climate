@@ -20,6 +20,14 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
 
 **Handling:** Values are never shifted or adjusted. Monthly and annual aggregates are robust to the one-day offset. The daily explorer shows the observation time for each period and notes the offset when the reading is before noon. Changes in observation time are surfaced by `clim check` and on each station page.
 
+### GHCNh station list carries a wrong state code for at least one NWS site
+
+*metadata, ghcnh * — id `ghcnh-state-codes`
+
+NOAA's ghcnh-station-list.csv gives a wrong state for at least one NWS-network site: Sheboygan, Wisconsin is listed as Texas, so it appears under the Texas state filter on the national map while sitting on Lake Michigan. The station's coordinates, name and data are fine; stations/us.yaml inherits NOAA's code.
+
+**Handling:** Not patched. We show NOAA's state code as published. A coordinate-based state lookup (state polygons) would fix this class of error for all ~180 USL sites; until then the national map's state filter follows NOAA.
+
 ## Check findings
 
 ### completeness

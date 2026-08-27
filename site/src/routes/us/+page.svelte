@@ -20,7 +20,8 @@
       hot95_baseline: col(r, 'hot95_baseline'), hot95_last10: col(r, 'hot95_last10'),
       warm70_baseline: col(r, 'warm70_baseline'), warm70_last10: col(r, 'warm70_last10'),
       frost_baseline: col(r, 'frost_baseline'), frost_last10: col(r, 'frost_last10'),
-      tmin_trend: col(r, 'tmin_trend_per_decade_c'), tmax_trend: col(r, 'tmax_trend_per_decade_c'), suspect: !!col(r, 'suspect_step')
+      tmin_trend: col(r, 'tmin_trend_per_decade_c'), tmax_trend: col(r, 'tmax_trend_per_decade_c'), suspect: !!col(r, 'suspect_step'),
+      score_tmax: col(r, 'score_tmax'), score_tmin: col(r, 'score_tmin'), base_fallback: !!col(r, 'base_fallback'), complete_years: col(r, 'complete_years') ?? (col(r, 'last_year') - col(r, 'first_year'))
     }))
   );
   const METRICS = {
@@ -31,6 +32,7 @@
   let metric = $state('warm70');
   let year = $state(2025);
   let stateFilter = $state('');
+  let spirals = $state('off');
   let activeOnly = $state(false);
   let restored = $state(false);
   let matrices = $state({});
@@ -133,13 +135,18 @@
     {#each states as st (st)}<option value={st}>{st}</option>{/each}
   </select>
   <label class="small"><input type="checkbox" bind:checked={activeOnly} /> still reporting only</label>
+  <span class="sep"></span>
+  <span class="small muted">Spirals:</span>
+  {#each [['off', 'off'], ['tmax', 'days'], ['tmin', 'nights'], ['both', 'both']] as [k, lbl] (k)}
+    <button class="pill" class:on={spirals === k} onclick={() => (spirals = k)}>{lbl}</button>
+  {/each}
 </div>
 
 <YearScrubber {years} bind:value={year} playable stepMs={180} />
 
-<UsMap bind:this={mapRef} {stations} {values} {vmax} cool={M.cool} unitLabel={M.noun} onselect={selectStation} center={ix.region.center} zoom={ix.region.zoom} {stateFilter} />
+<UsMap bind:this={mapRef} {stations} {values} {vmax} cool={M.cool} unitLabel={M.noun} onselect={selectStation} center={ix.region.center} zoom={ix.region.zoom} {stateFilter} {spirals} {year} />
 <p class="small muted">
-  {#if values}{nWithData.toLocaleString()} stations have data for {year}{stateFilter ? ` in ${stateFilter}` : ''}. Color scale is fixed across years (top = {vmax} {M.noun}, the 98th percentile of all station-years); gray-ringed circles are lower bounds from incomplete years.{:else}Loading…{/if}
+  {#if spirals !== 'off'}Spirals: every year as a ring for the longest records that fit in view (zoom in for more) — January at the top, radius = the 15-day-mean daily {spirals === 'tmin' ? 'low' : spirals === 'tmax' ? 'high' : 'high (red) and low (blue)'}, palest = oldest, bold = the year on the slider, shaded = the station's 1951–80 middle 80% / 50%; badges: where a typical day (red) and night (blue) of its last ten complete years fall among the baseline's (50 = no change; † = scored against its own earliest years). {/if}  {#if values}{nWithData.toLocaleString()} stations have data for {year}{stateFilter ? ` in ${stateFilter}` : ''}. Color scale is fixed across years (top = {vmax} {M.noun}, the 98th percentile of all station-years); gray-ringed circles are lower bounds from incomplete years.{:else}Loading…{/if}
 </p>
 
 {#if ranked.length}

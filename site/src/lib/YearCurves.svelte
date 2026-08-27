@@ -10,7 +10,7 @@
   import { yearRows, bandRows } from '$lib/curves.js';
   import { HEAT_DARK, COOL_DARK, MUTED, INK } from '$lib/palette.js';
 
-  let { curves, element = 'tmin', from = 0, mode = 'all', smooth = 7, height = 300, compact = false, label = '', sub = '' } = $props();
+  let { curves, element = 'tmin', from = 0, mode = 'all', smooth = 7, height = 300, compact = false, label = '', sub = '', upTo = null, highlight = null } = $props();
   const W = $derived(compact ? 360 : 760);
   const M = $derived(compact ? { top: 6, right: 6, bottom: 16, left: 26 } : { top: 14, right: 12, bottom: 24, left: 40 });
   let canvas = $state(null);
@@ -18,7 +18,12 @@
   const conv = (c) => (units.f ? c * 1.8 + 32 : c);
 
   let years = $derived(yearRows(curves, element, { from, smooth }));
-  let shown = $derived(mode === 'all' ? years : years.filter((r, i, a) => r.y % 5 === 0 || i >= a.length - 5));
+  let shown = $derived.by(() => {
+    let rows = mode === 'all' ? years : years.filter((r, i, a) => r.y % 5 === 0 || i >= a.length - 5);
+    if (upTo != null) rows = rows.filter((r) => r.y <= upTo || r.y === highlight);
+    return rows;
+  });
+  let bold = $derived(highlight ?? shown[shown.length - 1]?.y);
   let band = $derived(bandRows(curves, element));
   let ext = $derived.by(() => {
     let lo = Infinity, hi = -Infinity;
@@ -32,7 +37,7 @@
   const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((c, i) => Math.round(c + (B[i] - c) * t)).join(',')})`; };
   const dark = $derived(element === 'tmin' ? COOL_DARK : HEAT_DARK);
   const light = '#e6dfd3';
-  let latest = $derived(shown[shown.length - 1]?.y);
+  let latest = $derived(years[years.length - 1]?.y);
 
   $effect(() => {
     if (!canvas) return;
@@ -50,13 +55,14 @@
     if (band) { fillBand(band.p10, band.p90, 'rgba(120,110,95,0.16)'); fillBand(band.p25, band.p75, 'rgba(120,110,95,0.20)'); }
     ctx.strokeStyle = '#e8e1d5'; ctx.lineWidth = 1;
     for (let i = 0; i < 12; i++) { const x = xs(DOY_MONTH_STARTS[i]) - 0.5; ctx.beginPath(); ctx.moveTo(x, M.top); ctx.lineTo(x, height - M.bottom); ctx.stroke(); }
-    const n = shown.length, y0 = shown[0]?.y ?? from, y1 = shown[n - 1]?.y ?? from;
-    for (const r of shown) {
+    const y0 = years[0]?.y ?? from, y1 = years[years.length - 1]?.y ?? from; // shading keyed to the full record
+    const ordered = [...shown.filter((r) => r.y !== bold), ...shown.filter((r) => r.y === bold)];
+    for (const r of ordered) {
       const t = y1 === y0 ? 1 : (r.y - y0) / (y1 - y0);
       const isH = hover && hover.year === r.y;
-      const isLatest = r.y === latest;
-      ctx.strokeStyle = isH ? INK : mix(light, dark, Math.pow(t, 1.8));
-      ctx.lineWidth = isH ? 2.4 : isLatest ? (compact ? 1.6 : 2.2) : mode === 'all' ? (compact ? 0.7 : 0.9) : 1.5;
+      const isLatest = r.y === bold;
+      ctx.strokeStyle = isH ? INK : isLatest ? dark : mix(light, dark, Math.pow(t, 1.8));
+      ctx.lineWidth = isH ? 2.4 : isLatest ? (compact ? 1.6 : 2.4) : mode === 'all' ? (compact ? 0.7 : 0.9) : 1.5;
       ctx.beginPath();
       let pen = false;
       for (let d = 0; d < 366; d++) {
@@ -107,14 +113,14 @@
   {:else}
     <div class="legend small">
       <span class="grad" style="background: linear-gradient(90deg, {light}, {dark})"></span>
-      <span>{shown[0]?.y ?? from} → {latest ?? ''} (thick line)</span>
+      <span>{shown[0]?.y ?? from} → {shown[shown.length - 1]?.y ?? ''}; thick line: <b>{bold ?? ''}</b></span>
       {#if band}<span class="band">shaded: the baseline's middle 80% and middle 50% for each date; dashed: its median</span>{/if}
     </div>
     <div class="tip small">
       {#if hover}
         <b>{hover.year}</b>, around {hover.label}: {smooth}-day mean {element === 'tmin' ? 'low' : 'high'} {fmt(hover.v)}{hover.dMed != null ? `, ${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs the baseline median for that date` : ''}
       {:else}
-        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any baseline year at that date.{/if}
+        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent; the thick line is {bold ?? 'the latest year'}.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any baseline year at that date.{/if}
       {/if}
     </div>
   {/if}
