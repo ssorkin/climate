@@ -7,11 +7,11 @@
   onMount(() => loadUnits(page.url.searchParams));
 </script>
 
-<div class="shell" class:wide={page.url.pathname === '/' || page.url.pathname.startsWith('/map') || page.url.pathname.startsWith('/us')}>
+<div class="shell" class:wide={page.url.pathname === '/' || page.url.pathname.startsWith('/stations') || page.url.pathname.startsWith('/us')}>
   <header>
     <a class="brand" href="/">climate<span>.sorkinlabs</span></a>
     <nav>
-      <a href="/map">LA stations</a>
+      <a href="/stations">LA stations</a>
       <a href="/us">US map</a>
       <a href="/methods">Methods</a>
       <a href="/data">Data</a>
