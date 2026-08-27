@@ -66,13 +66,13 @@ Volunteer (COOP, ids USC*) stations record the 24-hour max/min at a fixed local 
   - Anchorage Lake Hood Sea Plane Ba: last TMAX 240 days ago
 ### suspect_step
 
-- 🟡 22 national station(s): 2019: mean daily highs +3.6 °C off this station's trend line …
-  - Barrow Airport: 2019: mean daily highs +3.6 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
-  - Barter Is WSO Airport: 2019: mean daily lows +4.1 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
+- 🟡 15 national station(s): mean daily highs jumped +4.2 °C between 1985–1989 and 2015–2 …
+  - Barter Is WSO Airport: mean daily highs jumped +4.2 °C between 1985–1989 and 2015–2019 — likely a sensor or site change under one station id
   - Bethel Airport: mean daily lows jumped +3.0 °C between 2010–2014 and 2015–2019 — likely a sensor or site change under one station id
   - Bettles Airport: mean daily highs jumped +3.2 °C between 1970–1974 and 1975–1979 — likely a sensor or site change under one station id
-  - King Salmon: 2019: mean daily highs +3.8 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
-  - Kotzebue Airport: 2019: mean daily highs +3.9 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
+  - Kotzebue Airport: mean daily highs jumped -3.2 °C between 2015–2019 and 2020–2024 — likely a sensor or site change under one station id
+  - Nenana Municipal Airport: 2012: mean daily highs +6.7 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
+  - Fresno Chandler Dwtn Airport: 2019: mean daily lows +3.9 °C off this station's trend line — that year is excluded; likely a sensor or site change under one station id
 ### suspicious_values
 
 - 🟡 Ontario Airport: 2 suspicious unflagged value(s)
