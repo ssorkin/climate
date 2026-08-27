@@ -8,8 +8,8 @@
   let { stations = [], rowH = 18 } = $props();
   let rows = $derived(
     stations
-      .filter((s) => s.headline?.rank_tmin_last10 != null && s.headline?.rank_tmax_last10 != null)
-      .map((s) => ({ s, n: s.headline.rank_tmin_last10, d: s.headline.rank_tmax_last10 }))
+      .filter((s) => s.headline?.score?.tmin != null && s.headline?.score?.tmax != null)
+      .map((s) => ({ s, n: s.headline.score.tmin, d: s.headline.score.tmax, span: s.headline.score.tmin_span, fb: !!s.headline.baseline_fallback, base: s.headline.base_period }))
       .sort((a, b) => b.n - a.n)
   );
   const W = 620, L = 170, R = 20;
@@ -28,7 +28,7 @@
     {#each rows as r, i (r.s.id)}
       {@const y = 16 + i * rowH}
       <rect x="0" y={y - rowH / 2} width={W} height={rowH} fill="transparent" onpointerenter={() => (hover = r.s.id)} />
-      <text x={L - 8} y={y + 3.5} text-anchor="end" font-size="10.5" fill={INK}>{r.s.short}</text>
+      <text x={L - 8} y={y + 3.5} text-anchor="end" font-size="10.5" fill={INK}>{r.s.short}{r.fb ? ' †' : ''}</text>
       <line x1={x(Math.min(r.n, r.d))} x2={x(Math.max(r.n, r.d))} y1={y} y2={y} stroke={AXIS} stroke-width="1.5" />
       <circle cx={x(r.d)} cy={y} r="5" fill={SURFACE} stroke={HEAT} stroke-width="1.8" />
       <circle cx={x(r.n)} cy={y} r="5" fill={COOL} stroke={SURFACE} stroke-width="1.2" />
@@ -38,9 +38,9 @@
   <div class="tip small">
     {#if hover}
       {@const r = rows.find((q) => q.s.id === hover)}
-      <b>{r.s.short}</b>, last ten years: a typical night is warmer than {Math.round(r.n)}% of 1951–80 nights at the same date; a typical day, warmer than {Math.round(r.d)}% of days.
+      <b>{r.s.short}</b>, {r.span ? `${r.span[0]}–${r.span[1]}` : 'last ten years'}: a typical night is warmer than {Math.round(r.n)}% of {r.base ? `${r.base[0]}–${r.base[1]}` : 'baseline'} nights at the same date; a typical day, warmer than {Math.round(r.d)}% of days.{r.fb ? ' † Scored against its own first 30 years — no 1951–80 record.' : ''}
     {:else}
-      Where a typical night (filled) and day (hollow) of the last ten years fall among 1951–1980 readings for the same time of year.
+      Where a typical night (filled) and day (hollow) of each station's last ten complete years fall among 1951–1980 readings for the same time of year.{rows.some((r) => r.fb) ? ' † No 1951–80 record: scored against the station\'s own first 30 years.' : ''}
     {/if}
   </div>
 </div>

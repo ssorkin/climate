@@ -102,19 +102,19 @@
   <canvas bind:this={canvas} style="aspect-ratio: {W} / {height}" onpointermove={onmove} onpointerleave={() => (hover = null)} aria-label={label || 'One line per year'}></canvas>
   {#if compact}
     <div class="tip small">
-      {#if hover}<b>{hover.year}</b>, {hover.label}: {fmt(hover.v)}{hover.dMed != null ? ` (${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs 1951–80)` : ''}{:else}{shown[0]?.y ?? ''} → <b>{latest ?? ''}</b>{/if}
+      {#if hover}<b>{hover.year}</b>, {hover.label}: {fmt(hover.v)}{hover.dMed != null ? ` (${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs baseline)` : ''}{:else}{shown[0]?.y ?? ''} → <b>{latest ?? ''}</b>{/if}
     </div>
   {:else}
     <div class="legend small">
       <span class="grad" style="background: linear-gradient(90deg, {light}, {dark})"></span>
       <span>{shown[0]?.y ?? from} → {latest ?? ''} (thick line)</span>
-      {#if band}<span class="band">shaded: 1951–80 middle 80% and middle 50% for each date; dashed: its median</span>{/if}
+      {#if band}<span class="band">shaded: the baseline's middle 80% and middle 50% for each date; dashed: its median</span>{/if}
     </div>
     <div class="tip small">
       {#if hover}
-        <b>{hover.year}</b>, around {hover.label}: {smooth}-day mean {element === 'tmin' ? 'low' : 'high'} {fmt(hover.v)}{hover.dMed != null ? `, ${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs the 1951–80 median for that date` : ''}
+        <b>{hover.year}</b>, around {hover.label}: {smooth}-day mean {element === 'tmin' ? 'low' : 'high'} {fmt(hover.v)}{hover.dMed != null ? `, ${hover.dMed > 0 ? '+' : ''}${(units.f ? hover.dMed * 1.8 : hover.dMed).toFixed(1)}° vs the baseline median for that date` : ''}
       {:else}
-        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any at that date in 1951–1980.{/if}
+        Each line is one year's {smooth}-day mean {element === 'tmin' ? 'daily low' : 'daily high'}, palest = oldest, darkest = most recent.{#if band} Lines riding above the shaded band are {element === 'tmin' ? 'nights' : 'days'} warmer than almost any baseline year at that date.{/if}
       {/if}
     </div>
   {/if}

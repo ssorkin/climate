@@ -29,15 +29,47 @@ _REGIONS: list[Region] = []
 _CTX: dict = {}
 
 
-def _curated_short(sid: str, default: str) -> str:
-    """A curated region's short name wins over a generated list's, whichever region is run."""
+def _score(indices: pl.DataFrame) -> dict | None:
+    """The station's score: mean percentile rank over its last ten complete years, taken from
+    the last fifteen calendar years (at least five of them complete), for highs and lows
+    separately, with the span those years cover. Anchored to complete years so a station with
+    a few recent gaps still gets one; a station that has mostly gone dark does not."""
+    out = {}
+    last = int(indices["year"].max())
+    for el in ("tmax", "tmin"):
+        rows = (
+            indices.filter(pl.col(f"rank_{el}").is_not_null() & (pl.col("year") > last - 15))
+            .sort("year")
+            .tail(10)
+        )
+        if rows.height < 5:  # fewer than five complete years in the last fifteen: no score
+            return None
+        out[el] = round(float(rows[f"rank_{el}"].mean()), 1)
+        out[f"{el}_span"] = [int(rows["year"].min()), int(rows["year"].max())]
+    return out
+
+
+def _curated(sid: str) -> tuple[Region, Station] | None:
     for reg in _REGIONS:
         if getattr(reg, "generated", False):
             continue
         for st in reg.stations:
             if st.id == sid:
-                return st.short
-    return default
+                return reg, st
+    return None
+
+
+def _curated_short(sid: str, default: str) -> str:
+    """A curated region's short name wins over a generated list's, whichever region is run."""
+    c = _curated(sid)
+    return c[1].short if c else default
+
+
+def _home_region(sid: str, default: str) -> str:
+    """A station's home region is the curated one it belongs to, whichever region is run —
+    otherwise a national run would relabel every LA station 'us' and the LA export lose it."""
+    c = _curated(sid)
+    return c[0].id if c else default
 
 
 def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataFrame) -> dict:
@@ -50,7 +82,7 @@ def station_meta(st: Station, reg: Region, stations: pl.DataFrame, inv: pl.DataF
             "short": _curated_short(st.id, st.short),
             "name": hs.name.title().replace("Airport", "Airport").replace("Afb", "AFB"),
             "noaa_name": hs.name,
-            "region": reg.id,
+            "region": _home_region(st.id, reg.id),
             "regions": region_ids_for(_REGIONS, st.id),
             "state": hs.state,
             "lat": hs.lat,
@@ -107,19 +139,35 @@ def analyze_station(
     monthly = M.drop_years(M.monthly_metrics(daily, cfg, today), set(suspect_years))
     cold = M.cold_season_metrics(daily, cfg, today)
     decades = M.decade_means(annual, cfg, cold)
-    doy = M.doy_climatology(daily, cfg)
     summer = M.summer_to_date(daily, cfg, today)
     b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
-    base_years = annual.filter(
-        (pl.col("year") >= b0)
-        & (pl.col("year") <= b1)
-        & pl.col("complete_tmax")
-        & pl.col("complete_tmin")
-    ).height
-    has_baseline = base_years >= 20
-    ranks = M.percentile_ranks(daily, cfg) if has_baseline else None
+
+    def n_complete(y0: int, y1: int) -> int:
+        return annual.filter(
+            (pl.col("year") >= y0)
+            & (pl.col("year") <= y1)
+            & pl.col("complete_tmax")
+            & pl.col("complete_tmin")
+        ).height
+
+    base_years = n_complete(b0, b1)
+    has_baseline = base_years >= 20  # the fixed 1951–1980 base every cross-station figure uses
+    # A station without that record is scored against its own first 30 years, clearly marked,
+    # so it still gets ranks, bands and a score — never averaged with the fixed-base stations.
+    baseline_used: tuple[int, int] | None = (b0, b1) if has_baseline else None
+    baseline_fallback = False
+    if not has_baseline:
+        comp = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"]
+        # earliest 30-year window holding 20 complete years, with 10+ years after it to score
+        for f0 in comp.to_list():
+            if n_complete(f0, f0 + 29) >= 20 and int(comp.max()) >= f0 + 39:
+                baseline_used, baseline_fallback = (f0, f0 + 29), True
+                break
+    scored = baseline_used is not None
+    doy = M.doy_climatology(daily, cfg, baseline_used)
+    ranks = M.percentile_ranks(daily, cfg, baseline_used) if scored else None
     indices = M.percentile_indices(daily, doy, annual, cfg, ranks)
-    if not has_baseline:  # fixed-base percentile indices need the baseline; trends in means do not
+    if not scored:  # percentile indices need a base period; trends in means do not
         indices = indices.with_columns(
             pl.lit(None, dtype=pl.Float64).alias(c) for c in ("tx90p", "tn90p", "tx10p", "tn10p")
         )
@@ -225,6 +273,9 @@ def analyze_station(
         "homogenized": homog,
         "has_baseline": bool(has_baseline),
         "baseline_years": int(base_years),
+        "baseline": list(baseline_used) if baseline_used else None,
+        "baseline_fallback": bool(baseline_fallback),
+        "score": _score(indices) if scored else None,
         "index_windows": (
             {
                 key: M.window_means(
@@ -244,7 +295,7 @@ def analyze_station(
                     y1,
                 )
                 for key, (y0, y1) in {
-                    "baseline": (b0, b1),
+                    "baseline": baseline_used or (b0, b1),
                     "last30": (last_complete - 29, last_complete),
                     "last10": (last_complete - 9, last_complete),
                 }.items()

@@ -8,7 +8,7 @@
   import { MONTHS } from '$lib/dates.js';
   import { DOY_MONTH_STARTS, doyToMonthDay, rankLut, yearMean } from '$lib/ranks.js';
 
-  let { ranks, element = 'tmin', from = 1951, to = null, label = '', compact = false, rowPx = 3, smooth = 1 } = $props();
+  let { ranks, element = 'tmin', from = 1951, to = null, label = '', compact = false, rowPx = 3, smooth = 1, baseLabel = '1951–80' } = $props();
   const LUT = rankLut(DIVERGING);
   const pageRgb = [250, 247, 242];
   let canvas = $state(null);
@@ -79,9 +79,9 @@
   {#if !compact}
     <div class="tip small">
       {#if hover}
-        <b>{hover.date}, {hover.year}</b>: {hover.v == null ? 'no reading' : `${element === 'tmin' ? 'low' : 'high'} at the ${hover.v}th percentile of 1951–80 ${element === 'tmin' ? 'nights' : 'days'} for this date`}
+        <b>{hover.date}, {hover.year}</b>: {hover.v == null ? 'no reading' : `${element === 'tmin' ? 'low' : 'high'} at the ${hover.v}th percentile of ${baseLabel} ${element === 'tmin' ? 'nights' : 'days'} for this date`}
       {:else}
-        One row per year (top = {y0}, bottom = {y1}), one column per day{smooth > 1 ? `, each a ${smooth}-day mean` : ''}. Blue: cooler than most {element === 'tmin' ? 'nights' : 'days'} at that date in 1951–1980; red: warmer than most.
+        One row per year (top = {y0}, bottom = {y1}), one column per day{smooth > 1 ? `, each a ${smooth}-day mean` : ''}. Blue: cooler than most {element === 'tmin' ? 'nights' : 'days'} at that date in {baseLabel}; red: warmer than most.
       {/if}
     </div>
   {/if}

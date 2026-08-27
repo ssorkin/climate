@@ -265,7 +265,12 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
         }
 
     summary = {
-        **{k: v for k, v in meta.items() if k not in ("inventory", "homogenized", "index_windows")},
+        **{
+            k: v
+            for k, v in meta.items()
+            if k not in ("inventory", "homogenized", "index_windows", "baseline")
+        },
+        "base_period": meta.get("baseline"),
         "indices": idx_block,
         "homogenized": homog,
         "modeled": _modeled_block(
@@ -406,7 +411,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     n2 = dump(SITE_DATA_DIR / "stations" / sid / "daily.json", daily_json)
     write_curves_bin(
         daily,
-        doy if meta.get("has_baseline") else None,
+        doy if meta.get("baseline") else None,
         SITE_DATA_DIR / "stations" / sid / "curves.bin",
     )
     if (d / "ranks.parquet").exists():
@@ -458,6 +463,9 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             .get("slope_per_decade"),
             "suspect_step": suspect,
             "has_baseline": meta.get("has_baseline", False),
+            "base_period": meta.get("baseline"),
+            "baseline_fallback": meta.get("baseline_fallback", False),
+            "score": meta.get("score"),
             "rank_tmin_last10": meta.get("index_windows", {}).get("last10", {}).get("rank_tmin"),
             "rank_tmax_last10": meta.get("index_windows", {}).get("last10", {}).get("rank_tmax"),
             "trend_rank_tmin": meta["trends"].get("rank_tmin"),
@@ -642,7 +650,13 @@ def run_export(region: str = "all") -> None:
             # Percentile indices are normalized per station, so a plain mean across the
             # stations that have a baseline is legitimate (composition barely matters).
             per_year: dict[int, dict[str, list]] = {}
-            for sid in ids:
+
+            def _fixed_base(sid: str) -> bool:  # only the 1951–1980 stations are averaged
+                mp = ANALYSIS_DIR / sid / "meta.json"
+                return mp.exists() and bool(json.loads(mp.read_text()).get("has_baseline"))
+
+            fixed_ids = [sid for sid in ids if _fixed_base(sid)]
+            for sid in fixed_ids:
                 dd = ANALYSIS_DIR / sid / "indices.parquet"
                 if not dd.exists():
                     continue
@@ -684,7 +698,7 @@ def run_export(region: str = "all") -> None:
                             "rank_tmin",
                         )
                     }
-                    for sid in ids
+                    for sid in fixed_ids
                     if (ANALYSIS_DIR / sid / "indices.parquet").exists()
                     and (df := pl.read_parquet(ANALYSIS_DIR / sid / "indices.parquet"))["tn90p"]
                     .drop_nulls()

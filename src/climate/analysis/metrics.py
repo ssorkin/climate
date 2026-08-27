@@ -640,8 +640,10 @@ def doy366(month: int, day: int) -> int:
     return date(2000, month, day).timetuple().tm_yday
 
 
-def doy_climatology(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
-    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+def doy_climatology(
+    daily: pl.DataFrame, cfg: dict, baseline: tuple[int, int] | None = None
+) -> pl.DataFrame:
+    b0, b1 = baseline or (cfg["baseline"]["start"], cfg["baseline"]["end"])
     w = cfg["doy_window_days"]
     d = daily.select("date", "tmax", "tmin").with_columns(
         pl.col("date").dt.year().alias("year"),
@@ -899,14 +901,18 @@ def drop_years(df: pl.DataFrame, years: set[int], year_col: str = "year") -> pl.
 RANK_MIN_BASELINE = 100  # baseline readings in the window needed to rank a day
 
 
-def percentile_ranks(daily: pl.DataFrame, cfg: dict) -> pl.DataFrame:
+def percentile_ranks(
+    daily: pl.DataFrame, cfg: dict, baseline: tuple[int, int] | None = None
+) -> pl.DataFrame:
     """For every day: where its high / low falls (0–100) within the station's own baseline
     distribution for that calendar date (all baseline readings within ±doy_window_days).
 
     Rank = share of baseline readings below the value, ties counted half — nonparametric, no
     normality assumed. Under an unchanged climate the annual mean rank sits near 50.
+    `baseline` overrides the configured period (a station's own first 30 years, when it has
+    no 1951–1980 record).
     """
-    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+    b0, b1 = baseline or (cfg["baseline"]["start"], cfg["baseline"]["end"])
     w = cfg["doy_window_days"]
     d = daily.select("date", "tmax", "tmin").with_columns(
         pl.col("date").dt.year().alias("year"), _doy_expr().alias("doy")

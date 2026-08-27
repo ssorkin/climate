@@ -6,7 +6,10 @@
    * are nudged apart and tethered to their true location by a thin line.
    */
   import { onMount } from 'svelte';
-  import { drawSpiral, sharedRange } from '$lib/spiral.js';
+  import { drawSpiral } from '$lib/spiral.js';
+  import { rankLut } from '$lib/ranks.js';
+  import { DIVERGING } from '$lib/palette.js';
+  const LUT = rankLut(DIVERGING);
 
   let { stations = [], curves = {}, element = 'tmax', center = [34.05, -118.3], zoom = 8.3, height = '620px', size = 108, onselect = null, year = null } = $props();
 
@@ -54,14 +57,18 @@
       const nm = document.createElement('span');
       nm.className = 'nm';
       nm.textContent = s.short;
-      box.append(leader, canvas, nm);
+      const badge = document.createElement('span');
+      badge.className = 'score day';
+      const badgeN = document.createElement('span');
+      badgeN.className = 'score night';
+      box.append(leader, canvas, nm, badge, badgeN);
       box.addEventListener('click', () => onselect?.(s.id));
       box.addEventListener('keydown', (e) => e.key === 'Enter' && onselect?.(s.id));
       const dotEl = document.createElement('div');
       dotEl.className = 'spiral-dot';
       const dot = new maplibregl.Marker({ element: dotEl, anchor: 'center' }).setLngLat([s.lon, s.lat]).addTo(map);
       const m = new maplibregl.Marker({ element: box, anchor: 'center' }).setLngLat([s.lon, s.lat]).addTo(map);
-      markers.set(s.id, { m, dot, box, canvas, line, s });
+      markers.set(s.id, { m, dot, box, canvas, line, badge, badgeN, s });
     }
     paint();
     if (map?.loaded()) fit();
@@ -81,10 +88,29 @@
   $effect(() => { element; curves; year; paint(); });
 
   function paint() {
-    const list = stations.filter((s) => curves[s.id]).map((s) => curves[s.id]);
-    if (!list.length) return;
-    const tRange = sharedRange(list, element);
-    for (const mk of markers.values()) drawSpiral(mk.canvas, curves[mk.s.id], element, { size, tRange, from: 1940, upTo: year, highlight: year });
+    for (const mk of markers.values()) {
+      drawSpiral(mk.canvas, curves[mk.s.id], element, { size, from: 1940, upTo: year, highlight: year });
+      const h = mk.s.headline ?? {};
+      const base = h.base_period ? `${h.base_period[0]}–${h.base_period[1]}` : '';
+      const fb = h.baseline_fallback ? ' (its own first 30 years; no 1951–80 record)' : '';
+      const set = (el, score, what) => {
+        if (score == null) { el.style.display = 'none'; return ''; }
+        const c = LUT[Math.round(score)];
+        el.style.display = '';
+        el.textContent = `${Math.round(score)}${h.baseline_fallback ? '†' : ''}`;
+        el.style.background = `rgb(${c.join(',')})`;
+        el.style.color = Math.abs(score - 50) > 22 ? '#fffdf9' : '#1f1b16';
+        const span = sc[`${what === 'day' ? 'tmax' : 'tmin'}_span`];
+        return `a typical ${what} of ${span ? `${span[0]}–${span[1]}` : 'the last ten years'} is warmer than ${Math.round(score)}% of ${base} ${what}s at the same date`;
+      };
+      const showDay = element !== 'tmin', showNight = element !== 'tmax';
+      const sc = h.score ?? {};
+      const td = showDay ? set(mk.badge, sc.tmax, 'day') : (mk.badge.style.display = 'none', '');
+      const tn = showNight ? set(mk.badgeN, sc.tmin, 'night') : (mk.badgeN.style.display = 'none', '');
+      mk.badgeN.classList.toggle('left', element === 'both');
+      const parts = [td, tn].filter(Boolean);
+      mk.box.title = parts.length ? `${mk.s.short}: ${parts.join('; ')}${fb}` : `${mk.s.short}: no baseline to score against`;
+    }
   }
 
   // Push overlapping spirals apart in screen space; tether each to its true spot.
@@ -160,6 +186,25 @@
     padding: 1px 5px;
     border-radius: 6px;
     white-space: nowrap;
+  }
+  :global(.spiral .score) {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: 1;
+    min-width: 26px;
+    padding: 2px 5px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 700;
+    text-align: center;
+    border: 1.5px solid #fffdf9;
+    box-shadow: 0 0 0 1px rgba(43, 39, 34, 0.25);
+  }
+  :global(.spiral .score.left) {
+    right: auto;
+    left: -4px;
   }
   :global(.spiral .leader) {
     position: absolute;

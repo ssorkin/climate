@@ -266,11 +266,11 @@
       <span class="val" class:up={hero.l > hero.b && family !== 'frost' && family !== 'coldday'} class:down={hero.l < hero.b && (family === 'frost' || family === 'coldday')}>{hero.l.toFixed(hero.l < 10 ? 1 : 0)}</span>
     </div>
     <div class="stat">
-      <span class="lbl">daily lows, trend since {s.baseline.start}</span>
+      <span class="lbl">daily lows, trend since {s.base_period.start}</span>
       <span class="val small-val">{fmtC(s.trends?.tmin_mean_c?.slope_per_decade, units.f, { sign: true, delta: true })}<span class="per"> / decade</span></span>
     </div>
     <div class="stat">
-      <span class="lbl">daily highs, trend since {s.baseline.start}</span>
+      <span class="lbl">daily highs, trend since {s.base_period.start}</span>
       <span class="val small-val">{fmtC(s.trends?.tmax_mean_c?.slope_per_decade, units.f, { sign: true, delta: true })}<span class="per"> / decade</span></span>
     </div>
   </div>
@@ -300,8 +300,8 @@
 <div class="row">
   <p class="muted">
     One line per year of {rankEl === 'tmin' ? 'daily lows' : 'daily highs'} (7-day means), palest = oldest, darkest = most recent, the thick line the latest year.
-    {#if s.has_baseline}The shaded band is the middle 80% and middle 50% of 1951–1980 readings for each date, the dashed line their median.
-    {#if s.indices?.windows?.last10?.rank_tmin != null}Over the last ten years a typical night here sits at the <b>{Math.round(s.indices.windows.last10.rank_tmin)}th</b> percentile of those baseline nights and a typical day at the <b>{Math.round(s.indices.windows.last10.rank_tmax)}th</b>; 50 would mean no change.{/if}{/if}
+    {#if s.base_period}The shaded band is the middle 80% and middle 50% of {s.base_period[0]}–{s.base_period[1]} readings for each date, the dashed line their median{s.base_period_fallback ? ' — this station has no 1951–1980 record, so its own first 30 years stand in' : ''}.
+    {#if s.score}Over its last ten complete years ({s.score.tmin_span[0]}–{s.score.tmin_span[1]}) a typical night here sits at the <b>{Math.round(s.score.tmin)}th</b> percentile of those baseline nights and a typical day at the <b>{Math.round(s.score.tmax)}th</b>; 50 would mean no change.{/if}{/if}
   </p>
   <div class="ctl">
     <div class="seg" role="tablist" aria-label="Nights or days">
@@ -318,21 +318,21 @@
   <YearCurves {curves} element={rankEl} mode={curveMode} />
 {/if}
 
-{#if s.has_baseline}
-  <h3>Every {rankEl === 'tmin' ? 'night' : 'day'} since 1951, ranked against the same date in 1951–1980</h3>
+{#if s.base_period}
+  <h3>Every {rankEl === 'tmin' ? 'night' : 'day'}, ranked against the same date in {s.base_period[0]}–{s.base_period[1]}</h3>
   <div class="row">
-    <p class="muted small">Each reading placed within this station's own 1951–1980 readings within a week of the same date: blue, cooler than most; red, warmer than most. One row per year, one column per day.</p>
+    <p class="muted small">Each reading placed within this station's own {s.base_period[0]}–{s.base_period[1]} readings within a week of the same date: blue, cooler than most; red, warmer than most. One row per year, one column per day.</p>
     <label class="small"><input type="checkbox" bind:checked={rankSmooth} /> 7-day means</label>
   </div>
   {#if ranks}
-    <RankHeatmap {ranks} element={rankEl} rowPx={4} smooth={rankSmooth ? 7 : 1} />
+    <RankHeatmap {ranks} element={rankEl} rowPx={4} smooth={rankSmooth ? 7 : 1} baseLabel={`${s.base_period[0]}–${s.base_period[1]}`} from={s.base_period[0]} />
   {/if}
 {/if}
 
-{#if s.indices}
+{#if s.indices && s.base_period}
   <h2 id="distribution">How this station's temperatures have shifted</h2>
   <p class="muted">
-    Against this station's own 1951–1980 calendar-day percentiles: the share of nights and days in the warmest tenth
+    Against this station's own {s.base_period[0]}–{s.base_period[1]} calendar-day percentiles{s.base_period_fallback ? ' (its first 30 years; no 1951–1980 record)' : ''}: the share of nights and days in the warmest tenth
     (TN90p, TX90p) and the coolest tenth (TN10p, TX10p). In an unchanged climate each would stay near 10%.
     {#if s.trends?.dtr_c}The daily temperature range (high minus low) is {s.trends.dtr_c.significant ? (s.trends.dtr_c.slope_per_decade < 0 ? 'narrowing' : 'widening') : 'not clearly changing'}{s.trends.dtr_c.significant ? ` by ${fmtC(Math.abs(s.trends.dtr_c.slope_per_decade), units.f, { delta: true })} per decade` : ''}.{/if}
   </p>

@@ -121,7 +121,7 @@
   let idx = $derived(data.indices);
   let curves = $state({});
   let rankEl = $state('tmax');
-  let curveStations = $derived(allStations.filter((s) => s.first_year <= 1975 && s.complete_years >= 40));
+  let curveStations = $derived(allStations.filter((s) => s.first_year <= 1975 && s.complete_years >= 30));
   let spiralYears = $derived.by(() => {
     const y1 = Math.max(...curveStations.map((s) => s.last_year));
     return Array.from({ length: y1 - 1940 + 1 }, (_, i) => 1940 + i);
@@ -136,8 +136,8 @@
     curves = out;
   });
   const median = (arr) => { const a = arr.filter((v) => v != null).sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : null; };
-  let nightRank = $derived(median(baseStations.map((s) => s.headline.rank_tmin_last10)));
-  let dayRank = $derived(median(baseStations.map((s) => s.headline.rank_tmax_last10)));
+  let nightRank = $derived(median(baseStations.map((s) => s.headline.score?.tmin)));
+  let dayRank = $derived(median(baseStations.map((s) => s.headline.score?.tmax)));
   let baseStations = $derived(allStations.filter((s) => s.headline?.has_baseline));
   const idxMean = (key, a, b) => {
     if (!idx) return null;
@@ -180,7 +180,7 @@
       and watch the answer drift. The drift is much larger at night than by day.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}. "Typical" is the median station's average percentile over the last ten years, each day judged
+      Latest readings through {fmtISO(latest)}. "Typical" is the median station's average percentile over its last ten complete years, each day judged
       against that station's own 1951–1980 readings within a week of the same date (<a href="/methods#ranks">how</a>). Each chart is one
       thermometer at one place: it records the city growing around the station as well as the wider climate (<a href="/methods#attribution">more</a>).
     </p>
@@ -194,9 +194,10 @@
       <div class="pillrow">
         <button class="pill" class:on={rankEl === 'tmax'} onclick={() => (rankEl = 'tmax')}>Days (daily high)</button>
         <button class="pill" class:on={rankEl === 'tmin'} onclick={() => (rankEl = 'tmin')}>Nights (daily low)</button>
+        <button class="pill" class:on={rankEl === 'both'} onclick={() => (rankEl = 'both')}>Both</button>
       </div>
     </div>
-    <p class="muted">Each spiral is one station: January at the top, the year running clockwise, and the distance from the centre the {rankEl === 'tmin' ? 'daily low' : 'daily high'} (7-day mean, one scale for every station). One ring per year — the palest from the 1940s and 50s, the darkest the last few years, the dark one the year on the slider. Where a station has a complete 1951–1980 record, the dashed ring is the median of those years for each date: rings outside it are warmer than the old normal. Click a spiral for the station.</p>
+    <p class="muted">Each spiral is one station: January at the top, the year running clockwise, and the distance from the centre the {rankEl === 'tmin' ? 'daily low' : rankEl === 'tmax' ? 'daily high' : 'daily high (outer, red) and low (inner, blue)'}, 15-day means on the station's own scale. One ring per year — the palest from the 1940s and 50s, the darkest the last few years, the bold one the year on the slider. The shaded rings are the middle 80% and middle 50% of the station's baseline years for each date and the dashed ring their median: a bold ring outside the shading is warmer than almost any baseline year at that date. The badge is the station's <b>score</b> — where a typical {rankEl === 'tmin' ? 'night' : rankEl === 'tmax' ? 'day' : 'day (red) and night (blue)'} of the last ten years falls among the baseline's, 50 meaning no change. Baseline is 1951–1980; † marks a station without that record, scored against its own first 30 years. Click a spiral for the station.</p>
     <YearScrubber years={spiralYears} bind:value={spiralYear} playable />
     <SpiralMap stations={curveStations} {curves} element={rankEl} year={spiralYear} center={region.center} zoom={region.zoom} onselect={(id) => goto(`/station/${id}#ranks`)} />
     <p class="small muted">Press play to watch the rings accumulate; drag the year to pick out one ring (drawn dark) against everything before it.</p>
@@ -204,7 +205,7 @@
 
   <section>
     <h2>Two numbers per station</h2>
-    <p class="muted">The same idea averaged over the last ten years: where a typical night and a typical day at each station now fall among 1951–1980 readings for the same time of year.</p>
+    <p class="muted">The same idea averaged over each station's last ten complete years: where a typical night and a typical day at each station now fall among 1951–1980 readings for the same time of year.</p>
     <div class="punch"><RankDots stations={allStations} /></div>
   </section>
 {/if}
