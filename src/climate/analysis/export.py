@@ -272,6 +272,7 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
     # closed airfield whose id later carried a mesonet feed). Gradual warming, however large,
     # does not trip it. Flagged, not hidden.
     suspect = suspect_step(annual)
+    w = meta["windows"]
     summary["suspect_step"] = suspect
     n1 = dump(SITE_DATA_DIR / "stations" / sid / "summary.json", summary)
 
