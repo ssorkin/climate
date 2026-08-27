@@ -78,6 +78,22 @@
   ("this summer through August 23" against every other summer through August 23). A station's latest date is always shown.
 </p>
 
+<h2 id="indices">Percentile indices: TN90p, TX90p, TN10p, TX10p, and the diurnal range</h2>
+<p>
+  A 95°F day means something different at LAX and in Van Nuys, and a 70°F night is rare at the beach and routine in the desert.
+  The site's primary measures therefore normalize each station to its own climate, following the standard climate-extremes
+  indices (ETCCDI, the family NOAA and the IPCC use): for every calendar day we take the 1951–1980 readings within ±7 days of
+  that date and find the 90th and 10th percentiles of the daily high and low. TX90p is the share of a year's days whose high
+  exceeds that day's 90th percentile; TN90p the same for nights; TX10p and TN10p the shares below the 10th percentile. In an
+  unchanged climate each hovers near 10%. Two simplifications relative to the formal definition: a ±7-day window rather than
+  ±2, and no in-base bootstrap, so the baseline years read a touch above 10% by construction. Stations lacking at least 20
+  complete years in 1951–1980 get no percentile indices. Alongside them: the June–August mean daily high and low as anomalies
+  from the baseline (they use every reading and are much less noisy than counts), and the daily temperature range (high minus
+  low) — if nights warm faster than days, it narrows. Trends on all of these are Theil–Sen slopes since 1951 with the same
+  significance rule as elsewhere. The fixed-°F counts (days ≥ 95°F, nights ≥ 70°F) remain on the site as the intuitive,
+  impact-facing layer; they are not the statistical test.
+</p>
+
 <h2 id="trends">Baseline, decades, trends</h2>
 <p>
   "Then" is {ix.baseline.start}–{ix.baseline.end}: every station has a complete record over it, it is the reference period used by
@@ -121,9 +137,12 @@
   enters any per-station statistic.
 </p>
 
-<h2>What these charts can and can't say</h2>
+<h2 id="attribution">What these charts can and can't say</h2>
 <p>
-  Each chart is one thermometer at one place. Station surroundings change over a century — pavement, buildings,
+  Each chart is one thermometer at one place. Nighttime temperatures in particular are sensitive to the urban heat island:
+  pavement, buildings and waste heat release warmth after sunset, so a growing city warms its nights more than its days — the
+  same asymmetry the wider climate produces. The site answers "what has happened at this station?", not "how much of it is
+  global warming?"; separating urban growth from regional change needs reference sites and models this site does not attempt. Station surroundings change over a century — pavement, buildings,
   irrigation, instrument upgrades — and that shows up in the record alongside regional climate change; we don't try to
   separate the two, and we don't average stations into a "Los Angeles" number. That the same shift in warm nights
   appears at a beach, a mountain, a desert town and a college campus is the reader's evidence, not ours. Cold-season

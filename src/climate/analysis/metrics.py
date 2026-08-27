@@ -891,3 +891,68 @@ def drop_years(df: pl.DataFrame, years: set[int], year_col: str = "year") -> pl.
         else:
             exprs.append(pl.when(keep).then(pl.col(c)).otherwise(None).alias(c))
     return df.with_columns(exprs)
+
+
+# --- distributional indices (ETCCDI-style) ----------------------------------------------
+
+
+def percentile_indices(
+    daily: pl.DataFrame, doy: pl.DataFrame, annual: pl.DataFrame, cfg: dict
+) -> pl.DataFrame:
+    """Per year: TX90p / TN90p / TX10p / TN10p — the share (%) of days whose high / low sits
+    above the station's own baseline 90th percentile (or below the 10th) for that calendar
+    date — plus the mean diurnal range (DTR, °C) and warm-season (JJA) mean high / low.
+
+    Percentiles come from doy_climatology: baseline years, ±doy_window_days around each
+    calendar date. Simplification vs. ETCCDI: a wider window (7 vs 2 days) and no in-base
+    bootstrap, so baseline years read a touch above 10% by construction. Years follow the
+    same completeness flags as the count metrics; anything else is null.
+    """
+    d = daily.select("date", "tmax", "tmin").with_columns(
+        pl.col("date").dt.year().alias("year"),
+        pl.col("date").dt.month().alias("month"),
+        _doy_expr().alias("doy"),
+    )
+    d = d.join(
+        doy.select("doy", "tmax_p10", "tmax_p90", "tmin_p10", "tmin_p90"), on="doy", how="left"
+    )
+    d = d.with_columns(
+        (pl.col("tmax") / 10 > pl.col("tmax_p90")).alias("tx90"),
+        (pl.col("tmax") / 10 < pl.col("tmax_p10")).alias("tx10"),
+        (pl.col("tmin") / 10 > pl.col("tmin_p90")).alias("tn90"),
+        (pl.col("tmin") / 10 < pl.col("tmin_p10")).alias("tn10"),
+        ((pl.col("tmax") - pl.col("tmin")) / 10).alias("dtr"),
+    )
+    jja = cfg["summer_months"]
+    g = d.group_by("year").agg(
+        (100 * pl.col("tx90").filter(pl.col("tmax").is_not_null()).mean()).alias("tx90p"),
+        (100 * pl.col("tx10").filter(pl.col("tmax").is_not_null()).mean()).alias("tx10p"),
+        (100 * pl.col("tn90").filter(pl.col("tmin").is_not_null()).mean()).alias("tn90p"),
+        (100 * pl.col("tn10").filter(pl.col("tmin").is_not_null()).mean()).alias("tn10p"),
+        pl.col("dtr").mean().alias("dtr_c"),
+        (pl.col("tmax").filter(pl.col("month").is_in(jja)).mean() / 10).alias("jja_tmax_c"),
+        (pl.col("tmin").filter(pl.col("month").is_in(jja)).mean() / 10).alias("jja_tmin_c"),
+    )
+    out = annual.select(
+        "year", "complete_tmax", "complete_tmin", "jja_complete_tmax", "jja_complete_tmin"
+    ).join(g, on="year", how="left")
+    both = pl.col("complete_tmax") & pl.col("complete_tmin")
+    return (
+        out.with_columns(
+            pl.when(pl.col("complete_tmax")).then(pl.col("tx90p")).otherwise(None).alias("tx90p"),
+            pl.when(pl.col("complete_tmax")).then(pl.col("tx10p")).otherwise(None).alias("tx10p"),
+            pl.when(pl.col("complete_tmin")).then(pl.col("tn90p")).otherwise(None).alias("tn90p"),
+            pl.when(pl.col("complete_tmin")).then(pl.col("tn10p")).otherwise(None).alias("tn10p"),
+            pl.when(both).then(pl.col("dtr_c")).otherwise(None).alias("dtr_c"),
+            pl.when(pl.col("jja_complete_tmax"))
+            .then(pl.col("jja_tmax_c"))
+            .otherwise(None)
+            .alias("jja_tmax_c"),
+            pl.when(pl.col("jja_complete_tmin"))
+            .then(pl.col("jja_tmin_c"))
+            .otherwise(None)
+            .alias("jja_tmin_c"),
+        )
+        .drop("complete_tmax", "complete_tmin", "jja_complete_tmax", "jja_complete_tmin")
+        .sort("year")
+    )

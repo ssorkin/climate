@@ -18,6 +18,7 @@
   import WindowsTable from '$lib/WindowsTable.svelte';
   import MethodsNote from '$lib/MethodsNote.svelte';
   import HourlyPanel from '$lib/HourlyPanel.svelte';
+  import IndexLines from '$lib/IndexLines.svelte';
 
   let { data } = $props();
   let s = $derived(data.summary);
@@ -279,6 +280,21 @@
 <h2>By month</h2>
 <HeatCalendar years={s.monthly.year} months={s.monthly.month} values={monthly} lower={monthlyLower} expected={monthlyExp} daysValid={monthlyDaysValid} daysTotal={monthlyDaysTotal} complete={monthlyComplete} cool={family === 'frost' || family === 'coldday'} selected={year} onselect={(y) => (year = y)} unitLabel={fam.noun} />
 
+{#if s.indices}
+  <h2 id="distribution">How this station's temperatures have shifted</h2>
+  <p class="muted">
+    Against this station's own 1951–1980 calendar-day percentiles: the share of nights and days in the warmest tenth
+    (TN90p, TX90p) and the coolest tenth (TN10p, TX10p). In an unchanged climate each would stay near 10%.
+    {#if s.trends?.dtr_c}The daily temperature range (high minus low) is {s.trends.dtr_c.significant ? (s.trends.dtr_c.slope_per_decade < 0 ? 'narrowing' : 'widening') : 'not clearly changing'}{s.trends.dtr_c.significant ? ` by ${fmtC(Math.abs(s.trends.dtr_c.slope_per_decade), units.f, { delta: true })} per decade` : ''}.{/if}
+  </p>
+  <div class="two">
+    <IndexLines series={s.indices} key="tn90p" label="Unusually warm nights (TN90p)" color="#2a78d6" trend={s.trends?.tn90p} unit="% of nights" height={200} />
+    <IndexLines series={s.indices} key="tx90p" label="Unusually warm days (TX90p)" color="#d94f22" trend={s.trends?.tx90p} unit="% of days" height={200} />
+    <IndexLines series={s.indices} key="tn10p" label="Unusually cool nights (TN10p)" color="#2a78d6" trend={s.trends?.tn10p} unit="% of nights" height={200} />
+    <IndexLines series={s.indices} key="tx10p" label="Unusually cool days (TX10p)" color="#d94f22" trend={s.trends?.tx10p} unit="% of days" height={200} />
+  </div>
+{/if}
+
 <h2>Then and now</h2>
 <WindowsTable summary={s} />
 
@@ -415,6 +431,16 @@
   }
   .raw {
     margin-top: 1rem;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.4rem;
+  }
+  @media (max-width: 800px) {
+    .two {
+      grid-template-columns: 1fr;
+    }
   }
   .warn {
     background: #fff4e5;

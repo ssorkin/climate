@@ -18,6 +18,8 @@
   import Stripes from '$lib/Stripes.svelte';
   import RegionalIndex from '$lib/RegionalIndex.svelte';
   import TrendForest from '$lib/TrendForest.svelte';
+  import IndexLines from '$lib/IndexLines.svelte';
+  import TrendPairs from '$lib/TrendPairs.svelte';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -114,6 +116,30 @@
   };
   let warmT = $derived(trendStats('trend_warm70'));
   let hotT = $derived(trendStats('trend_hot95'));
+  let idx = $derived(data.indices);
+  let baseStations = $derived(allStations.filter((s) => s.headline?.has_baseline));
+  const idxMean = (key, a, b) => {
+    if (!idx) return null;
+    const v = idx.year.map((y, i) => (y >= a && y <= b ? idx[key][i] : null)).filter((q) => q != null);
+    return v.length ? v.reduce((s, q) => s + q, 0) / v.length : null;
+  };
+  let tn90Now = $derived(idxMean('tn90p', 2016, 2025));
+  let tx90Now = $derived(idxMean('tx90p', 2016, 2025));
+  let tn10Now = $derived(idxMean('tn10p', 2016, 2025));
+  let tx10Now = $derived(idxMean('tx10p', 2016, 2025));
+  let tn90T = $derived(trendStats('trend_tn90p'));
+  let tx90T = $derived(trendStats('trend_tx90p'));
+  let nightsFaster = $derived(allStations.filter((s) => s.headline?.trend_jja_tmin && s.headline?.trend_jja_tmax && s.headline.trend_jja_tmin.slope_per_decade > s.headline.trend_jja_tmax.slope_per_decade).length);
+  let nPairs = $derived(allStations.filter((s) => s.headline?.trend_jja_tmin && s.headline?.trend_jja_tmax).length);
+  // the LA mean index trend: Theil–Sen is done in Python per station; for the mean line we show the station-median slope
+  const medianTrend = (key) => {
+    const ts = baseStations.map((s) => s.headline[key]).filter(Boolean);
+    if (!ts.length) return null;
+    const sl = ts.map((t) => t.slope_per_decade).sort((a, b) => a - b);
+    const med = sl[Math.floor(sl.length / 2)];
+    const sig = ts.filter((t) => t.significant && Math.sign(t.slope_per_decade) === Math.sign(med)).length;
+    return { slope_per_decade: med, significant: sig > ts.length / 2, from: Math.max(...ts.map((t) => t.from)), n: ts.length };
+  };
   let latest = $derived(stations.map((s) => s.last_date).sort().at(-1));
   let closed = $derived(allStations.length - stations.length);
 </script>
@@ -126,23 +152,44 @@
 
 <section class="hero">
   <div class="text">
-    <h1>Los Angeles nights aren't cooling off like they used to.</h1>
+    <h1>Los Angeles isn't just getting hotter. Its nights are.</h1>
     <p class="lede">
-      The heat you feel isn't only the afternoon high — it's whether the night gives you a break.
-      Each of the {allStations.length} weather stations in Greater Los Angeles with hourly records — airports from the beach to
-      the desert, some since 1940 — tells its own story, and the stories agree: nights that never drop below 70°F are
-      becoming clearly more frequent at <b>{warmT.up} of {warmT.n}</b> stations with a measurable trend (the median station adds
-      {warmT.median != null ? warmT.median.toFixed(1) : '—'} such nights per decade), while 95°F days are rising clearly at
-      <b>{hotT.up} of {hotT.n}</b>{hotT.down ? ` and falling at ${hotT.down}` : ''}. Every number comes straight from NOAA's hourly station records.
+      Ask each of Greater Los Angeles's long-running weather stations how its own temperatures have shifted, and the same
+      asymmetry appears everywhere: nights that would have counted as unusually warm in 1951–1980 — the warmest tenth for that
+      time of year — now make up about <b>{tn90Now == null ? '—' : Math.round(tn90Now)}%</b> of nights at the typical station,
+      while unusually warm days have moved far less (about <b>{tx90Now == null ? '—' : Math.round(tx90Now)}%</b>); the coolest
+      tenth of nights has nearly vanished (<b>{tn10Now == null ? '—' : tn10Now.toFixed(1)}%</b>). Nights are warming faster than days at
+      <b>{nightsFaster} of {nPairs}</b> stations. Every number comes from NOAA's hourly station records, judged against each
+      station's own history.
     </p>
     <p class="small muted">
-      Latest readings through {fmtISO(latest)}{#if closed}; {closed} closed {closed === 1 ? 'station is' : 'stations are'} included for history{/if}.
-      Each station's trend is fitted to its own years, so a station that opened in 1998 is judged over 1998–2025 and one from
-      1940 over {ix.baseline.start}–2025 (<a href="/methods#trends">how</a>). The famous downtown record has hourly data only since 1999 —
-      <a href="/methods#civic-center">a note on that</a>.
+      Latest readings through {fmtISO(latest)}. The percentile measures are standard climate-extremes indices (TN90p, TX90p, TN10p,
+      TX10p) computed against each station's own 1951–1980 calendar-day percentiles (<a href="/methods#indices">how</a>); stations
+      that began after 1980 have no baseline and appear only in the threshold and map views. Each chart is one thermometer at one
+      place: it records urban growth around the station as well as the wider climate (<a href="/methods#attribution">more</a>).
     </p>
   </div>
 </section>
+
+{#if idx}
+  <section>
+    <div class="two">
+      <IndexLines series={idx} perStation={idx.per_station} key="tn90p" label="Unusually warm nights — share of nights above the 1951–80 90th percentile for the date" color="#2a78d6" trend={medianTrend('trend_tn90p')} trendNote=" (median station)" unit="% of nights" />
+      <IndexLines series={idx} perStation={idx.per_station} key="tx90p" label="Unusually warm days — share of days above the 1951–80 90th percentile for the date" color="#d94f22" trend={medianTrend('trend_tx90p')} trendNote=" (median station)" unit="% of days" />
+    </div>
+    <div class="two" style="margin-top:1rem">
+      <IndexLines series={idx} perStation={idx.per_station} key="tn10p" label="Unusually cool nights — share below the 10th percentile" color="#2a78d6" trend={medianTrend('trend_tn10p')} trendNote=" (median station)" unit="% of nights" height={190} />
+      <IndexLines series={idx} perStation={idx.per_station} key="tx10p" label="Unusually cool days — share below the 10th percentile" color="#d94f22" trend={medianTrend('trend_tx10p')} trendNote=" (median station)" unit="% of days" height={190} />
+    </div>
+    <p class="small muted">{baseStations.length} stations with a complete 1951–1980 baseline. If the climate had not changed, each line would hover near 10%.</p>
+  </section>
+
+  <section>
+    <h2>The punchline: nights are warming faster than days</h2>
+    <p class="muted">For every station, the trend in its June–August mean daily low (filled) against its mean daily high (hollow), over the station's own complete years. Where the filled dot sits to the right, nights are warming faster — and the daily temperature range is narrowing.</p>
+    <div class="punch"><TrendPairs stations={allStations} /></div>
+  </section>
+{/if}
 
 <section>
   <div class="sechead">
@@ -159,8 +206,8 @@
 </section>
 
 <section>
-  <h2>The trend at each station</h2>
-  <p class="muted">One row per station, longest records first: its own trend over its own complete years, with a 90% range. Filled dots are trends clearly different from zero. Nothing here averages stations together.</p>
+  <h2>What it feels like: nights that never cool below 70°F, days that reach 95°F</h2>
+  <p class="muted">The percentile measures above are the statistical test; these fixed thresholds are the lived experience — and a 70°F night means something different at the beach than in the valley. One row per station, longest records first: its own trend over its own complete years, with a 90% range. Filled dots are trends clearly different from zero.</p>
   <div class="two">
     <TrendForest stations={allStations} key="trend_warm70" label="Nights ≥ 70°F per year" unitLabel="nights" />
     <TrendForest stations={allStations} key="trend_hot95" label="Days ≥ 95°F per year" unitLabel="days" />
@@ -262,6 +309,9 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.9rem;
+  }
+  .punch {
+    max-width: 760px;
   }
   .two {
     display: grid;

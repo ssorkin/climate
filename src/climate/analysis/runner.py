@@ -98,6 +98,19 @@ def analyze_station(
     decades = M.decade_means(annual, cfg, cold)
     doy = M.doy_climatology(daily, cfg)
     summer = M.summer_to_date(daily, cfg, today)
+    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+    base_years = annual.filter(
+        (pl.col("year") >= b0)
+        & (pl.col("year") <= b1)
+        & pl.col("complete_tmax")
+        & pl.col("complete_tmin")
+    ).height
+    has_baseline = base_years >= 20
+    indices = M.percentile_indices(daily, doy, annual, cfg)
+    if not has_baseline:  # fixed-base percentile indices need the baseline; trends in means do not
+        indices = indices.with_columns(
+            pl.lit(None, dtype=pl.Float64).alias(c) for c in ("tx90p", "tn90p", "tx10p", "tn10p")
+        )
 
     annual.write_parquet(out_dir / "annual.parquet")
     monthly.write_parquet(out_dir / "monthly.parquet")
@@ -109,6 +122,7 @@ def analyze_station(
         out_dir / "records.parquet"
     )
     summer["table"].write_parquet(out_dir / "summer.parquet")
+    indices.write_parquet(out_dir / "indices.parquet")
 
     homog = None
     off = H.offsets(ush, st.id) if ush is not None else None
@@ -120,7 +134,6 @@ def analyze_station(
         )
         homog = {"breaks": H.breaks(ann_off), "source": "USHCN v2.5 FLs.52j vs raw"}
 
-    b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
     complete_years = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"]
     last_complete = int(complete_years.max()) if len(complete_years) else None
     cols = M.threshold_columns(cfg)
@@ -158,6 +171,15 @@ def analyze_station(
             t = M.trend(yrs, since[c].cast(pl.Float64).fill_null(np.nan).to_numpy())
             if t:
                 trends[c] = t
+    if True:
+        since_i = indices.filter(pl.col("year") >= b0)
+        yrs_i = since_i["year"].to_numpy()
+        for c in ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "jja_tmax_c", "jja_tmin_c"):
+            t = M.trend(
+                yrs_i, since_i[c].cast(pl.Float64).fill_null(np.nan).to_numpy(), min_nonzero=1
+            )
+            if t:
+                trends[c] = t
     cn = cold.filter(pl.col("season") >= b0)
     t = M.trend(
         cn["season"].to_numpy(), cn["coldnight_32"].cast(pl.Float64).fill_null(np.nan).to_numpy()
@@ -177,6 +199,25 @@ def analyze_station(
         "last_year": int(valid["date"].max().year),
         "active": bool(active),
         "homogenized": homog,
+        "has_baseline": bool(has_baseline),
+        "baseline_years": int(base_years),
+        "index_windows": (
+            {
+                key: M.window_means(
+                    indices,
+                    ["tx90p", "tn90p", "tx10p", "tn10p", "dtr_c", "jja_tmax_c", "jja_tmin_c"],
+                    y0,
+                    y1,
+                )
+                for key, (y0, y1) in {
+                    "baseline": (b0, b1),
+                    "last30": (last_complete - 29, last_complete),
+                    "last10": (last_complete - 9, last_complete),
+                }.items()
+            }
+            if last_complete
+            else {}
+        ),
         "suspect_years": {str(y): msg for y, msg in sorted(suspect_years.items())},
         "last_complete_year": last_complete,
         "complete_years": len(complete_years),

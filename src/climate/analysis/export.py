@@ -171,8 +171,36 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
                 }
         homog["windows"] = hw
 
+    indices = pl.read_parquet(d / "indices.parquet") if (d / "indices.parquet").exists() else None
+    idx_block = None
+    if indices is not None:
+        iw = meta.get("index_windows", {})
+        bj = iw.get("baseline", {})
+        idx_block = {
+            "year": col(indices, "year"),
+            "tx90p": col(indices, "tx90p"),
+            "tn90p": col(indices, "tn90p"),
+            "tx10p": col(indices, "tx10p"),
+            "tn10p": col(indices, "tn10p"),
+            "dtr_c": col(indices, "dtr_c"),
+            "jja_tmax_anom_c": [
+                None
+                if v is None or bj.get("jja_tmax_c") is None
+                else round(v - bj["jja_tmax_c"], 2)
+                for v in indices["jja_tmax_c"].to_list()
+            ],
+            "jja_tmin_anom_c": [
+                None
+                if v is None or bj.get("jja_tmin_c") is None
+                else round(v - bj["jja_tmin_c"], 2)
+                for v in indices["jja_tmin_c"].to_list()
+            ],
+            "windows": iw,
+        }
+
     summary = {
-        **{k: v for k, v in meta.items() if k not in ("inventory", "homogenized")},
+        **{k: v for k, v in meta.items() if k not in ("inventory", "homogenized", "index_windows")},
+        "indices": idx_block,
         "homogenized": homog,
         "modeled": _modeled_block(
             sid, meta.get("regions", []), annual["year"].to_list(), cold["season"].to_list()
@@ -354,6 +382,18 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             .get("tmin_mean_c", {})
             .get("slope_per_decade"),
             "suspect_step": suspect,
+            "has_baseline": meta.get("has_baseline", False),
+            "trend_tn90p": meta["trends"].get("tn90p"),
+            "trend_tx90p": meta["trends"].get("tx90p"),
+            "trend_tn10p": meta["trends"].get("tn10p"),
+            "trend_tx10p": meta["trends"].get("tx10p"),
+            "trend_dtr": meta["trends"].get("dtr_c"),
+            "trend_jja_tmax": meta["trends"].get("jja_tmax_c"),
+            "trend_jja_tmin": meta["trends"].get("jja_tmin_c"),
+            "tn90p_last10": meta.get("index_windows", {}).get("last10", {}).get("tn90p"),
+            "tx90p_last10": meta.get("index_windows", {}).get("last10", {}).get("tx90p"),
+            "tn10p_last10": meta.get("index_windows", {}).get("last10", {}).get("tn10p"),
+            "tx10p_last10": meta.get("index_windows", {}).get("last10", {}).get("tx10p"),
             "trend_warm70": meta["trends"].get("warm_70"),
             "trend_hot95": meta["trends"].get("hot_95"),
             "trend_frost32": meta["trends"].get("frost_nights"),
@@ -520,6 +560,48 @@ def run_export(region: str = "all") -> None:
             path = SITE_DATA_DIR / ("index.json" if reg.id == "la" else f"{reg.id}/index.json")
             n = dump(path, index)
             print(f"  {path.relative_to(SITE_DATA_DIR)} {n / 1e3:.0f} KB ({len(ids)} stations)")
+            # Percentile indices are normalized per station, so a plain mean across the
+            # stations that have a baseline is legitimate (composition barely matters).
+            per_year: dict[int, dict[str, list]] = {}
+            for sid in ids:
+                dd = ANALYSIS_DIR / sid / "indices.parquet"
+                if not dd.exists():
+                    continue
+                for r in pl.read_parquet(dd).iter_rows(named=True):
+                    slot = per_year.setdefault(
+                        r["year"], {"tx90p": [], "tn90p": [], "tx10p": [], "tn10p": [], "dtr_c": []}
+                    )
+                    for kk in slot:
+                        if r[kk] is not None:
+                            slot[kk].append(r[kk])
+            years_i = sorted(y for y in per_year if y <= year1)
+            idx_mean = {
+                "year": years_i,
+                "n": [len(per_year[y]["tn90p"]) for y in years_i],
+                **{
+                    kk: [
+                        round(sum(v) / len(v), 2) if (v := per_year[y][kk]) else None
+                        for y in years_i
+                    ]
+                    for kk in ("tx90p", "tn90p", "tx10p", "tn10p", "dtr_c")
+                },
+                "per_station": {
+                    sid: {
+                        kk: col(df, kk)
+                        for kk in ("year", "tx90p", "tn90p", "tx10p", "tn10p", "dtr_c")
+                    }
+                    for sid in ids
+                    if (ANALYSIS_DIR / sid / "indices.parquet").exists()
+                    and (df := pl.read_parquet(ANALYSIS_DIR / sid / "indices.parquet"))["tn90p"]
+                    .drop_nulls()
+                    .len()
+                    > 0
+                },
+            }
+            n = dump(SITE_DATA_DIR / "regional" / f"{reg.id}-indices.json", idx_mean)
+            print(
+                f"  regional/{reg.id}-indices.json {n / 1e3:.0f} KB ({len(idx_mean['per_station'])} stations with a baseline)"
+            )
             regm = _regional(reg.id)
             if regm:
                 slim = {

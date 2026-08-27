@@ -22,15 +22,20 @@ Website: [climate.sorkinlabs.com](https://climate.sorkinlabs.com)
   and deriving each day's high and low from the hourly readings.
 - **Checks** the data — completeness by year, gaps, flagged values, observation-time
   changes, freshness — and publishes the findings in `DATA_QUALITY.md`.
-- **Analyzes** each station: annual and monthly means, days and nights past
-  thresholds, frost nights, records, anomalies against a 1951–1980 baseline, trends.
+- **Analyzes** each station: the standard climate-extremes indices TX90p / TN90p /
+  TX10p / TN10p (share of days and nights beyond the station's own 1951–1980
+  calendar-day percentiles), warm-season mean high/low anomalies, the diurnal range,
+  plus annual and monthly counts of days and nights past thresholds, frost nights,
+  records and Theil–Sen trends.
 - **Exports** compact JSON that the fully static SvelteKit site loads per station.
 
 ## Principles
 
-1. **The lived experience of heat.** Daytime highs and, especially, warm nights are
-   what people feel. The site leads with counts of hot days and warm nights, not
-   annual mean temperature.
+1. **How the distribution is changing, then what it feels like.** The headline test is
+   distributional — has the share of unusually warm nights and days shifted against
+   each station's own history? — and the answer for Los Angeles is asymmetric: nights
+   are warming much faster than days, and cool nights are disappearing. Counts of
+   ≥95°F days and ≥70°F nights stay on the site as the lived-experience layer.
 2. **Stations, not regions.** Each chart is what one thermometer recorded at one
    place. We don't average stations into a "Los Angeles" number, and we don't chart
    the famous downtown record because its instruments moved eight times (see
