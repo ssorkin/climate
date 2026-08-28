@@ -2,7 +2,8 @@
   /**
    * The story in four numbers, pooled across every station with a record in both windows:
    * the then->now change in the hottest afternoon, the coolest heat-wave night, the night
-   * after the wave ends, and overnight relief — each with a 95% interval from a
+   * after the wave ends, and overnight relief — plus days per heat wave, kept so the reader
+   * sees that the events have not gotten longer — each with a 95% interval from a
    * hierarchical bootstrap (stations, then whole summers within each station). A change
    * whose interval includes zero prints gray; the ones that don't carry the story.
    */
@@ -15,7 +16,8 @@
     { key: 'peak_f', win: 'peak_f', label: 'Hottest afternoon', kind: 'temp', color: HEAT },
     { key: 'low_f', win: 'low_f', label: 'Coolest heat-wave night', kind: 'temp', color: COOL },
     { key: 'after_low_f', win: 'after_low_f', label: 'Night after it ends', kind: 'temp', color: COOL },
-    { key: 'relief_h', win: 'relief_h', label: `Overnight relief (hours under ${reliefF}°F)`, kind: 'hours', color: COOL }
+    { key: 'relief_h', win: 'relief_h', label: `Overnight relief (hours under ${reliefF}°F)`, kind: 'hours', color: COOL },
+    { key: 'days', win: 'mean_days', label: 'Days per heat wave', kind: 'days', color: HEAT }
   ];
   // then / now levels: the mean of the station window means (same stations as the pooled change)
   const level = (win, key) => { const v = stations.map((s) => s.windows?.[win]?.[key]).filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
