@@ -21,3 +21,4 @@ uv run clim ingest --region la
 uv run clim check --strict
 uv run clim analyze --region la
 uv run clim export --region la
+uv run python scripts/og_card.py || echo "og card not regenerated" >&2

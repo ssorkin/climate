@@ -63,13 +63,20 @@
 </script>
 
 <svelte:head>
-  <title>{story.short} · climate.sorkinlabs</title>
+  <title>{story.title} · climate.sorkinlabs</title>
   <meta property="og:title" content={story.title} />
   <meta property="og:description" content="80+ years of hourly NOAA records at {hwStations.length} LA-area weather stations: the hottest afternoon of a heat wave lands where it always did; the coolest night inside one is {dF(est('low_f'))} warmer, and a heat-wave night gives {n1(-est('relief_h'))} fewer hours under 70°F." />
   <meta property="og:type" content="article" />
   <meta property="article:published_time" content={story.published} />
   <meta property="article:author" content="Stephen Sorkin" />
   <meta property="og:url" content="https://climate.sorkinlabs.com{permalink(story)}" />
+  <meta property="og:image" content="https://climate.sorkinlabs.com{story.image}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Every heat wave at an LA-area station since the 1940s: the hottest afternoons hold level while the coolest nights climb." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={story.title} />
+  <meta name="twitter:image" content="https://climate.sorkinlabs.com{story.image}" />
   {#if onPermalink}
     <link rel="canonical" href="https://climate.sorkinlabs.com{permalink(story)}" />
   {/if}

@@ -13,7 +13,9 @@ export` in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   year per candidate for hourly temperature — slow, run rarely); `clim stations --region us`
   rebuilds the national region from it.
 - `uv run pytest` — tests; `uv run ruff check src tests` — lint
-- Site: `cd site && npm run dev` / `npm run build` (static; data from `clim export`)
+- Site: `cd site && npm run dev` / `npm run build` (static; data from `clim export`).
+  `uv run python scripts/og_card.py` redraws the story's social card (`site/static/og/*.png`,
+  committed; needs a headless Chromium, otherwise the last PNG stands) — nightly runs it after export.
 - Deploy (atomic): `scripts/deploy.sh [--build]` — rsync `site/build/` to dronesclub
   `/var/www/climate-releases/<ts>/`, swap symlink `/var/www/climate-current` via
   `ln -s` + `mv -T`, prune to last 3. NEVER `rsync --delete` into the live root.
