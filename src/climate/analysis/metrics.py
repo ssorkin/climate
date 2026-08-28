@@ -1188,6 +1188,15 @@ def heat_wave_window(
         v = w[col].drop_nulls()
         return round(float(v.mean()), 2) if v.len() else None
 
+    def spread(col: str) -> dict:
+        """Sample sd and count, so a then-vs-now difference can carry a 95% interval
+        (waves treated as independent draws)."""
+        if col not in w.columns:
+            return {f"{col}_sd": None, f"{col}_n": 0}
+        v = w[col].drop_nulls()
+        sd = round(float(v.std()), 3) if v.len() >= 2 else None
+        return {f"{col}_sd": sd, f"{col}_n": int(v.len())}
+
     # ordinary days: warm-season days in these years that are not inside a wave or the day after
     in_wave: set[date] = set()
     for s, e in zip(w["start"].to_list(), w["end"].to_list()):
@@ -1216,6 +1225,11 @@ def heat_wave_window(
         "mean_low_f": mean_of("mean_low_f"),
         "after_low_f": mean_of("after_low_f"),
         "relief_h": mean_of("relief_h"),
+        **spread("peak_f"),
+        **spread("low_f"),
+        **spread("mean_low_f"),
+        **spread("after_low_f"),
+        **spread("relief_h"),
         "ordinary_high_f": (
             round(float(np.mean([f_whole(v) for v in ord_hi.to_list()])), 2)
             if ord_hi.len()

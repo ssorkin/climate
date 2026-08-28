@@ -78,8 +78,16 @@
   For each wave we keep its length, its hottest high, the lowest low on nights 2 through <i>n</i> (the "coolest night
   of the wave"), the low on the day after it ends, and — from the hourly readings — the share of 6 pm–8 am readings
   under 70°F, scaled to 14 hours, so 3-hourly and hourly years are comparable. "Then" is 1951–1980 and "now" the last
-  30 complete warm seasons; a window needs 15 of them. The conclusion (flat peaks, warmer nights) does not depend on
-  the definition: the 90th percentile, a two-day minimum and the 98th percentile all give the same shape.
+  30 complete warm seasons; a window needs 15 of them. Then-vs-now changes carry a 95% interval computed from the
+  per-wave spread in each window (1.96 × √(s₁²/n₁ + s₂²/n₂)), treating heat waves as independent draws — a
+  convenience, since waves in one summer are not independent, so read the intervals as indicative. The conclusion
+  (flat peaks, warmer nights) does not depend on the definition: the 90th percentile, a two-day minimum and the
+  98th percentile all give the same shape.
+</p>
+<p>
+  Vocabulary, kept distinct on purpose: a <b>warm night</b> is a daily low ≥ 70°F; a <b>heat-wave night</b> is any
+  night inside a defined heat wave; the <b>coolest heat-wave night</b> is the lowest daily low on nights 2 through
+  <i>n</i> of the wave; <b>overnight relief</b> is hours under 70°F between 6 pm and 8 am.
 </p>
 
 <h2>Missing data</h2>

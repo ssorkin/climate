@@ -43,3 +43,11 @@ export const fmtDate = (iso) => {
   const [y, m, d] = iso.split('-').map(Number);
   return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 };
+
+// 95% interval (±) for the then->now difference in a window metric, treating waves as
+// independent: 1.96 * sqrt(sa²/na + sb²/nb). Null when either side has < 2 waves.
+export function ci95(then, now, key) {
+  const sa = then?.[`${key}_sd`], sb = now?.[`${key}_sd`], na = then?.[`${key}_n`], nb = now?.[`${key}_n`];
+  if (sa == null || sb == null || !na || !nb || na < 2 || nb < 2) return null;
+  return 1.96 * Math.sqrt((sa * sa) / na + (sb * sb) / nb);
+}

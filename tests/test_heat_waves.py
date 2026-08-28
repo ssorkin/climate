@@ -87,4 +87,5 @@ def test_window_summary_and_ordinary_nights(cfg):
     assert win["n"] == 30 and win["waves_per_year"] == 1.0 and win["days_per_year"] == 3.0
     assert win["mean_days"] == 3 and win["peak_f"] == 95 and win["low_f"] == 65
     assert win["after_low_f"] == 60 and win["ordinary_low_f"] == 60 and win["ordinary_high_f"] == 80
+    assert win["peak_f_n"] == 30 and win["peak_f_sd"] == 0.0 and win["relief_h_n"] == 0
     assert M.heat_wave_window(w, daily, cfg, yrs, 1990, 2020) is None
