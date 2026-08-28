@@ -5,9 +5,9 @@
    */
   import { COOL, GRID, MUTED, INK, INK2, HEAT_RAMP } from '$lib/palette.js';
   import { units } from '$lib/units.svelte.js';
-  import { tempF, ci95 } from '$lib/hw.js';
+  import { tempF } from '$lib/hw.js';
 
-  let { rows = [], reliefF = 70, big = false } = $props(); // [{label, then:{relief_h,...}, now:{...}}]
+  let { rows = [], reliefF = 70, big = false } = $props(); // [{label, then:{relief_h, years}, now:{...}, change?: text}]
   const NIGHT = 14;
   const W = 920;
   let M = $derived({ left: 90, right: 24 });
@@ -27,13 +27,12 @@
     {/each}
     {#each rows as r, i}
       {@const top = 28 + i * ROW}
-      {@const ci = ci95(r.then, r.now, 'relief_h')}
       <text x={x(0)} y={top + 10} font-size={big ? 15 : 13} font-weight="700" fill={INK}>{r.label}</text>
       {#each [['then', r.then], ['now', r.now]] as [k, e], j}
         {@const y = top + 18 + j * (BAR + 6)}
         <rect x={x(0)} y={y} width={x(NIGHT) - x(0)} height={BAR} fill={HEAT_RAMP[1]} rx="2" />
         <rect x={x(0)} y={y} width={Math.max(0, x(e.relief_h) - x(0))} height={BAR} fill={COOL} rx="2" />
-        <text x={x(e.relief_h) + 8} y={y + BAR / 2 + 4} font-size={big ? 14 : 12} font-weight="700" fill={INK2}>{f1(e.relief_h)} h under {tempF(reliefF, units.f)}{k === 'now' && ci != null && big ? ` (change ${(e.relief_h - r.then.relief_h).toFixed(1)} ± ${ci.toFixed(1)})` : ''}</text>
+        <text x={x(e.relief_h) + 8} y={y + BAR / 2 + 4} font-size={big ? 14 : 12} font-weight="700" fill={INK2}>{f1(e.relief_h)} h under {tempF(reliefF, units.f)}{k === 'now' && r.change ? ` (${r.change})` : ''}</text>
         <text x={x(0) - 6} y={y + BAR / 2 + 4} text-anchor="end" font-size="11" fill={MUTED}>{e.years.join('–')}</text>
       {/each}
     {/each}

@@ -9,5 +9,12 @@ export async function load({ fetch }) {
   } catch {
     /* no regional model */
   }
-  return { index, regional };
+  let heatwaves = null;
+  try {
+    const h = await fetch(dataUrl('/data/regional/la-heatwaves.json'));
+    if (h.ok) heatwaves = await h.json();
+  } catch {
+    /* no heat-wave export */
+  }
+  return { index, regional, heatwaves };
 }

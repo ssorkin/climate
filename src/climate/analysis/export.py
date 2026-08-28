@@ -196,12 +196,24 @@ def _heat_wave_block(d, meta: dict, cfg: dict) -> dict | None:
     if not hw or not (d / "heatwaves.parquet").exists():
         return None
     w = pl.read_parquet(d / "heatwaves.parquet").sort("start")
+    diff = None
+    wb, wn = hw["windows"].get("baseline"), hw["windows"].get("last30")
+    if wb and wn:
+        yrs = hw["years"]
+        bs = M.heat_wave_bootstrap(
+            w,
+            [y for y in yrs if wb["years"][0] <= y <= wb["years"][1]],
+            [y for y in yrs if wn["years"][0] <= y <= wn["years"][1]],
+        )
+        diff = {m: {k: v[k] for k in ("est", "lo", "hi")} for m, v in bs.items()}
     return {
         "rule": cfg["heat_waves"],
         "threshold_f": hw["threshold_f"],
         "years": hw["years"],
         "n_waves": hw["n_waves"],
         "windows": hw["windows"],
+        "diff": diff,
+        "robustness": hw.get("robustness"),
         "waves": {
             "start": [str(v) for v in w["start"].to_list()],
             "days": col(w, "days"),
@@ -211,6 +223,8 @@ def _heat_wave_block(d, meta: dict, cfg: dict) -> dict | None:
             "mean_low_f": [_clean(v) for v in w["mean_low_f"].to_list()],
             "after_low_f": col(w, "after_low_f"),
             "relief_h": [_clean(v) for v in w["relief_h"].to_list()],
+            "low_anom_f": [_clean(v) for v in w["low_anom_f"].to_list()],
+            "start_doy": col(w, "start_doy"),
         },
     }
 
@@ -749,32 +763,70 @@ def run_export(region: str = "all") -> None:
             print(
                 f"  regional/{reg.id}-indices.json {n / 1e3:.0f} KB ({len(idx_mean['per_station'])} stations with a baseline)"
             )
-            hw_stations = []
+            hw_stations, hw_boots, hw_robust = [], [], {}
             for sid in ids:
                 sp = SITE_DATA_DIR / "stations" / sid / "summary.json"
                 if not sp.exists():
                     continue
                 sm = json.loads(sp.read_text())
-                if sm.get("heat_waves"):
-                    hw_stations.append(
-                        {
-                            "id": sid,
-                            "short": sm["short"],
-                            "first_year": sm["first_year"],
-                            "last_year": sm["last_year"],
-                            "active": sm["active"],
-                            **{
-                                k: sm["heat_waves"][k]
-                                for k in ("threshold_f", "years", "n_waves", "windows", "waves")
-                            },
-                        }
+                hwb = sm.get("heat_waves")
+                if not hwb:
+                    continue
+                hw_stations.append(
+                    {
+                        "id": sid,
+                        "short": sm["short"],
+                        "first_year": sm["first_year"],
+                        "last_year": sm["last_year"],
+                        "active": sm["active"],
+                        **{
+                            k: hwb[k]
+                            for k in (
+                                "threshold_f",
+                                "years",
+                                "n_waves",
+                                "windows",
+                                "diff",
+                                "robustness",
+                                "waves",
+                            )
+                        },
+                    }
+                )
+                wb, wn = hwb["windows"].get("baseline"), hwb["windows"].get("last30")
+                if wb and wn:
+                    w = pl.read_parquet(ANALYSIS_DIR / sid / "heatwaves.parquet")
+                    hw_boots.append(
+                        M.heat_wave_bootstrap(
+                            w,
+                            [y for y in hwb["years"] if wb["years"][0] <= y <= wb["years"][1]],
+                            [y for y in hwb["years"] if wn["years"][0] <= y <= wn["years"][1]],
+                        )
                     )
+                    for r in hwb.get("robustness") or []:
+                        slot = hw_robust.setdefault(
+                            r["definition"], {"definition": r["definition"], "per_station": {}}
+                        )
+                        slot["per_station"][sm["short"]] = r
+            # pooled then-vs-now changes (hierarchical bootstrap: stations, then summers)
+            pooled = M.pooled_bootstrap(hw_boots) if hw_boots else None
+            robustness = []
+            for slot in hw_robust.values():
+                rows = list(slot["per_station"].values())
+                row = {"definition": slot["definition"], "n_stations": len(rows)}
+                for k in ("peak_f_change", "low_f_change", "days_change", "waves_per_year_change"):
+                    vals = [r[k] for r in rows if r.get(k) is not None]
+                    row[k] = round(sum(vals) / len(vals), 2) if vals else None
+                row["per_station"] = slot["per_station"]
+                robustness.append(row)
             n = dump(
                 SITE_DATA_DIR / "regional" / f"{reg.id}-heatwaves.json",
                 {
                     "region": reg.id,
                     "rule": cfg["heat_waves"],
                     "baseline": cfg["baseline"],
+                    "pooled": pooled,
+                    "robustness": robustness,
                     "stations": hw_stations,
                 },
             )

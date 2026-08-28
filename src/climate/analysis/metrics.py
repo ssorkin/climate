@@ -1228,6 +1228,10 @@ def heat_wave_window(
         "mean_low_f": mean_of("mean_low_f"),
         "after_low_f": mean_of("after_low_f"),
         "relief_h": mean_of("relief_h"),
+        "peak_anom_f": mean_of("peak_anom_f"),
+        "low_anom_f": mean_of("low_anom_f"),
+        "mean_low_anom_f": mean_of("mean_low_anom_f"),
+        "start_doy": mean_of("start_doy"),
         **spread("days"),
         **spread("peak_f"),
         **spread("low_f"),
@@ -1245,3 +1249,321 @@ def heat_wave_window(
             else None
         ),
     }
+
+
+# --- heat waves: uncertainty and robustness ----------------------------------------------
+
+HW_DIFF_METRICS = (
+    "peak_f",
+    "low_f",
+    "mean_low_f",
+    "after_low_f",
+    "relief_h",
+    "days",
+    "waves_per_year",
+    "peak_anom_f",
+    "low_anom_f",
+    "mean_low_anom_f",
+    "start_doy",
+)
+
+
+def _doy_of(dates: list[date]) -> np.ndarray:
+    return np.array([doy366(d.month, d.day) for d in dates], dtype=np.int32)
+
+
+def doy_normal_f(daily: pl.DataFrame, col: str, years: list[int], window: int) -> np.ndarray:
+    """Mean whole-°F value of `col` for every calendar day (index 1..366), pooling all
+    readings within ±window days over the given years. NaN where nothing falls in range."""
+    d = daily.select("date", col).filter(pl.col(col).is_not_null())
+    d = d.filter(pl.col("date").dt.year().is_in(years))
+    doy = _doy_of(d["date"].to_list())
+    vals = np.array([f_whole(v) for v in d[col].to_list()], dtype=float)
+    out = np.full(367, np.nan)
+    for k in range(1, 367):
+        dist = np.abs(doy - k)
+        dist = np.minimum(dist, 366 - dist)
+        sel = vals[dist <= window]
+        if len(sel):
+            out[k] = sel.mean()
+    return out
+
+
+def heat_wave_anomalies(
+    daily: pl.DataFrame, waves: pl.DataFrame, cfg: dict, years: list[int]
+) -> pl.DataFrame:
+    """Add calendar-date-adjusted versions of the wave temperatures, so a shift in *when*
+    heat waves happen cannot masquerade as warmer nights: peak_anom_f (the peak minus the
+    normal high for its date), low_anom_f (the coolest night minus the normal low for that
+    night's date), mean_low_anom_f (mean over nights 2..n), plus start_doy. Normals are
+    ±doy_window_days means over the station's complete warm seasons — the same normal for
+    both eras, so only the seasonal shape matters."""
+    w = cfg["doy_window_days"]
+    nx = doy_normal_f(daily, "tmax", years, w)
+    nn = doy_normal_f(daily, "tmin", years, w)
+    d = daily.select("date", "tmax", "tmin").sort("date")
+    by_date = {r["date"]: (r["tmax"], r["tmin"]) for r in d.iter_rows(named=True)}
+    peak_a, low_a, mean_low_a, sdoy = [], [], [], []
+    for r in waves.iter_rows(named=True):
+        s, e = r["start"], r["end"]
+        sdoy.append(doy366(s.month, s.day))
+        # peak: the first day reaching the wave's peak
+        pa = None
+        for k in range((e - s).days + 1):
+            day = s + timedelta(days=k)
+            tx = by_date.get(day, (None, None))[0]
+            if tx is not None and f_whole(tx) == r["peak_f"]:
+                pa = r["peak_f"] - nx[doy366(day.month, day.day)]
+                break
+        peak_a.append(None if pa is None or np.isnan(pa) else round(float(pa), 2))
+        nights = []
+        coolest = None
+        for k in range(1, (e - s).days + 1):
+            day = s + timedelta(days=k)
+            tn = by_date.get(day, (None, None))[1]
+            if tn is None:
+                continue
+            a = f_whole(tn) - nn[doy366(day.month, day.day)]
+            if np.isnan(a):
+                continue
+            nights.append(a)
+            if coolest is None or f_whole(tn) < coolest[0]:
+                coolest = (f_whole(tn), a)
+        low_a.append(None if coolest is None else round(float(coolest[1]), 2))
+        mean_low_a.append(round(float(np.mean(nights)), 2) if nights else None)
+    return waves.with_columns(
+        pl.Series("peak_anom_f", peak_a, dtype=pl.Float64),
+        pl.Series("low_anom_f", low_a, dtype=pl.Float64),
+        pl.Series("mean_low_anom_f", mean_low_a, dtype=pl.Float64),
+        pl.Series("start_doy", sdoy, dtype=pl.Int32),
+    )
+
+
+def calendar_thresholds(daily: pl.DataFrame, cfg: dict, years: list[int], pct: float) -> np.ndarray:
+    """ETCCDI-style calendar-day thresholds: for each day of year, the pct-th percentile of
+    the station's highs within ±doy_window_days over the given years (whole °F)."""
+    w = cfg["doy_window_days"]
+    d = daily.select("date", "tmax").filter(pl.col("tmax").is_not_null())
+    d = d.filter(pl.col("date").dt.year().is_in(years))
+    doy = _doy_of(d["date"].to_list())
+    vals = d["tmax"].to_numpy()
+    out = np.full(367, np.nan)
+    for k in range(1, 367):
+        dist = np.abs(doy - k)
+        dist = np.minimum(dist, 366 - dist)
+        sel = vals[dist <= w]
+        if len(sel):
+            out[k] = f_whole(int(np.percentile(sel, pct)))
+    return out
+
+
+def heat_waves_calendar(
+    daily: pl.DataFrame, cfg: dict, thr_by_doy: np.ndarray, min_days: int
+) -> pl.DataFrame:
+    """heat_waves() with a threshold that varies by calendar day (and only May–Oct days)."""
+    months = cfg["heat_waves"]["months"]
+    d = daily.select("date", "tmax", "tmin").sort("date")
+    dates = d["date"].to_list()
+    hi = [f_whole(v) if v is not None else None for v in d["tmax"].to_list()]
+    lo = [f_whole(v) if v is not None else None for v in d["tmin"].to_list()]
+
+    def hot(i: int) -> bool:
+        t = thr_by_doy[doy366(dates[i].month, dates[i].day)]
+        return hi[i] is not None and dates[i].month in months and not np.isnan(t) and hi[i] >= t
+
+    rows = []
+    i, n = 0, len(dates)
+    while i < n:
+        if not hot(i):
+            i += 1
+            continue
+        j = i
+        while j + 1 < n and hot(j + 1) and (dates[j + 1] - dates[j]).days == 1:
+            j += 1
+        days = j - i + 1
+        if days >= min_days:
+            highs = hi[i : j + 1]
+            lows = [v for v in lo[i + 1 : j + 1] if v is not None]
+            rows.append(
+                {
+                    "start": dates[i],
+                    "end": dates[j],
+                    "year": dates[i].year,
+                    "days": days,
+                    "peak_f": max(highs),
+                    "low_f": min(lows) if lows else None,
+                }
+            )
+        i = j + 1
+    return pl.DataFrame(
+        rows,
+        schema={
+            "start": pl.Date,
+            "end": pl.Date,
+            "year": pl.Int32,
+            "days": pl.Int32,
+            "peak_f": pl.Int32,
+            "low_f": pl.Int32,
+        },
+    )
+
+
+def _year_tables(waves: pl.DataFrame, years: list[int], metrics: tuple[str, ...]):
+    """Per-year sums and counts of each metric, so a bootstrap over summers is a weighted
+    sum: rows = years (all complete summers in the window, wave-less ones included)."""
+    w = waves.filter(pl.col("year").is_in(years))
+    idx = {y: k for k, y in enumerate(years)}
+    sums = {m: np.zeros(len(years)) for m in metrics}
+    cnts = {m: np.zeros(len(years)) for m in metrics}
+    nw = np.zeros(len(years))
+    for r in w.iter_rows(named=True):
+        k = idx[r["year"]]
+        nw[k] += 1
+        for m in metrics:
+            v = r.get(m)
+            if v is not None:
+                sums[m][k] += v
+                cnts[m][k] += 1
+    return sums, cnts, nw
+
+
+def heat_wave_bootstrap(
+    waves: pl.DataFrame,
+    years_then: list[int],
+    years_now: list[int],
+    metrics: tuple[str, ...] = HW_DIFF_METRICS,
+    n_boot: int = 2000,
+    seed: int = 0,
+) -> dict:
+    """Then-vs-now change in each metric with a 95% interval from a cluster bootstrap over
+    *summers*: whole complete warm seasons are resampled with replacement within each
+    window, every heat wave in a sampled summer comes along, and the difference of the two
+    window means is recorded — so four waves in one summer are never four independent
+    observations. Returns {metric: {"est", "lo", "hi", "reps": np.ndarray}}; a metric with
+    no waves on one side is omitted."""
+    rng = np.random.default_rng(seed)
+    metrics = tuple(m for m in metrics if m in waves.columns or m == "waves_per_year")
+    out = {}
+    tabs = {}
+    for key, yrs in (("then", years_then), ("now", years_now)):
+        if len(yrs) < 2:
+            return out
+        sums, cnts, nw = _year_tables(
+            waves, yrs, tuple(m for m in metrics if m != "waves_per_year")
+        )
+        wts = rng.multinomial(len(yrs), np.full(len(yrs), 1 / len(yrs)), size=n_boot).astype(float)
+        tabs[key] = (sums, cnts, nw, wts, len(yrs))
+    for m in metrics:
+        reps, point = [], []
+        ok = True
+        for key in ("then", "now"):
+            sums, cnts, nw, wts, n = tabs[key]
+            if m == "waves_per_year":
+                point.append(nw.sum() / n)
+                reps.append(wts @ nw / n)
+            else:
+                if cnts[m].sum() == 0:
+                    ok = False
+                    break
+                point.append(sums[m].sum() / cnts[m].sum())
+                den = wts @ cnts[m]
+                num = wts @ sums[m]
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    reps.append(np.where(den > 0, num / den, np.nan))
+        if not ok:
+            continue
+        diff = reps[1] - reps[0]
+        diff = diff[~np.isnan(diff)]
+        if len(diff) < n_boot // 2:
+            continue
+        out[m] = {
+            "est": round(float(point[1] - point[0]), 3),
+            "lo": round(float(np.percentile(diff, 2.5)), 3),
+            "hi": round(float(np.percentile(diff, 97.5)), 3),
+            "reps": diff,
+        }
+    return out
+
+
+def pooled_bootstrap(per_station: list[dict], seed: int = 1) -> dict:
+    """Pool station-level changes: the estimate is the mean of station point estimates; the
+    interval is a hierarchical bootstrap — stations resampled with replacement, each
+    contributing one of its own summer-resampled replicates — over the same replicate
+    count the stations were run with. Input: [heat_wave_bootstrap() results]."""
+    rng = np.random.default_rng(seed)
+    out = {}
+    metrics = {m for s in per_station for m in s}
+    for m in sorted(metrics):
+        arrs = [s[m]["reps"] for s in per_station if m in s]
+        ests = [s[m]["est"] for s in per_station if m in s]
+        if not arrs:
+            continue
+        n_boot = min(len(a) for a in arrs)
+        D = np.stack([a[:n_boot] for a in arrs], axis=1)  # n_boot x k
+        k = D.shape[1]
+        pick = rng.integers(0, k, size=(n_boot, k))
+        pooled = D[np.arange(n_boot)[:, None], pick].mean(axis=1)
+        out[m] = {
+            "est": round(float(np.mean(ests)), 3),
+            "lo": round(float(np.percentile(pooled, 2.5)), 3),
+            "hi": round(float(np.percentile(pooled, 97.5)), 3),
+            "n_stations": k,
+        }
+    return out
+
+
+def heat_wave_robustness(
+    daily: pl.DataFrame, cfg: dict, years: list[int], then: tuple[int, int], now: tuple[int, int]
+) -> list[dict]:
+    """Does the definition matter? The then-vs-now change in the hottest afternoon and the
+    coolest heat-wave night under alternative definitions: 2+/3+ days, 90th/95th/98th
+    percentile, and an ETCCDI-style calendar-day 95th percentile."""
+    hw = cfg["heat_waves"]
+    yt = [y for y in years if then[0] <= y <= then[1]]
+    yn = [y for y in years if now[0] <= y <= now[1]]
+    rows = []
+    defs = [
+        ("2+ days, 95th percentile", 2, 95, False),
+        ("3+ days, 95th percentile (this page)", 3, 95, False),
+        ("3+ days, 90th percentile", 3, 90, False),
+        ("3+ days, 98th percentile", 3, 98, False),
+        ("3+ days, calendar-day 95th percentile", 3, 95, True),
+    ]
+    for label, min_days, pct, by_doy in defs:
+        if by_doy:
+            w = heat_waves_calendar(
+                daily, cfg, calendar_thresholds(daily, cfg, years, pct), min_days
+            )
+            thr = None
+        else:
+            sub = {**cfg, "heat_waves": {**hw, "percentile": pct, "min_days": min_days}}
+            thr = heat_wave_threshold(daily, sub, years)
+            if thr is None:
+                continue
+            w = heat_waves(daily, sub, thr)
+        a = w.filter(pl.col("year").is_in(yt))
+        b = w.filter(pl.col("year").is_in(yn))
+        if a.is_empty() or b.is_empty():
+            continue
+
+        def mean(df, col):
+            v = df[col].drop_nulls()
+            return float(v.mean()) if v.len() else None
+
+        pa, pb, la, lb = mean(a, "peak_f"), mean(b, "peak_f"), mean(a, "low_f"), mean(b, "low_f")
+        rows.append(
+            {
+                "definition": label,
+                "min_days": min_days,
+                "percentile": pct,
+                "calendar_day": by_doy,
+                "threshold_f": thr,
+                "n_then": a.height,
+                "n_now": b.height,
+                "waves_per_year_change": round(b.height / len(yn) - a.height / len(yt), 2),
+                "days_change": round(float(b["days"].mean() - a["days"].mean()), 2),
+                "peak_f_change": None if pa is None or pb is None else round(pb - pa, 2),
+                "low_f_change": None if la is None or lb is None else round(lb - la, 2),
+            }
+        )
+    return rows

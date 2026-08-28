@@ -6,9 +6,9 @@ export const AUTHOR = { name: 'Stephen Sorkin', url: 'https://github.com/ssorkin
 export const STORIES = [
   {
     slug: 'la-heat-waves',
-    title: "Los Angeles heat waves aren't getting much hotter at their peak. But the nights aren't cooling down.",
+    title: "Los Angeles heat waves haven't gotten hotter at their peak. Their nights have.",
     short: 'LA heat waves: flat peaks, warmer nights',
-    dek: '80+ years of hourly NOAA records at LA-area weather stations. The hottest afternoon of a heat wave lands where it always did; the coolest night inside one is several degrees warmer, and overnight relief has roughly halved.',
+    dek: '80+ years of hourly NOAA records at LA-area weather stations. The hottest afternoon of a heat wave lands where it always did; the coolest night inside one is several degrees warmer, and a heat-wave night gives hours less relief under 70°F.',
     published: '2026-08-28',
     region: 'la'
   }

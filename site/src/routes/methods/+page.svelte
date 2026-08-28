@@ -1,6 +1,8 @@
 <script>
   let { data } = $props();
   let ix = $derived(data.index);
+  let hw = $derived(data.heatwaves);
+  const sgn = (v) => (v == null ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1));
   let coop = $derived(ix.stations.filter((s) => s.kind === 'coop'));
   let reg = $derived(data.regional);
   const EVAL_LABELS = { hot95: 'Days ≥ 95°F', hot100: 'Days ≥ 100°F', warm65: 'Nights ≥ 65°F', warm70: 'Nights ≥ 70°F', frost32: 'Frost nights' };
@@ -78,11 +80,30 @@
   For each wave we keep its length, its hottest high, the lowest low on nights 2 through <i>n</i> (the "coolest night
   of the wave"), the low on the day after it ends, and — from the hourly readings — the share of 6 pm–8 am readings
   under 70°F, scaled to 14 hours, so 3-hourly and hourly years are comparable. "Then" is 1951–1980 and "now" the last
-  30 complete warm seasons; a window needs 15 of them. Then-vs-now changes carry a 95% interval computed from the
-  per-wave spread in each window (1.96 × √(s₁²/n₁ + s₂²/n₂)), treating heat waves as independent draws — a
-  convenience, since waves in one summer are not independent, so read the intervals as indicative. The conclusion
-  (flat peaks, warmer nights) does not depend on the definition: the 90th percentile, a two-day minimum and the
-  98th percentile all give the same shape.
+  30 complete warm seasons; a window needs 15 of them.
+</p>
+<p>
+  <b>Uncertainty.</b> Heat waves are not independent draws — several in one summer share that summer's weather
+  regime — so then-vs-now changes carry 95% intervals from a <b>cluster bootstrap over summers</b>: whole complete
+  warm seasons are resampled with replacement within each window (summers with no heat wave included), every wave in
+  a sampled summer comes along, and the difference of the two window means is recorded, 2,000 times. The pooled
+  numbers on the front page use a hierarchical version — stations resampled with replacement, each contributing one
+  of its own summer-resampled replicates — so a station with many waves cannot dominate.
+</p>
+<p>
+  <b>Timing.</b> Overnight lows have a seasonal cycle, so if modern heat waves simply came later in the summer, their
+  nights would read warmer with no change in climate. As a check, each heat-wave night's low is also expressed as a
+  departure from the normal low for its calendar date (the station's ±7-day mean over its complete warm seasons, the
+  same normal for both eras).
+  {#if hw?.pooled?.low_anom_f && hw?.pooled?.low_f}
+    Adjusting the coolest heat-wave night for its calendar date moves the pooled estimate from
+    <b>{sgn(hw.pooled.low_f.est)}°F</b> to <b>{sgn(hw.pooled.low_anom_f.est)}°F</b>
+    ({sgn(hw.pooled.low_anom_f.lo)} to {sgn(hw.pooled.low_anom_f.hi)}); heat waves now start on average
+    {Math.abs(hw.pooled.start_doy?.est ?? 0).toFixed(0)} days {(hw.pooled.start_doy?.est ?? 0) >= 0 ? 'later' : 'earlier'} in the season than in the baseline.
+  {/if}
+  The conclusion (flat peaks, warmer nights) does not depend on the definition either: the 90th and 98th percentiles,
+  a two-day minimum and an ETCCDI-style calendar-day percentile all give the same shape — the table is on the
+  <a href="/#robustness">front page</a> under "Does the definition matter?".
 </p>
 <p>
   Vocabulary, kept distinct on purpose: a <b>warm night</b> is a daily low ≥ 70°F; a <b>heat-wave night</b> is any

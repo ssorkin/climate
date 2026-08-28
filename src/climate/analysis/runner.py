@@ -213,16 +213,22 @@ def analyze_station(
             )
         else:
             waves = waves.with_columns(pl.lit(None, dtype=pl.Float64).alias("relief_h"))
+        waves = M.heat_wave_anomalies(daily, waves, cfg, hw_years)
         waves.write_parquet(out_dir / "heatwaves.parquet")
         hw_last = hw_years[-1]
+        win_then = M.heat_wave_window(waves, daily, cfg, hw_years, b0, b1)
+        win_now = M.heat_wave_window(waves, daily, cfg, hw_years, hw_last - 29, hw_last)
         heat_waves = {
             "threshold_f": hw_thr,
             "years": hw_years,
             "n_waves": int(waves.filter(pl.col("year").is_in(hw_years)).height),
-            "windows": {
-                "baseline": M.heat_wave_window(waves, daily, cfg, hw_years, b0, b1),
-                "last30": M.heat_wave_window(waves, daily, cfg, hw_years, hw_last - 29, hw_last),
-            },
+            "windows": {"baseline": win_then, "last30": win_now},
+            # alternative definitions, for the "does the definition matter?" table
+            "robustness": (
+                M.heat_wave_robustness(daily, cfg, hw_years, (b0, b1), (hw_last - 29, hw_last))
+                if win_then and win_now
+                else None
+            ),
         }
     cols = M.threshold_columns(cfg)
     metric_cols = [

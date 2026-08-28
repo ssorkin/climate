@@ -3,12 +3,13 @@
    * Three temperatures from every heat wave, then vs now, one row per station on one
    * °F axis: the hottest afternoon (orange), the coolest heat-wave night (blue) and the
    * night after the wave ends (light blue). Hollow = baseline window, filled = last 30
-   * complete summers; the whisker on the filled dot is the 95% interval of the change.
+   * complete summers; the whisker on the filled dot is the 95% interval of the change
+   * (summer-cluster bootstrap, from the export).
    */
   import { linear } from '$lib/scales.js';
   import { HEAT, COOL, COOL_RAMP, GRID, MUTED, INK, INK2, SURFACE } from '$lib/palette.js';
   import { units } from '$lib/units.svelte.js';
-  import { tempF, deltaF, axisT, ci95 } from '$lib/hw.js';
+  import { tempF, deltaF, axisT, diffOf } from '$lib/hw.js';
 
   let { stations = [], baseline = null } = $props(); // baseline: [y0, y1] for the caption
   const SERIES = [
@@ -49,14 +50,14 @@
           {@const a = b[k.key]}
           {@const c = n[k.key]}
           {#if a != null && c != null}
-            {@const ci = ci95(b, n, k.key)}
-            {#if ci != null}
-              <line x1={x(c - ci)} x2={x(c + ci)} y1={yy} y2={yy} stroke={k.color} stroke-width="1" opacity="0.6" />
+            {@const df = diffOf(s, k.key)}
+            {#if df}
+              <line x1={x(a + df.lo)} x2={x(a + df.hi)} y1={yy} y2={yy} stroke={k.color} stroke-width="1" opacity="0.6" />
             {/if}
             <line x1={x(a)} x2={x(c)} y1={yy} y2={yy} stroke={k.color} stroke-width="3" stroke-linecap="round" />
             <circle cx={x(a)} cy={yy} r="5.5" fill={SURFACE} stroke={k.color} stroke-width="2" />
             <circle cx={x(c)} cy={yy} r="5.5" fill={k.color} stroke={SURFACE} stroke-width="2" />
-            <text x={colX[j]} y={yy + 4} font-size="12.5" font-weight="700" fill={Math.abs(c - a) > (ci ?? 0) ? k.color : MUTED}>{dF(c - a)}</text>
+            <text x={colX[j]} y={yy + 4} font-size="12.5" font-weight="700" fill={df && (df.lo > 0 || df.hi < 0) ? k.color : MUTED}>{dF(c - a)}</text>
           {/if}
         {/each}
         <rect x={M.left} y={yy - ROW / 2} width={W - M.left - M.right} height={ROW} fill="transparent" />
@@ -65,7 +66,7 @@
   </svg>
   <div class="tip">
     {#if hover == null}
-      Hollow: {baseline ? baseline.join('–') : 'baseline'}. Filled: the last 30 complete summers. Whisker: 95% interval of the change. Gray change = within that interval.
+      Hollow: {baseline ? baseline.join('–') : 'baseline'}. Filled: the last 30 complete summers. Whisker: 95% interval of the change, from resampling whole summers. Gray change = interval includes zero.
     {:else}
       {@const s = stations[hover]}
       {s.short}: hottest afternoon {tempF(s.windows.baseline.peak_f, units.f)} → {tempF(s.windows.last30.peak_f, units.f)} · coolest heat-wave night {tempF(s.windows.baseline.low_f, units.f)} → {tempF(s.windows.last30.low_f, units.f)} · night after {tempF(s.windows.baseline.after_low_f, units.f)} → {tempF(s.windows.last30.after_low_f, units.f)} ({s.windows.baseline.peak_f_n} then, {s.windows.last30.peak_f_n} now heat waves)
