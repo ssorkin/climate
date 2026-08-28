@@ -99,7 +99,7 @@
         each station; this site does not attempt to attribute the causes. Every chart is one thermometer at one place, as NOAA published it.
       </p>
     </div>
-    <HeadlineTrends {pooled} nStations={nPooled} baseline={[hwB.start, hwB.end]} reliefF={hwRule.relief_f} />
+    <HeadlineTrends {pooled} stations={hwCompare} nStations={nPooled} baseline={[hwB.start, hwB.end]} reliefF={hwRule.relief_f} />
   </section>
 
   <section>

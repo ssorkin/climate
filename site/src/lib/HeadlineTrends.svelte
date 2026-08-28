@@ -9,16 +9,18 @@
   import { HEAT, COOL, MUTED, GRID, AXIS } from '$lib/palette.js';
   import { units } from '$lib/units.svelte.js';
 
-  let { pooled = {}, nStations = 0, baseline = [1951, 1980], reliefF = 70 } = $props();
+  let { pooled = {}, stations = [], nStations = 0, baseline = [1951, 1980], reliefF = 70 } = $props();
 
   const ROWS = [
-    { key: 'peak_f', label: 'Hottest afternoon', kind: 'temp', color: HEAT },
-    { key: 'low_f', label: 'Coolest heat-wave night', kind: 'temp', color: COOL },
-    { key: 'relief_h', label: `Overnight relief (hours under ${reliefF}°F)`, kind: 'hours', color: COOL },
-    { key: 'days', label: 'Days per heat wave', kind: 'days', color: HEAT },
-    { key: 'waves_per_year', label: 'Heat waves per summer', kind: 'count', color: HEAT }
+    { key: 'peak_f', win: 'peak_f', label: 'Hottest afternoon', kind: 'temp', color: HEAT },
+    { key: 'low_f', win: 'low_f', label: 'Coolest heat-wave night', kind: 'temp', color: COOL },
+    { key: 'relief_h', win: 'relief_h', label: `Overnight relief (hours under ${reliefF}°F)`, kind: 'hours', color: COOL },
+    { key: 'days', win: 'mean_days', label: 'Days per heat wave', kind: 'days', color: HEAT },
+    { key: 'waves_per_year', win: 'waves_per_year', label: 'Heat waves per summer', kind: 'count', color: HEAT }
   ];
-  let rows = $derived(ROWS.map((r) => ({ ...r, ...(pooled?.[r.key] ?? {}) })).filter((r) => r.est != null));
+  // then / now levels: the mean of the station window means (same stations as the pooled change)
+  const level = (win, key) => { const v = stations.map((s) => s.windows?.[win]?.[key]).filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  let rows = $derived(ROWS.map((r) => ({ ...r, ...(pooled?.[r.key] ?? {}), then: level('baseline', r.win), now: level('last30', r.win) })).filter((r) => r.est != null));
   const conv = (r, v) => (r.kind === 'temp' && !units.f ? v / 1.8 : v);
   const fmt = (r, v, signed = true) => {
     if (v == null) return '—';
@@ -38,23 +40,27 @@
     return { x0: x(0), lo: x(r.lo), hi: x(r.hi), c: x(r.est) };
   };
   const clear = (r) => r.lo > 0 || r.hi < 0;
+  const lvl = (r, v, unit = true) => { const t = fmt(r, v, false); return unit || r.kind === 'temp' ? t : t.replace(/[^0-9.]+$/, ''); };
 </script>
 
 <div class="panel card">
   <div class="head">Then → now, {nStations} stations</div>
-  <div class="sub">{baseline[0]}–{baseline[1]} to the last 30 complete summers, pooled, with 95% intervals</div>
+  <div class="sub">{baseline[0]}–{baseline[1]} → the last 30 complete summers, averaged over the stations, with 95% intervals on the change</div>
   {#each rows as r}
     {@const g = glyph(r)}
     <div class="row">
       <div class="lbl">{r.label}</div>
       <div class="val" style:color={clear(r) ? r.color : MUTED}>{fmt(r, r.est)}</div>
-      <svg viewBox="0 0 {W} {H}" width={W} height={H} aria-label="95% interval {fmt(r, r.lo)} to {fmt(r, r.hi)}">
-        <line x1="4" x2={W - 4} y1={H / 2} y2={H / 2} stroke={GRID} />
-        <line x1={g.x0} x2={g.x0} y1="2" y2={H - 2} stroke={AXIS} />
-        <line x1={g.lo} x2={g.hi} y1={H / 2} y2={H / 2} stroke={clear(r) ? r.color : MUTED} stroke-width="3" stroke-linecap="round" />
-        <circle cx={g.c} cy={H / 2} r="4" fill={clear(r) ? r.color : MUTED} />
-      </svg>
-      <div class="ci">{fmt(r, r.lo)} to {fmt(r, r.hi)}</div>
+      <div class="levels"><span class="then">{lvl(r, r.then, false)}</span> <span class="arrow">→</span> <span class="now" style:color={clear(r) ? r.color : 'inherit'}>{lvl(r, r.now)}</span></div>
+      <div class="ciwrap">
+        <svg viewBox="0 0 {W} {H}" width={W} height={H} aria-label="95% interval {fmt(r, r.lo)} to {fmt(r, r.hi)}">
+          <line x1="4" x2={W - 4} y1={H / 2} y2={H / 2} stroke={GRID} />
+          <line x1={g.x0} x2={g.x0} y1="2" y2={H - 2} stroke={AXIS} />
+          <line x1={g.lo} x2={g.hi} y1={H / 2} y2={H / 2} stroke={clear(r) ? r.color : MUTED} stroke-width="3" stroke-linecap="round" />
+          <circle cx={g.c} cy={H / 2} r="4" fill={clear(r) ? r.color : MUTED} />
+        </svg>
+        <span class="ci">95%: {fmt(r, r.lo)} to {fmt(r, r.hi)}</span>
+      </div>
     </div>
   {/each}
   <div class="foot">Intervals resample whole summers within each station, then stations. Gray: interval includes zero.</div>
@@ -78,11 +84,41 @@
   }
   .row {
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'lbl val'
+      'lv ci';
     align-items: center;
-    gap: 0.6rem;
+    column-gap: 0.6rem;
+    row-gap: 0.1rem;
     border-top: 1px solid #efe9df;
     padding-top: 0.45rem;
+  }
+  .lbl {
+    grid-area: lbl;
+  }
+  .val {
+    grid-area: val;
+  }
+  .levels {
+    grid-area: lv;
+    font-size: 0.95rem;
+    color: #52514e;
+    white-space: nowrap;
+  }
+  .levels .now {
+    font-weight: 700;
+  }
+  .levels .arrow {
+    color: #b8b2a7;
+    margin: 0 0.15rem;
+  }
+  .ciwrap {
+    grid-area: ci;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    justify-content: flex-end;
   }
   .lbl {
     font-size: 0.85rem;
@@ -99,7 +135,6 @@
   .ci {
     font-size: 0.75rem;
     color: #898781;
-    min-width: 5.6rem;
     white-space: nowrap;
   }
   .foot {
