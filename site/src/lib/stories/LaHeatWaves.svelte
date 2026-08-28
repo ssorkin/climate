@@ -15,6 +15,7 @@
   import HeatWaveThresholds from '$lib/HeatWaveThresholds.svelte';
   import HeatWaveThenNow from '$lib/HeatWaveThenNow.svelte';
   import ReliefBars from '$lib/ReliefBars.svelte';
+  import HeadlineTrends from '$lib/HeadlineTrends.svelte';
 
   let { data, onPermalink = false } = $props();
   const story = storyBySlug('la-heat-waves');
@@ -32,8 +33,12 @@
   let hwCompare = $derived([...comparable(hwStations)].sort((a, b) => a.threshold_f - b.threshold_f));
   let hwFull = $derived(hwCompare.filter((s) => s.windows.baseline.n >= 25 && s.windows.last30.n >= 25));
   let hwOthers = $derived(hwStations.filter((s) => !hwCompare.includes(s)));
-  let hwStory = $state(null);
-  let hwHero = $derived(hwStations.find((s) => s.id === (hwStory ?? region.story_station)) ?? hwCompare[0] ?? hwStations[0]);
+  // small multiples: the stations where the nights moved most relative to the afternoons, first
+  const gap = (s) => (s.windows.last30.low_f - s.windows.baseline.low_f) - (s.windows.last30.peak_f - s.windows.baseline.peak_f);
+  let hwRanked = $derived([...hwCompare].sort((a, b) => gap(b) - gap(a)));
+  let otherPick = $state(null);
+  let hwOther = $derived(hwOthers.find((s) => s.id === otherPick) ?? hwOthers[0]);
+  let hwHero = $derived(hwStations.find((s) => s.id === region.story_station) ?? hwCompare[0] ?? hwStations[0]);
   let nowYears = $derived(hwFull[0]?.windows.last30.years ?? hwCompare[0]?.windows.last30.years ?? null);
 
   const hwDelta = (set, key) => med(set.map((s) => s.windows.last30[key] - s.windows.baseline[key]));
@@ -79,20 +84,22 @@
         each station; this site does not attempt to attribute the causes. Every chart is one thermometer at one place, as NOAA published it.
       </p>
     </div>
+    <HeadlineTrends stations={hwCompare} baseline={[hwB.start, hwB.end]} />
   </section>
 
   <section>
-    <div class="sechead">
-      <h2>Every heat wave at {hwHero.short} since {hwHero.first_year}</h2>
-      <div class="pillrow">
-        {#each hwStations as s (s.id)}
-          <button class="pill" class:on={hwHero.id === s.id} onclick={() => (hwStory = s.id)}>{s.short}</button>
-        {/each}
-      </div>
+    <h2>Every heat wave at {hwRanked.length} stations since the 1940s</h2>
+    <p class="muted">One line per heat wave, from its <span class="night">coolest night</span> up to its <span class="day">hottest afternoon</span>. Short bars mark the averages of both ends for {yrs([hwB.start, hwB.end])} and the last 30 complete summers. Stations where the nights moved most relative to the afternoons come first; hollow dots are waves in a summer that is not yet complete.</p>
+    <div class="multiples">
+      {#each hwRanked as s (s.id)}
+        <div>
+          <h3><a href="/station/{s.id}">{s.short}</a> <span class="muted small">threshold {tFU(s.threshold_f)} · {s.years.length} complete summers</span></h3>
+          <HeatWaveRange station={s} height={230} />
+        </div>
+      {/each}
     </div>
-    <p class="muted">One line per heat wave, from its <span class="night">coolest night</span> up to its <span class="day">hottest afternoon</span>. Short bars mark the averages of both ends for {yrs([hwB.start, hwB.end])} and the last 30 complete summers. Hollow dots are waves in a summer that is not yet complete.</p>
-    <HeatWaveRange station={hwHero} />
   </section>
+
 
   <section>
     <h2>What counts as a heat wave here</h2>
@@ -126,24 +133,21 @@
     <p class="small muted">Share of 6 pm–8 am readings under {tFU(hwRule.relief_f)}, scaled to 14 hours so hourly and 3-hourly years compare; nights from the second night of the wave on. At March, in the Inland Empire, heat-wave nights have barely moved — and neither have its ordinary summer nights.</p>
   </section>
 
-  <section>
-    <h2>Not just one thermometer</h2>
-    <p class="muted">The same picture at every station with a record in both windows, from the coast to the Inland Empire. Same chart as above, one per station: the orange bars stay level, the blue bars step up.</p>
-    <div class="multiples">
-      {#each hwCompare as s (s.id)}
-        <div>
-          <h3><a href="/station/{s.id}">{s.short}</a> <span class="muted small">threshold {tFU(s.threshold_f)} · {s.years.length} complete summers</span></h3>
-          <HeatWaveRange station={s} height={230} />
+  {#if hwOther}
+    <section>
+      <div class="sechead">
+        <h2>Stations without a {yrs([hwB.start, hwB.end])} baseline</h2>
+        <div class="pillrow">
+          {#each hwOthers as s (s.id)}
+            <button class="pill" class:on={hwOther.id === s.id} onclick={() => (otherPick = s.id)}>{s.short}</button>
+          {/each}
         </div>
-      {/each}
-    </div>
-    {#if hwOthers.length}
-      <p class="small muted">
-        {hwOthers.length} more stations have heat-wave records but no {yrs([hwB.start, hwB.end])} baseline to compare against:
-        {#each hwOthers as s, i}<a href="/station/{s.id}">{s.short}</a>{i < hwOthers.length - 1 ? ', ' : '.'}{/each}
-      </p>
-    {/if}
-  </section>
+      </div>
+      <p class="muted">{hwOthers.length} more stations have heat-wave records but too few mid-century summers to compare then with now. Their waves, same chart: <a href="/station/{hwOther.id}">{hwOther.short}</a>, {hwOther.years.length} complete summers.</p>
+      <HeatWaveRange station={hwOther} height={260} />
+    </section>
+  {/if}
+
 
   <section class="card explore">
     <h2>Explore it yourself</h2>
@@ -174,7 +178,10 @@
   }
   .hero {
     margin-top: 2rem;
-    max-width: 60rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 27rem;
+    gap: 2rem;
+    align-items: start;
   }
   .hero h1 {
     font-size: 2.8rem;
@@ -256,6 +263,9 @@
     font-weight: 600;
   }
   @media (max-width: 800px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
     .hero h1 {
       font-size: 2.1rem;
     }

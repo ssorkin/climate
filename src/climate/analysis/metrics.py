@@ -1212,10 +1212,13 @@ def heat_wave_window(
     )
     ord_hi = ordinary["tmax"].drop_nulls()
     ord_lo = ordinary["tmin"].drop_nulls()
+    per_year = [int(w.filter(pl.col("year") == y).height) for y in yrs]
     return {
         "years": [yrs[0], yrs[-1]],
         "n": n,
         "waves_per_year": round(w.height / n, 2),
+        "waves_per_year_sd": round(float(np.std(per_year, ddof=1)), 3) if n >= 2 else None,
+        "waves_per_year_n": n,
         "days_per_year": round(float(w["days"].sum()) / n, 2) if w.height else 0.0,
         "mean_days": mean_of("days"),
         "max_days": int(w["days"].max()) if w.height else None,
@@ -1225,6 +1228,7 @@ def heat_wave_window(
         "mean_low_f": mean_of("mean_low_f"),
         "after_low_f": mean_of("after_low_f"),
         "relief_h": mean_of("relief_h"),
+        **spread("days"),
         **spread("peak_f"),
         **spread("low_f"),
         **spread("mean_low_f"),
