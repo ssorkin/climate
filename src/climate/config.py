@@ -47,6 +47,7 @@ class Region:
     stations: tuple[Station, ...]
     excluded: tuple[Excluded, ...] = field(default_factory=tuple)
     generated: bool = False  # built by `clim stations`; exported in the compact form
+    story_station: str | None = None  # the station the front-page heat-wave story opens on
 
     @property
     def station_ids(self) -> list[str]:
@@ -91,6 +92,7 @@ def _parse_region(path: Path) -> Region:
         stations=stations,
         excluded=excluded,
         generated=bool(raw.get("generated", False)),
+        story_station=raw.get("story_station"),
     )
     ids = region.station_ids
     if len(set(ids)) != len(ids):
@@ -100,6 +102,8 @@ def _parse_region(path: Path) -> Region:
             raise ConfigError(f"{path.name}: bad station id {sid!r}")
     if region.default_station not in ids:
         raise ConfigError(f"{path.name}: default_station {region.default_station} not in list")
+    if region.story_station is not None and region.story_station not in ids:
+        raise ConfigError(f"{path.name}: story_station {region.story_station} not in list")
     if set(ids) & {e.id for e in excluded}:
         raise ConfigError(f"{path.name}: a station is both active and excluded")
     for e in excluded:

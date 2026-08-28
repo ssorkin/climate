@@ -188,6 +188,33 @@ def _modeled_block(
     return None
 
 
+def _heat_wave_block(d, meta: dict, cfg: dict) -> dict | None:
+    """Every heat wave at the station plus its threshold and then/now windows. Waves in
+    incomplete warm seasons are exported too (`years` says which seasons are complete) so
+    the current summer can be drawn "so far"."""
+    hw = meta.get("heat_waves")
+    if not hw or not (d / "heatwaves.parquet").exists():
+        return None
+    w = pl.read_parquet(d / "heatwaves.parquet").sort("start")
+    return {
+        "rule": cfg["heat_waves"],
+        "threshold_f": hw["threshold_f"],
+        "years": hw["years"],
+        "n_waves": hw["n_waves"],
+        "windows": hw["windows"],
+        "waves": {
+            "start": [str(v) for v in w["start"].to_list()],
+            "days": col(w, "days"),
+            "peak_f": col(w, "peak_f"),
+            "mean_high_f": [_clean(v) for v in w["mean_high_f"].to_list()],
+            "low_f": col(w, "low_f"),
+            "mean_low_f": [_clean(v) for v in w["mean_low_f"].to_list()],
+            "after_low_f": col(w, "after_low_f"),
+            "relief_h": [_clean(v) for v in w["relief_h"].to_list()],
+        },
+    }
+
+
 def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict]:
     d = ANALYSIS_DIR / sid
     meta = json.loads((d / "meta.json").read_text())
@@ -268,9 +295,10 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
         **{
             k: v
             for k, v in meta.items()
-            if k not in ("inventory", "homogenized", "index_windows", "baseline")
+            if k not in ("inventory", "homogenized", "index_windows", "baseline", "heat_waves")
         },
         "base_period": meta.get("baseline"),
+        "heat_waves": _heat_wave_block(d, meta, cfg),
         "indices": idx_block,
         "homogenized": homog,
         "modeled": _modeled_block(
@@ -484,6 +512,15 @@ def export_station(sid: str, cfg: dict, region_id: str) -> tuple[dict, int, dict
             "trend_warm70": meta["trends"].get("warm_70"),
             "trend_hot95": meta["trends"].get("hot_95"),
             "trend_frost32": meta["trends"].get("frost_nights"),
+            "heat_waves": (
+                {
+                    "threshold_f": meta["heat_waves"]["threshold_f"],
+                    "n_years": len(meta["heat_waves"]["years"]),
+                    "windows": meta["heat_waves"]["windows"],
+                }
+                if meta.get("heat_waves")
+                else None
+            ),
             "summer_to_date": {
                 "through": st.get("through"),
                 "ref_year": st.get("ref_year"),
@@ -626,6 +663,7 @@ def run_export(region: str = "all") -> None:
                 "baseline": cfg["baseline"],
                 "thresholds_f": cfg["thresholds_f"],
                 "completeness": cfg["completeness"],
+                "heat_waves": cfg["heat_waves"],
                 "regions": [
                     {
                         "id": r.id,
@@ -633,6 +671,7 @@ def run_export(region: str = "all") -> None:
                         "center": list(r.center),
                         "zoom": r.zoom,
                         "default_station": r.default_station,
+                        "story_station": r.story_station,
                         "n_stations": len(r.stations),
                     }
                     for r in all_regions
@@ -709,6 +748,38 @@ def run_export(region: str = "all") -> None:
             n = dump(SITE_DATA_DIR / "regional" / f"{reg.id}-indices.json", idx_mean)
             print(
                 f"  regional/{reg.id}-indices.json {n / 1e3:.0f} KB ({len(idx_mean['per_station'])} stations with a baseline)"
+            )
+            hw_stations = []
+            for sid in ids:
+                sp = SITE_DATA_DIR / "stations" / sid / "summary.json"
+                if not sp.exists():
+                    continue
+                sm = json.loads(sp.read_text())
+                if sm.get("heat_waves"):
+                    hw_stations.append(
+                        {
+                            "id": sid,
+                            "short": sm["short"],
+                            "first_year": sm["first_year"],
+                            "last_year": sm["last_year"],
+                            "active": sm["active"],
+                            **{
+                                k: sm["heat_waves"][k]
+                                for k in ("threshold_f", "years", "n_waves", "windows", "waves")
+                            },
+                        }
+                    )
+            n = dump(
+                SITE_DATA_DIR / "regional" / f"{reg.id}-heatwaves.json",
+                {
+                    "region": reg.id,
+                    "rule": cfg["heat_waves"],
+                    "baseline": cfg["baseline"],
+                    "stations": hw_stations,
+                },
+            )
+            print(
+                f"  regional/{reg.id}-heatwaves.json {n / 1e3:.0f} KB ({len(hw_stations)} stations)"
             )
             regm = _regional(reg.id)
             if regm:

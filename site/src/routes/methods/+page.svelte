@@ -65,6 +65,23 @@
   computed live in your browser from the same daily data, with the same rules.
 </p>
 
+<h2 id="heatwaves">Heat waves</h2>
+<p>
+  The front page opens on heat waves because the question is simple and the answer is not what people expect. A
+  <b>heat wave</b> is {ix.heat_waves?.min_days ?? 3} or more consecutive days whose high reaches the station's own
+  {ix.heat_waves?.percentile ?? 95}th percentile of May–October daily highs, computed over its complete warm seasons
+  (whole °F, the same round-trip as above). The rule is station-relative on purpose: the same definition gives 79°F at
+  Point Mugu and 103°F in San Bernardino, and nothing else — humidity, nights, season — is tuned. A warm season counts
+  when 90% of its May–October days have both a high and a low; a missing day breaks a run rather than being bridged.
+</p>
+<p>
+  For each wave we keep its length, its hottest high, the lowest low on nights 2 through <i>n</i> (the "coolest night
+  of the wave"), the low on the day after it ends, and — from the hourly readings — the share of 6 pm–8 am readings
+  under 70°F, scaled to 14 hours, so 3-hourly and hourly years are comparable. "Then" is 1951–1980 and "now" the last
+  30 complete warm seasons; a window needs 15 of them. The conclusion (flat peaks, warmer nights) does not depend on
+  the definition: the 90th percentile, a two-day minimum and the 98th percentile all give the same shape.
+</p>
+
 <h2>Missing data</h2>
 <p>
   A year is counted only if at least {Math.round(ix.completeness.annual_min_frac * 100)}% of its days were observed (for highs and

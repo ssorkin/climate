@@ -8,7 +8,7 @@ two in sync and covered by tests.
 from __future__ import annotations
 
 import calendar
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 
 import numpy as np
 import polars as pl
@@ -1022,3 +1022,208 @@ def percentile_indices(
         .drop("complete_tmax", "complete_tmin", "jja_complete_tmax", "jja_complete_tmin")
         .sort("year")
     )
+
+
+# --- heat waves ----------------------------------------------------------------------------
+
+
+def _season_days(year: int, months: list[int]) -> int:
+    return sum(calendar.monthrange(year, m)[1] for m in months)
+
+
+def warm_season_years(daily: pl.DataFrame, cfg: dict) -> list[int]:
+    """Years whose warm-season days (cfg heat_waves.months) are >= annual_min_frac valid for
+    *both* the high and the low. Heat waves are only counted in these years."""
+    hw = cfg["heat_waves"]
+    frac = cfg["completeness"]["annual_min_frac"]
+    d = daily.select("date", "tmax", "tmin").with_columns(
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
+    )
+    g = (
+        d.filter(pl.col("month").is_in(hw["months"]))
+        .group_by("year")
+        .agg(
+            pl.col("tmax").is_not_null().sum().alias("n_max"),
+            pl.col("tmin").is_not_null().sum().alias("n_min"),
+        )
+    )
+    out = []
+    for r in g.iter_rows(named=True):
+        need = int(np.ceil(frac * _season_days(r["year"], hw["months"])))
+        if r["n_max"] >= need and r["n_min"] >= need:
+            out.append(int(r["year"]))
+    return sorted(out)
+
+
+def heat_wave_threshold(daily: pl.DataFrame, cfg: dict, years: list[int]) -> int | None:
+    """The station's heat-wave threshold in whole °F: the configured percentile of its
+    warm-season daily highs over the given complete years (None below min_years)."""
+    hw = cfg["heat_waves"]
+    if len(years) < hw["min_years"]:
+        return None
+    d = daily.select("date", "tmax").with_columns(
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
+    )
+    vals = (
+        d.filter(pl.col("month").is_in(hw["months"]) & pl.col("year").is_in(years))["tmax"]
+        .drop_nulls()
+        .to_numpy()
+    )
+    if len(vals) == 0:
+        return None
+    return f_whole(int(np.percentile(vals, hw["percentile"])))
+
+
+def heat_waves(daily: pl.DataFrame, cfg: dict, thr_f: int) -> pl.DataFrame:
+    """Every run of >= min_days consecutive calendar days with f_whole(tmax) >= thr_f.
+
+    One row per wave: start, end, year (of the start), days, peak_f (hottest high),
+    mean_high_f, low_f (the coolest night *inside* the wave: the lowest low on days 2..n),
+    mean_low_f, after_low_f (the low on the day after the run ends, when that day was
+    observed). A missing day breaks a run — it is never bridged.
+    """
+    min_days = cfg["heat_waves"]["min_days"]
+    d = daily.select("date", "tmax", "tmin").sort("date")
+    dates = d["date"].to_list()
+    hi = [f_whole(v) if v is not None else None for v in d["tmax"].to_list()]
+    lo = [f_whole(v) if v is not None else None for v in d["tmin"].to_list()]
+    rows = []
+    i, n = 0, len(dates)
+    while i < n:
+        if hi[i] is None or hi[i] < thr_f:
+            i += 1
+            continue
+        j = i
+        while (
+            j + 1 < n
+            and hi[j + 1] is not None
+            and hi[j + 1] >= thr_f
+            and (dates[j + 1] - dates[j]).days == 1
+        ):
+            j += 1
+        days = j - i + 1
+        if days >= min_days:
+            highs = hi[i : j + 1]
+            lows = [v for v in lo[i + 1 : j + 1] if v is not None]
+            after = lo[j + 1] if j + 1 < n and (dates[j + 1] - dates[j]).days == 1 else None
+            rows.append(
+                {
+                    "start": dates[i],
+                    "end": dates[j],
+                    "year": dates[i].year,
+                    "days": days,
+                    "peak_f": max(highs),
+                    "mean_high_f": float(np.mean(highs)),
+                    "low_f": min(lows) if lows else None,
+                    "mean_low_f": float(np.mean(lows)) if lows else None,
+                    "after_low_f": after,
+                }
+            )
+        i = j + 1
+    schema = {
+        "start": pl.Date,
+        "end": pl.Date,
+        "year": pl.Int32,
+        "days": pl.Int32,
+        "peak_f": pl.Int32,
+        "mean_high_f": pl.Float64,
+        "low_f": pl.Int32,
+        "mean_low_f": pl.Float64,
+        "after_low_f": pl.Int32,
+    }
+    return pl.DataFrame(rows, schema=schema)
+
+
+def heat_wave_relief(hourly: pl.DataFrame, waves: pl.DataFrame, relief_f: int) -> pl.Series:
+    """Per wave: hours per night under relief_f, from the hourly readings.
+
+    A night runs 18:00–08:00 local and is labeled by its morning date; nights 2..n of the
+    wave count (the same nights as low_f). Hours = share of the night's readings under the
+    threshold x 14 h, so 3-hourly years are on the same footing as hourly ones; a night
+    needs 5+ readings. Null when the wave has no usable night.
+    """
+    if waves.is_empty():
+        return pl.Series("relief_h", [], dtype=pl.Float64)
+    h = hourly.select("date", "hour", "temp").filter(pl.col("temp").is_not_null())
+    night = (
+        h.with_columns(
+            pl.when(pl.col("hour") >= 18)
+            .then(pl.col("date") + pl.duration(days=1))
+            .when(pl.col("hour") <= 8)
+            .then(pl.col("date"))
+            .otherwise(None)
+            .alias("night"),
+            (f_whole_expr(pl.col("temp")) < relief_f).alias("cool"),
+        )
+        .filter(pl.col("night").is_not_null())
+        .group_by("night")
+        .agg(pl.len().alias("n"), pl.col("cool").mean().alias("frac"))
+        .filter(pl.col("n") >= 5)
+    )
+    frac = dict(zip(night["night"].to_list(), night["frac"].to_list()))
+    out = []
+    for s, e in zip(waves["start"].to_list(), waves["end"].to_list()):
+        nights = [frac.get(s + timedelta(days=k)) for k in range(1, (e - s).days + 1)]
+        nights = [v for v in nights if v is not None]
+        out.append(14 * float(np.mean(nights)) if nights else None)
+    return pl.Series("relief_h", out, dtype=pl.Float64)
+
+
+def heat_wave_window(
+    waves: pl.DataFrame, daily: pl.DataFrame, cfg: dict, years: list[int], y0: int, y1: int
+) -> dict | None:
+    """Then/now summary over the complete warm seasons in [y0, y1]: how often, how long,
+    how hot, how warm the nights — and the ordinary (non-wave) warm-season high and low for
+    the same years, so wave nights can be compared with the nights around them."""
+    hw = cfg["heat_waves"]
+    yrs = [y for y in years if y0 <= y <= y1]
+    if len(yrs) < hw["window_min_years"]:
+        return None
+    w = waves.filter(pl.col("year").is_in(yrs))
+    n = len(yrs)
+
+    def mean_of(col: str) -> float | None:
+        if col not in w.columns:
+            return None
+        v = w[col].drop_nulls()
+        return round(float(v.mean()), 2) if v.len() else None
+
+    # ordinary days: warm-season days in these years that are not inside a wave or the day after
+    in_wave: set[date] = set()
+    for s, e in zip(w["start"].to_list(), w["end"].to_list()):
+        for k in range((e - s).days + 2):
+            in_wave.add(s + timedelta(days=k))
+    d = daily.select("date", "tmax", "tmin").with_columns(
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
+    )
+    ordinary = d.filter(
+        pl.col("month").is_in(hw["months"])
+        & pl.col("year").is_in(yrs)
+        & ~pl.col("date").is_in(list(in_wave))
+    )
+    ord_hi = ordinary["tmax"].drop_nulls()
+    ord_lo = ordinary["tmin"].drop_nulls()
+    return {
+        "years": [yrs[0], yrs[-1]],
+        "n": n,
+        "waves_per_year": round(w.height / n, 2),
+        "days_per_year": round(float(w["days"].sum()) / n, 2) if w.height else 0.0,
+        "mean_days": mean_of("days"),
+        "max_days": int(w["days"].max()) if w.height else None,
+        "peak_f": mean_of("peak_f"),
+        "mean_high_f": mean_of("mean_high_f"),
+        "low_f": mean_of("low_f"),
+        "mean_low_f": mean_of("mean_low_f"),
+        "after_low_f": mean_of("after_low_f"),
+        "relief_h": mean_of("relief_h"),
+        "ordinary_high_f": (
+            round(float(np.mean([f_whole(v) for v in ord_hi.to_list()])), 2)
+            if ord_hi.len()
+            else None
+        ),
+        "ordinary_low_f": (
+            round(float(np.mean([f_whole(v) for v in ord_lo.to_list()])), 2)
+            if ord_lo.len()
+            else None
+        ),
+    }

@@ -22,6 +22,13 @@
   import SpiralMap from '$lib/SpiralMap.svelte';
   import RankDots from '$lib/RankDots.svelte';
   import { loadCurves } from '$lib/curves.js';
+  import { fToC } from '$lib/units.js';
+  import { comparable, median as med, tempF, deltaF, axisT } from '$lib/hw.js';
+  import HeatWaveRange from '$lib/HeatWaveRange.svelte';
+  import HeatWaveThresholds from '$lib/HeatWaveThresholds.svelte';
+  import HeatWaveCounts from '$lib/HeatWaveCounts.svelte';
+  import Dumbbell from '$lib/Dumbbell.svelte';
+  import NightPairBars from '$lib/NightPairBars.svelte';
 
   let { data } = $props();
   let ix = $derived(data.index);
@@ -162,18 +169,123 @@
     return { slope_per_decade: med, significant: sig > ts.length / 2, from: Math.max(...ts.map((t) => t.from)), n: ts.length };
   };
   let latest = $derived(stations.map((s) => s.last_date).sort().at(-1));
+
+  // --- the heat-wave story -------------------------------------------------------------
+  let hw = $derived(data.heatwaves);
+  let hwRule = $derived(hw?.rule ?? { percentile: 95, min_days: 3, relief_f: 70 });
+  // every station with a threshold, longest records first (the tabs on the hero chart)
+  let hwStations = $derived([...(hw?.stations ?? [])].sort((a, b) => b.years.length - a.years.length));
+  // then-vs-now needs both windows; "unbroken" records have 25+ complete summers in each
+  let hwCompare = $derived([...comparable(hwStations)].sort((a, b) => a.threshold_f - b.threshold_f));
+  let hwFull = $derived(hwCompare.filter((s) => s.windows.baseline.n >= 25 && s.windows.last30.n >= 25));
+  let hwStory = $state(null);
+  let hwHero = $derived(hwStations.find((s) => s.id === (hwStory ?? region.story_station)) ?? hwCompare[0] ?? hwStations[0]);
+  const hwDelta = (set, key) => med(set.map((s) => s.windows.last30[key] - s.windows.baseline[key]));
+  const hwMed = (set, win, key) => med(set.map((s) => s.windows[win][key]));
+  let hwB = $derived(hw?.baseline ?? ix.baseline);
+  let hwNowYears = $derived(hwFull[0]?.windows.last30.years ?? hwCompare[0]?.windows.last30.years ?? null);
+  const yrs = (w) => `${w[0]}–${w[1]}`;
+  const n2 = (v, d = 1) => (v == null ? '—' : v.toFixed(d));
+  const sgn = (v, d = 1) => (v == null ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d));
+  const dRows = (set, key, tipFmt) => set.map((s) => ({ label: s.short, a: s.windows.baseline[key], b: s.windows.last30[key], tipA: tipFmt(s.windows.baseline[key]), tipB: tipFmt(s.windows.last30[key]) }));
+  const tF = (v) => tempF(v, units.f);
+  const dF = (v) => deltaF(v, units.f);
+  const tFU = (v) => tempF(v, units.f) + (units.f ? 'F' : 'C');
   let closed = $derived(allStations.length - stations.length);
 </script>
 
 <svelte:head>
-  <title>Los Angeles heat, night by night, since 1893 · climate.sorkinlabs</title>
-  <meta property="og:title" content="Los Angeles nights aren't cooling off like they used to" />
-  <meta property="og:description" content="Hot days, warm nights and frost at {stations.length} LA-area weather stations, every year since 1893, from NOAA's raw daily records." />
+  <title>Los Angeles heat waves aren't hotter. They just don't cool off. · climate.sorkinlabs</title>
+  <meta property="og:title" content="Los Angeles heat waves aren't hotter than they used to be. They just don't cool off." />
+  <meta property="og:description" content="Every heat wave at {hwStations.length} LA-area weather stations since the 1940s, from NOAA's hourly records: the hottest afternoons hold still, the coolest nights climb." />
 </svelte:head>
 
-<section class="hero">
+{#if hwHero && hwCompare.length}
+  <section class="hero">
+    <div class="text">
+      <h1>Los Angeles heat waves aren't hotter than they used to be. They just don't cool off.</h1>
+      <p class="lede">
+        Pick any airport in the basin and line up every heat wave it has recorded since the 1940s. The hottest afternoon of each one lands
+        about where it always did ({sgn(hwDelta(hwFull, 'peak_f') == null ? null : units.f ? hwDelta(hwFull, 'peak_f') : hwDelta(hwFull, 'peak_f') / 1.8)}° at the typical station, {yrs(hwB ? [hwB.start, hwB.end] : [0, 0])} to {hwNowYears ? yrs(hwNowYears) : 'now'}). The coolest night of each one is
+        {dF(hwDelta(hwFull, 'low_f'))} warmer — and the hours of relief under {tFU(hwRule.relief_f)} on a heat-wave night have gone from
+        {n2(hwMed(hwFull, 'baseline', 'relief_h'))} to {n2(hwMed(hwFull, 'last30', 'relief_h'))}.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Every heat wave at {hwHero.short} since {hwHero.first_year}</h2>
+      <div class="pillrow">
+        {#each hwStations as s (s.id)}
+          <button class="pill" class:on={hwHero.id === s.id} onclick={() => (hwStory = s.id)}>{s.short}</button>
+        {/each}
+      </div>
+    </div>
+    <p class="muted">One line per heat wave, from its <span class="night">coolest night</span> up to its <span class="day">hottest afternoon</span>. Short bars mark the averages of both ends for {yrs([hwB.start, hwB.end])} and the last 30 complete summers. Hollow dots are waves in a summer that is not yet complete.</p>
+    <HeatWaveRange station={hwHero} />
+  </section>
+
+  <section>
+    <h2>First, what counts as a heat wave</h2>
+    <p class="muted">There is no single temperature that means "heat wave" in Los Angeles: 83°F is a hot day at LAX and an ordinary one in Burbank. So the definition is local to each station and comes from its own history.</p>
+    <div class="def card"><b>A heat wave</b> is {hwRule.min_days} or more days in a row when the afternoon high reaches the hottest {100 - hwRule.percentile}% of that station's summer days (May–October, over its whole record).</div>
+    <p class="muted">Nothing else is tuned — no humidity, no minimum night temperature, no adjustment for the season. The night side of the story below falls out of the data, not the definition. A day counts only when the hourly record covers it (<a href="/methods#heatwaves">how</a>).</p>
+    <HeatWaveThresholds stations={hwStations} />
+  </section>
+
+  <section>
+    <h2>What has stayed the same</h2>
+    <p class="muted">Compare {yrs([hwB.start, hwB.end])} with the last 30 complete summers at the {hwFull.length} stations with unbroken records. Heat waves come about as often as they did, run about as long, and peak about as high — the differences are within a degree or a fraction of a day, and they don't all point the same way.</p>
+    <div class="tiles3">
+      <StatTile label="How often" value="{sgn(hwDelta(hwFull, 'waves_per_year'), 1)} / summer" sub="heat waves per summer, median change across the {hwFull.length} stations" />
+      <StatTile label="How long" value="{sgn(hwDelta(hwFull, 'mean_days'), 1)} days" sub="days per heat wave, median change" />
+      <StatTile label="How hot" value="{dF(hwDelta(hwFull, 'peak_f'))}" sub="hottest afternoon of the wave, median change" />
+    </div>
+    <div class="three">
+      <div><h3>Heat waves per summer</h3><Dumbbell rows={dRows(hwCompare, 'waves_per_year', (v) => n2(v, 2))} color={HEAT} domain={[0, 4]} format={(v) => n2(v, 0)} delta={(d) => sgn(d, 2)} big={0.5} empty="{yrs([hwB.start, hwB.end])} (hollow) → last 30 summers (filled)" /></div>
+      <div><h3>Days per heat wave</h3><Dumbbell rows={dRows(hwCompare, 'mean_days', (v) => n2(v, 1))} color={HEAT} domain={[3, 5]} format={(v) => n2(v, 1)} big={0.5} empty="Average length; every wave is at least {hwRule.min_days} days" /></div>
+      <div><h3>Hottest afternoon of the wave</h3><Dumbbell rows={dRows(hwCompare, 'peak_f', tF)} color={HEAT} domain={[88, 110]} axis={(v) => axisT(v, units.f)} format={(v) => Math.round(v) + '°'} delta={dF} big={2} empty="Average of each wave's hottest high" /></div>
+    </div>
+    <h3>Heat waves per summer, year by year</h3>
+    <HeatWaveCounts stations={hwCompare} />
+    <p class="small muted">The count swings from year to year and decade to decade — the 2000s were quiet at every station, the 1950s busy at the coast — but at the coast and in the basin the recent average sits where the mid-century one did. Inland stations are the exception: March, San Bernardino and Victorville run about half a day longer per wave and about one extra heat wave a year.</p>
+  </section>
+
+  <section>
+    <h2>What has changed: the nights</h2>
+    <p class="muted">Every night inside a heat wave is warmer now, and so is the first night after it ends. The coolest night a heat wave offers — the one that used to break the spell — is {dF(hwDelta(hwFull, 'low_f'))} warmer at the typical station. Measured in hours, the relief has shrunk faster than the degrees suggest.</p>
+    <div class="tiles3">
+      <StatTile label="Coolest night of the wave" value={dF(hwDelta(hwFull, 'low_f'))} sub="the lowest overnight temperature during a heat wave, median change" accent />
+      <StatTile label="Night after it ends" value={dF(hwDelta(hwFull, 'after_low_f'))} sub="overnight low on the first night after the run breaks" accent />
+      <StatTile label="Relief under {tFU(hwRule.relief_f)}" value="{n2(hwMed(hwFull, 'baseline', 'relief_h'))} h → {n2(hwMed(hwFull, 'last30', 'relief_h'))} h" sub="hours per heat-wave night below {tFU(hwRule.relief_f)}, 6 pm–8 am, median" accent />
+    </div>
+    <h3>The coolest night of a heat wave, then and now</h3>
+    <Dumbbell rows={dRows(hwCompare, 'low_f', tF)} color={COOL} domain={[50, 75]} axis={(v) => axisT(v, units.f)} format={(v) => Math.round(v) + '°'} delta={dF} big={2} empty="Average of each wave's lowest overnight temperature, {yrs([hwB.start, hwB.end])} (hollow) → last 30 summers (filled)" />
+    <h3>Hours of relief under {tFU(hwRule.relief_f)} on a heat-wave night</h3>
+    <Dumbbell rows={dRows(hwCompare, 'relief_h', (v) => n2(v, 1) + ' h')} color={COOL} domain={[0, 12]} format={(v) => n2(v, 0) + ' h'} delta={(d) => sgn(d, 1) + ' h'} big={1} empty="Between 6 pm and 8 am, from the hourly readings; nights inside the wave" />
+  </section>
+
+  <section>
+    <h2>Heat-wave nights warmed faster than ordinary nights</h2>
+    <p class="muted">Summer nights in general are warmer in Los Angeles — that is the rest of this page. But at the basin airports, the nights inside heat waves have warmed <i>more</i> than the ordinary nights around them: the gap between "a warm summer night" and "a night you can't sleep" has opened at exactly the moment it matters. Inland, at March, neither has moved much.</p>
+    <NightPairBars stations={hwCompare} />
+  </section>
+
+  <section class="card about">
+    <b>What this is not saying.</b> These are readings at airports, taken hourly, and nothing has been adjusted. Every one of these stations has changed
+    instruments at least once since the 1940s, and several sit in neighborhoods that have paved over. This page describes what each thermometer
+    recorded; it does not explain why, and it says nothing about Los Angeles beyond these places. Hourly readings also miss a thermometer's true
+    peak by about half a degree — consistently, in every decade — one more reason not to lean on the "hotter" question. Definition, completeness
+    rules and the sensitivity to the definition: <a href="/methods#heatwaves">Methods</a>.
+  </section>
+
+  <h2 class="divider">Behind the story: nights across the whole year, at every station</h2>
+{/if}
+
+<section class="hero evidence" id="nights">
   <div class="text">
-    <h1>A typical Los Angeles night is now warmer than {nightRank == null ? '—' : Math.round(nightRank)}% of the nights people had at that time of year in 1951–1980.</h1>
+    <h2 class="big">A typical Los Angeles night is now warmer than {nightRank == null ? '—' : Math.round(nightRank)}% of the nights people had at that time of year in 1951–1980.</h2>
     <p class="lede">
       A typical day: warmer than {dayRank == null ? '—' : Math.round(dayRank)}%. If nothing had changed, both numbers would be 50. That is the whole
       site in one idea — take every reading from NOAA's hourly station records, ask <i>how unusual is this for this date, at this station?</i>,
@@ -325,10 +437,53 @@
     margin-top: 2rem;
     max-width: 60rem;
   }
-  .hero h1 {
+  .hero h1,
+  .hero h2.big {
     font-size: 2.8rem;
     margin: 0 0 0.8rem;
-    max-width: 18ch;
+    max-width: 26ch;
+  }
+  .hero.evidence h2.big {
+    font-size: 2rem;
+    max-width: 26ch;
+  }
+  .tiles3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 1.4rem;
+  }
+  .three {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 1.2rem 0 0.2rem;
+  }
+  .def {
+    font-size: 1.15rem;
+    border-left: 4px solid #d94f22;
+    margin: 0.8rem 0;
+  }
+  .divider {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e8e1d5;
+  }
+  .day {
+    color: #c2410c;
+    font-weight: 600;
+  }
+  .night {
+    color: #1c5cab;
+    font-weight: 600;
+  }
+  @media (max-width: 800px) {
+    .tiles3 {
+      grid-template-columns: 1fr;
+    }
   }
   .tiles {
     display: grid;

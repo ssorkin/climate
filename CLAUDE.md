@@ -35,6 +35,11 @@ export` in Python, fully static SvelteKit site at climate.sorkinlabs.com.
   stations without 20 baseline years get none), June–August mean high/low anomalies and
   the diurnal range. Fixed thresholds (≥95°F days, ≥70°F nights) are the intuitive layer.
   Percentile indices may be averaged across stations; raw counts may not.
+- **Heat waves are station-relative.** A heat wave is `heat_waves.min_days`+ consecutive days
+  with the high at/above the station's *own* 95th percentile of May–Oct highs over its complete
+  warm seasons (`config/analysis.yaml: heat_waves`; `metrics.heat_waves`). A missing day breaks
+  a run. The front page leads with this story (peaks flat, nights warmer); the regional file is
+  `regional/<region>-heatwaves.json`.
 - **Missing days are null, never 0.** A year counts only with ≥ 90% valid days *per
   element* (TMAX and TMIN separately); a month with ≥ 25. Incomplete periods export
   as `null`; the current year is `partial` and compared only in a same-window

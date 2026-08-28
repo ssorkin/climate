@@ -20,6 +20,7 @@ from climate.config import (
     region_ids_for,
     unique_stations,
 )
+from climate.hourly.ingest import hourly_path
 from climate.ingest.store import load_daily_wide, load_inventory, load_stations
 from climate.ingest.ushcn import load_ushcn
 from climate.paths import ANALYSIS_DIR
@@ -197,6 +198,32 @@ def analyze_station(
 
     complete_years = annual.filter(pl.col("complete_tmax") & pl.col("complete_tmin"))["year"]
     last_complete = int(complete_years.max()) if len(complete_years) else None
+    # Heat waves: runs of days at the station's own hottest-5% warm-season highs. Only
+    # complete warm seasons (both elements) count; the threshold needs min_years of them.
+    hw_years = [y for y in M.warm_season_years(daily, cfg) if y not in suspect_years]
+    hw_thr = M.heat_wave_threshold(daily, cfg, hw_years)
+    heat_waves = None
+    if hw_thr is not None:
+        waves = M.heat_waves(daily, cfg, hw_thr)
+        hp = hourly_path(st.id)
+        if hp.exists():
+            hourly = pl.read_parquet(hp, columns=["date", "hour", "temp"])
+            waves = waves.with_columns(
+                M.heat_wave_relief(hourly, waves, cfg["heat_waves"]["relief_f"])
+            )
+        else:
+            waves = waves.with_columns(pl.lit(None, dtype=pl.Float64).alias("relief_h"))
+        waves.write_parquet(out_dir / "heatwaves.parquet")
+        hw_last = hw_years[-1]
+        heat_waves = {
+            "threshold_f": hw_thr,
+            "years": hw_years,
+            "n_waves": int(waves.filter(pl.col("year").is_in(hw_years)).height),
+            "windows": {
+                "baseline": M.heat_wave_window(waves, daily, cfg, hw_years, b0, b1),
+                "last30": M.heat_wave_window(waves, daily, cfg, hw_years, hw_last - 29, hw_last),
+            },
+        }
     cols = M.threshold_columns(cfg)
     metric_cols = [
         "tmax_mean_c",
@@ -270,6 +297,7 @@ def analyze_station(
         "last_year": int(valid["date"].max().year),
         "active": bool(active),
         "homogenized": homog,
+        "heat_waves": heat_waves,
         "has_baseline": bool(has_baseline),
         "baseline_years": int(base_years),
         "baseline": list(baseline_used) if baseline_used else None,

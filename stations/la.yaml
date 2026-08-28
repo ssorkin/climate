@@ -6,6 +6,8 @@ name: Greater Los Angeles
 center: [34.05, -118.15]
 zoom: 8.2
 default_station: USW00023174
+# The front-page heat-wave story opens on this station (every LA station is a tab).
+story_station: USW00023152
 stations:
   - {id: USW00023174, short: LAX}
   - {id: USW00023129, short: Long Beach Airport}

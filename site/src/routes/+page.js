@@ -16,6 +16,13 @@ export async function load({ fetch }) {
   } catch {
     /* no national index yet */
   }
+  let heatwaves = null;
+  try {
+    const h = await fetch(dataUrl("/data/regional/la-heatwaves.json"));
+    if (h.ok) heatwaves = await h.json();
+  } catch {
+    /* no heat-wave export */
+  }
   let regional = null;
   let indices = null;
   try {
@@ -26,5 +33,5 @@ export async function load({ fetch }) {
   } catch {
     /* no regional model */
   }
-  return { index, hero, usCount, regional, indices };
+  return { index, hero, usCount, regional, indices, heatwaves };
 }
