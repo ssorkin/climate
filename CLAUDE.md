@@ -66,5 +66,8 @@ export` in Python, fully static SvelteKit site at climate.sorkinlabs.com.
 - Site: Svelte 5 runes, plain JS, inline-SVG charts in scoped-style components, °F
   default with °C toggle, direct labels over legends, sequential palettes for
   magnitudes and diverging only for anomalies.
+- Stories: `site/src/lib/stories.js` is the registry (slug, title, dek, published); each story is a
+  component in `site/src/lib/stories/` rendered at its permalink `/stories/<slug>` (canonical, with
+  a byline) and, while newest, on `/`. Permalinks never change; `/explore` holds the non-story charts.
 - Copy describes what was observed *at this station*; no regional-climate or causal
   claims, and the siting/urbanization caveat stays on the Methods page.
