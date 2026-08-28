@@ -115,12 +115,12 @@
     <p class="muted">That identifies roughly {n1(winMean(hwCompare, 'last30', 'waves_per_year'))} heat waves a summer at a typical station, covering about {Math.round(winMean(hwCompare, 'last30', 'days_per_year'))} days. (The threshold is the warmest {100 - hwRule.percentile}% of May–October, so a station sees only about {Math.round(((100 - hwRule.percentile) / 100) * 184)} threshold-crossing days a summer to begin with; requiring {hwRule.min_days} in a row makes qualifying runs rarer still.){#if robustLevels.length}{' '}Stricter definitions change how many events qualify — {robustLevels.map((r) => `${r.per_year} a summer ${r.short}`).join(', ')} — but not the central result: daytime peaks have changed little, while heat-wave nights are several degrees warmer (<a href="#robustness">the table</a>).{/if}</p>
     {#if spells?.last30?.per_summer}
       <aside class="card aside">
-        <b>Why does {n1(winMean(hwCompare, 'last30', 'waves_per_year'))} per station sound low?</b> Los Angeles is geographically large, and coastal and inland stations rarely cross their own thresholds at the same time. Counting a <i>regional spell</i> as a run of consecutive days on which at least one of the {spells.last30.n_stations} comparable stations was inside a heat wave (summers complete at all of them, {yrs(spells.last30.years)}), the region saw about <b>{n1(spells.last30.per_summer)} distinct spells a summer</b>, covering {spells.last30.days_per_summer} days{#if spells.baseline?.per_summer}{' '}— against {n1(spells.baseline.per_summer)} spells and {spells.baseline.days_per_summer} days a summer in {yrs(spells.baseline.years)}{/if}. A station-by-station count is still the right unit for then-vs-now, because it is one thermometer compared with itself.
+        <b>Why does {n1(winMean(hwCompare, 'last30', 'waves_per_year'))} per station sound low?</b> Los Angeles is geographically large, and coastal and inland stations rarely cross their own thresholds at the same time. Count a <i>regional spell</i> as a run of consecutive days on which at least one of the {spells.last30.n_stations} comparable stations was inside a heat wave, and the region saw about <b>{n1(spells.last30.per_summer)} spells a summer</b> ({yrs(spells.last30.years)}, summers complete at all of them). A station-by-station count is still the right unit for then-vs-now: it is one thermometer compared with itself.
       </aside>
     {/if}
     <details>
       <summary>The threshold at each station</summary>
-      <HeatWaveThresholds stations={hwStations} />
+      <HeatWaveThresholds stations={hwStations} percentile={hwRule.percentile} />
     </details>
   </section>
 
@@ -152,7 +152,7 @@
 
   <section>
     <h2>Overnight relief: hours under {tFU(hwRule.relief_f)} on a heat-wave night</h2>
-    <p class="muted">A daily low of 69°F and one of 60°F both count as "under 70," but they are very different nights. The hourly readings can tell them apart: of the 14 hours between 6 pm and 8 am, how many were under {tFU(hwRule.relief_f)}? That is the number that decides whether windows can be opened, whether a building sheds the day's heat, whether people sleep.</p>
+    <p class="muted">A daily low of 69°F and one of 60°F both count as "under 70," but they are very different nights. The hourly readings can tell them apart: of the 14 hours between 6 pm and 8 am, how many were under {tFU(hwRule.relief_f)}? That number is closely tied to whether windows can be opened, whether a building sheds the day's heat, whether people sleep.</p>
     <ReliefBars rows={typical} reliefF={hwRule.relief_f} big />
     <p class="muted">Station by station:</p>
     <ReliefBars rows={reliefRows} reliefF={hwRule.relief_f} />
@@ -161,7 +161,7 @@
       <h3>The pattern isn't universal: {exceptions.map((s) => s.short).join(' and ')} {exceptions.length === 1 ? 'is' : 'are'} the exception</h3>
       <p class="muted">
         {#each exceptions as s, i}{s.short}{i < exceptions.length - 1 ? '; ' : ''}: the coolest heat-wave night moved {dF(diffOf(s, 'low_f')?.est)} ({dF(diffOf(s, 'low_f')?.lo)} to {dF(diffOf(s, 'low_f')?.hi)}), and its ordinary summer nights moved {dF(s.windows.last30.ordinary_low_f - s.windows.baseline.ordinary_low_f)}.{/each}
-        Inland, away from the marine layer, heat-wave nights have changed by only about a degree — and so have ordinary summer nights. That is a real difference between places, not noise in the headline: this is a regional pattern with heterogeneous stations, not every thermometer proving one headline.
+        At March, inland and away from the marine layer, heat-wave nights have changed by only about a degree — and so have ordinary summer nights. That is a real difference between places, not noise in the headline: this is a regional pattern with heterogeneous stations, not every thermometer proving one headline.
       </p>
     {/if}
   </section>

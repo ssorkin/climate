@@ -5,7 +5,7 @@
   import { units } from '$lib/units.svelte.js';
   import { tempF, axisT } from '$lib/hw.js';
 
-  let { stations = [] } = $props();
+  let { stations = [], percentile = 90 } = $props();
   let rows = $derived([...stations].sort((a, b) => a.threshold_f - b.threshold_f));
   const W = 920;
   const M = { left: 210, right: 60 };
@@ -31,7 +31,7 @@
       <text x={x(s.threshold_f) + 12} y={yy + 4} font-size="13" font-weight="600" fill={INK2}>{tempF(s.threshold_f, units.f)}</text>
     {/each}
   </svg>
-  <div class="tip">{hover == null ? 'The hottest 5% of each station’s May–October afternoons, over its complete summers.' : `${rows[hover].short}: a heat wave is 3+ days at ${tempF(rows[hover].threshold_f, units.f)} or more · ${rows[hover].years.length} complete summers, ${rows[hover].first_year}–${rows[hover].last_year}`}</div>
+  <div class="tip">{hover == null ? `The hottest ${100 - percentile}% of each station’s May–October afternoons, over its complete summers.` : `${rows[hover].short}: a heat wave is 3+ days at ${tempF(rows[hover].threshold_f, units.f)} or more · ${rows[hover].years.length} complete summers, ${rows[hover].first_year}–${rows[hover].last_year}`}</div>
 </div>
 
 <style>
