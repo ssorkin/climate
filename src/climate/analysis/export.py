@@ -810,11 +810,34 @@ def run_export(region: str = "all") -> None:
                         slot["per_station"][sm["short"]] = r
             # pooled then-vs-now changes (hierarchical bootstrap: stations, then summers)
             pooled = M.pooled_bootstrap(hw_boots) if hw_boots else None
+            comparable = [
+                s
+                for s in hw_stations
+                if s["windows"].get("baseline") and s["windows"].get("last30")
+            ]
+            spells = None
+            if comparable:
+                b0, b1 = cfg["baseline"]["start"], cfg["baseline"]["end"]
+                last = max(s["windows"]["last30"]["years"][1] for s in comparable)
+                spells = {
+                    "definition": "a maximal run of consecutive days on which at least one of "
+                    "the comparable stations was inside a heat wave; only summers complete at "
+                    "every one of them count",
+                    "baseline": M.regional_spells(comparable, b0, b1),
+                    "last30": M.regional_spells(comparable, last - 29, last),
+                }
             robustness = []
             for slot in hw_robust.values():
                 rows = list(slot["per_station"].values())
                 row = {"definition": slot["definition"], "n_stations": len(rows)}
-                for k in ("peak_f_change", "low_f_change", "days_change", "waves_per_year_change"):
+                for k in (
+                    "peak_f_change",
+                    "low_f_change",
+                    "days_change",
+                    "waves_per_year_change",
+                    "waves_per_year_then",
+                    "waves_per_year_now",
+                ):
                     vals = [r[k] for r in rows if r.get(k) is not None]
                     row[k] = round(sum(vals) / len(vals), 2) if vals else None
                 row["per_station"] = slot["per_station"]
@@ -826,6 +849,7 @@ def run_export(region: str = "all") -> None:
                     "rule": cfg["heat_waves"],
                     "baseline": cfg["baseline"],
                     "pooled": pooled,
+                    "spells": spells,
                     "robustness": robustness,
                     "stations": hw_stations,
                 },

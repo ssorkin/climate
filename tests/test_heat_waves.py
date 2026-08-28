@@ -158,5 +158,15 @@ def test_robustness_table_has_every_definition(cfg):
     rows = M.heat_wave_robustness(daily, cfg, yrs, (1951, 1980), (1996, 2025))
     labels = [r["definition"] for r in rows]
     assert any("calendar-day" in x for x in labels) and any("2+ days" in x for x in labels)
+    assert sum("(this page)" in x for x in labels) == 1
     for r in rows:
         assert r["low_f_change"] == 3.0 and r["peak_f_change"] == 0.0
+
+
+def test_regional_spells_merge_overlapping_waves():
+    a = {"years": [2000, 2001], "waves": {"start": ["2000-07-10", "2001-07-01"], "days": [3, 3]}}
+    b = {"years": [2000], "waves": {"start": ["2000-07-12", "2000-08-01"], "days": [3, 4]}}
+    r = M.regional_spells([a, b], 2000, 2001)
+    # only 2000 is complete at both stations; Jul 10-14 merges into one spell, Aug 1-4 is another
+    assert r["n_years"] == 1 and r["n_spells"] == 2 and r["per_summer"] == 2.0
+    assert r["days_per_summer"] == 9.0

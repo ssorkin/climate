@@ -11,25 +11,25 @@
 <div class="wrap">
   <table>
     <thead>
-      <tr><th>Definition</th><th>Hottest afternoon</th><th>Coolest heat-wave night</th><th>Days per wave</th><th>Waves per summer</th><th>Stations</th></tr>
+      <tr><th>Definition</th><th>Events / station / summer</th><th>Hottest afternoon</th><th>Coolest heat-wave night</th><th>Days per event</th><th>Stations</th></tr>
     </thead>
     <tbody>
       {#each rows as r}
         <tr class:main={r.definition.includes('this page')}>
           <td>{r.definition}</td>
+          <td>{r.waves_per_year_then == null ? '—' : `${r.waves_per_year_then.toFixed(1)} → ${r.waves_per_year_now.toFixed(1)}`}</td>
           <td>{dF(r.peak_f_change)}</td>
           <td class="night">{dF(r.low_f_change)}</td>
           <td>{sg(r.days_change, 1)}</td>
-          <td>{sg(r.waves_per_year_change, 2)}</td>
           <td>{r.n_stations}</td>
         </tr>
       {/each}
       {#if pooled?.low_anom_f}
         <tr>
-          <td>3+ days, 95th percentile — nights adjusted for their calendar date</td>
+          <td>Page definition — nights adjusted for their calendar date</td>
+          <td>—</td>
           <td>{dF(pooled.peak_anom_f?.est)}</td>
           <td class="night">{dF(pooled.low_anom_f.est)} <span class="muted">({dF(pooled.low_anom_f.lo)} to {dF(pooled.low_anom_f.hi)})</span></td>
-          <td>—</td>
           <td>—</td>
           <td>{pooled.low_anom_f.n_stations}</td>
         </tr>

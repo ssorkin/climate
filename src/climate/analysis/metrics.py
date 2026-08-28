@@ -1517,18 +1517,22 @@ def heat_wave_robustness(
 ) -> list[dict]:
     """Does the definition matter? The then-vs-now change in the hottest afternoon and the
     coolest heat-wave night under alternative definitions: 2+/3+ days, 90th/95th/98th
-    percentile, and an ETCCDI-style calendar-day 95th percentile."""
+    percentile, and an ETCCDI-style calendar-day percentile — the configured one marked."""
     hw = cfg["heat_waves"]
     yt = [y for y in years if then[0] <= y <= then[1]]
     yn = [y for y in years if now[0] <= y <= now[1]]
     rows = []
-    defs = [
-        ("2+ days, 95th percentile", 2, 95, False),
-        ("3+ days, 95th percentile (this page)", 3, 95, False),
-        ("3+ days, 90th percentile", 3, 90, False),
-        ("3+ days, 98th percentile", 3, 98, False),
-        ("3+ days, calendar-day 95th percentile", 3, 95, True),
-    ]
+    main = (hw["min_days"], hw["percentile"])
+    candidates = [(2, 95, False), (3, 90, False), (3, 95, False), (3, 98, False)]
+    if main not in [(d, p) for d, p, _ in candidates]:
+        candidates.insert(0, (main[0], main[1], False))
+    candidates.append((hw["min_days"], hw["percentile"], True))
+    defs = []
+    for d, p, by_doy in candidates:
+        label = f"{d}+ days, {'calendar-day ' if by_doy else ''}{p}th percentile"
+        if (d, p) == main and not by_doy:
+            label += " (this page)"
+        defs.append((label, d, p, by_doy))
     for label, min_days, pct, by_doy in defs:
         if by_doy:
             w = heat_waves_calendar(
@@ -1560,6 +1564,8 @@ def heat_wave_robustness(
                 "threshold_f": thr,
                 "n_then": a.height,
                 "n_now": b.height,
+                "waves_per_year_then": round(a.height / len(yt), 2),
+                "waves_per_year_now": round(b.height / len(yn), 2),
                 "waves_per_year_change": round(b.height / len(yn) - a.height / len(yt), 2),
                 "days_change": round(float(b["days"].mean() - a["days"].mean()), 2),
                 "peak_f_change": None if pa is None or pb is None else round(pb - pa, 2),
@@ -1567,3 +1573,36 @@ def heat_wave_robustness(
             }
         )
     return rows
+
+
+def regional_spells(stations: list[dict], y0: int, y1: int) -> dict:
+    """Distinct extreme-heat spells across a set of stations: maximal runs of consecutive
+    calendar days on which at least one station was inside a heat wave. Input: exported
+    station blocks ({"waves": {"start": [...], "days": [...]}, "years": [...]}). Counts
+    only summers in [y0, y1] that are complete at every station, so the count is not
+    inflated by stations that report in some years and not others."""
+    common = None
+    for s in stations:
+        yrs = {y for y in s["years"] if y0 <= y <= y1}
+        common = yrs if common is None else common & yrs
+    common = sorted(common or [])
+    days: set[date] = set()
+    for s in stations:
+        for start, n in zip(s["waves"]["start"], s["waves"]["days"]):
+            d0 = date.fromisoformat(start)
+            if d0.year in common:
+                for k in range(n):
+                    days.add(d0 + timedelta(days=k))
+    spells, prev = 0, None
+    for d in sorted(days):
+        if prev is None or (d - prev).days > 1:
+            spells += 1
+        prev = d
+    return {
+        "years": [common[0], common[-1]] if common else None,
+        "n_years": len(common),
+        "n_stations": len(stations),
+        "n_spells": spells,
+        "per_summer": round(spells / len(common), 2) if common else None,
+        "days_per_summer": round(len(days) / len(common), 1) if common else None,
+    }

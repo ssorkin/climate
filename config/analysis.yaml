@@ -36,9 +36,11 @@ doy_window_days: 7
 
 # Heat waves: runs of consecutive days whose high reaches the station's *own* hottest
 # warm-season days. Station-relative by construction, so the same rule works at the
-# beach and in the desert; nothing else (humidity, nights, season) is tuned.
+# beach and in the desert; nothing else (humidity, nights, season) is tuned. 3+ days at
+# the 90th percentile follows common percentile-based heat-wave practice; the export
+# also carries 95th/3-day, 95th/2-day, 98th/3-day and a calendar-day variant as checks.
 heat_waves:
-  percentile: 95            # of the station's May–Oct daily highs, over its complete summers
+  percentile: 90            # of the station's May–Oct daily highs, over its complete summers
   min_days: 3               # consecutive days at or above the threshold
   months: [5, 6, 7, 8, 9, 10]
   relief_f: 70              # a night's "relief hours" are 18:00–08:00 readings under this

@@ -42,10 +42,15 @@
   let nowYears = $derived([...hwCompare].sort((a, b) => b.windows.last30.n - a.windows.last30.n)[0]?.windows.last30.years ?? null);
 
   let pooled = $derived(hw?.pooled ?? {});
+  let spells = $derived(hw?.spells ?? null);
+  const thrOf = (short, fallback) => hwStations.find((s) => s.short === short)?.threshold_f ?? fallback;
+  // events per summer under the looser definitions, for the strictness note
+  const SHORT = { '3+ days, 95th percentile': 'at the 95th percentile', '3+ days, 98th percentile': 'at the 98th' };
+  let robustLevels = $derived((hw?.robustness ?? []).filter((r) => SHORT[r.definition] && r.waves_per_year_now != null && !r.definition.includes('this page')).map((r) => ({ short: SHORT[r.definition], per_year: r.waves_per_year_now.toFixed(1) })));
   let nPooled = $derived(pooled.low_f?.n_stations ?? hwCompare.length);
   const winMean = (set, win, key) => { const v = set.map((s) => s.windows[win][key]).filter((x) => x != null); return v.length ? v.reduce((x, y) => x + y, 0) / v.length : null; };
   const est = (key) => pooled[key]?.est ?? null;
-  const range = (key) => (pooled[key] ? `${dF(pooled[key].lo)} to ${dF(pooled[key].hi)}` : '');
+  const range = (key) => (pooled[key] ? (key === 'days' ? `95%: ${n1(pooled[key].lo)} to ${n1(pooled[key].hi)}` : `${dF(pooled[key].lo)} to ${dF(pooled[key].hi)}`) : '');
   const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   const word = (n) => WORDS[n] ?? String(n);
   // stations where the coolest-night interval includes zero: the exceptions, named on the page
@@ -73,7 +78,7 @@
   <meta property="og:image" content="https://climate.sorkinlabs.com{story.image}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Every heat wave at an LA-area station since the 1940s: the hottest afternoons hold level while the coolest nights climb." />
+  <meta property="og:image:alt" content="Every heat wave at a long-record LA-area station: the hottest afternoons hold level while the coolest nights climb." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={story.title} />
   <meta name="twitter:image" content="https://climate.sorkinlabs.com{story.image}" />
@@ -88,11 +93,11 @@
       <h1>{story.title}</h1>
       <Byline {story} dataThrough={latest} {onPermalink} />
       <p class="lede">
-        Line up every heat wave a long-record LA-area station has recorded since the 1940s. The hottest afternoon of each one lands about where it
+        Line up every heat wave a long-record LA-area station has recorded — six of them have records reaching back to the 1940s or 50s. The hottest afternoon of each one lands about where it
         always did: {dF(est('peak_f'))} across {nPooled} stations, {yrs([hwB.start, hwB.end])} to {yrs(nowYears)}. The coolest night inside each one is
         {dF(est('low_f'))} warmer and the night after it ends {dF(est('after_low_f'))} warmer — and a heat-wave night that once gave
         {n1(winMean(hwCompare, 'baseline', 'relief_h'))} hours under {tFU(hwRule.relief_f)} now gives {n1(winMean(hwCompare, 'last30', 'relief_h'))}.
-        The waves aren't longer, and they aren't clearly more frequent. The nights are hotter.
+        The events themselves aren't obviously longer or more frequent. When one happens, the night behaves differently.
       </p>
       <p class="small attribution">
         These are observed changes at individual weather stations. They include regional climate change, urbanization and changes around
@@ -104,9 +109,15 @@
 
   <section>
     <h2>What counts as a heat wave here</h2>
-    <p class="muted">There is no single temperature that means "heat wave" in Los Angeles: 83°F is a hot day at LAX and an ordinary one in Burbank. So the extreme is defined relative to each place's own climate.</p>
-    <div class="def card"><b>A heat wave</b> is {hwRule.min_days} or more days in a row when the afternoon high reaches the hottest {100 - hwRule.percentile}% of that station's summer days (May–October, over its whole record).</div>
-    <p class="muted">That makes it {tFU(hwStations.find((s) => s.short === 'LAX')?.threshold_f ?? 83)} at LAX and {tFU(hwStations.find((s) => s.short === 'Burbank Airport')?.threshold_f ?? 98)} in Burbank. Nothing else is tuned — no humidity, no minimum night temperature, no adjustment for the season. What happens at night falls out of the data, not the definition. A day counts only when the hourly record covers it; a missing day breaks a run (<a href="/methods#heatwaves">how</a>). <a href="#robustness">Does the definition matter?</a> — no; the table is below.</p>
+    <p class="muted">There is no single temperature that means "heat wave" in Los Angeles: {tFU(thrOf('LAX', 80))} is a hot day at LAX and an ordinary one in Burbank. So the extreme is defined relative to each place's own climate.</p>
+    <div class="def card">Here, a <b>heat wave</b> is at least {WORDS[hwRule.min_days] ?? hwRule.min_days} consecutive days among the hottest {100 - hwRule.percentile}% of warm-season afternoons at that station (May–October, over its whole record) — a station-relative extreme-heat event.</div>
+    <p class="muted">That makes it {tFU(thrOf('LAX', 80))} at LAX and {tFU(thrOf('Burbank Airport', 95))} in Burbank. Nothing else is tuned — no humidity, no minimum night temperature, no adjustment for the season. What happens at night falls out of the data, not the definition. A day counts only when the hourly record covers it; a missing day breaks a run (<a href="/methods#heatwaves">how</a>).</p>
+    <p class="muted">That identifies roughly {n1(winMean(hwCompare, 'last30', 'waves_per_year'))} heat waves a summer at a typical station, covering about {Math.round(winMean(hwCompare, 'last30', 'days_per_year'))} days. (The threshold is the warmest {100 - hwRule.percentile}% of May–October, so a station sees only about {Math.round(((100 - hwRule.percentile) / 100) * 184)} threshold-crossing days a summer to begin with; requiring {hwRule.min_days} in a row makes qualifying runs rarer still.){#if robustLevels.length}{' '}Stricter definitions change how many events qualify — {robustLevels.map((r) => `${r.per_year} a summer ${r.short}`).join(', ')} — but not the central result: daytime peaks have changed little, while heat-wave nights are several degrees warmer (<a href="#robustness">the table</a>).{/if}</p>
+    {#if spells?.last30?.per_summer}
+      <aside class="card aside">
+        <b>Why does {n1(winMean(hwCompare, 'last30', 'waves_per_year'))} per station sound low?</b> Los Angeles is geographically large, and coastal and inland stations rarely cross their own thresholds at the same time. Counting a <i>regional spell</i> as a run of consecutive days on which at least one of the {spells.last30.n_stations} comparable stations was inside a heat wave (summers complete at all of them, {yrs(spells.last30.years)}), the region saw about <b>{n1(spells.last30.per_summer)} distinct spells a summer</b>, covering {spells.last30.days_per_summer} days{#if spells.baseline?.per_summer}{' '}— against {n1(spells.baseline.per_summer)} spells and {spells.baseline.days_per_summer} days a summer in {yrs(spells.baseline.years)}{/if}. A station-by-station count is still the right unit for then-vs-now, because it is one thermometer compared with itself.
+      </aside>
+    {/if}
     <details>
       <summary>The threshold at each station</summary>
       <HeatWaveThresholds stations={hwStations} />
@@ -135,7 +146,8 @@
       <StatTile label="Night after it ends" value={dF(est('after_low_f'))} sub="pooled change, 95%: {range('after_low_f')}" accent />
     </div>
     <HeatWaveThenNow stations={hwCompare} baseline={[hwB.start, hwB.end]} />
-    <p class="small muted">95% intervals bootstrap entire summers, so several heat waves in one year aren't treated as independent observations; the pooled numbers resample stations as well (<a href="/methods#heatwaves">how</a>). Heat waves also come about as often and run about as long as they did — year-by-year counts are in the <a href="/explore#heatwaves">explorer</a>.</p>
+    <p class="small muted">95% intervals bootstrap entire summers, so several heat waves in one year aren't treated as independent observations; the pooled numbers resample stations as well (<a href="/methods#heatwaves">how</a>).</p>
+    <p class="muted">Heat waves themselves aren't obviously longer or more frequent under this definition: {n1(winMean(hwCompare, 'baseline', 'mean_days'))} → {n1(winMean(hwCompare, 'last30', 'mean_days'))} days per event ({range('days')}) and {n1(winMean(hwCompare, 'baseline', 'waves_per_year'), 2)} → {n1(winMean(hwCompare, 'last30', 'waves_per_year'), 2)} per summer ({pooled.waves_per_year ? `${n1(pooled.waves_per_year.lo, 2)} to ${n1(pooled.waves_per_year.hi, 2)}` : ''}). The story is not that there are more of them; it is that when one happens, the night behaves differently. Year-by-year counts are in the <a href="/explore#heatwaves">explorer</a>.</p>
   </section>
 
   <section>
@@ -146,10 +158,10 @@
     <ReliefBars rows={reliefRows} reliefF={hwRule.relief_f} />
     <p class="small muted">Share of 6 pm–8 am readings under {tFU(hwRule.relief_f)}, scaled to 14 hours so hourly and 3-hourly years compare; nights from the second night of the wave on.</p>
     {#if exceptions.length}
-      <h3>Not everywhere: {exceptions.map((s) => s.short).join(' and ')} {exceptions.length === 1 ? 'is' : 'are'} the exception</h3>
+      <h3>The pattern isn't universal: {exceptions.map((s) => s.short).join(' and ')} {exceptions.length === 1 ? 'is' : 'are'} the exception</h3>
       <p class="muted">
         {#each exceptions as s, i}{s.short}{i < exceptions.length - 1 ? '; ' : ''}: the coolest heat-wave night moved {dF(diffOf(s, 'low_f')?.est)} ({dF(diffOf(s, 'low_f')?.lo)} to {dF(diffOf(s, 'low_f')?.hi)}), and its ordinary summer nights moved {dF(s.windows.last30.ordinary_low_f - s.windows.baseline.ordinary_low_f)}.{/each}
-        That is a real difference between places, not noise in the headline: inland, away from the marine layer, heat-wave nights have barely changed — and neither have ordinary summer nights. This is a regional pattern with heterogeneous stations, not every thermometer proving one headline.
+        Inland, away from the marine layer, heat-wave nights have changed by only about a degree — and so have ordinary summer nights. That is a real difference between places, not noise in the headline: this is a regional pattern with heterogeneous stations, not every thermometer proving one headline.
       </p>
     {/if}
   </section>
@@ -157,7 +169,7 @@
   <section id="robustness">
     <details>
       <summary><b>Does the definition matter?</b> The same then-vs-now changes under other definitions</summary>
-      <p class="small muted">Pooled over the {nPooled} comparable stations (plain means; the front-page rows carry intervals). The last row keeps the page's definition but expresses each heat-wave night as a departure from the normal low for its calendar date, so a shift in <i>when</i> heat waves occur cannot masquerade as warmer nights{pooled.start_doy ? ` — modern heat waves start on average ${Math.abs(pooled.start_doy.est).toFixed(0)} days ${pooled.start_doy.est >= 0 ? 'later' : 'earlier'} than in the baseline` : ''}.</p>
+      <p class="small muted">Pooled over the {nPooled} comparable stations (plain means; the front-page rows carry intervals). There is no single canonical heat-wave definition — the ETCCDI warm-spell index is stricter still (6+ days above a calendar-day 90th percentile) — so the page states its operational one and shows the alternatives. The last row keeps the page's definition but expresses each heat-wave night as a departure from the normal low for its calendar date, so a shift in <i>when</i> heat waves occur cannot masquerade as warmer nights{pooled.start_doy ? ` — modern heat waves start on average ${Math.abs(pooled.start_doy.est).toFixed(0)} days ${pooled.start_doy.est >= 0 ? 'later' : 'earlier'} than in the baseline` : ''}.</p>
       <HeatWaveRobustness rows={hw.robustness ?? []} {pooled} />
     </details>
   </section>
@@ -246,6 +258,12 @@
   }
   details {
     margin: 0.6rem 0;
+  }
+  .aside {
+    font-size: 0.95rem;
+    color: #52514e;
+    max-width: 52rem;
+    margin: 0.8rem 0 1rem;
   }
   summary {
     cursor: pointer;

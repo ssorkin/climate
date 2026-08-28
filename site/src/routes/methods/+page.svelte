@@ -1,4 +1,5 @@
 <script>
+  import HeatWaveRobustness from '$lib/HeatWaveRobustness.svelte';
   let { data } = $props();
   let ix = $derived(data.index);
   let hw = $derived(data.heatwaves);
@@ -72,8 +73,7 @@
   The front page opens on heat waves because the question is simple and the answer is not what people expect. A
   <b>heat wave</b> is {ix.heat_waves?.min_days ?? 3} or more consecutive days whose high reaches the station's own
   {ix.heat_waves?.percentile ?? 95}th percentile of May–October daily highs, computed over its complete warm seasons
-  (whole °F, the same round-trip as above). The rule is station-relative on purpose: the same definition gives 79°F at
-  Point Mugu and 103°F in San Bernardino, and nothing else — humidity, nights, season — is tuned. A warm season counts
+  (whole °F, the same round-trip as above). The rule is station-relative on purpose: the same definition gives a far lower bar at the beach than in the Inland Empire, and nothing else — humidity, nights, season — is tuned. A warm season counts
   when 90% of its May–October days have both a high and a low; a missing day breaks a run rather than being bridged.
 </p>
 <p>
@@ -101,9 +101,15 @@
     ({sgn(hw.pooled.low_anom_f.lo)} to {sgn(hw.pooled.low_anom_f.hi)}); heat waves now start on average
     {Math.abs(hw.pooled.start_doy?.est ?? 0).toFixed(0)} days {(hw.pooled.start_doy?.est ?? 0) >= 0 ? 'later' : 'earlier'} in the season than in the baseline.
   {/if}
-  The conclusion (flat peaks, warmer nights) does not depend on the definition either: the 90th and 98th percentiles,
-  a two-day minimum and an ETCCDI-style calendar-day percentile all give the same shape — the table is on the
-  <a href="/#robustness">front page</a> under "Does the definition matter?".
+  The conclusion (flat peaks, warmer nights) does not depend on the definition either. There is no single canonical
+  heat-wave definition — the NWS's public one is "abnormally hot weather generally lasting more than two days", and the
+  ETCCDI warm-spell index needs 6+ days above a calendar-day 90th percentile — so the page states an operational one
+  (3+ days at the station's 90th percentile, in line with common percentile-based practice) and shows the alternatives:
+</p>
+{#if hw?.robustness?.length}
+  <HeatWaveRobustness rows={hw.robustness} pooled={hw.pooled} />
+{/if}
+<p>
 </p>
 <p>
   Vocabulary, kept distinct on purpose: a <b>warm night</b> is a daily low ≥ 70°F; a <b>heat-wave night</b> is any
