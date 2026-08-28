@@ -93,8 +93,8 @@
     <div class="multiples">
       {#each hwRanked as s (s.id)}
         <div>
-          <h3><a href="/station/{s.id}">{s.short}</a> <span class="muted small">threshold {tFU(s.threshold_f)} · {s.years.length} complete summers</span></h3>
-          <HeatWaveRange station={s} height={230} />
+          <h3><a href="/station/{s.id}">{s.short}</a> <span class="muted small">≥ {tFU(s.threshold_f)} · {s.years.length} summers</span></h3>
+          <HeatWaveRange station={s} compact />
         </div>
       {/each}
     </div>
@@ -225,12 +225,25 @@
   }
   .multiples {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.4rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem 1.4rem;
   }
   .multiples h3 {
-    font-size: 1.05rem;
-    margin: 1rem 0 0;
+    font-size: 0.98rem;
+    margin: 0.6rem 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 1000px) {
+    .multiples {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .multiples {
+      grid-template-columns: 1fr;
+    }
   }
   .multiples h3 a {
     color: inherit;
