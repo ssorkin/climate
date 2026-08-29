@@ -1,0 +1,22 @@
+id: cimis-hourly-averages
+title: CIMIS hourly temperatures are hour-ending averages in standard time
+kind: measurement
+dataset: cimis
+years: []
+description: >-
+  CIMIS (DWR irrigation-management) stations report each hour's temperature as the
+  average of that hour's 1-minute samples, labeled by the hour it ends (0100-2400) in
+  Pacific Standard Time all year. GHCNh airports report a spot reading near the top of
+  the hour in local clock time. A day's high derived from hourly averages sits a little
+  below one derived from spot readings, and both sit below the thermometer's true peak;
+  CIMIS's own daily max/min (from the 1-minute samples) are kept alongside as a check.
+  QC flag Y (moderately outside the station's historical range) is kept because the
+  hottest days are exactly that; R, S, M, I, Q and the historical-average fills A/E/T
+  are dropped. Records start 1982-06-07, so there is no 1951-1980 baseline.
+handling: >-
+  CIMIS stations are a separate data tier (ids CIMIS<nbr>, stations/cimis.yaml), never
+  members of a region and never mixed into airport counts. Every airport-vs-CIMIS
+  comparison is made over the same years with each station's own heat-wave threshold;
+  levels are not compared across networks, only changes. Readings are placed at the
+  middle of their hour (0100 -> 00:30) before the shared day rule (8+ readings, no gap
+  over 3 h, a reading by 03:00 and after 21:00) is applied.

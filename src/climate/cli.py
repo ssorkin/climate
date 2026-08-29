@@ -51,6 +51,18 @@ def hourly(
 
 
 @app.command()
+def cimis(
+    stage: str = typer.Argument(..., help="stations | acquire | ingest | analyze"),
+    only: str = typer.Option("", help="Comma-separated CIMIS station numbers or CIMIS<nbr> ids"),
+    refresh: bool = typer.Option(False, help="Re-fetch the chunk that contains today"),
+) -> None:
+    """The CIMIS tier (DWR's irrigated-grass stations, 1982-): a siting control for heat waves."""
+    from climate.cimis import run_stage
+
+    run_stage(stage, only=[x for x in only.split(",") if x], refresh=refresh)
+
+
+@app.command()
 def ingest(region: str = typer.Option("all", help=REGION_HELP)) -> None:
     """Parse raw files into Parquet + DuckDB views."""
     from climate.ingest.runner import run_ingest

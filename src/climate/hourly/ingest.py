@@ -94,24 +94,12 @@ def _read(path) -> pl.DataFrame | None:
     ).filter(pl.col("ts").is_not_null())
 
 
-def ingest_station(st: HourlyStation) -> str:
-    frames = [f for f in (_read(p) for p in _files_for(st)) if f is not None and f.height]
-    if not frames:
-        return f"  {st.id} {st.short}: no files"
-    df = pl.concat(frames).filter(pl.col("temp").is_not_null() | pl.col("dewp").is_not_null())
-    df = df.with_columns(pl.col("ts").dt.replace_time_zone("UTC").alias("ts_utc")).drop("ts")
-    df = df.unique(subset=["ts_utc"], keep="last").sort("ts_utc")
-    local = df["ts_utc"].dt.convert_time_zone(st.tz)
-    df = df.with_columns(
-        local.dt.date().alias("date"),
-        local.dt.hour().cast(pl.Int8).alias("hour"),
-        (local.dt.hour().cast(pl.Float64) + local.dt.minute().cast(pl.Float64) / 60).alias("h"),
-    )
-    out = hourly_path(st.id)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    df.select("ts_utc", "date", "hour", "temp", "dewp", "rh", "wetbulb").write_parquet(out)
-
-    t = df.filter(pl.col("temp").is_not_null()).sort("ts_utc")
+def derive_days(df: pl.DataFrame, station_id: str) -> tuple[pl.DataFrame, pl.DataFrame]:
+    """The day rule, shared by every hourly source (GHCNh, CIMIS): from readings with
+    `date` (local), `h` (local clock hour as a float) and `temp` (tenths °C) build one row
+    per local day — n_obs, tmax, tmin, first_h, last_h, max_gap_h, complete — and write the
+    complete days to the daily store in GHCN-Daily's long layout. Returns (day, good)."""
+    t = df.filter(pl.col("temp").is_not_null()).sort("date", "h")
     day = (
         t.group_by("date")
         .agg(
@@ -137,13 +125,13 @@ def ingest_station(st: HourlyStation) -> str:
         pl.concat(
             [
                 good.select(
-                    pl.lit(st.id).alias("id"),
+                    pl.lit(station_id).alias("id"),
                     "date",
                     pl.lit("TMAX").alias("element"),
                     pl.col("tmax").alias("value"),
                 ),
                 good.select(
-                    pl.lit(st.id).alias("id"),
+                    pl.lit(station_id).alias("id"),
                     "date",
                     pl.lit("TMIN").alias("element"),
                     pl.col("tmin").alias("value"),
@@ -158,10 +146,31 @@ def ingest_station(st: HourlyStation) -> str:
         )
         .sort(["element", "date"])
     )
-    dp = daily_path(st.id)
+    dp = daily_path(station_id)
     dp.parent.mkdir(parents=True, exist_ok=True)
     long.write_parquet(dp)
-    day.select("date", "n_obs", "max_gap_h", "complete").write_parquet(daily_meta_path(st.id))
+    day.select("date", "n_obs", "max_gap_h", "complete").write_parquet(daily_meta_path(station_id))
+    return day, good
+
+
+def ingest_station(st: HourlyStation) -> str:
+    frames = [f for f in (_read(p) for p in _files_for(st)) if f is not None and f.height]
+    if not frames:
+        return f"  {st.id} {st.short}: no files"
+    df = pl.concat(frames).filter(pl.col("temp").is_not_null() | pl.col("dewp").is_not_null())
+    df = df.with_columns(pl.col("ts").dt.replace_time_zone("UTC").alias("ts_utc")).drop("ts")
+    df = df.unique(subset=["ts_utc"], keep="last").sort("ts_utc")
+    local = df["ts_utc"].dt.convert_time_zone(st.tz)
+    df = df.with_columns(
+        local.dt.date().alias("date"),
+        local.dt.hour().cast(pl.Int8).alias("hour"),
+        (local.dt.hour().cast(pl.Float64) + local.dt.minute().cast(pl.Float64) / 60).alias("h"),
+    )
+    out = hourly_path(st.id)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    df.select("ts_utc", "date", "hour", "temp", "dewp", "rh", "wetbulb").write_parquet(out)
+
+    day, good = derive_days(df, st.id)
     return (
         f"  {st.id} {st.short:<38} {df.height:>9,} obs  {df['date'].min()} .. {df['date'].max()}"
         f"  complete days {good.height:>6,} of {day.height:,}"

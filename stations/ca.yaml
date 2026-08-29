@@ -1,0 +1,124 @@
+# California airports and other NWS/FAA hourly stations in NOAA GHCNh: every station in
+# stations/us.yaml tagged CA (minus NOAA's mis-tagged Florida sites) with an airport-network id.
+# Curated for the statewide heat-wave comparison; tide-gauge (USL) sites are left out.
+region: ca
+name: California airports
+center: [37.2, -119.5]
+zoom: 5.6
+default_station: USW00023174
+story_station: USW00023152
+stations:
+  - {id: USW00023239, short: "Alameda NAS"}
+  - {id: USW00094299, short: "Alturas Municipal Airport"}
+  - {id: USW00024283, short: "Arcata Eureka Airport"}
+  - {id: USW00023224, short: "Auburn Municipal Airport"}
+  - {id: USW00023191, short: "Avalon Catalina Airport"}
+  - {id: USW00023155, short: "Bakersfield Airport"}
+  - {id: USW00023161, short: "Barstow-Daggett Airport"}
+  - {id: USW00093216, short: "Beale AFB"}
+  - {id: USW00003182, short: "Bicycle Lake Fort Irwin AAF"}
+  - {id: USW00000115, short: "Big Bear City Airport"}
+  - {id: USW00023157, short: "Bishop Airport"}
+  - {id: USW00023225, short: "Blue Canyon Nyack Airport"}
+  - {id: USW00023158, short: "Blythe Asos"}
+  - {id: USW00023152, short: "Burbank Glendale Pasadena Airport"}
+  - {id: USW00023136, short: "Camarillo Airport"}
+  - {id: USW00003154, short: "Camp Pendleton MCAS"}
+  - {id: USW00003164, short: "Campo Asos"}
+  - {id: USW00003177, short: "Carlsbad Mcclellan Palomar Airport"}
+  - {id: USW00023203, short: "Castle AFB"}
+  - {id: USW00093104, short: "China Lake NAF"}
+  - {id: USW00003179, short: "Chino Airport"}
+  - {id: USW00023254, short: "Concord Buchanan Field"}
+  - {id: USW00053175, short: "Corona Municipal Airport"}
+  - {id: USW00024286, short: "Crescent City Mcnamara Airport"}
+  - {id: USW00003104, short: "Desert Resorts Regional Airport"}
+  - {id: USW00023114, short: "Edwards AFB"}
+  - {id: USW00053144, short: "Edwards AFB N Aux Airfield"}
+  - {id: USW00023199, short: "El Centro NAF"}
+  - {id: USW00023167, short: "Fresno Chandler Dwtn Airport"}
+  - {id: USW00093193, short: "Fresno Yosemite International"}
+  - {id: USW00003166, short: "Fullerton Municipal Airport"}
+  - {id: USW00053143, short: "Gillespie Field Airport"}
+  - {id: USW00000135, short: "Gnoss Field Airport"}
+  - {id: USI0000KSRF, short: "Hamilton AAF"}
+  - {id: USW00023211, short: "Hamilton AAF"}
+  - {id: USW00053119, short: "Hanford Municipal Airport"}
+  - {id: USW00003167, short: "Hawthorne Municipal Airport"}
+  - {id: USW00093228, short: "Hayward Air Terminal"}
+  - {id: USW00093115, short: "Imperial Beach Ream Field NAS"}
+  - {id: USW00003144, short: "Imperial County Airport"}
+  - {id: USW00003159, short: "Lancaster"}
+  - {id: USW00023110, short: "Lemoore Reeves NAS"}
+  - {id: USW00023285, short: "Livermore Municipal Airport"}
+  - {id: USW00023243, short: "Lompoc Airport"}
+  - {id: USW00023129, short: "Long Beach Daugherty Airport"}
+  - {id: USW00053141, short: "Los Alamitos AAF"}
+  - {id: USW00093134, short: "Los Angeles Downtown/Usc"}
+  - {id: USW00023174, short: "Los Angeles International Airport"}
+  - {id: USW00053130, short: "Los Angeles Whiteman Airport"}
+  - {id: USW00093242, short: "Madera Municipal Airport"}
+  - {id: USW00003181, short: "Mammoth Yosemite Airport"}
+  - {id: USW00023119, short: "March AFB"}
+  - {id: USW00093205, short: "Marysville Airport (Asos)"}
+  - {id: USW00023257, short: "Merced Municipal Airport"}
+  - {id: USW00023258, short: "Modesto Airport"}
+  - {id: USW00023244, short: "Moffett Fed Airfield"}
+  - {id: USW00003183, short: "Mojave Airport"}
+  - {id: USW00024259, short: "Montague Siskiyou Airport"}
+  - {id: USW00023259, short: "Monterey Peninsul Airport"}
+  - {id: USW00024215, short: "Mt. Shasta"}
+  - {id: USW00093112, short: "N Is NAS"}
+  - {id: USW00093227, short: "Napa County Airport"}
+  - {id: USW00023179, short: "Needles Airport"}
+  - {id: USW00023230, short: "Oakland International Airport"}
+  - {id: USW00053121, short: "Oceanside Municipal Airport"}
+  - {id: USW00003102, short: "Ontario International Airport"}
+  - {id: USW00093210, short: "Oroville Municipal Airport"}
+  - {id: USW00093110, short: "Oxnard Ventura County Airport"}
+  - {id: USW00093138, short: "Palm Springs Asos"}
+  - {id: USW00023182, short: "Palmdale Airport"}
+  - {id: USW00023289, short: "Palo Alto"}
+  - {id: USW00093209, short: "Paso Robles Municipal Airport"}
+  - {id: USW00093111, short: "Point Mugu Nf"}
+  - {id: USW00023149, short: "Porterville Municipal Airport"}
+  - {id: USW00053120, short: "Ramona Airport"}
+  - {id: USW00024216, short: "Red Bluff Municipal Airport"}
+  - {id: USW00024257, short: "Redding Airport"}
+  - {id: USW00003171, short: "Riverside Municipal Airport"}
+  - {id: USW00093230, short: "S Lake Tahoe Airport"}
+  - {id: USW00023232, short: "Sacramento Airport Asos"}
+  - {id: USW00023206, short: "Sacramento Mather AFB"}
+  - {id: USW00023208, short: "Sacramento Mcclellan AFB"}
+  - {id: USW00093225, short: "Sacramento Metro Airport"}
+  - {id: USW00023233, short: "Salinas Airport"}
+  - {id: USW00023122, short: "San Bernardino Int Airport"}
+  - {id: USW00093231, short: "San Carlos Airport"}
+  - {id: USW00093117, short: "San Clemente Is Naas"}
+  - {id: USW00003178, short: "San Diego Brown Field"}
+  - {id: USW00023188, short: "San Diego International Airport"}
+  - {id: USW00093107, short: "San Diego Miramar NAS"}
+  - {id: USW00003131, short: "San Diego Montgomery Field"}
+  - {id: USW00023234, short: "San Francisco International Airport"}
+  - {id: USW00023293, short: "San Jose"}
+  - {id: USW00093232, short: "San Jose Reid Hillview Airport"}
+  - {id: USW00093206, short: "San Luis Obispo Mcchesney Field"}
+  - {id: USW00093116, short: "San Nicolas Is"}
+  - {id: USW00023187, short: "Sandberg"}
+  - {id: USW00093184, short: "Santa Ana John Wayne Airport"}
+  - {id: USW00023190, short: "Santa Barbara Municipal Airport"}
+  - {id: USW00023273, short: "Santa Maria Public Airport"}
+  - {id: USW00093197, short: "Santa Monica Municipal Airport"}
+  - {id: USW00023213, short: "Santa Rosa Sonoma County Airport"}
+  - {id: USW00023237, short: "Stockton Airport"}
+  - {id: USW00003174, short: "Torrance"}
+  - {id: USW00023202, short: "Travis Field AFB"}
+  - {id: USW00093201, short: "Truckee Airport"}
+  - {id: USW00093121, short: "Twentynine Palms Mc"}
+  - {id: USW00023275, short: "Ukiah Municipal Airport"}
+  - {id: USW00093241, short: "Vacaville/Nut Tree Airport Asos"}
+  - {id: USW00023130, short: "Van Nuys Airport"}
+  - {id: USW00093214, short: "Vandenberg AFB"}
+  - {id: USW00023131, short: "Victorville So Ca Airport"}
+  - {id: USW00093144, short: "Visalia Muniap"}
+  - {id: USW00023277, short: "Watsonville Municipal Airport"}
